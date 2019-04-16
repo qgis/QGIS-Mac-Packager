@@ -1,0 +1,75 @@
+QGIS bundle contains many packages and libraries bundled. To determine a
+particular application's license terms examine the install package and/or
+the source projects' website.
+
+By installation of this package, you agree with all licenses for
+the bundled packages.
+
+This agreement contains 3 sections
+A) Open source projects
+B) 3rd party propriatory projects
+C) Individual text of licenses from B)
+
+-----------------------------------------------------------------------------------------------------
+
+A) Each of items in this list are open source:
+
+QGIS: GPLv2
+Python: PSF LICENSE
+Qt: LGPLv3
+GDAL X/MIT
+GRASS: GPL
+uDig: LGPL
+SAGA: GPL
+Scipy: BSD-new license
+Cython: Apache License
+PyQt: GPL
+Matplotlib: Matplotlib license (based on the PSF license)
+Numpy: NumPy license
+openssl: https://www.openssl.org/source/license.html
+expat: MIT
+freetype: GPLv2
+geos: LGPL
+MDAL: MIT
+libgeotiff: libgeotiff license
+libgfortran license
+libgif license
+libgsl license
+hdf5: BSD-style Open Source
+libhpdf license
+libjpeg license
+libjson license
+liblzma license
+libnetcdf license
+libopenblasp license
+libpng license
+libpq license
+proj: MIT license
+qscintilla2 license
+qt5keychain: https://github.com/frankosterfeld/qtkeychain/blob/master/COPYING
+libquadmath license
+libreadline license
+libspatialindex license
+libspatialite license
+libsqlite license
+libsz license
+libtasn1 license
+libtiff license
+libxml2 license
+libz license
+libzip license
+libzstd license
+sip license
+dmgbuild: MIT
+
+-----------------------------------------------------------------------------------------------------
+
+B) Package contains also these non-open source projects with licenses at the end of this document
+
+[1] ERDAS ECW/JP2 Desktop Read-Only Redistributable SDK License
+[2] LizardTech Computer Software License Agreement for MrSID Decode SDKs
+
+-----------------------------------------------------------------------------------------------------
+
+C) Text of licenses from section B)
+
