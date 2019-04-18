@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/qgis/QGIS-Mac-Packager.svg?branch=master)](https://travis-ci.org/qgis/QGIS-Mac-Packager)
+
 # QGIS Mac Packager
 
 Set of scripts to create MacOS standalone QGIS package (dmg)
