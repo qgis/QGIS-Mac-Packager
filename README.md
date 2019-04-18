@@ -12,6 +12,11 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - Run `open /Applications/QGISxy.app` from Terminal and add the output
 - Append any messages from QGIS message log or python warnings log if present
 
+# Development
+
+- run tests `python3 -m unittest discover tests/ -v`
+- run pep8 `python3 -m pycodestyle .  --max-line-length=120`
+
 # Debugging Tips
 - [gatekeeper](https://stackoverflow.com/a/29221163/2838364): `codesign --verbose --deep-verify /Applications/QGIS.app/` 
 - loaded dylibs: `ps -A | grep -i qgis; vmmap <pid>`
@@ -68,7 +73,7 @@ plutil ~/Library/LaunchAgents/org.qgis.build.plist
 launchctl load ~/Library/LaunchAgents/org.qgis.build.plist
 ``` 
 
-# Server Update
+## Server Update
 
 - remove all build folders 
 - remove homebrew (`/usr/local/*`)
