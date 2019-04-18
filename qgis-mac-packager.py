@@ -40,6 +40,7 @@ if __name__ == "__main__":
                         default=False)
     parser.add_argument('-v', '--verbose', action='count', default=1)
     parser.add_argument('--clean', action='store_true', help="Clean build", default=False)
+    parser.add_argument('--no-credentials', action='store_true', help="If you want to skip signing, uploading to server (development mode)", default=False)
 
     args = parser.parse_args()
     pa = Paths(args)
@@ -67,12 +68,13 @@ if __name__ == "__main__":
     if not args.skip_package:
         package(
             msg=msg,
-            pa=pa,
-            signFile=os.path.join(pa.package.dir, os.pardir, os.pardir, "sign_identity.txt"),
-            keychainFile=os.path.join(pa.package.dir, os.pardir, os.pardir, "qgis.keychain-db")
+            pa=pa
         )
 
     if not args.skip_upload:
         upload(
-            pa=pa
+            msg=msg,
+            pa=pa,
+            server="qgis-mac-packager-bot@qgis2.qgis.org",
+            folder="/var/www/downloads/macos"
         )

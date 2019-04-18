@@ -85,7 +85,7 @@ def print_identities(keychain):
         raise
 
 
-def package(msg, pa, signFile = None, keychainFile = None):
+def package(msg, pa):
     '''
         sign: File with Apple signing identity'
         keychain: keychain file to use
@@ -93,6 +93,13 @@ def package(msg, pa, signFile = None, keychainFile = None):
 
     if not os.path.exists(pa.qgisApp):
         raise QGISPackageError(pa.qgisApp + " does not exists")
+
+    if pa.args.no_credentials:
+        signFile = None
+        keychainFile = None
+    else:
+        signFile = pa.host.sign_identity
+        keychainFile = pa.host.keychain
 
     identity = None
     if signFile:
@@ -107,8 +114,6 @@ def package(msg, pa, signFile = None, keychainFile = None):
         print("Using keychain " + keychainFile)
         if not os.path.exists(keychainFile):
             raise QGISPackageError("missing file " + keychainFile)
-    else:
-        print("No keychain file specified")
 
     print("Print available identities")
     print_identities(keychainFile)

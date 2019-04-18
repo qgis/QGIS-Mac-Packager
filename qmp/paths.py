@@ -66,6 +66,9 @@ class Paths:
         self.package.resources = os.path.join(self.package.dir, os.pardir, "resources")
 
         # destinations on host OS
+        self.host.ssh_private_key = os.path.join(self.package.dir, os.pardir, os.pardir, "ssh", "id_rsa")
+        self.host.sign_identity = os.path.join(self.package.dir, os.pardir, os.pardir, "sign_identity.txt")
+        self.host.keychain = os.path.join(self.package.dir, os.pardir, os.pardir, "qgis.keychain-db")
         self.host.sipCellar = "/usr/local/Cellar/osgeo-sip/" + self.version.sip + "/lib/" + self.version.python + "/site-packages/PyQt5"
         self.host.pyqt = "/usr/local/opt/osgeo-pyqt/lib/python3.7/site-packages/PyQt5"
         self.host.pyqtPluginFile = os.path.join(self.host.pyqt, os.pardir, os.pardir, os.pardir, os.pardir, "share", "osgeo-pyqt", "plugins")
@@ -233,6 +236,14 @@ class Paths:
             self.host.geotiff,
             self.host.pythonDynload
         ]
+
+        # check credentials
+        if not self.args.no_credentials:
+            expected_paths += [
+                self.host.ssh_private_key,
+                self.host.sign_identity,
+                self.host.keychain
+            ]
 
         for f in expected_paths:
             if not os.path.exists(f):
