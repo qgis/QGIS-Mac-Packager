@@ -4,7 +4,6 @@ sudo: required
 
 before_install:
   - pip3 install pycodestyle
-  - pip3 install unittest
 
 jobs:
   include:

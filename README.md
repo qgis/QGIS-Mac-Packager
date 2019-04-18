@@ -17,7 +17,7 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 # Development
 
 - run tests `python3 -m unittest discover tests/ -v`
-- run pep8 `python3 -m pycodestyle .  --max-line-length=120`
+- run pep8 `python3 -m pycodestyle . --max-line-length=120`
 
 # Debugging Tips
 - [gatekeeper](https://stackoverflow.com/a/29221163/2838364): `codesign --verbose --deep-verify /Applications/QGIS.app/` 
