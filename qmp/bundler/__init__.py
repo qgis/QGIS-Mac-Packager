@@ -273,13 +273,13 @@ def bundle(cp, msg, pa):
         deps_queue |= set(binaryDependencies.libs)
         deps_queue |= set(binaryDependencies.frameworks)
 
-    msg = "\nLibs:\n\t"
-    msg += "\n\t".join(sorted(libs))
-    msg += "\nFrameworks:\n\t"
-    msg += "\n\t".join(sorted(frameworks))
-    msg += "\nSysLibs:\n\t"
-    msg += "\n\t".join(sorted(sys_libs))
-    print(msg)
+    str = "\nLibs:\n\t"
+    str += "\n\t".join(sorted(libs))
+    str += "\nFrameworks:\n\t"
+    str += "\n\t".join(sorted(frameworks))
+    str += "\nSysLibs:\n\t"
+    str += "\n\t".join(sorted(sys_libs))
+    print(str)
 
     print(100 * "*")
     print("STEP 2: Copy libraries/plugins to bundle")
@@ -333,14 +333,15 @@ def bundle(cp, msg, pa):
                 if not os.path.exists(link):
                     raise QGISBundlerError("Ups, wrongly linked! " + lib)
             else:
-                # we already have this lib in the bundle (because there is a link! in lib/), so make sure we do not have it twice!
+                # we already have this lib in the bundle (because there is a link! in lib/),
+                # so make sure we do not have it twice!
                 existing_link_realpath = os.path.realpath(link)
                 if existing_link_realpath != os.path.realpath(lib):
                     if utils.files_differ(existing_link_realpath, lib):
                         # libraries with the same name BUT with different contents
                         # so do not have it in libs folder because we do not know which
                         # we HOPE that this happens only for cpython extensions for python modules
-                        if not pa.version.cpython in link:
+                        if pa.version.cpython not in link:
                             raise QGISBundlerError(
                                 "multiple libraries with same name but different content " + link + "; " + lib)
                         unlink_links.add(link)
@@ -401,8 +402,9 @@ def bundle(cp, msg, pa):
     workarounds[lib] = existing_link_realpath
     for lib, existing_link_realpath in workarounds.items():
         if not (os.path.exists(lib) and os.path.exists(existing_link_realpath)):
-            print(
-                "WARNING: Workaround " + lib + "->" + existing_link_realpath + " is no longer valid, maybe you upaded packages?")
+            str = "WARNING: Workaround " + lib + "->" + existing_link_realpath
+            str += " is no longer valid, maybe you upaded packages?"
+            msg.warn(str)
             continue
 
         cp.remove(lib)

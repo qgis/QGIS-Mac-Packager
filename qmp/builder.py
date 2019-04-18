@@ -10,18 +10,18 @@ from .common import QGISBuildError
 
 class Progress(git.remote.RemoteProgress):
     def update(self, op_code, cur_count, max_count=None, message=''):
-        print('update(%s, %s, %s, %s)'%(op_code, cur_count, max_count, message))
+        print('update(%s, %s, %s, %s)' % (op_code, cur_count, max_count, message))
 
 
 def build(cp, msg, pa, clean, git_commit, qgis_repo):
-    print(100*"*")
+    print(100 * "*")
     print("STEP 1: Get QGIS repo " + qgis_repo)
-    print(100*"*")
+    print(100 * "*")
     if not os.path.exists(pa.output.qgis):
         os.makedirs(pa.output.qgis)
     os.chdir(pa.output.qgis)
     if os.listdir(pa.output.qgis):
-       # dir is not empty
+        # dir is not empty
         try:
             repo = git.Repo(pa.output.qgis)
         except git.InvalidGitRepositoryError:
@@ -41,12 +41,11 @@ def build(cp, msg, pa, clean, git_commit, qgis_repo):
     except git.exc.GitCommandError:
         print("Failed to pull, probably you are on tag and not branch...")
 
-
-    print(100*"*")
+    print(100 * "*")
     print("STEP 2: Clean the build/install directory ")
-    print(100*"*")
+    print(100 * "*")
     if clean:
-        print ("Cleaning: " + pa.output.build)
+        print("Cleaning: " + pa.output.build)
         cp.recreate_dir(pa.output.build)
     else:
         print("Skipped, clean build not requested")
@@ -57,9 +56,9 @@ def build(cp, msg, pa, clean, git_commit, qgis_repo):
     print("Cleaning: " + pa.output.install)
     cp.recreate_dir(pa.output.install)
 
-    print(100*"*")
+    print(100 * "*")
     print("STEP 3: Generate CMAKE build system")
-    print(100*"*")
+    print(100 * "*")
     os.chdir(pa.output.build)
 
     env = {
@@ -72,27 +71,26 @@ def build(cp, msg, pa, clean, git_commit, qgis_repo):
     # keep superenv from stripping (use Cellar prefix)
     env["CXXFLAGS"] = "-isystem {}/include".format(pa.host.grass_base)
 
+    # FindGEOS.cmake is confused because it finds geos library but not framework Info.plist
+    cmake_args = [
+        "cmake",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_INSTALL_PREFIX=" + os.path.realpath(pa.output.install),
+        "-DCMAKE_PREFIX_PATH=" + pa.host.cmakePrefix,
+        "-DQGIS_MACAPP_BUNDLE=0",
+        "-DWITH_3D=TRUE",
+        "-DWITH_BINDINGS=TRUE",
+        "-DSQLITE3_INCLUDE_DIR=" + pa.host.sqlite + "/include",
+        "-DSQLITE3_LIBRARY=" + pa.host.sqlite + "/lib/libsqlite3.dylib",
+        "-DCMAKE_FIND_FRAMEWORK=LAST"]
 
-    cmake_args = ["cmake",
-            "-DCMAKE_BUILD_TYPE=Release",
-            "-DCMAKE_INSTALL_PREFIX="+os.path.realpath(pa.output.install),
-            "-DCMAKE_PREFIX_PATH="+pa.host.cmakePrefix,
-            "-DQGIS_MACAPP_BUNDLE=0",
-            "-DWITH_3D=TRUE",
-            "-DWITH_BINDINGS=TRUE",
-            "-DSQLITE3_INCLUDE_DIR=" + pa.host.sqlite + "/include",
-            "-DSQLITE3_LIBRARY=" + pa.host.sqlite + "/lib/libsqlite3.dylib",
-            "-DCMAKE_FIND_FRAMEWORK=LAST" # FindGEOS.cmake is confused because it finds geos library but not framework Info.plist
-           ]
-
-    enable_tests = False # TODO
+    enable_tests = False  # TODO
     if not enable_tests:
         # disable unit tests
         cmake_args += ["-DENABLE_TESTS=FALSE"]
 
     cmake_args += ["-DCMAKE_OSX_DEPLOYMENT_TARGET={}".format(pa.version.minos)]
     cmake_args += [pa.output.qgis]
-
 
     try:
         result = subprocess.run(
@@ -116,13 +114,13 @@ def build(cp, msg, pa, clean, git_commit, qgis_repo):
         print(err.output)
         raise
 
-    print(100*"*")
+    print(100 * "*")
     cores = multiprocessing.cpu_count() - 1
     print("STEP 4: make on " + str(cores) + " cores")
-    print(100*"*")
+    print(100 * "*")
     os.chdir(pa.output.build)
 
-    make_args = ["make", "-j"+str(cores), "install"]
+    make_args = ["make", "-j" + str(cores), "install"]
     try:
         result = subprocess.run(
             make_args,
@@ -145,4 +143,3 @@ def build(cp, msg, pa, clean, git_commit, qgis_repo):
         raise
 
     print("build done")
-

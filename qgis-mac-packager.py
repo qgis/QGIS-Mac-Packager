@@ -17,7 +17,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Build, Package and Upload QGIS Application')
     parser.add_argument('--output_directory',
                         required=True,
-                        help='output directory for this build (will contain qgis git repo, build tree, install tree, bundle tree and resulting dmg)')
+                        help='output directory for this build (will contain qgis git repo, build tree, '
+                             'install tree, bundle tree and resulting dmg)')
     parser.add_argument('--git',
                         required=True,
                         help='git branch/tag/changeset')
@@ -34,13 +35,18 @@ if __name__ == "__main__":
                         default=False)
     parser.add_argument('-sbundle', '--skip_bundle', action='store_true', help="skip bundle phase (development) ",
                         default=False)
-    parser.add_argument('-spackage', '--skip_package', action='store_true', help="skip package(dmg) phase (development) ",
+    parser.add_argument('-spackage', '--skip_package',
+                        action='store_true',
+                        help="skip package(dmg) phase (development) ",
                         default=False)
     parser.add_argument('-supload', '--skip_upload', action='store_true', help="skip upload phase (development) ",
                         default=False)
     parser.add_argument('-v', '--verbose', action='count', default=1)
     parser.add_argument('--clean', action='store_true', help="Clean build", default=False)
-    parser.add_argument('--no-credentials', action='store_true', help="If you want to skip signing, uploading to server (development mode)", default=False)
+    parser.add_argument('--no-credentials',
+                        action='store_true',
+                        help="If you want to skip signing, uploading to server (development mode)",
+                        default=False)
 
     args = parser.parse_args()
     pa = Paths(args)

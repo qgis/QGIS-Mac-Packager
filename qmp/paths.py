@@ -14,12 +14,12 @@ class Paths:
     def __init__(self, args):
         self.args = args
 
-        self.package = PathGroup() # destinations in the QGIS-Mac-Packager
-        self.host = PathGroup() # destinations on the host system
+        self.package = PathGroup()  # destinations in the QGIS-Mac-Packager
+        self.host = PathGroup()  # destinations on the host system
         self.output = PathGroup()  # destinations in the output directory
-        self.bundle = PathGroup() # destinations in the output/bundle directory
-        self.install = PathGroup() # destination in the install location on user machine
-        self.version = PathGroup() # versions of the libraries
+        self.bundle = PathGroup()  # destinations in the output/bundle directory
+        self.install = PathGroup()  # destination in the install location on user machine
+        self.version = PathGroup()  # versions of the libraries
 
         self.version.grass = "grass76"
         self.version.grassBrew = "7.6.1_3"
@@ -27,14 +27,14 @@ class Paths:
         self.version.mod_spatialite = "mod_spatialite.7.dylib"
         self.version.python = "python3.7"
         self.version.saga = "2.3.2_3"
-        self.version.projLib = "libproj.15.dylib" # proj.13 is proj4, proj.15 is proj6
+        self.version.projLib = "libproj.15.dylib"  # proj.13 is proj4, proj.15 is proj6
         self.version.libwx = "3.0"
         self.version.libwxFull = "3.0.0.4.0"
         self.version.libpq = "5.10"
         self.version.libpqFull = "5"
         self.version.cpython = "cpython-37m-darwin"
         self.version.sip = "4.19.15"
-        self.version.minos = "10.11.0" # MACOS minimum supported OS
+        self.version.minos = "10.11.0"  # MACOS minimum supported OS
 
         # jpeg.9 is /usr/local/Cellar/jpeg/9c/lib/libjpeg.9.dylib
         # required by others
@@ -57,7 +57,7 @@ class Paths:
             "libpq.5.10.dylib", "libpq.5.11.dylib",
             "libopenjp2.2.1.0.dylib", "libopenjp2.7.dylib",
             "libz.1.dylib", "libz.1.2.11.dylib",
-            "libproj.15.dylib", "libproj.13.dylib"  
+            "libproj.15.dylib", "libproj.13.dylib"
             "libicudata.63.dylib", "libicudata.63.1.dylib"
         ]
 
@@ -69,9 +69,11 @@ class Paths:
         self.host.ssh_private_key = os.path.join(self.package.dir, os.pardir, os.pardir, "ssh", "id_rsa")
         self.host.sign_identity = os.path.join(self.package.dir, os.pardir, os.pardir, "sign_identity.txt")
         self.host.keychain = os.path.join(self.package.dir, os.pardir, os.pardir, "qgis.keychain-db")
-        self.host.sipCellar = "/usr/local/Cellar/osgeo-sip/" + self.version.sip + "/lib/" + self.version.python + "/site-packages/PyQt5"
+        self.host.sipCellar = "/usr/local/Cellar/osgeo-sip/" + self.version.sip + \
+                              "/lib/" + self.version.python + "/site-packages/PyQt5"
         self.host.pyqt = "/usr/local/opt/osgeo-pyqt/lib/python3.7/site-packages/PyQt5"
-        self.host.pyqtPluginFile = os.path.join(self.host.pyqt, os.pardir, os.pardir, os.pardir, os.pardir, "share", "osgeo-pyqt", "plugins")
+        self.host.pyqtPluginFile = os.path.join(self.host.pyqt, os.pardir, os.pardir,
+                                                os.pardir, os.pardir, "share", "osgeo-pyqt", "plugins")
         self.host.pythonBase = "/usr/local/opt/python3/Frameworks/Python.framework/Versions/3.7"
         self.host.python = self.host.pythonBase + "/Python"
         self.host.pySitePackages = os.path.join(self.host.pythonBase, "lib", self.version.python, "site-packages")
@@ -82,12 +84,12 @@ class Paths:
         self.sagaHost = "/usr/local/opt/osgeo-saga-lts"
         self.host.grass = "/usr/local/opt/osgeo-grass"
         self.host.grass_base = "/usr/local/opt/osgeo-grass" + "/grass-base"
-        self.grass7Host = self.host.grass_base # TODO remove
+        self.grass7Host = self.host.grass_base  # TODO remove
         self.host.grass7Cellar = "/usr/local/Cellar/osgeo-grass/" + self.version.grassBrew
         self.gdalPluginsHost = "/usr/local/lib/gdalplugins"
         self.mysqlDriverHost = "/usr/local/opt/osgeo-qt-mysql/lib/qt/plugins/sqldrivers/libqsqlmysql.dylib"
-        self.psqlDriverHost =  "/usr/local/opt/osgeo-qt-psql/lib/qt/plugins/sqldrivers/libqsqlpsql.dylib"
-        self.odbcDriverHost =  "/usr/local/opt/osgeo-qt-odbc/lib/qt/plugins/sqldrivers/libqsqlodbc.dylib"
+        self.psqlDriverHost = "/usr/local/opt/osgeo-qt-psql/lib/qt/plugins/sqldrivers/libqsqlpsql.dylib"
+        self.odbcDriverHost = "/usr/local/opt/osgeo-qt-odbc/lib/qt/plugins/sqldrivers/libqsqlodbc.dylib"
         self.host.projLib = "/usr/local/opt/osgeo-proj/lib"
         self.projHost = "/usr/local/opt/osgeo-proj/share"
         self.projDatumGridsHost = self.package.dir + "/../../proj-datumgrid/grids"
@@ -118,7 +120,6 @@ class Paths:
         self.host.lizip = "/usr/local/opt/libzip"
         self.host.tasn1 = "/usr/local/opt/libtasn1"
         self.host.libdir = "/usr/local"
-
 
         self.host.cmakePrefix = ";".join([
             self.host.qt,

@@ -12,7 +12,7 @@ def fix_lib(binary, depLibs, contentsPath, relLibPathToExe, relLibPathToFramewor
     args = ["install_name_tool", "-id", p, binary]
     try:
         subprocess.check_output(args, encoding='UTF-8')
-    except:
+    except subprocess.CalledProcessError as err:
         print("WARNING: " + binary)
 
     for lib in depLibs.libs:
@@ -22,7 +22,7 @@ def fix_lib(binary, depLibs, contentsPath, relLibPathToExe, relLibPathToFramewor
                 binary]
         try:
             subprocess.check_output(args, encoding='UTF-8')
-        except:
+        except subprocess.CalledProcessError:
             print("WARNING: " + binary)
 
     for framework in depLibs.frameworks:

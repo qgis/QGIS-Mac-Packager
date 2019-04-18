@@ -24,17 +24,17 @@ def brew_prefix():
 
 def xcode():
     output = subprocess.check_output(["system_profiler", "SPDeveloperToolsDataType"], encoding='UTF-8')
-    for l in output.split('\n'):
-        l = l.strip()
-        if l.startswith("Version:"):
-            l = l.replace("Version:", "")
-            l = l.strip()
-            return l
+    for chunk in output.split('\n'):
+        chunk = chunk.strip()
+        if chunk.startswith("Version:"):
+            chunk = chunk.replace("Version:", "")
+            chunk = chunk.strip()
+            return chunk
     return "Unknown"
 
 
 def homebrew_libs():
-    force_error =[]
+    force_error = []
 
     exclude = ["python@2", "bash-completion"]
     libs = []
@@ -72,17 +72,17 @@ def check_py_version(name):
     try:
         output = subprocess.check_output(["python3", "-c", cmd], stderr=subprocess.PIPE, encoding='UTF-8')
         return output.strip()
-    except:
+    except subprocess.CalledProcessError as err:
         print("Unable to detect version for " + name)
         return ""
 
 
 def projdatumgrid():
-    cmd = os.path.join(THIS_DIR, os.path.pardir, "scripts", "fetch_proj-datumgrid.bash" )
+    cmd = os.path.join(THIS_DIR, os.path.pardir, "scripts", "fetch_proj-datumgrid.bash")
     try:
         output = subprocess.check_output([cmd, "-version"], stderr=subprocess.PIPE, encoding='UTF-8')
         return output.strip()
-    except:
+    except subprocess.CalledProcessError as err:
         print("Unable to detect version for proj-datumgrid")
         return ""
 
@@ -99,7 +99,7 @@ def python_libs():
 
     while pkgs:
         pkg = pkgs.pop()
-        pkg_dir =  os.path.realpath(os.path.join(sitepackages, pkg))
+        pkg_dir = os.path.realpath(os.path.join(sitepackages, pkg))
         if pkg_dir in done_pkgs:
             continue
         done_pkgs += [pkg_dir]

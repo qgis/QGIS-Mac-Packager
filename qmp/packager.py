@@ -24,11 +24,10 @@ def sign_this(path, identity, keychainFile):
 
         args += [path]
 
-
         out = subprocess.check_output(args, stderr=subprocess.STDOUT, encoding='UTF-8')
         print(out.strip())
     except subprocess.CalledProcessError as err:
-        if not "is already signed" in str(err.output):
+        if "is already signed" not in str(err.output):
             print(err.output)
             raise
         else:

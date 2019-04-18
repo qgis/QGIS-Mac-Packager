@@ -63,4 +63,3 @@ def upload(msg, pa, server, folder):
     rc.ssh("ln -s " + remote_dmg + " " + link_dmg)
     rc.ssh("ln -s " + remote_md5 + " " + link_md5)
     print("Links " + pa.args.release_type + " recreated")
-

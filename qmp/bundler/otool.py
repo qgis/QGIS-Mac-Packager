@@ -28,7 +28,7 @@ def is_omach_file(binary):
     args = ["otool", "-L", binary]
     try:
         ret = subprocess.check_output(args, encoding='UTF-8')
-    except:
+    except subprocess.CalledProcessError:
         return False
 
     return "is not an object file" not in ret
@@ -44,13 +44,17 @@ def binary_type(pa, lib_path):
     filename, file_extension = os.path.splitext(lib_path)
     # hmmm, some broken library in python package
     if "/DLC/h5py/" in lib_path:
-        lib_path = lib_path.replace("/DLC/h5py/", "/usr/local/lib/" + pa.version.python +"/site-packages/h5py/.dylibs/")
+        lib_path = lib_path.replace("/DLC/h5py/",
+                                    "/usr/local/lib/" + pa.version.python + "/site-packages/h5py/.dylibs/")
     if "/DLC/psycopg2/" in lib_path:
-        lib_path = lib_path.replace("/DLC/psycopg2/", "/usr/local/lib/" + pa.version.python +"/site-packages/psycopg2/.dylibs/")
+        lib_path = lib_path.replace("/DLC/psycopg2/",
+                                    "/usr/local/lib/" + pa.version.python + "/site-packages/psycopg2/.dylibs/")
     if "/DLC/PIL/" in lib_path:
-        lib_path = lib_path.replace("/DLC/PIL/", "/usr/local//lib/" + pa.version.python +"/site-packages/PIL/.dylibs/")
+        lib_path = lib_path.replace("/DLC/PIL/",
+                                    "/usr/local//lib/" + pa.version.python + "/site-packages/PIL/.dylibs/")
     if "/DLC/pyproj/" in lib_path:
-        lib_path = lib_path.replace("/DLC/pyproj/", "/usr/local/lib/" + pa.version.python +"/site-packages/pyproj/.dylibs/")
+        lib_path = lib_path.replace("/DLC/pyproj/",
+                                    "/usr/local/lib/" + pa.version.python + "/site-packages/pyproj/.dylibs/")
 
     # note "/opt/X11" comes from XQuarz and it has ALREADY signed X libraries
     if lib_path.startswith("/usr/lib/") or lib_path.startswith("/System/Library/"):
@@ -73,7 +77,7 @@ def get_binary_dependencies(pa, binary):
     args = ["otool", "-L", binary]
     ret = subprocess.check_output(args, encoding='UTF-8')
     otool_libs = ret.split("\n")
-    path = otool_libs.pop(0)[:-1] # first one is the library path
+    path = otool_libs.pop(0)[:-1]  # first one is the library path
     libname = os.path.basename(path)
 
     frameworks = []
@@ -104,5 +108,3 @@ def get_binary_dependencies(pa, binary):
 
     # binaries must be copied manually to the destination
     return BinaryDependencies(libname, path, frameworks, sys_libs, libs)
-
-

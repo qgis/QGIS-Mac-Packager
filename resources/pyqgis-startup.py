@@ -20,9 +20,10 @@
 import sys
 import os
 
-sys.path[:] = (pth for pth in sys.path if not (pth.startswith('/Library/Python') or \
-pth.startswith('/Library/Frameworks') or \
-pth.startswith('/System/Library/Frameworks/Python.framework')))
+sys.path[:] = (pth for pth in sys.path if not (
+                    pth.startswith('/Library/Python') or
+                    pth.startswith('/Library/Frameworks') or
+                    pth.startswith('/System/Library/Frameworks/Python.framework')))
 
 # make abs paths
 sys.path[:] = (os.path.abspath(pth) for pth in sys.path)

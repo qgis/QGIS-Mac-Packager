@@ -62,92 +62,94 @@ def patch_info_plist(pa, min_os):
     # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/LaunchServicesKeys.html#//apple_ref/doc/uid/20001431-113253
     infoplist = os.path.join(pa.contentsDir, "Info.plist")
     if not os.path.exists(infoplist):
-        raise  QGISBundlerError("MISSING " + infoplist)
+        raise QGISBundlerError("MISSING " + infoplist)
 
     # CFBundleIdentifier
     if patchCFBundleIdentifier:
         identifier = pa.installQgisAppName.replace(".app", "").lower().replace(".", "")
-        _patch_file(pa, infoplist,
+        _patch_file(pa,
+                    infoplist,
                     identifier,
                     "org.qgis.qgis3",
-                    "org.qgis.{}".format(identifier)
-        )
+                    "org.qgis.{}".format(identifier))
 
     # Bundle name
     if patchBundleName:
-        _patch_file(pa, infoplist,
+        _patch_file(pa,
+                    infoplist,
                     pa.installQgisAppName.replace(".app", ""),
                     "\t<key>CFBundleName</key>\n\t<string>QGIS</string>",
-                    "\t<key>CFBundleName</key>\n\t<string>{}</string>".format(pa.installQgisAppName.replace(".app", ""))
-        )
+                    "\t<key>CFBundleName</key>\n\t<string>{}</string>"
+                    .format(pa.installQgisAppName.replace(".app", "")))
 
     # Bundle signature
     if patchBundleSignature:
-        _patch_file(pa, infoplist,
+        _patch_file(pa,
+                    infoplist,
                     pa.installQgisAppName.replace(".app", ""),
                     "\t<key>CFBundleSignature</key>\n\t<string>QGIS</string>",
-                    "\t<key>CFBundleSignature</key>\n\t<string>{}</string>".format(pa.installQgisAppName.replace(".app", ""))
-        )
+                    "\t<key>CFBundleSignature</key>\n\t<string>{}</string>"
+                    .format(pa.installQgisAppName.replace(".app", "")))
 
     # Minimum version
     if not (min_os is None):
-        _patch_file(pa, infoplist,
-                               "LSMinimumSystemVersion",
-                               "\t<key>CFBundleDevelopmentRegion</key>",
-                               "\t<key>LSMinimumSystemVersion</key>\n" +
-                               "\t<string>{}</string>\n".format(min_os) +
-                               "\t<key>CFBundleDevelopmentRegion</key>"
-                               )
+        _patch_file(pa,
+                    infoplist,
+                    "LSMinimumSystemVersion",
+                    "\t<key>CFBundleDevelopmentRegion</key>",
+                    "\t<key>LSMinimumSystemVersion</key>\n" +
+                    "\t<string>{}</string>\n".format(min_os) +
+                    "\t<key>CFBundleDevelopmentRegion</key>")
 
     # LSFileQuarantineEnabled
     if add_quarantine:
-        _patch_file(pa, infoplist,
-                               "LSFileQuarantineEnabled",
-                               "\t<key>CFBundleDevelopmentRegion</key>",
-                               "\t<key>LSFileQuarantineEnabled</key>\n" +
-                               "\t<false/>\n".format(min_os) +
-                               "\t<key>CFBundleDevelopmentRegion</key>"
-                               )
+        _patch_file(pa,
+                    infoplist,
+                    "LSFileQuarantineEnabled",
+                    "\t<key>CFBundleDevelopmentRegion</key>",
+                    "\t<key>LSFileQuarantineEnabled</key>\n" +
+                    "\t<false/>\n".format(min_os) +
+                    "\t<key>CFBundleDevelopmentRegion</key>")
 
     # Python Start
     if add_python_start:
-        _patch_file(pa, infoplist,
-                               "PYQGIS_STARTUP",
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
-                               "\t\t<key>PYQGIS_STARTUP</key>\n" +
-                               "\t\t<string>{}/Resources/python/pyqgis-startup.py</string>\n".format(destContents) +
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>"
-                               )
+        _patch_file(pa,
+                    infoplist,
+                    "PYQGIS_STARTUP",
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
+                    "\t\t<key>PYQGIS_STARTUP</key>\n" +
+                    "\t\t<string>{}/Resources/python/pyqgis-startup.py</string>\n".format(destContents) +
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>")
 
     # Python Home
     if add_python_home:
-        _patch_file(pa, infoplist,
-                               "PYTHONHOME",
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
-                               "\t\t<key>PYTHONHOME</key>\n" +
-                               "\t\t<string>{}/Frameworks/Python.framework/Versions/Current</string>\n".format(destContents) +
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>"
-                               )
+        _patch_file(pa,
+                    infoplist,
+                    "PYTHONHOME",
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
+                    "\t\t<key>PYTHONHOME</key>\n" +
+                    "\t\t<string>{}/Frameworks/Python.framework/Versions/Current</string>\n".format(destContents) +
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>")
 
     # Python path
     if add_python_path:
-        _patch_file(pa, infoplist,
-                               "PYTHONPATH",
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
-                               "\t\t<key>PYTHONPATH</key>\n" +
-                               "\t\t<string>{}/Resources/python</string>\n".format(destContents) +
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>"
-                               )
+        _patch_file(pa,
+                    infoplist,
+                    "PYTHONPATH",
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
+                    "\t\t<key>PYTHONPATH</key>\n" +
+                    "\t\t<string>{}/Resources/python</string>\n".format(destContents) +
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>")
 
     # qgis prefix
     if add_qgis_prefix:
-        _patch_file(pa, infoplist,
-                               "QGIS_PREFIX_PATH",
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
-                               "\t\t<key>QGIS_PREFIX_PATH</key>\n" +
-                               "\t\t<string>{}/MacOS</string>\n".format(destContents) +
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>"
-                               )
+        _patch_file(pa,
+                    infoplist,
+                    "QGIS_PREFIX_PATH",
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
+                    "\t\t<key>QGIS_PREFIX_PATH</key>\n" +
+                    "\t\t<string>{}/MacOS</string>\n".format(destContents) +
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>")
 
     # Grass7 folder
     if add_grass7_folder:
@@ -159,34 +161,33 @@ def patch_info_plist(pa, min_os):
                     "'/Applications/GRASS-7.{}.app/Contents/MacOS'.format(version)",
                     "'{}'".format(destGrass7Dir))
 
-
     # fix GDAL paths
     if add_gdal_paths:
-        _patch_file(pa, infoplist,
-                               "GDAL_DRIVER_PATH",
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
-                               "\t\t<key>GDAL_DRIVER_PATH</key>\n" +
-                               "\t\t<string>{}</string>\n".format(pa.gdalPluginsInstall) +
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>"
-                               )
+        _patch_file(pa,
+                    infoplist,
+                    "GDAL_DRIVER_PATH",
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
+                    "\t\t<key>GDAL_DRIVER_PATH</key>\n" +
+                    "\t\t<string>{}</string>\n".format(pa.gdalPluginsInstall) +
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>")
 
-        _patch_file(pa, infoplist,
-                               "GDAL_DATA",
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
-                               "\t\t<key>GDAL_DATA</key>\n" +
-                               "\t\t<string>{}</string>\n".format(pa.gdalShareInstall) +
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>"
-                               )
+        _patch_file(pa,
+                    infoplist,
+                    "GDAL_DATA",
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
+                    "\t\t<key>GDAL_DATA</key>\n" +
+                    "\t\t<string>{}</string>\n".format(pa.gdalShareInstall) +
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>")
 
     # fix PROJ paths
     if add_proj_path:
-        _patch_file(pa, infoplist,
-                               "PROJ_LIB",
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
-                               "\t\t<key>PROJ_LIB</key>\n" +
-                               "\t\t<string>{}/Resources/proj/proj</string>\n".format(destContents) +
-                               "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>"
-                               )
+        _patch_file(pa,
+                    infoplist,
+                    "PROJ_LIB",
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>",
+                    "\t\t<key>PROJ_LIB</key>\n" +
+                    "\t\t<string>{}/Resources/proj/proj</string>\n".format(destContents) +
+                    "\t\t<key>QT_AUTO_SCREEN_SCALE_FACTOR</key>")
 
     # fix for Retina displays
     with open(infoplist, "r") as f:
@@ -213,10 +214,10 @@ def patch_text_files(pa):
     # First patch GRASS7 shell script
     grass7file = pa.grass7Dir + "/bin/" + pa.version.grass
     toreplace = """
-    export PYTHONHOME=XXX/Contents/Frameworks/Python.framework/Versions/Current
+export PYTHONHOME=XXX/Contents/Frameworks/Python.framework/Versions/Current
 export PYTHONPATH=XXX/Contents/Resources/python
 export GRASS_PYTHON=XXX/Contents/MacOS/bin/python
-export MANPATH="/usr/local/share/man:/usr/share/man:/opt/X11/share/man:/Library/Developer/CommandLineTools/usr/share/man"
+export MANPATH=/usr/local/share/man:/usr/share/man:/opt/X11/share/man:/Library/Developer/CommandLineTools/usr/share/man
 $GRASS_PYTHON XXX/Contents/Resources/grass7/bin/_grass76 $@
 """.replace("XXX", pa.installQgisApp)
     _patch_file(pa,
@@ -230,12 +231,13 @@ $GRASS_PYTHON XXX/Contents/Resources/grass7/bin/_grass76 $@
         pa.host.grass7Cellar + "/grass-base" + "~~>" + pa.grass7Install,
         pa.host.grass7Cellar + "/" + pa.version.grassFull + "~~>" + pa.grass7Install,
         pa.projHost + "~~>" + pa.projShareInstall,
-        pa.host.grass7Cellar + "/" + pa.version.grassFull +"/lib" + "~~>" + pa.installQgisLib,
+        pa.host.grass7Cellar + "/" + pa.version.grassFull + "/lib" + "~~>" + pa.installQgisLib,
         pa.host.projLib + "~~>" + pa.installQgisLib,
         pa.geotiffHost + "~~>" + pa.geotiffShareInstall,
         pa.host.gdalShare + "~~>" + pa.gdalShareInstall,
         "=python2 " + "~~>" + "=" + pa.installQgisApp + "/Contents/MacOS/bin/python ",
-        pa.host.grass7Cellar + "/libexec/bin/" + pa.version.grass + "~~>" + pa.grass7Install + "/bin/_" + pa.version.grass,
+        pa.host.grass7Cellar + "/libexec/bin/" + pa.version.grass + "~~>" +
+        pa.grass7Install + "/bin/_" + pa.version.grass,
         pa.host.openblas + "~~>" + pa.installQgisLib,
         "/usr/local/lib" + "~~>" + pa.installQgisLib,
     ]
@@ -312,7 +314,7 @@ def clean_redundant_files(pa, cp):
         for file in filenames:
             fpath = os.path.join(root, file)
             filename, file_extension = os.path.splitext(fpath)
-            if any(ext==file_extension for ext in extensionsToCheck):
+            if any(ext == file_extension for ext in extensionsToCheck):
                 print("Removing " + fpath)
                 cp.rm(fpath)
 
@@ -387,15 +389,19 @@ def test_full_tree_consistency(pa):
                     continue
 
                 basename = basename.replace("." + pa.version.cpython, "")
-                basename = re.sub(r'(\-\d+)?(\.\d+)?(\.\d+)?(\.\d+)?(\.\d+)$', '', basename) # e.g. 3.0.0.4 or 3.0
+                basename = re.sub(r'(\-\d+)?(\.\d+)?(\.\d+)?(\.\d+)?(\.\d+)$', '', basename)  # e.g. 3.0.0.4 or 3.0
                 print('Checking duplicity of library ' + basename)
                 if basename in unique_libs:
                     if files_differ(filepath, unique_libs[basename]):
                         # make sure there is no link in libs
                         if os.path.exists(pa.libDir + "/" + os.path.basename(filepath)):
-                            errors += ["Link exists for library " + filepath + " is bundled multiple times, first time in " + unique_libs[basename]]
+                            msg = "Link exists for library " + filepath
+                            msg += " is bundled multiple times, first time in " + unique_libs[basename]
+                            errors += [msg]
                     else:
-                        errors += ["Library " + filepath + " is bundled multiple times, first time in " + unique_libs[basename]]
+                        msg = "Library " + filepath
+                        msg += " is bundled multiple times, first time in " + unique_libs[basename]
+                        errors += [msg]
 
                 unique_libs[basename] = filepath
 
@@ -411,7 +417,7 @@ def test_full_tree_consistency(pa):
             if file_extension in [".dylib", ".so"] and is_omach_file(filepath):
                 print('Checking compactness of library ' + filepath)
                 check_deps(pa, filepath, os.path.realpath(pa.macosDir))
-            elif not file_extension and is_omach_file(filepath): # no extension == binaries
+            elif not file_extension and is_omach_file(filepath):  # no extension == binaries
                 if os.access(filepath, os.X_OK) and ("/Frameworks/" not in filepath):
                     print('Checking compactness of binaries ' + filepath)
                     check_deps(pa, filepath, os.path.dirname(filepath))
@@ -452,15 +458,15 @@ def test_full_tree_consistency(pa):
     errors = []
     # TODO wondering what we really need from these files in the bundle
     exceptions = [
-        "-config", # this file is to show the compilation flags of libraries
-        "sitecustomize.py", #this sets up python if used in homebrew context, so we do not need it here
+        "-config",  # this file is to show the compilation flags of libraries
+        "sitecustomize.py",  # this sets up python if used in homebrew context, so we do not need it here
         "INSTALL",
         "METADATA",
         ".rst",
-        "SagaUtils.py", # saga already found by prefixPath + "bin"
+        "SagaUtils.py",  # saga already found by prefixPath + "bin"
         ".txt",
         ".html",
-        ".pc", #pkgconfig
+        ".pc",  # pkgconfig
         "Makefile",
         "Setup",
 

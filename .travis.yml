@@ -3,10 +3,8 @@ language: shell
 sudo: required
 
 before_install:
-  - brew install python3
   - pip3 install pycodestyle
   - pip3 install unittest
-
 
 jobs:
   include:

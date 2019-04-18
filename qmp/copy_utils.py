@@ -58,8 +58,8 @@ class CopyUtils:
             self._is_in_out_dir(os.path.dirname(dest) + "/" + src)
         try:
             os.symlink(src, dest)
-        except:
-            print( dest + " -> " + src)
+        except OSError:
+            print(dest + " -> " + src)
             raise
 
     def unlink(self, name):

@@ -11,17 +11,19 @@ import inspect
 # .. Useful stuff ..............................................................
 application = defines.get('app', None)
 appname = os.path.basename(application)
-thisFileDir = os.path.dirname(os.path.abspath(inspect.getfile(lambda:None)))
+thisFileDir = os.path.dirname(os.path.abspath(inspect.getfile(lambda: None)))
+
 
 def icon_from_app(app_path):
     plist_path = os.path.join(app_path, 'Contents', 'Info.plist')
     plist = biplist.readPlist(plist_path)
     icon_name = plist['CFBundleIconFile']
-    icon_root,icon_ext = os.path.splitext(icon_name)
+    icon_root, icon_ext = os.path.splitext(icon_name)
     if not icon_ext:
         icon_ext = '.icns'
     icon_name = icon_root + icon_ext
     return os.path.join(app_path, 'Contents', 'Resources', icon_name)
+
 
 # .. Basics ....................................................................
 
@@ -40,10 +42,10 @@ format = defines.get('format', 'UDBZ')
 size = defines.get('size', '10g')
 
 # Files to include
-files = [ application ]
+files = [application]
 
 # Symlinks to create
-symlinks = { 'Applications': '/Applications' }
+symlinks = {'Applications': '/Applications'}
 
 # Volume icon
 #
@@ -52,11 +54,11 @@ symlinks = { 'Applications': '/Applications' }
 # will be used to badge the system's Removable Disk icon
 #
 icon = icon_from_app(application)
-#badge_icon = icon_from_app(application)
+# badge_icon = icon_from_app(application)
 
 # Where to put the icons
 icon_locations = {
-    appname:        (140, 120),
+    appname: (140, 120),
     'Applications': (500, 120)
     }
 
@@ -110,14 +112,13 @@ show_icon_preview = False
 # we only include settings for the default view)
 include_icon_view_settings = 'auto'
 include_list_view_settings = 'auto'
-
 # .. Icon view configuration ...................................................
 
 arrange_by = None
 grid_offset = (0, 0)
 grid_spacing = 100
 scroll_position = (0, 0)
-label_pos = 'bottom' # or 'right'
+label_pos = 'bottom'  # or 'right'
 text_size = 16
 icon_size = 128
 
@@ -170,7 +171,7 @@ list_column_sort_directions = {
 
 # .. License configuration .....................................................
 with open(thisFileDir + '/EULA.txt', 'r') as fh:
-    eula=fh.read()
+    eula = fh.read()
 with open(thisFileDir + '/license_ecw.txt', 'r') as fh:
     eula += "\n" + 100 * "-"
     eula += "\n[1] ERDAS ECW/JP2\n"
@@ -183,9 +184,9 @@ with open(thisFileDir + '/license_mrsid.txt', 'r') as fh:
     eula += fh.read()
 
 license = {
-     'default-language': 'en_US',
-     'licenses': {
-         'en_US': eula,
+    'default-language': 'en_US',
+    'licenses': {
+        'en_US': eula,
     },
     'buttons': {
          'en_US': (

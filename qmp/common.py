@@ -23,9 +23,9 @@ class QGISUploadError(QGISMacPackagerError):
 
 
 class Message(object):
-    def __init__(self, verbosity = None):
+    def __init__(self, verbosity=None):
         if verbosity is None:
-            verbosity = 1 # warnings and headers
+            verbosity = 1  # warnings and headers
         self.verbosity = verbosity
 
     def dev(self, msg):
