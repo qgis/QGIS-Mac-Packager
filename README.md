@@ -35,21 +35,23 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - Open XCode and accept license
 - install homebrew and QGIS deps by running `install_brew.bash`
 - Download MrSID SDK [referenced in](https://github.com/OSGeo/homebrew-osgeo4mac/blob/master/Formula/osgeo-mrsid-sdk.rb) and place it in the folder `$HOME/Library/Caches/Homebrew`
-- Download erdas-ecw-jp2 [referenced in](https://github.com/OSGeo/homebrew-osgeo4mac/blob/master/Formula/ecwjp2-sdk.rb). Open dmg, open pkg and install to default location (Desktop Read-Only Free type)
+- Download erdas-ecw-jp2 [referenced in](https://github.com/OSGeo/homebrew-osgeo4mac/blob/master/Formula/osgeo-ecwjp2-sdk.rb). Open dmg, open pkg and install to default location (Desktop Read-Only Free type)
 - install homebrew packages by `install_brew_packages.bash`
 - get proj datumgrids by running `scripts/fetch_proj-datumgrid.bash`
 - Update `~/.bash_profile` from `scrips/bash_profile`
 - now clone this repository
-- to upload to Dropbox
-    1. Create App with a folder to upload a files, get a token
-    2. Create File ~/Projects/dropbox_token.txt and paste the token inside
+- for upload, add you ssh keys to `qgis/ssh/` and secure them
 - copy `run_cronjob` one folder above
-- to Code Signing 
+- to Code Signing (Apple cert)
     - You need application certificate from https://developer.apple.com/account
     - Generate production/development signing identify
     - Get cer file and scp to the server
     - Double click on cer file and install it on the server
     - On Machine where you created request, export private key and copy and install on server too.
+- to Code Signing (other p12 cert)
+    - install p12 cert to `login` identity
+    - open keychain access, find certificate and install all required certificate authorities crts (certificate should show it is valid)
+- To both code signing methods:
     - `security find-identity -v` to find existing identities 
     - create `sing_identity.txt` with the ID of your identity
     - allow to use it in cronjob (https://stackoverflow.com/a/20324331/2838364)
@@ -57,7 +59,6 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 
 - so your folders structure is
 ```
-  dropbox_token.txt
   sign_identity.txt
   qgis.keychain.db --> ~/Library/Keychains/login.keychain-db
   run_cronjob.bash
@@ -65,6 +66,7 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
   proj-datumgrid/
   builds/
   logs/
+  ssh/
 ```
 - Run `run_*.bash` to build nightly/ltr/pr releases
 - Nightly releases should be set as launchd once per day (use tabs!)
@@ -80,11 +82,9 @@ launchctl load ~/Library/LaunchAgents/org.qgis.build.plist
 - remove homebrew (`/usr/local/*`)
 - reinstall homebrew packages
 - update version & run `scripts/fetch_proj-datumgrid.bash`
-- update docs/README.md with new set of used libs
 
 # How to release new versions
 
 - remove all build folders 
 - update TAG in `scripts/run_ltr.bash`, `scripts/run_pr.bash`
-- wait till next nightly build to build the package
-- check `docs/README.md` if there are some references to old/new version to update
+- run scripts 
