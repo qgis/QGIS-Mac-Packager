@@ -10,4 +10,4 @@ jobs:
   include:
     - stage: test
       name: "Tests"
-      script: /scripts/check_all.bash
+      script: ./scripts/check_all.bash
