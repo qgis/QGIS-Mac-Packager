@@ -19,6 +19,6 @@ export LANG=en_US.UTF-8
 # aliases
 alias UPDATE_REPO="cd ~/qgis/QGIS-Mac-Packager; git fetch origin; git rebase origin/master"
 alias UPDATE_CRONJOB="cd ~/qgis/QGIS-Mac-Packager; cp scripts/run_cronjob.bash ../"
-alias UPDATE_LAUNCHD="cd ~/qgis/QGIS-Mac-Packager; cp scripts/org.qgis.build.plist ~/Library/LaunchAgents/; launchctl load ~/Library/LaunchAgents/org.qgis.build.plist; launchctl unload ~/Library/LaunchAgents/org.qgis.build.plist"
+alias UPDATE_LAUNCHD="cd ~/qgis/QGIS-Mac-Packager; launchctl unload ~/Library/LaunchAgents/org.qgis.build.plist; cp scripts/org.qgis.build.plist ~/Library/LaunchAgents/; launchctl load ~/Library/LaunchAgents/org.qgis.build.plist"
 alias CLEAN_BUILDS="cd ~/qgis; rm -rf ./builds/*/build;rm -rf ./builds/*/bundle;rm -rf ./builds/*/install"
 alias REINSTALL_BREW="~/qgis/QGIS-Mac-Packager/scripts/install_brew.bash"
