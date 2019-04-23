@@ -10,7 +10,7 @@ QGISAPP="QGIS3.6.app"
 
 PWD=`pwd`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-BD=$DIR/../../builds/pr-${TAG}
+BD=$DIR/../../builds/pr
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 LOG=$BD/pr_${TIMESTAMP}.log
 
