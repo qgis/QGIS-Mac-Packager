@@ -4,11 +4,10 @@ sudo: required
 
 before_install:
   - pip3 install pycodestyle
+  - pip3 install colorama
 
 jobs:
   include:
     - stage: test
-      name: "PEP8"
-      script: python3 -m pycodestyle .  --max-line-length=120
-    - script: python3 -m unittest discover tests/ -v
-      name: "Unit Tests"
+      name: "Tests"
+      script: /scripts/check_all.bash
