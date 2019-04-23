@@ -32,7 +32,7 @@ class RemoteCommand(object):
 
 def upload(msg, pa, server, folder):
     if pa.args.no_credentials:
-        msg.msg("Upload skipped, no ssh key supplied")
+        msg.info("Upload skipped, no ssh key supplied")
         return
 
     rc = RemoteCommand(msg, pa, server)
@@ -41,18 +41,18 @@ def upload(msg, pa, server, folder):
     root = folder + "/" + pa.args.release_type
     rc.ssh("mkdir -p " + root)
 
-    print("Folder " + root + " created")
+    msg.info("Folder " + root + " created")
 
     # upload file
     src = pa.output.dmg
     remote_dmg = root + "/" + pa.args.dmg_name
     rc.scp(src, remote_dmg)
-    print("File " + remote_dmg + " uploaded")
+    msg.info("File " + remote_dmg + " uploaded")
 
     # create md5 sum
     remote_md5 = remote_dmg + ".md5sum"
     rc.ssh("md5sum " + remote_dmg + " > " + remote_md5)
-    print("File " + remote_md5 + " uploaded")
+    msg.info("File " + remote_md5 + " uploaded")
 
     # recreate links
     link_dmg = folder + "/" + "qgis-latest-macos-" + pa.args.release_type + ".dmg"
@@ -62,4 +62,4 @@ def upload(msg, pa, server, folder):
     rc.ssh("rm -f " + link_md5)
     rc.ssh("ln -s " + remote_dmg + " " + link_dmg)
     rc.ssh("ln -s " + remote_md5 + " " + link_md5)
-    print("Links " + pa.args.release_type + " recreated")
+    msg.info("Links " + pa.args.release_type + " recreated")

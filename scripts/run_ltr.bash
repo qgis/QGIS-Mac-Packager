@@ -5,7 +5,7 @@ set -o pipefail
 # 2018 Peter Petrik (zilolv at gmail dot com)
 # GNU General Public License 2 any later version
 
-TAG=final-3_4_5
+TAG=final-3_4_7
 QGISAPP="QGIS3.4.app"
 
 PWD=`pwd`

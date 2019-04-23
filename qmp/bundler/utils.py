@@ -2,8 +2,9 @@
 # GNU General Public License 2 any later version
 
 import os
-import shutil
 import subprocess
+
+from ..common import QGISBundlerError
 
 
 def files_differ(file1, file2):
@@ -14,7 +15,7 @@ def files_differ(file1, file2):
     return False
 
 
-def framework_name(framework):
+def framework_basename(framework):
     path = framework
     while path:
         path = os.path.abspath(path)
@@ -23,12 +24,12 @@ def framework_name(framework):
         path = os.path.join(path, os.pardir)
 
     if not path:
-        raise Exception("Wrong framework directory structure!" + framework)
+        raise QGISBundlerError("Wrong framework directory structure!" + framework)
 
-    frameworkName = os.path.basename(path)
-    frameworkName = frameworkName.replace(".framework", "")
+    framework_name = os.path.basename(path)
+    framework_name = framework_name.replace(".framework", "")
 
-    return frameworkName, path
+    return framework_name, path
 
 
 def is_text(fn):

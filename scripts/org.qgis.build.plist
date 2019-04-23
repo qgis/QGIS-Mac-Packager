@@ -7,7 +7,7 @@
 
         <key>ProgramArguments</key>
         <array>
-                <string>/Users/QGIS/qgis/run_cronjob.bash</string>
+                <string>/Users/admin/qgis/run_cronjob.bash</string>
         </array>
 
         <key>KeepAlive</key>
@@ -25,9 +25,9 @@
         </dict>
 
         <key>StandardErrorPath</key>
-        <string>/Users/QGIS/qgis/logs/qgis_launchd.err</string>
+        <string>/Users/admin/qgis/logs/qgis_launchd.err</string>
 
         <key>StandardOutPath</key>
-        <string>/Users/QGIS/qgis/logs/qgis_launchd.out</string>
+        <string>/Users/admin/qgis/logs/qgis_launchd.out</string>
 </dict>
 </plist>

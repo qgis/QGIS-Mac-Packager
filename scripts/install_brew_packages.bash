@@ -33,6 +33,7 @@ brew install openvpn
 brew install szip
 pip3 install GitPython
 pip3 install owslib
+pip3 install colorama
 brew install wget
 brew install bash-completion
 brew install gettext

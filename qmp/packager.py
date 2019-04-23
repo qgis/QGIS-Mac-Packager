@@ -7,7 +7,7 @@ import subprocess
 from .common import QGISPackageError
 
 
-def sign_this(path, identity, keychainFile):
+def sign_this(msg, path, identity, keychainFile):
     # TODO maybe codesing --deep option will be satisfactory
     # instead of signing one by one binary!
     try:
@@ -25,35 +25,32 @@ def sign_this(path, identity, keychainFile):
         args += [path]
 
         out = subprocess.check_output(args, stderr=subprocess.STDOUT, encoding='UTF-8')
-        print(out.strip())
+        msg.dev(out.strip())
     except subprocess.CalledProcessError as err:
         if "is already signed" not in str(err.output):
-            print(err.output)
-            raise
+            raise QGISPackageError(err.output)
         else:
-            print(path + " is already signed")
+            msg.dev(path + " is already signed")
 
 
-def sign_bundle_content(qgisApp, identity, keychain):
+def sign_bundle_content(msg, qgisApp, identity, keychain):
     # sign all binaries/libraries but QGIS
     for root, dirs, files in os.walk(qgisApp, topdown=False):
         # first sign all binaries
         for file in files:
-            filepath = os.path.join(root, file)
-            filename, file_extension = os.path.splitext(filepath)
-            if file_extension in [".dylib", ".so", ""] and os.access(filepath, os.X_OK):
-                if not filepath.endswith("/Contents/MacOS/QGIS"):
-                    sign_this(filepath, identity, keychain)
+            file_path = os.path.join(root, file)
+            filename, file_extension = os.path.splitext(file_path)
+            if file_extension in [".dylib", ".so", ""] and os.access(file_path, os.X_OK):
+                if not file_path.endswith("/Contents/MacOS/QGIS"):
+                    sign_this(msg, file_path, identity, keychain)
 
     # it is not necessary to sign each individual resource separately
-
     # now sign the directory
-    print("Sign the app dir")
-    sign_this(qgisApp + "/Contents/MacOS/QGIS", identity, keychain)
-    sign_this(qgisApp, identity, keychain)
+    sign_this(msg, qgisApp + "/Contents/MacOS/QGIS", identity, keychain)
+    sign_this(msg, qgisApp, identity, keychain)
 
 
-def verify_sign(path):
+def verify_sign(msg, path):
     args = ["codesign",
             "--deep-verify",
             "--verbose",
@@ -61,13 +58,12 @@ def verify_sign(path):
 
     try:
         out = subprocess.check_output(args, stderr=subprocess.STDOUT, encoding='UTF-8')
-        print(out.strip())
+        msg.info(out.strip())
     except subprocess.CalledProcessError as err:
-        print(err.output)
-        raise
+        raise QGISPackageError(err.output)
 
 
-def print_identities(keychain):
+def print_identities(msg, keychain):
     args = ["security",
             "find-identity",
             "-v", "-p",
@@ -78,10 +74,9 @@ def print_identities(keychain):
 
     try:
         out = subprocess.check_output(args, stderr=subprocess.STDOUT, encoding='UTF-8')
-        print(out.strip())
+        msg.dev(out.strip())
     except subprocess.CalledProcessError as err:
-        print(err.output)
-        raise
+        raise QGISPackageError(err.output)
 
 
 def package(msg, pa):
@@ -94,63 +89,60 @@ def package(msg, pa):
         raise QGISPackageError(pa.qgisApp + " does not exists")
 
     if pa.args.no_credentials:
-        signFile = None
-        keychainFile = None
+        sign_file = None
+        keychain_file = None
     else:
-        signFile = pa.host.sign_identity
-        keychainFile = pa.host.keychain
+        sign_file = pa.host.sign_identity
+        keychain_file = pa.host.keychain
 
     identity = None
-    if signFile:
-        with open(signFile, "r") as fh:
+    if sign_file:
+        with open(sign_file, "r") as fh:
             # parse token
             identity = fh.read().strip()
             if len(identity) != 40:
                 raise QGISPackageError("ERROR: Looks like your ID is not valid, should be 40 char long")
 
-    if keychainFile:
-        keychainFile = os.path.realpath(keychainFile)
-        print("Using keychain " + keychainFile)
-        if not os.path.exists(keychainFile):
-            raise QGISPackageError("missing file " + keychainFile)
+    if keychain_file:
+        keychain_file = os.path.realpath(keychain_file)
+        msg.dev("Using keychain " + keychain_file)
+        if not os.path.exists(keychain_file):
+            raise QGISPackageError("missing file " + keychain_file)
 
-    print("Print available identities")
-    print_identities(keychainFile)
+    msg.dev("Print available identities")
+    print_identities(msg, keychain_file)
 
+    msg.header("Signing the files " + pa.qgisApp)
     if identity:
-        print("Signing the bundle")
-        sign_bundle_content(pa.qgisApp, identity, keychainFile)
-        verify_sign(pa.qgisApp)
+        sign_bundle_content(msg, pa.qgisApp, identity, keychain_file)
+        verify_sign(msg, pa.qgisApp)
     else:
-        print("Signing skipped, no identity supplied")
+        msg.info("Signing skipped, no identity supplied")
 
-    print(100 * "*")
-    print("STEP: Create dmg image")
-    print(100 * "*")
-    dmgFile = pa.output.dmg
-    if os.path.exists(dmgFile):
-        print("Removing old dmg")
-        os.remove(dmgFile)
+    msg.header("Create dmg image")
+    dmg_file = pa.output.dmg
+    if os.path.exists(dmg_file):
+        msg.info("Removing old dmg")
+        os.remove(dmg_file)
 
     args = ["/usr/local/bin/dmgbuild",
             "-Dapp=" + pa.qgisApp,
             "-s", pa.package.resources + "/dmgsettings.py",
             pa.args.qgisapp_name,
-            dmgFile,
-            ]
+            dmg_file]
 
     try:
         out = subprocess.check_output(args, stderr=subprocess.STDOUT, encoding='UTF-8')
-        print(out)
+        msg.dev(out)
     except subprocess.CalledProcessError as err:
-        print(err.output)
-        raise
+        raise QGISPackageError(err.output)
 
+    msg.header("Signing the dmg " + dmg_file)
     if identity:
-        sign_this(dmgFile, identity, keychainFile)
-        verify_sign(pa.qgisApp)
+        sign_this(msg, dmg_file, identity, keychain_file)
+        verify_sign(msg, pa.qgisApp)
     else:
-        print("Signing skipped, no identity supplied")
+        msg.info("Signing skipped, no identity supplied")
 
-    fsize = subprocess.check_output(["du", "-h", dmgFile], stderr=subprocess.STDOUT, encoding='UTF-8')
-    print("ALL DONE\n" + fsize)
+    f_size = subprocess.check_output(["du", "-h", dmg_file], stderr=subprocess.STDOUT, encoding='UTF-8')
+    msg.info("Dmg created with size " + f_size)

@@ -54,6 +54,7 @@ if __name__ == "__main__":
     msg = Message(args.verbose)
     cp = CopyUtils(pa.output.root)
 
+    msg.chapter("build")
     if not args.skip_build:
         build(
             cp=cp,
@@ -63,20 +64,29 @@ if __name__ == "__main__":
             git_commit=args.git,
             qgis_repo="https://github.com/qgis/QGIS.git/"
         )
+    else:
+        msg.info("build skipped")
 
+    msg.chapter("bundle")
     if not args.skip_bundle:
         bundle(
             cp=cp,
             msg=msg,
             pa=pa
         )
+    else:
+        msg.info("bundle skipped")
 
+    msg.chapter("package")
     if not args.skip_package:
         package(
             msg=msg,
             pa=pa
         )
+    else:
+        msg.info("package (dmg) skipped")
 
+    msg.chapter("upload")
     if not args.skip_upload:
         upload(
             msg=msg,
@@ -84,3 +94,5 @@ if __name__ == "__main__":
             server="qgis-mac-packager-bot@qgis2.qgis.org",
             folder="/var/www/downloads/macos"
         )
+    else:
+        msg.info("upload skipped")

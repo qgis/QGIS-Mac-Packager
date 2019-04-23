@@ -1,12 +1,9 @@
 # 2018 Peter Petrik (zilolv at gmail dot com)
 # GNU General Public License 2 any later version
 
-import subprocess
 import os
 
-from .otool import is_omach_file, get_binary_dependencies
-from .utils import is_text, files_differ
-import re
+from .utils import is_text
 from ..common import QGISBundlerError
 
 
@@ -37,10 +34,10 @@ def _patch_file(pa, filepath, keyword, replace_from, replace_to):
             raise QGISBundlerError("Ups failed to add {} in info {}".format(keyword, filepath))
 
 
-def patch_files(pa, min_os):
+def patch_files(msg, pa, min_os):
     patch_info_plist(pa, min_os)
     patch_sqlite(pa)
-    patch_text_files(pa)
+    patch_text_files(msg, pa)
 
 
 def patch_info_plist(pa, min_os):
@@ -210,7 +207,7 @@ def patch_sqlite(pa):
                 )
 
 
-def patch_text_files(pa):
+def patch_text_files(msg, pa):
     # First patch GRASS7 shell script
     grass7file = pa.grass7Dir + "/bin/" + pa.version.grass
     toreplace = """
@@ -256,234 +253,9 @@ $GRASS_PYTHON XXX/Contents/Resources/grass7/bin/_grass76 $@
                             text = text.replace(key, value)
 
                     if text != orig_text:
-                        print("Patching text file " + filepath)
+                        msg.dev("Patching text file " + filepath)
                         with open(filepath, "w") as fh:
                             fh.write(text)
-                except Exception as e:
-                    # print("Failed to patch " + filepath )
+                except Exception:
+                    msg.warn("Failed to patch file " + filepath)
                     pass
-
-
-def append_recursively_site_packages(pa, cp, sourceDir, destDir):
-    for item in os.listdir(sourceDir):
-        s = os.path.join(sourceDir, item)
-        d = os.path.join(destDir, item)
-        # do not copy sip pyqt5, because link is also in global site-packages and pyqt5's Qt libraries are
-        # not copied
-        if os.path.exists(d) or (s == pa.host.sipCellar):
-            print("Skipped " + s)
-            continue
-        else:
-            print(" Copied " + s + " ~~~~> " + d)
-
-        if os.path.isdir(s):
-            # hard copy - no symlinks
-            cp.copytree(s, d, False)
-
-            if os.path.exists(d + "/.dylibs"):
-                print("Removing extra " + d + "/.dylibs")
-                cp.rmtree(d + "/.dylibs")
-        else:
-            # if it is link, copy also content of the dir of that link.
-            # this is because pth files can get other site-packages
-            # but we want it on one place
-            if os.path.islink(s):
-                dirname = os.path.realpath(s)
-                dirname = os.path.dirname(dirname)
-                print("packaging also site-package " + dirname)
-                append_recursively_site_packages(pa, cp, dirname, destDir)
-
-            # this can contain also site-packages with absolute path
-            if s.endswith(".pth"):
-                with open(s, 'r') as myfile:
-                    dirname = myfile.read().strip()
-                if os.path.isdir(dirname):
-                    print("packaging also site-package " + dirname)
-                    append_recursively_site_packages(pa, cp, dirname, destDir)
-
-            if not os.path.exists(d):
-                cp.copy(s, d)
-
-
-def clean_redundant_files(pa, cp):
-    extensionsToCheck = [".a", ".pyc", ".c", ".cpp", ".h", ".hpp", ".cmake", ".prl"]
-    dirsToCheck = ["/include", "/Headers", "/__pycache__", "/man/"]
-
-    # remove unneeded files/dirs
-    for root, dirnames, filenames in os.walk(pa.qgisApp):
-        for file in filenames:
-            fpath = os.path.join(root, file)
-            filename, file_extension = os.path.splitext(fpath)
-            if any(ext == file_extension for ext in extensionsToCheck):
-                print("Removing " + fpath)
-                cp.rm(fpath)
-
-        for dir in dirnames:
-            dpath = os.path.join(root, dir)
-            print(dpath)
-            if any(ext in dpath for ext in dirsToCheck):
-                print("Removing " + dpath)
-                cp.rm(dpath)
-
-    # remove broken links and empty dirs
-    for root, dirnames, filenames in os.walk(pa.qgisApp):
-        for file in filenames:
-            fpath = os.path.join(root, file)
-            real = os.path.realpath(fpath)
-            if not os.path.exists(real):
-                os.unlink(fpath)
-
-
-def check_deps(pa, filepath, executable_path):
-    binaryDependencies = get_binary_dependencies(pa, filepath)
-    all_binaries = binaryDependencies.libs + binaryDependencies.frameworks
-
-    for bin in all_binaries:
-        if bin:
-            binpath = bin.replace("@executable_path", executable_path)
-            binpath = os.path.realpath(binpath)
-
-            if "@" in binpath:
-                raise QGISBundlerError("Library/Framework " + bin + " with rpath or loader path for " + filepath)
-
-            binpath = os.path.realpath(binpath)
-            if not os.path.exists(binpath):
-                raise QGISBundlerError("Library/Framework " + bin + " not exist for " + filepath)
-
-            if pa.qgisApp not in binpath:
-                raise QGISBundlerError("Library/Framework " + bin + " is not in bundle dir for " + filepath)
-
-
-def test_full_tree_consistency(pa):
-    print("Test qgis --help works")
-    try:
-        output = subprocess.check_output([pa.qgisExe, "--help"], stderr=subprocess.STDOUT, encoding='UTF-8')
-    except subprocess.CalledProcessError as err:
-        # for some reason it returns exit 1 even when it writes help
-        output = err.output
-    if output:
-        print(output.split("\n")[0])
-    if "QGIS" not in output:
-        raise QGISBundlerError("wrong QGIS.app installation")
-
-    print("Test that we have just one-of-kind of library type")
-    errors = []
-    exceptions = pa.version.exceptions
-    unique_libs = {}
-    for root, dirs, files in os.walk(pa.qgisApp):
-        for file in files:
-            filepath = os.path.join(root, file)
-            if not os.path.islink(filepath):
-                filename, file_extension = os.path.splitext(filepath)
-
-                if not (file_extension in [".dylib", ".so"] and is_omach_file(filepath)):
-                    continue
-
-                basename = os.path.basename(filename)
-
-                skip = False
-                for e in exceptions:
-                    if filepath.endswith(e):
-                        skip = True
-                if skip:
-                    continue
-
-                basename = basename.replace("." + pa.version.cpython, "")
-                basename = re.sub(r'(\-\d+)?(\.\d+)?(\.\d+)?(\.\d+)?(\.\d+)$', '', basename)  # e.g. 3.0.0.4 or 3.0
-                print('Checking duplicity of library ' + basename)
-                if basename in unique_libs:
-                    if files_differ(filepath, unique_libs[basename]):
-                        # make sure there is no link in libs
-                        if os.path.exists(pa.libDir + "/" + os.path.basename(filepath)):
-                            msg = "Link exists for library " + filepath
-                            msg += " is bundled multiple times, first time in " + unique_libs[basename]
-                            errors += [msg]
-                    else:
-                        msg = "Library " + filepath
-                        msg += " is bundled multiple times, first time in " + unique_libs[basename]
-                        errors += [msg]
-
-                unique_libs[basename] = filepath
-
-    if errors:
-        print("\n".join(errors))
-        raise QGISBundlerError("Duplicate libraries found!")
-
-    print("Test that all libraries have correct link and and bundled")
-    for root, dirs, files in os.walk(pa.qgisApp):
-        for file in files:
-            filepath = os.path.join(root, file)
-            filename, file_extension = os.path.splitext(filepath)
-            if file_extension in [".dylib", ".so"] and is_omach_file(filepath):
-                print('Checking compactness of library ' + filepath)
-                check_deps(pa, filepath, os.path.realpath(pa.macosDir))
-            elif not file_extension and is_omach_file(filepath):  # no extension == binaries
-                if os.access(filepath, os.X_OK) and ("/Frameworks/" not in filepath):
-                    print('Checking compactness of binaries ' + filepath)
-                    check_deps(pa, filepath, os.path.dirname(filepath))
-                else:
-                    print('Checking compactness of library ' + filepath)
-                    check_deps(pa, filepath, os.path.realpath(pa.macosDir))
-
-    print("Test that all links are pointing to the destination inside the bundle")
-    for root, dirs, files in os.walk(pa.qgisApp):
-        for file in files:
-            filepath = os.path.join(root, file)
-            filepath = os.path.realpath(filepath)
-            if not os.path.exists(filepath):
-                raise QGISBundlerError(" File " + root + "/" + file + " does not exist")
-
-            if pa.qgisApp not in filepath:
-                raise QGISBundlerError(" File " + root + "/" + file + " is not in bundle dir")
-
-    print("Test GDAL installation")
-    if not os.path.exists(pa.binDir + "/gdal_merge.py"):
-        raise QGISBundlerError("gdal_merge.py does not exist")
-
-    gdalinfo = pa.binDir + "/gdalinfo"
-    expected_formats = ["GRIB", "GPKG", "GTiff"]
-    expected_formats += ["netCDF"]
-
-    try:
-        output = subprocess.check_output([gdalinfo, "--formats"], stderr=subprocess.STDOUT, encoding='UTF-8')
-    except subprocess.CalledProcessError as err:
-        print(err.output)
-        raise
-
-    for f in expected_formats:
-        if f not in output:
-            raise QGISBundlerError("format {} missing in gdalinfo --formats".format(f))
-
-    print("Test that all text files does not contain references to homebrew /usr/local")
-    errors = []
-    # TODO wondering what we really need from these files in the bundle
-    exceptions = [
-        "-config",  # this file is to show the compilation flags of libraries
-        "sitecustomize.py",  # this sets up python if used in homebrew context, so we do not need it here
-        "INSTALL",
-        "METADATA",
-        ".rst",
-        "SagaUtils.py",  # saga already found by prefixPath + "bin"
-        ".txt",
-        ".html",
-        ".pc",  # pkgconfig
-        "Makefile",
-        "Setup",
-
-    ]
-    for root, dirs, files in os.walk(pa.qgisApp):
-        for file in files:
-            filepath = os.path.join(root, file)
-            if any(filepath.endswith(ext) for ext in exceptions):
-                continue
-
-            if is_text(filepath):
-                try:
-                    with open(filepath, "r", encoding='utf-8') as fh:
-                        if "/usr/local" in fh.read():
-                            errors += [filepath]
-                except UnicodeDecodeError:
-                    pass
-    if errors:
-        print("WARNING! reference to /usr/local")
-        print("{}".format("/n".join(errors)))

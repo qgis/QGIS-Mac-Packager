@@ -5,12 +5,16 @@ import os
 import shutil
 import subprocess
 
+from .common import QGISMacPackagerError
 
-# to make sure we
-# NEVER NEVER NEVER
-# deletes something outside
-# the build directory
+
 class CopyUtils:
+    """
+        to make sure we
+        NEVER NEVER NEVER
+        delete something outside
+        the build directory
+    """
     def __init__(self, outdir, verbose=True):
         self.outdir = outdir
         self.verbose = verbose
@@ -19,7 +23,7 @@ class CopyUtils:
         if self.outdir not in name:
             realpath = os.path.realpath(name)
             if self.outdir not in realpath:
-                raise Exception("Trying to do file operation outside bundle directory! " + name)
+                raise QGISMacPackagerError("Trying to do file operation outside bundle directory! " + name)
 
     def chmodW(self, path):
         self._is_in_out_dir(path)
@@ -59,8 +63,7 @@ class CopyUtils:
         try:
             os.symlink(src, dest)
         except OSError:
-            print(dest + " -> " + src)
-            raise
+            raise QGISMacPackagerError(dest + " -> " + src)
 
     def unlink(self, name):
         self._is_in_out_dir(name)
