@@ -1,15 +1,15 @@
 [![Build Status](https://travis-ci.org/qgis/QGIS-Mac-Packager.svg?branch=master)](https://travis-ci.org/qgis/QGIS-Mac-Packager)
-[![Build Status](https://qgis.org/downloads/macos/qgis-macos-pr.latest.png)](https://qgis.org/downloads/macos/qgis-macos-pr.latest.log)
-[![Build Status](https://qgis.org/downloads/macos/qgis-macos-ltr.latest.png)](https://qgis.org/downloads/macos/qgis-macos-ltr.latest.log)
-[![Build Status](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.png)](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.log)
+[![Build Status](https://qgis.org/downloads/macos/qgis-macos-pr.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-pr.latest.log)
+[![Build Status](https://qgis.org/downloads/macos/qgis-macos-ltr.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-ltr.latest.log)
+[![Build Status](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.log)
 
 # Latest Passed Builds
 
 | PR  | LTR   | Nightly  |
 |:---:|:-----:|:--------:|
-| [DMG](https://qgis.org/downloads/macos/qgis-macos-pr.dmg) | [DMG](https://qgis.org/downloads/macos/qgis-macos-ltr.dmg) | [DMG](https://qgis.org/downloads/macos/qgis-macos-nightly.dmg)  |
-| [MD5](https://qgis.org/downloads/macos/qgis-macos-pr.md5sum) | [MD5](https://qgis.org/downloads/macos/qgis-macos-ltr.md5sum) | [MD5](https://qgis.org/downloads/macos/qgis-macos-nightly.md5sum) |
-| [DEPS](https://qgis.org/downloads/macos/qgis-macos-pr.deps) | [DEPS](https://qgis.org/downloads/macos/qgis-macos-ltr.deps)| [DEPS](https://qgis.org/downloads/macos/qgis-macos-nightly.deps) |
+| [DMG](https://qgis.org/downloads/macos/qgis-macos-pr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-ltr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-nightly.dmg?raw=true)  |
+| [MD5](https://qgis.org/downloads/macos/qgis-macos-pr.md5sum?raw=true) | [MD5](https://qgis.org/downloads/macos/qgis-macos-ltr.md5sum?raw=true) | [MD5](https://qgis.org/downloads/macos/qgis-macos-nightly.md5sum?raw=true) |
+| [DEPS](https://qgis.org/downloads/macos/qgis-macos-pr.deps?raw=true) | [DEPS](https://qgis.org/downloads/macos/qgis-macos-ltr.deps?raw=true)| [DEPS](https://qgis.org/downloads/macos/qgis-macos-nightly.deps?raw=true) |
 
 
 # QGIS Mac Packager
