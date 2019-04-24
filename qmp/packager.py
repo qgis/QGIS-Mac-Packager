@@ -144,5 +144,8 @@ def package(msg, pa):
     else:
         msg.info("Signing skipped, no identity supplied")
 
+    msg.header("Create checksum")
+    os.system("md5 " + dmg_file + " > " + dmg_file + ".md5sum")
+
     f_size = subprocess.check_output(["du", "-h", dmg_file], stderr=subprocess.STDOUT, encoding='UTF-8')
     msg.info("Dmg created with size " + f_size)

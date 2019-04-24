@@ -4,7 +4,6 @@
 from .otool import *
 from .install_name_tool import *
 from .utils import *
-from .deps import get_computer_info
 from .copy_files_to_bundle import copy_files_to_bundle
 from .analyze_external_deps import analyze_external_deps
 from .copy_external_deps_to_bundle import copy_extenal_deps_to_bundle
@@ -15,10 +14,6 @@ from .test_full_tree_consistency import test_full_tree_consistency
 
 
 def bundle(cp, msg, pa):
-    msg.header("Get computer info")
-    computer_info = get_computer_info(msg)
-    msg.info(computer_info)
-
     msg.header("Copy QGIS and independent folders to build folder")
     copy_files_to_bundle(cp, msg, pa)
 

@@ -6,7 +6,10 @@ import platform
 import os
 import time
 
-from ..common import QGISBundlerError
+
+class QGISDepsError(Exception):
+    pass
+
 
 THIS_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -20,7 +23,7 @@ def brew_prefix():
     output = subprocess.check_output(["brew", "--prefix"], encoding='UTF-8')
     homebrew_dir = output.strip()
     if not os.path.isdir(homebrew_dir):
-        raise QGISBundlerError("Missing homebrew folder " + homebrew_dir)
+        raise QGISDepsError("Missing homebrew folder " + homebrew_dir)
     return homebrew_dir
 
 
@@ -50,11 +53,11 @@ def homebrew_libs():
         bottle_dir = os.path.join(cellar_dir, bottle)
         versions = next(os.walk(bottle_dir))[1]
         if len(versions) != 1:
-            raise QGISBundlerError("Multiple versions installed for " + bottle_dir)
+            raise QGISDepsError("Multiple versions installed for " + bottle_dir)
 
         for e in force_error:
             if bottle.endswith(e):
-                raise QGISBundlerError(bottle + " present but it must not be installed on system")
+                raise QGISDepsError(bottle + " present but it must not be installed on system")
 
         excluded = False
         for e in exclude:
@@ -69,26 +72,25 @@ def homebrew_libs():
     return "\n".join(sorted(libs))
 
 
-def check_py_version(msg, name):
+def check_py_version(name):
     cmd = "import {}; print({}.__version__)".format(name, name)
     try:
         output = subprocess.check_output(["python3", "-c", cmd], stderr=subprocess.PIPE, encoding='UTF-8')
         return output.strip()
-    except subprocess.CalledProcessError as err:
-        msg.warn("Unable to detect version for " + name)
+    except subprocess.CalledProcessError:
         return ""
 
 
 def projdatumgrid():
-    cmd = os.path.join(THIS_DIR, os.path.pardir, os.path.pardir, "scripts", "fetch_proj-datumgrid.bash")
+    cmd = os.path.join(THIS_DIR, "fetch_proj-datumgrid.bash")
     try:
         output = subprocess.check_output([cmd, "-version"], stderr=subprocess.PIPE, encoding='UTF-8')
         return output.strip()
     except subprocess.CalledProcessError:
-        raise QGISBundlerError("Unable to detect version for proj-datumgrid from {}".format(cmd))
+        raise QGISDepsError("Unable to detect version for proj-datumgrid from {}".format(cmd))
 
 
-def python_libs(msg):
+def python_libs():
     exclude = ["dropbox", "__pycache__"]
     libs = {}
     homebrew_dir = brew_prefix()
@@ -131,7 +133,7 @@ def python_libs(msg):
         else:
             if os.path.isdir(pkg_dir):
                 if pkg not in libs:
-                    libs[pkg] = check_py_version(msg, pkg)
+                    libs[pkg] = check_py_version(pkg)
 
     ret = []
     for lk in libs.keys():
@@ -140,7 +142,7 @@ def python_libs(msg):
     return "\n".join(sorted(ret))
 
 
-def get_computer_info(msg):
+def get_computer_info():
     mac_ver = platform.mac_ver()[0]
 
     ret = ""
@@ -151,7 +153,11 @@ def get_computer_info(msg):
     ret += "Used Proj Datum Grids:\n\n"
     ret += projdatumgrid() + "\n\n"
     ret += "Used Python3 modules\n\n"
-    ret += python_libs(msg) + "\n\n"
+    ret += python_libs() + "\n\n"
     ret += "Updated: " + timestamp()
 
     return ret
+
+
+if __name__ == "__main__":
+    print(get_computer_info())

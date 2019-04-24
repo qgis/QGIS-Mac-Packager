@@ -7,14 +7,13 @@ import os
 from qmp.builder import build
 from qmp.bundler import bundle
 from qmp.packager import package
-from qmp.uploader import upload
 
 from qmp.paths import Paths
 from qmp.common import Message
 from qmp.copy_utils import CopyUtils
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Build, Package and Upload QGIS Application')
+    parser = argparse.ArgumentParser(description='Build, Package and Sign QGIS Application')
     parser.add_argument('--output_directory',
                         required=True,
                         help='output directory for this build (will contain qgis git repo, build tree, '
@@ -39,13 +38,11 @@ if __name__ == "__main__":
                         action='store_true',
                         help="skip package(dmg) phase (development) ",
                         default=False)
-    parser.add_argument('-supload', '--skip_upload', action='store_true', help="skip upload phase (development) ",
-                        default=False)
     parser.add_argument('-v', '--verbose', action='count', default=1)
     parser.add_argument('--clean', action='store_true', help="Clean build", default=False)
     parser.add_argument('--no-credentials',
                         action='store_true',
-                        help="If you want to skip signing, uploading to server (development mode)",
+                        help="If you want to skip signing",
                         default=False)
 
     args = parser.parse_args()
@@ -85,14 +82,3 @@ if __name__ == "__main__":
         )
     else:
         msg.info("package (dmg) skipped")
-
-    msg.chapter("upload")
-    if not args.skip_upload:
-        upload(
-            msg=msg,
-            pa=pa,
-            server="qgis-mac-packager-bot@qgis2.qgis.org",
-            folder="/var/www/downloads/macos"
-        )
-    else:
-        msg.info("upload skipped")

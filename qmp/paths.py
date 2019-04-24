@@ -66,7 +66,6 @@ class Paths:
         self.package.resources = os.path.join(self.package.dir, os.pardir, "resources")
 
         # destinations on host OS
-        self.host.ssh_private_key = os.path.join(self.package.dir, os.pardir, os.pardir, "ssh", "id_rsa")
         self.host.sign_identity = os.path.join(self.package.dir, os.pardir, os.pardir, "sign_identity.txt")
         self.host.keychain = os.path.join(self.package.dir, os.pardir, os.pardir, "qgis.keychain-db")
         self.host.sipCellar = "/usr/local/Cellar/osgeo-sip/" + self.version.sip + \
@@ -241,7 +240,6 @@ class Paths:
         # check credentials
         if not self.args.no_credentials:
             expected_paths += [
-                self.host.ssh_private_key,
                 self.host.sign_identity,
                 self.host.keychain
             ]
