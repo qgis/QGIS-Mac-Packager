@@ -1,7 +1,10 @@
 [![Build Status](https://travis-ci.org/qgis/QGIS-Mac-Packager.svg?branch=master)](https://travis-ci.org/qgis/QGIS-Mac-Packager)
-[![Build Status](https://qgis.org/downloads/macos/qgis-macos-pr.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-pr.latest.log)
-[![Build Status](https://qgis.org/downloads/macos/qgis-macos-ltr.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-ltr.latest.log)
-[![Build Status](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.log)
+
+[![PR Status](https://qgis.org/downloads/macos/qgis-macos-pr.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-pr.latest.log)
+
+[![LTR Status](https://qgis.org/downloads/macos/qgis-macos-ltr.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-ltr.latest.log)
+
+[![NIGHTLY Status](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.log)
 
 # Latest Passed Builds
 
