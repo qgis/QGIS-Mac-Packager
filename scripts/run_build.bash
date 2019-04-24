@@ -57,10 +57,8 @@ else
     python3 $DIR/image_creator.py --text "$RELEASE-$TAG" --out $STATUS_PNG
 fi
 
-MD5FILE=$PACKAGE.md5sum
-
 if (( $UPLOAD > 0 )); then
-    $DIR/upload_to_qgis2.bash $RELEASE $LOG $PACKAGE $DEPS $STATUS_PNG $MD5FILE
+    $DIR/upload_to_qgis2.bash $RELEASE $LOG $BUILD_DIR/$PACKAGE $DEPS $STATUS_PNG $BUILD_DIR/$PACKAGE.md5sum
 fi
 
 echo "All done"
