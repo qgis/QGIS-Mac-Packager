@@ -37,6 +37,8 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - [gatekeeper](https://stackoverflow.com/a/29221163/2838364): `codesign --verbose --deep-verify /Applications/QGIS.app/` 
 - loaded dylibs: `ps -A | grep -i qgis; vmmap <pid>`
 - signature: `codesign -d -vvvv <file>` 
+- accept by gatekeeper: `spctl -a -t exec -vv <path>.dmg`
+- signature: `codesign --verify --deep --strict --verbose=2`
 
 # Server Setup 
 
@@ -57,16 +59,13 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - now clone this repository
 - for upload, add you ssh keys to `qgis/ssh/` and secure them
 - copy `run_cronjob` one folder above
-- to Code Signing (Apple cert)
+- to Code Signing (you need Apple certificate to be "Indentified developer")
     - You need application certificate from https://developer.apple.com/account
     - Generate production/development signing identify
     - Get cer file and scp to the server
     - Double click on cer file and install it on the server
     - On Machine where you created request, export private key and copy and install on server too.
-- to Code Signing (other p12 cert)
     - install p12 cert to `login` identity
-    - open keychain access, find certificate and install all required certificate authorities crts (certificate should show it is valid)
-- To both code signing methods:
     - `security find-identity -v` to find existing identities 
     - create `sing_identity.txt` with the ID of your identity
     - allow to use it in cronjob (https://stackoverflow.com/a/20324331/2838364)
