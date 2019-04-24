@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 PWD=`pwd`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
@@ -14,12 +12,11 @@ echo "PyCodeStyle"
 python3 -m pycodestyle . --max-line-length=120
 
 echo "Usage of print"
-
-PRINT="grep -rni print\( . --include=*.py --exclude ./qmp/common.py --exclude ./scripts/deps.py"
-eval $PRINT
-NLINES=`eval $PRINT | wc -l`
-if [ $NLINES -gt 0 ]; then
+PRINT=`grep -rni print\( . --include=*.py --exclude ./qmp/common.py --exclude ./scripts/deps.py`
+echo $PRINT
+if [ -n "$PRINT" ]; then
     exit 1
 fi
 
 cd $PWD
+exit 0

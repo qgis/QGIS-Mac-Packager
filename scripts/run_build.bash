@@ -51,10 +51,10 @@ python3 qgis-mac-packager.py \
 exit_status=$?
 if [ $exit_status -eq 0 ]; then
     echo "SUCCESS" | tee -a $LOG
-    python3 $DIR/image_creator.py --text "$RELEASE-$TAG" --out $STATUS_PNG --success
+    python3 $DIR/image_creator.py --text "$RELEASE-$GIT" --out $STATUS_PNG --success
 else
     echo "FAIL" | tee -a $LOG
-    python3 $DIR/image_creator.py --text "$RELEASE-$TAG" --out $STATUS_PNG
+    python3 $DIR/image_creator.py --text "$RELEASE-$GIT" --out $STATUS_PNG
 fi
 
 if (( $UPLOAD > 0 )); then
