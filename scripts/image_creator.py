@@ -6,8 +6,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 def create(text, bg_color, fg_color, file_name):
-    W = 140
-    H = 30
+    W = 150
+    H = 20
     image = Image.new("RGBA", (W, H), color=bg_color)
     draw = ImageDraw.Draw(image)
 
