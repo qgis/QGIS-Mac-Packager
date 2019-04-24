@@ -46,7 +46,7 @@ python3 qgis-mac-packager.py \
     --qgisapp_name ${QGISAPP} \
     --dmg_name $PACKAGE \
     -vv \
-2>&1 | tee $LOG
+2>&1 | tee -a $LOG
 
 exit_status=$?
 if [ $exit_status -eq 0 ]; then
