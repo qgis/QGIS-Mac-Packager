@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -o pipefail
 
 # 2018 Peter Petrik (zilolv at gmail dot com)
 # GNU General Public License 2 any later version
