@@ -35,10 +35,11 @@ def _update_git(msg, pa, git_commit, qgis_repo):
 
     repo = git.Repo(pa.output.qgis)
     g = git.Git(pa.output.qgis)
+    o = repo.remotes.origin
+    o.fetch()
     g.checkout(git_commit)
     try:
         # pull does not work when we have tag, only on branch (e.g. master)
-        o = repo.remotes.origin
         o.pull()
     except git.exc.GitCommandError:
         msg.dev("Failed to pull, probably you are on tag and not branch...")
