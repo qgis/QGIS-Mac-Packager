@@ -22,11 +22,11 @@ class Paths:
         self.version = PathGroup()  # versions of the libraries
 
         self.version.grass = "grass76"
-        self.version.grassBrew = "7.6.1_3"
+        self.version.grassBrew = "7.6.1_5"
         self.version.grassFull = "grass-7.6.1"
         self.version.mod_spatialite = "mod_spatialite.7.dylib"
         self.version.python = "python3.7"
-        self.version.saga = "2.3.2_3"
+        self.version.saga = "2.3.2_4"
         self.version.projLib = "libproj.15.dylib"  # proj.13 is proj4, proj.15 is proj6
         self.version.libwx = "3.0"
         self.version.libwxFull = "3.0.0.4.0"
@@ -200,7 +200,7 @@ class Paths:
             self.sagaHost + "/bin",
             self.grass7Host + "/bin",
             self.host.grass7Cellar + "/libexec/bin/" + self.version.grass,
-            self.projHost + "/proj/proj.db",
+            self.projHost + "/proj/proj_def.dat",
             self.geotiffHost + "/coordinate_system.csv",
             self.projDatumGridsHost,
             self.gdalPluginsHost,
