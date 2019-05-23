@@ -178,7 +178,7 @@ pip3 install cycler
 pip3 install decorator
 pip3 install exifread
 pip3 install future
-pip3 install gdal
+pip3 install GDAL==2.4.0
 pip3 install h5py
 pip3 install httplib2
 pip3 install idna
