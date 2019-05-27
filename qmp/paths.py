@@ -33,7 +33,7 @@ class Paths:
         self.version.libpq = "5.10"
         self.version.libpqFull = "5"
         self.version.cpython = "cpython-37m-darwin"
-        self.version.sip = "4.19.15"
+        self.version.sip = "4.19.17_1"
         self.version.minos = "10.11.0"  # MACOS minimum supported OS
 
         # jpeg.9 is /usr/local/Cellar/jpeg/9c/lib/libjpeg.9.dylib
@@ -191,6 +191,7 @@ class Paths:
         # check host paths exist
         expected_paths = [
             self.host.libdir,
+            self.host.sipCellar,
             self.package.resources,
             self.host.pyqt,
             self.host.pyqtPluginFile,
