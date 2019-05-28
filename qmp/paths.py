@@ -27,7 +27,7 @@ class Paths:
         self.version.mod_spatialite = "mod_spatialite.7.dylib"
         self.version.python = "python3.7"
         self.version.saga = "2.3.2_4"
-        self.version.projLib = "libproj.15.dylib"  # proj.13 is proj4, proj.15 is proj6
+        self.version.projLib = "libproj.13.dylib"  # proj.13 is proj4, proj.15 is proj6
         self.version.libwx = "3.0"
         self.version.libwxFull = "3.0.0.4.0"
         self.version.libpq = "5.10"
@@ -40,24 +40,16 @@ class Paths:
         # required by others
         # jpeg.8 is /usr/local/Cellar/jpeg-turbo/2.0.0/lib/libjpeg.8.dylib
         # required by /osgeo4mac/osgeo-qt-webkit
-        # hdf5
-        # /usr/local/Cellar//hdf5/1.10.4/lib/libhdf5.103.dylib
-        # required by others
-        # /usr/local/lib/python3.7//site-packages/h5py/.dylibs/libhdf5.101.dylib
-        # required by h5py
         # QOpenGLFunctions
         # 2.0 and 2.1 already in /usr/local/Cellar/osgeo-pyqt/5.10.1_1/lib/python3.7/site-packages/osgeo-pyqt/
         # PQ: used by saga
         # libz and libopenjp2 : PIL (pillow) dep
-        # proj.13 is proj5, proj.15 is proj6: SAGA still uses proj5.2
         self.version.exceptions = [
             "_QOpenGLFunctions_2_0.so", "_QOpenGLFunctions_2_1.so",
-            "libhdf5.101.dylib", "libhdf5.103.dylib",
             "libjpeg.8.dylib", "libjpeg.9.dylib",
             "libpq.5.10.dylib", "libpq.5.11.dylib",
             "libopenjp2.2.1.0.dylib", "libopenjp2.7.dylib",
             "libz.1.dylib", "libz.1.2.11.dylib",
-            "libproj.15.dylib", "libproj.13.dylib"
             "libicudata.63.dylib", "libicudata.63.1.dylib"
         ]
 

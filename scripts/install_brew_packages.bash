@@ -145,12 +145,18 @@ brew install osgeo-matplotlib
 brew link --overwrite numpy
 
 # python modules
+# see https://github.com/qgis/QGIS-Mac-Packager/issues/7
+pip3 install --no-binary=h5py h5py
+pip3 install --no-binary=pyproj pyproj==1.9.6
+pip3 install --no-binary=shapely shapely
+pip3 install --no-binary=GDAL GDAL==2.4.0
+
+# python modules WITHOUT binaries!
 pip3 install certifi
 pip3 install chardet
 pip3 install idna
 pip3 install OWSLib
 pip3 install cython
-pip3 install pyproj
 pip3 install python-dateutil
 pip3 install pytz
 pip3 install requests
@@ -178,8 +184,6 @@ pip3 install cycler
 pip3 install decorator
 pip3 install exifread
 pip3 install future
-pip3 install GDAL==2.4.0
-pip3 install h5py
 pip3 install httplib2
 pip3 install idna
 pip3 install ipython-genutils
@@ -212,7 +216,6 @@ pip3 install requests
 pip3 install retrying
 pip3 install scipy
 pip3 install setuptools
-pip3 install shapely
 pip3 install simplejson
 pip3 install six
 pip3 install test
