@@ -6,7 +6,7 @@ set -e
 # GNU General Public License 2 any later version
 
 TAG=master
-QGISAPP="QGIS3.7.app"
+QGISAPP="QGIS3.9.app"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 BD=$DIR/../../builds/nightly
 
