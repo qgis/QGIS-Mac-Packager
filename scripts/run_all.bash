@@ -6,6 +6,8 @@ set -e
 # GNU General Public License 2 any later version
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-$DIR/run_ltr.bash
-$DIR/run_pr.bash
-$DIR/run_nightly.bash
+for i in ltr pr nightly; do
+	if ! $DIR/run_pkg.bash $i; then
+		echo "BUILDING $i FAILED [$?]"
+	fi
+done

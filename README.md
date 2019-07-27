@@ -82,7 +82,7 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
   logs/
   ssh/
 ```
-- Run `run_*.bash` to build nightly/ltr/pr releases
+- Run `run_pkg.bash` with nightly/ltr/pr to build releases/nightlies (detects the latest version)
 - Nightly releases should be set as launchd once per day (use tabs!)
 ``` 
 cp scripts/org.qgis.build.plist ~/Library/LaunchAgents/
@@ -96,9 +96,3 @@ launchctl load ~/Library/LaunchAgents/org.qgis.build.plist
 - remove homebrew (`/usr/local/*`)
 - reinstall homebrew packages
 - update version & run `scripts/fetch_proj-datumgrid.bash`
-
-# How to release new versions
-
-- remove all build folders 
-- update TAG in `scripts/run_ltr.bash`, `scripts/run_pr.bash`
-- run scripts 

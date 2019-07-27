@@ -20,11 +20,11 @@ touch $LOG
 
 echo "clean the build directories" >> $LOG 2>&1
 # remove all dmg files older than X days
-find $BD/*/*.dmg -mtime +5 -exec rm {} \;
+find $BD/*/*.dmg -mtime +5 -delete
 
 echo "clean the log directories" >> $LOG 2>&1
 # remove all files older than 60 days
-find $LD/* -mtime +60 -exec rm {} \;
+find $LD/* -mtime +60 -delete
 
 echo "Check GIT repo" >> $LOG 2>&1
 cd $DIR/QGIS-Mac-Packager
@@ -39,14 +39,18 @@ else
     git rebase origin/master >> $LOG 2>&1
 fi
 
-echo "build NIGHTLY" >> $LOG 2>&1
-$SD/run_nightly.bash >> $LOG 2>&1
-$exit_status=$?
+failed=
+for i in nightly pr ltr; do
+	echo "build ${i^^}" >> $LOG 2>&1
+	if $SD/run_pkg.bash $i >> $LOG 2>&1; then
+		echo "SUCCESS ${i^^}" >> $LOG 2>&1
+	else
+		failed="$failed $i"
+		echo "FAIL ${i^^}" >> $LOG 2>&1
+	fi
+done
 
-if [ $exit_status -eq 0 ]; then
-    echo "SUCCESS" >> $LOG 2>&1
-else
-    echo "FAIL" >> $LOG 2>&1
-    echo "Your nighly QGIS MacOS Build failed"
+if [ -n "$failed" ]; then
+	echo "Your QGIS MacOS Build failed:$failed"
+	exit 1
 fi
-exit $exit_status
