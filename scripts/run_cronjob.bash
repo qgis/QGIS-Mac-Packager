@@ -2,6 +2,8 @@
 
 set -o pipefail
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+cd $DIR/../..
+DIR=$PWD
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 BD=$DIR/builds
 LD=$DIR/logs
