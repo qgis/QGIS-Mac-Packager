@@ -55,6 +55,7 @@ brew install libiconv
 brew install openssl
 brew install poppler
 brew install gnu-sed
+brew install coreutils
 
 # https://github.com/al45tair/dmgbuild/issues/12
 brew install python@2

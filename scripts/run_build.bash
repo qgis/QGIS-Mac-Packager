@@ -58,7 +58,7 @@ else
 fi
 
 if (( $UPLOAD > 0 )); then
-    $DIR/upload_to_qgis2.bash $RELEASE $LOG $BUILD_DIR/$PACKAGE $DEPS $STATUS_PNG $BUILD_DIR/$PACKAGE.md5sum
+    $DIR/upload_to_qgis2.bash $RELEASE $LOG $BUILD_DIR/$PACKAGE $DEPS $STATUS_PNG $BUILD_DIR/$PACKAGE.sha256sum
 fi
 
 echo "All done"

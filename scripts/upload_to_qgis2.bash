@@ -9,7 +9,7 @@ PWD=`pwd`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 if (( $# != 6 )); then
-    echo "upload_to_qgis2 release_name log dmg deps status_png md5sum"
+    echo "upload_to_qgis2 release_name log dmg deps status_png sha256sum"
     exit 1
 fi
 
@@ -43,7 +43,7 @@ ssh -o LogLevel=Error -i $KEY $SERVER "mkdir -p $ROOT"
 if [ -f $DMG ]; then
     # success
     process_file $DMG dmg
-    process_file $MD5SUM md5sum
+    process_file $MD5SUM sha256sum
     process_file $DEPS deps
 fi
 
