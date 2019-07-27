@@ -81,7 +81,7 @@ cd ..
 QGISAPP="QGIS${MAJOR}.${MINOR}.app"
 BD=$DIR/../../builds/${PKG}
 
-echo "BUILDING ${PKG^^}"
+echo "BUILDING ${PKG}"
 $DIR/run_build.bash \
   $BD \
   ${TAG} \

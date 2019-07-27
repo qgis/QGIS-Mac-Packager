@@ -41,12 +41,12 @@ fi
 
 failed=
 for i in nightly pr ltr; do
-	echo "build ${i^^}" >> $LOG 2>&1
+	echo "build $i" >> $LOG 2>&1
 	if $SD/run_pkg.bash $i >> $LOG 2>&1; then
-		echo "SUCCESS ${i^^}" >> $LOG 2>&1
+		echo "SUCCESS $i" >> $LOG 2>&1
 	else
 		failed="$failed $i"
-		echo "FAIL ${i^^}" >> $LOG 2>&1
+		echo "FAIL $i" >> $LOG 2>&1
 	fi
 done
 
