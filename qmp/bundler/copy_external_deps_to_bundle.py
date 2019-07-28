@@ -130,7 +130,7 @@ def copy_extenal_deps_to_bundle(cp, msg, pa, libs, frameworks):
     for lib, existing_link_realpath in workarounds.items():
         if not (os.path.exists(lib) and os.path.exists(existing_link_realpath)):
             str = "Workaround " + lib + "->" + existing_link_realpath
-            str += " is no longer valid, maybe you upaded packages?"
+            str += " is no longer valid, maybe you updated packages?"
             msg.warn(str)
             continue
 

@@ -9,8 +9,9 @@ PWD=`pwd`
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-if (( $# < 5 )); then
-    echo "run_build build_dir git_tag release_name qgisapp_name [no-upload]"
+if (( $# < 4 )); then
+    echo "usage: $0 build_dir git_tag release_name qgisapp_name [no-upload]"
+    exit 1
 fi
 
 BUILD_DIR=$1
@@ -39,20 +40,20 @@ python3 $DIR/deps.py | tee $DEPS
 cd $DIR/..
 echo "Run"
 
-python3 qgis-mac-packager.py \
+res=0
+
+if python3 qgis-mac-packager.py \
     --output_directory $BUILD_DIR \
     --git $GIT \
     --release_type $RELEASE \
     --qgisapp_name ${QGISAPP} \
     --dmg_name $PACKAGE \
     -vv \
-2>&1 | tee -a $LOG
-
-exit_status=$?
-if [ $exit_status -eq 0 ]; then
+2>&1 | tee -a $LOG; then
     echo "SUCCESS" | tee -a $LOG
     python3 $DIR/image_creator.py --text "$RELEASE-$GIT" --out $STATUS_PNG --success
 else
+    res=$?
     echo "FAIL" | tee -a $LOG
     python3 $DIR/image_creator.py --text "$RELEASE-$GIT" --out $STATUS_PNG
 fi
@@ -63,3 +64,5 @@ fi
 
 echo "All done"
 cd $PWD
+
+exit $res

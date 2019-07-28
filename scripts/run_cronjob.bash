@@ -13,7 +13,7 @@ SD=$DIR/QGIS-Mac-Packager/scripts
 echo "Starting CRONJOB ${TIMESTAMP} ${LOG}" > $LOG 2>&1
 
 echo "Manage ENV" >> $LOG 2>&1
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:$PATH
+export PATH=/usr/local/opt/ccache/libexec:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:$PATH
 
 echo "Create dirs " >> $LOG 2>&1
 mkdir -p $LD
@@ -22,11 +22,11 @@ touch $LOG
 
 echo "clean the build directories" >> $LOG 2>&1
 # remove all dmg files older than X days
-find $BD/*/*.dmg -mtime +5 -delete
+find $BD/* -name "*.dmg" -mtime +5 -delete
 
 echo "clean the log directories" >> $LOG 2>&1
 # remove all files older than 60 days
-find $LD/* -mtime +60 -delete
+find $LD/* -name "*.log" -mtime +60 -delete
 
 echo "Check GIT repo" >> $LOG 2>&1
 cd $DIR/QGIS-Mac-Packager
