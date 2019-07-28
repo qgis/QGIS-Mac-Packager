@@ -2,8 +2,6 @@
 
 set -o pipefail
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-cd $DIR/../..
-DIR=$PWD
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 BD=$DIR/builds
 LD=$DIR/logs
@@ -22,11 +20,11 @@ touch $LOG
 
 echo "clean the build directories" >> $LOG 2>&1
 # remove all dmg files older than X days
-find $BD/* -name "*.dmg" -mtime +5 -delete
+find $BD -name "*.dmg" -maxdepth 2 -type f -mtime +5 -exec rm {} \;
 
 echo "clean the log directories" >> $LOG 2>&1
 # remove all files older than 60 days
-find $LD/* -name "*.log" -mtime +60 -delete
+find $LD -name "*.log" -type f -mtime +60 -exec rm {} \;
 
 echo "Check GIT repo" >> $LOG 2>&1
 cd $DIR/QGIS-Mac-Packager
