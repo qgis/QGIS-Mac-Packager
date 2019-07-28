@@ -78,6 +78,15 @@ fi
 
 cd ..
 
+if [ -f building ]; then
+        echo "Already building $PKG"
+        exit 0
+fi
+
+trap "rm $PWD/building" EXIT
+touch building
+
+
 QGISAPP="QGIS${MAJOR}.${MINOR}.app"
 BD=$DIR/../../builds/${PKG}
 

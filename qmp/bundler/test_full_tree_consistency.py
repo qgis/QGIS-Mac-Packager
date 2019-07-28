@@ -129,7 +129,7 @@ def test_full_tree_consistency(msg, pa):
         if f not in output:
             raise QGISBundlerError("format {} missing in gdalinfo --formats".format(f))
 
-    msg.info("Test that all text files does not contain references to homebrew /usr/local")
+    msg.info("Test that all text files do not contain references to homebrew /usr/local")
     errors = []
     # TODO wondering what we really need from these files in the bundle
     exceptions = [
