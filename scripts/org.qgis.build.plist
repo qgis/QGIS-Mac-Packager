@@ -29,5 +29,8 @@
 
         <key>StandardOutPath</key>
         <string>/Users/admin/qgis/logs/qgis_launchd.out</string>
+
+	<key>AbandonProcessGroup</key>
+	<true/>
 </dict>
 </plist>

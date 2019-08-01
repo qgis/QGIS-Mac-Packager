@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -o pipefail
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 BD=$DIR/builds
@@ -39,10 +40,11 @@ else
     git rebase origin/master >> $LOG 2>&1
 fi
 
-failed=
+export failed= ok=
 for i in nightly pr ltr; do
 	echo "build $i" >> $LOG 2>&1
 	if $SD/run_pkg.bash $i >> $LOG 2>&1; then
+		ok="$ok $i"
 		echo "SUCCESS $i" >> $LOG 2>&1
 	else
 		failed="$failed $i"
@@ -50,7 +52,13 @@ for i in nightly pr ltr; do
 	fi
 done
 
+(
+   echo QGIS MacOS Build Status:
+   [ -z "$ok" ] || echo ok:$ok
+   [ -z "$failed" ] || echo failed:$failed
+) | mail -s "Your QGIS MacOS Build Status" admin
+
 if [ -n "$failed" ]; then
-	echo "Your QGIS MacOS Build failed:$failed"
+	echo "Your QGIS MacOS Build failed:$failed ok:$ok"
 	exit 1
 fi
