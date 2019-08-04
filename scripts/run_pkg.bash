@@ -61,6 +61,9 @@ PATCH=$(sed -ne 's/SET(CPACK_PACKAGE_VERSION_PATCH "\([0-9]*\)")/\1/p' CMakeList
 
 if [ $PKG = "nightly" ]; then
 	TAG=master
+	git reset --hard
+	QTDIR=/usr/local/Cellar/qt/*/bin/qmake
+	PATH=${QTDIR%/qmake}:$PATH scripts/pull_ts.sh
 else
 	TAG=final-${MAJOR}_${MINOR}_${PATCH}
 
