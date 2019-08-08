@@ -56,7 +56,7 @@ done
    echo QGIS MacOS Build Status:
    [ -z "$ok" ] || echo ok:$ok
    [ -z "$failed" ] || echo failed:$failed
-) | mail -s "Your QGIS MacOS Build Status" admin
+) | mutt -a $LOG -s "Your QGIS MacOS Build Status" -- admin@localhost
 
 if [ -n "$failed" ]; then
 	echo "Your QGIS MacOS Build failed:$failed ok:$ok"
