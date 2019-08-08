@@ -11,7 +11,7 @@
 | PR  | LTR   | Nightly  |
 |:---:|:-----:|:--------:|
 | [DMG](https://qgis.org/downloads/macos/qgis-macos-pr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-ltr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-nightly.dmg?raw=true)  |
-| [MD5](https://qgis.org/downloads/macos/qgis-macos-pr.sha256sum?raw=true) | [MD5](https://qgis.org/downloads/macos/qgis-macos-ltr.sha256sum?raw=true) | [MD5](https://qgis.org/downloads/macos/qgis-macos-nightly.sha256sum?raw=true) |
+| [SHA256](https://qgis.org/downloads/macos/qgis-macos-pr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-ltr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-nightly.sha256sum?raw=true) |
 | [DEPS](https://qgis.org/downloads/macos/qgis-macos-pr.deps?raw=true) | [DEPS](https://qgis.org/downloads/macos/qgis-macos-ltr.deps?raw=true)| [DEPS](https://qgis.org/downloads/macos/qgis-macos-nightly.deps?raw=true) |
 
 
