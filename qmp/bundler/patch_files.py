@@ -215,6 +215,7 @@ export PYTHONHOME=XXX/Contents/Frameworks/Python.framework/Versions/Current
 export PYTHONPATH=XXX/Contents/Resources/python
 export GRASS_PYTHON=XXX/Contents/MacOS/bin/python
 export MANPATH=/usr/local/share/man:/usr/share/man:/opt/X11/share/man:/Library/Developer/CommandLineTools/usr/share/man
+export GRASS_LD_LIBRARY_PATH=XXX/Contents/MacOS/lib
 $GRASS_PYTHON XXX/Contents/Resources/grass7/bin/_grass76 $@
 """.replace("XXX", pa.installQgisApp)
     _patch_file(pa,
