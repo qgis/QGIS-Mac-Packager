@@ -81,6 +81,7 @@ def _generate_cmake(msg, pa):
         "-DQGIS_MACAPP_BUNDLE=0",
         "-DWITH_3D=TRUE",
         "-DWITH_BINDINGS=TRUE",
+        "-DWITH_CUSTOMWIDGETS=ON",
         "-DSQLITE3_INCLUDE_DIR=" + pa.host.sqlite + "/include",
         "-DSQLITE3_LIBRARY=" + pa.host.sqlite + "/lib/libsqlite3.dylib",
         "-DCMAKE_FIND_FRAMEWORK=LAST"]
