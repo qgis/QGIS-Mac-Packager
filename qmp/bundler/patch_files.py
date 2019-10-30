@@ -228,6 +228,7 @@ $GRASS_PYTHON XXX/Contents/Resources/grass7/bin/_grass76 $@
     replacements = [
         pa.host.grass7Cellar + "/grass-base" + "~~>" + pa.grass7Install,
         pa.host.grass7Cellar + "/" + pa.version.grassFull + "~~>" + pa.grass7Install,
+        pa.host.grass7Cellar + "/" + pa.version.grass + "~~>" + pa.grass7Install,
         pa.projHost + "~~>" + pa.projShareInstall,
         pa.host.grass7Cellar + "/" + pa.version.grassFull + "/lib" + "~~>" + pa.installQgisLib,
         pa.host.projLib + "~~>" + pa.installQgisLib,
