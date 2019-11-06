@@ -7,7 +7,7 @@ the bundled packages.
 
 This agreement contains 3 sections
 A) Open source projects
-B) 3rd party propriatory projects
+B) 3rd party proprietary projects
 C) Individual text of licenses from B)
 
 -----------------------------------------------------------------------------------------------------
