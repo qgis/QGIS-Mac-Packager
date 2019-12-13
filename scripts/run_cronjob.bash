@@ -52,13 +52,13 @@ for i in nightly pr ltr; do
 	fi
 done
 
-(
-   echo QGIS MacOS Build Status:
-   [ -z "$ok" ] || echo ok:$ok
-   [ -z "$failed" ] || echo failed:$failed
-) | mutt -a $LOG -s "Your QGIS MacOS Build Status" -- admin@localhost
-
 if [ -n "$failed" ]; then
-	echo "Your QGIS MacOS Build failed:$failed ok:$ok"
+	(
+		echo QGIS MacOS Build Status:
+		[ -z "$ok" ] || echo ok:$ok
+		[ -z "$failed" ] || echo failed:$failed
+	) | mutt -a $LOG -s "QGIS MacOS Build Failure" -- admin@localhost
+
+	echo "QGIS MacOS Build failed:$failed ok:$ok"
 	exit 1
 fi
