@@ -63,7 +63,11 @@ PATCH=$(sed -ne 's/SET(CPACK_PACKAGE_VERSION_PATCH "\([0-9]*\)")/\1/p' CMakeList
 if [ $PKG = "nightly" ]; then
 	TAG=master
 	git reset --hard
-	PATH=$(dirname /usr/local/Cellar/qt/*/bin/qmake):$PATH scripts/pull_ts.sh
+	if ! PATH=$(dirname /usr/local/Cellar/qt/*/bin/qmake):$PATH scripts/pull_ts.sh; then
+		echo "Pulling translations failed [$?]"
+		rm -rvf i18n doc/TRANSLATORS
+		git checkout
+	fi
 else
 	TAG=final-${MAJOR}_${MINOR}_${PATCH}
 
@@ -89,7 +93,6 @@ fi
 trap "rm $PWD/building" EXIT
 touch building
 
-
 QGISAPP="QGIS${MAJOR}.${MINOR}.app"
 BD=$DIR/../../builds/${PKG}
 
@@ -100,4 +103,10 @@ $DIR/run_build.bash \
   ${PKG} \
   ${QGISAPP} "$@"
 
-[ "$PKG" = "nightly" ] || touch ${TAG}
+if [ "$PKG" = "nightly" ]; then
+	cd $BD
+	rm -rf i18n doc/TRANSLATORS
+	git checkout
+else
+	touch ${TAG}
+fi
