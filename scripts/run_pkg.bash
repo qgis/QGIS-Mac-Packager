@@ -104,7 +104,7 @@ $DIR/run_build.bash \
   ${QGISAPP} "$@"
 
 if [ "$PKG" = "nightly" ]; then
-	cd $BD
+	cd $BD/qgis
 	rm -rf i18n doc/TRANSLATORS
 	git checkout
 else
