@@ -21,6 +21,10 @@ Set of scripts to create MacOS standalone QGIS package (dmg)
 
 To know when we release, see [QGIS release schedule](https://www.qgis.org/en/site/getinvolved/development/roadmap.html#release-schedule)
 
+# Building OSGeo dependencies and QGIS for development
+
+see [builder/README.md]
+
 # How to report issues 
 
 - Add link to the installed package

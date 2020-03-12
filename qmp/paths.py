@@ -34,7 +34,7 @@ class Paths:
         self.version.libpqFull = "5"
         self.version.cpython = "cpython-37m-darwin"
         self.version.sip = "4.19.17_1"
-        self.version.minos = "10.11.0"  # MACOS minimum supported OS
+        self.version.minos = "10.13.0"  # MACOS minimum supported OS
 
         # jpeg.9 is /usr/local/Cellar/jpeg/9c/lib/libjpeg.9.dylib
         # required by others
