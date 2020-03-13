@@ -46,6 +46,8 @@ function build_spatialindex() {
   push_env
 
   try $CMAKE $BUILD_spatialindex .
+  check_cmakecache CMakeCache.txt
+
   try $MAKESMP
   try $MAKE install
 

@@ -45,6 +45,8 @@ function build_geos() {
   push_env
 
   try ${CMAKE} $BUILD_geos
+  check_cmakecache CMakeCache.txt
+
   try $MAKESMP
   try $MAKESMP install
 

@@ -27,6 +27,11 @@ function pop_env() {
   export LD=$OLD_LD
   export CMAKE=$OLD_CMAKE
   export CONFIGURE=$OLD_CONFIGURE
+  export INCLUDE=$OLD_INCLUDE
+  export LIB_DIR=$OLD_LIB_DIR
+  export LIB=$OLD_LIB
+  export SYSROOT=$OLD_SYSROOT
+  export CMAKE_PREFIX_PATH=$OLD_CMAKE_PREFIX_PATH
 }
 
 function try () {
@@ -105,6 +110,27 @@ RECIPES_PATH="$ROOT_PATH/recipes"
 BUILD_PATH="$ROOT_OUT_PATH/build"
 PACKAGES_PATH="${PACKAGES_PATH:-$ROOT_OUT_PATH/.packages}"
 
+function add_homebrew_path() {
+   info "Adding /usr/local/opt/$1/bin to PATH"
+   if [ ! -d "/usr/local/opt/$1/bin" ]; then
+     error "Missing homebrew $1 /usr/local/opt/$1/bin"
+   fi
+   export PATH="/usr/local/opt/$1/bin:$PATH"
+
+   # this one is separated by ; -- CMAKE list
+   # export CMAKE_PREFIX_PATH="/usr/local/opt/$1/bin;$CMAKE_PREFIX_PATH"
+}
+
+function check_cmakecache() {
+  info "Checking $1 for /usr/local/lib"
+  if grep -q /usr/local/lib $1
+  then
+    info "Found: "
+    cat $1 | grep /usr/local/lib
+    error "File $1 contains /usr/local/lib string <-- CMake picked some homebrew libs!"
+  fi
+}
+
 function push_env() {
     info "Entering in build environment"
 
@@ -119,11 +145,32 @@ function push_env() {
     export OLD_LD=$LD
     export OLD_CMAKE=$CMAKE
     export OLD_CONFIGURE=$CONFIGURE
+    export OLD_INCLUDE=$INCLUDE
+    export OLD_LIB_DIR=$LIB_DIR
+    export OLD_LIB=$LIB
+    export OLD_SYSROOT=$SYSROOT
+    export OLD_CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH
 
-    export CFLAGS="--sysroot $XCODE_DEVELOPER/SDKs/MacOSX.sdk -I$STAGE_PATH/include"
+    export SYSROOT=$XCODE_DEVELOPER/SDKs/MacOSX.sdk
+    export CFLAGS="--sysroot $SYSROOT -I$STAGE_PATH/include"
     export LDFLAGS="-L$STAGE_PATH/lib"
     export CXXFLAGS="${CFLAGS}"
-    export PATH="/bin/:/usr/bin:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin:/usr/local/bin"
+
+    # Modify PATH
+    # DO NOT ADD HERE /usr/local/bin since CMAKE will search in /usr/local/lib for homebrew libs
+    export PATH="/bin/:/usr/bin:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin"
+    export CMAKE_PREFIX_PATH="$STAGE_PATH;$QT_BASE/clang_64;$SYSROOT"
+
+    add_homebrew_path bison
+    add_homebrew_path flex
+    add_homebrew_path cmake
+    add_homebrew_path coreutils
+    add_homebrew_path ccache
+
+    # some environment for CMAKE search
+    export LIB=$STAGE_PATH
+    export INCLUDE=$STAGE_PATH/include
+    export LIB_DIR=$STAGE_PATH
 
     CMAKE="cmake"
     if [ $DEBUG -eq 1 ]; then
@@ -133,11 +180,15 @@ function push_env() {
       CMAKE="${CMAKE} -DCMAKE_BUILD_TYPE=Release"
     fi
     export CMAKE="${CMAKE} -DCMAKE_INSTALL_PREFIX:PATH=$STAGE_PATH"
+    export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH"
+    export CMAKE="${CMAKE} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
+    export CMAKE="${CMAKE} -DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=FALSE"
     # MACOSX_DEPLOYMENT_TARGET in environment should set minimum version
+
+    # export some tools
     export MAKESMP="${XCODE_DEVELOPER}/usr/bin/make -j$CORES"
     export MAKE="${XCODE_DEVELOPER}/usr/bin/make"
     export CONFIGURE="configure --prefix=$STAGE_PATH"
-
     export CC="${XCODE_DEVELOPER}/usr/bin/gcc $CFLAGS"
     export CXX="${XCODE_DEVELOPER}/usr/bin/g++ $CXXFLAGS"
     export LD="${XCODE_DEVELOPER}/usr/bin/ld"
@@ -173,7 +224,7 @@ else
   WHEAD="wget --spider -q -S"
 fi
 
-for tool in tar bzip2 unzip cmake; do
+for tool in tar bzip2 unzip cmake bison flex ; do
   which $tool &>/dev/null
   if [ $? -ne 0 ]; then
     error "Tool $tool is missing"

@@ -4,7 +4,7 @@
 VERSION_qgis=3.12.0
 
 # dependencies of this recipe
-DEPS_qgis=(geos proj spatialindex)
+DEPS_qgis=(gdal)
 
 # url of the package
 URL_qgis=https://github.com/qgis/QGIS/archive/final-${VERSION_qgis//./_}.tar.gz
@@ -32,7 +32,7 @@ function prebuild_qgis() {
 }
 
 function shouldbuild_qgis() {
-    echo "pass"
+   : # noop
 }
 
 # function called to build the source code
@@ -42,9 +42,22 @@ function build_qgis() {
 
   push_env
 
-  # try $CMAKE $BUILD_qgis .
-  # try $MAKESMP
-  # try $MAKE install
+  try $CMAKE \
+    -DFLEX_EXECUTABLE=`which flex` \
+    -DBISON_EXECUTABLE=`which bison` \
+    -DDISABLE_DEPRECATED=ON \
+    -DWITH_QTWEBKIT=OFF \
+    -DWITH_BINDINGS=OFF \
+    -DWITH_GRASS=OFF \
+    -DENABLE_QT5=ON \
+    -DENABLE_TESTS=OFF \
+    -DWITH_QWTPOLAR=OFF \
+    $BUILD_qgis .
+
+  check_cmakecache CMakeCache.txt
+
+  try $MAKESMP
+  try $MAKE install
 
   pop_env
 }
