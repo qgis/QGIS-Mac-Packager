@@ -28,6 +28,8 @@ function prebuild_jpeg() {
     return
   fi
 
+  patch_configure_file configure
+
   touch .patched
 }
 
@@ -47,6 +49,7 @@ function build_jpeg() {
   try ${BUILD_jpeg}/${CONFIGURE} \
     --disable-dependency-tracking \
     --disable-silent-rules
+  check_file_configuration config.status
 
   try $MAKESMP
   try $MAKESMP install
@@ -56,5 +59,5 @@ function build_jpeg() {
 
 # function called after all the compile have been done
 function postbuild_jpeg() {
-  verify_lib_arch "${STAGE_PATH}/lib/liblzma.dylib"
+  verify_lib "${STAGE_PATH}/lib/liblzma.dylib"
 }

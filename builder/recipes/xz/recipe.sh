@@ -28,6 +28,8 @@ function prebuild_xz() {
     return
   fi
 
+  patch_configure_file configure
+
   touch .patched
 }
 
@@ -45,6 +47,7 @@ function build_xz() {
   push_env
 
   try ${BUILD_xz}/${CONFIGURE}
+  check_file_configuration config.status
 
   try $MAKESMP
   try $MAKESMP install
@@ -54,5 +57,5 @@ function build_xz() {
 
 # function called after all the compile have been done
 function postbuild_xz() {
-  verify_lib_arch "${STAGE_PATH}/lib/liblzma.dylib"
+  verify_lib "${STAGE_PATH}/lib/liblzma.dylib"
 }

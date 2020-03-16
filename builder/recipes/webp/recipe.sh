@@ -28,6 +28,8 @@ function prebuild_webp() {
     return
   fi
 
+  patch_configure_file configure
+
   touch .patched
 }
 
@@ -46,6 +48,7 @@ function build_webp() {
 
   try ${BUILD_webp}/${CONFIGURE}
 
+  check_file_configuration config.status
   try $MAKESMP
   try $MAKESMP install
 
@@ -54,5 +57,5 @@ function build_webp() {
 
 # function called after all the compile have been done
 function postbuild_webp() {
-  verify_lib_arch "${STAGE_PATH}/lib/liblzma.dylib"
+  verify_lib "${STAGE_PATH}/lib/liblzma.dylib"
 }

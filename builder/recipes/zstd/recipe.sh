@@ -44,7 +44,6 @@ function build_zstd() {
   try cd $BUILD_PATH/zstd/build-$ARCH
   push_env
 
-
   try $MAKE install PREFIX=$STAGE_PATH
 
   pop_env
@@ -52,5 +51,5 @@ function build_zstd() {
 
 # function called after all the compile have been done
 function postbuild_zstd() {
-  verify_lib_arch "${STAGE_PATH}/lib/liblzma.dylib"
+  verify_lib "${STAGE_PATH}/lib/liblzma.dylib"
 }

@@ -48,7 +48,7 @@ function build_libgeotiff() {
   push_env
 
   try $CMAKE $BUILD_libgeotiff .
-  check_cmakecache CMakeCache.txt
+  check_file_configuration CMakeCache.txt
 
   try $MAKESMP
   try $MAKE install
@@ -58,5 +58,5 @@ function build_libgeotiff() {
 
 # function called after all the compile have been done
 function postbuild_libgeotiff() {
-  verify_lib_arch "${STAGE_PATH}/lib/libgeotiff.a"
+  verify_lib "${STAGE_PATH}/lib/libgeotiff.a"
 }

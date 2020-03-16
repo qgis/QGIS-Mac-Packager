@@ -54,7 +54,7 @@ function build_qgis() {
     -DWITH_QWTPOLAR=OFF \
     $BUILD_qgis .
 
-  check_cmakecache CMakeCache.txt
+  check_file_configuration CMakeCache.txt
 
   try $MAKESMP
   try $MAKE install

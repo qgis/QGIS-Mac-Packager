@@ -4,7 +4,7 @@
 VERSION_gdal=3.0.4
 
 # dependencies of this recipe
-DEPS_gdal=(geos proj libgeotiff)
+DEPS_gdal=(geos proj libgeotiff xerces)
 
 # url of the package
 URL_gdal=https://github.com/OSGeo/gdal/releases/download/v${VERSION_gdal}/gdal-${VERSION_gdal}.tar.gz
@@ -28,6 +28,8 @@ function prebuild_gdal() {
     return
   fi
 
+  patch_configure_file configure
+
   touch .patched
 }
 
@@ -44,9 +46,25 @@ function build_gdal() {
   try cd $BUILD_PATH/gdal/build-$ARCH
   push_env
 
-  try ${BUILD_gdal}/${CONFIGURE} \
-    --disable-debug
 
+  WITH_GDAL_DRIVERS=
+  for i in xerces
+  do
+    WITH_GDAL_DRIVERS="$WITH_GDAL_DRIVERS --with-$i=$STAGE_DIR"
+  done
+
+  WITHOUT_GDAL_DRIVERS=
+  for i in ecw
+  do
+    WITHOUT_GDAL_DRIVERS="$WITHOUT_GDAL_DRIVERS --without-$i"
+  done
+
+  try ${BUILD_gdal}/${CONFIGURE} \
+    --disable-debug \
+    ${WITH_GDAL_DRIVERS} \
+    ${WITHOUT_GDAL_DRIVERS}
+
+  check_file_configuration config.status
   try $MAKESMP
   try $MAKESMP install
 
@@ -55,5 +73,5 @@ function build_gdal() {
 
 # function called after all the compile have been done
 function postbuild_gdal() {
-  verify_lib_arch "${STAGE_PATH}/lib/libgdal.dylib"
+  verify_lib "${STAGE_PATH}/lib/libgdal.dylib"
 }

@@ -45,7 +45,7 @@ function build_proj() {
   push_env
 
   try $CMAKE $BUILD_proj .
-  check_cmakecache CMakeCache.txt
+  check_file_configuration CMakeCache.txt
 
   try $MAKESMP
   try $MAKE install
@@ -55,5 +55,5 @@ function build_proj() {
 
 # function called after all the compile have been done
 function postbuild_proj() {
-  verify_lib_arch "${STAGE_PATH}/lib/libproj.dylib"
+  verify_lib "${STAGE_PATH}/lib/libproj.dylib"
 }

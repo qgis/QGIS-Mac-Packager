@@ -48,7 +48,7 @@ function build_libtiff() {
   push_env
 
   try $CMAKE $BUILD_libtiff .
-  check_cmakecache CMakeCache.txt
+  check_file_configuration CMakeCache.txt
 
   try $MAKESMP
   try $MAKE install
@@ -58,5 +58,5 @@ function build_libtiff() {
 
 # function called after all the compile have been done
 function postbuild_libtiff() {
-  verify_lib_arch "${STAGE_PATH}/lib/libtiff.dylib"
+  verify_lib "${STAGE_PATH}/lib/libtiff.dylib"
 }

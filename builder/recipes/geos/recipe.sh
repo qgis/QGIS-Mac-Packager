@@ -45,7 +45,7 @@ function build_geos() {
   push_env
 
   try ${CMAKE} $BUILD_geos
-  check_cmakecache CMakeCache.txt
+  check_file_configuration CMakeCache.txt
 
   try $MAKESMP
   try $MAKESMP install
@@ -55,5 +55,5 @@ function build_geos() {
 
 # function called after all the compile have been done
 function postbuild_geos() {
-  verify_lib_arch "${STAGE_PATH}/lib/libgeos_c.dylib"
+  verify_lib "${STAGE_PATH}/lib/libgeos_c.dylib"
 }

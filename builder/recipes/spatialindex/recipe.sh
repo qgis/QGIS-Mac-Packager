@@ -46,7 +46,7 @@ function build_spatialindex() {
   push_env
 
   try $CMAKE $BUILD_spatialindex .
-  check_cmakecache CMakeCache.txt
+  check_file_configuration CMakeCache.txt
 
   try $MAKESMP
   try $MAKE install
@@ -56,5 +56,5 @@ function build_spatialindex() {
 
 # function called after all the compile have been done
 function postbuild_spatialindex() {
-  verify_lib_arch "${STAGE_PATH}/lib/libspatialindex.dylib"
+  verify_lib "${STAGE_PATH}/lib/libspatialindex.dylib"
 }

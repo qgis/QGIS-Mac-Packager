@@ -43,8 +43,9 @@ function info() {
 }
 
 function error() {
-  echo -e "$CRED"$@"$CRESET";
+  MSG="$CRED"$@"$CRESET"
   pop_env
+  echo -e $MSG;
   exit -1
 }
 
@@ -102,6 +103,13 @@ else
    error "Unable to find compiler at ${XCODE_DEVELOPER}/usr/bin! Ensure that XCode is installed!"
 fi
 
+if [ -d "${XCODE_DEVELOPER}/usr/lib/clang/${CLANG_VERSION}" ]; then
+   debug "Clang found at ${XCODE_DEVELOPER}/usr/bin"
+else
+   error "Unable to find clang at ${XCODE_DEVELOPER}/usr/lib/clang/${CLANG_VERSION}"
+fi
+
+
 # Paths
 ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ROOT_OUT_PATH="${ROOT_PATH}/../../builds/$RELEASE_TYPE-$ARCH/deps"
@@ -116,19 +124,25 @@ function add_homebrew_path() {
      error "Missing homebrew $1 /usr/local/opt/$1/bin"
    fi
    export PATH="/usr/local/opt/$1/bin:$PATH"
-
-   # this one is separated by ; -- CMAKE list
-   # export CMAKE_PREFIX_PATH="/usr/local/opt/$1/bin;$CMAKE_PREFIX_PATH"
 }
 
-function check_cmakecache() {
-  info "Checking $1 for /usr/local/lib"
+function check_file_configuration() {
+  # "Checking $1 for /usr/local/lib"
   if grep -q /usr/local/lib $1
   then
     info "Found: "
     cat $1 | grep /usr/local/lib
     error "File $1 contains /usr/local/lib string <-- CMake picked some homebrew libs!"
   fi
+}
+
+function patch_configure_file() {
+    try ${SED} 's;/usr/local/lib/ ;;g' $1
+    try ${SED} 's; /usr/local/lib/;;g' $1
+    try ${SED} 's;/usr/local/lib/;;g' $1
+    try ${SED} 's; /usr/local/lib;;g' $1
+    try $SED 's;/usr/local/lib ;;g' $1
+    try $SED 's;/usr/local/lib;;g' $1
 }
 
 function push_env() {
@@ -156,8 +170,6 @@ function push_env() {
     export LDFLAGS="-L$STAGE_PATH/lib"
     export CXXFLAGS="${CFLAGS}"
 
-    # Modify PATH
-    # DO NOT ADD HERE /usr/local/bin since CMAKE will search in /usr/local/lib for homebrew libs
     export PATH="/bin/:/usr/bin:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin"
     export CMAKE_PREFIX_PATH="$STAGE_PATH;$QT_BASE/clang_64;$SYSROOT"
 
@@ -252,10 +264,16 @@ function get_directory() {
   echo $directory
 }
 
-function verify_lib_arch() {
+function verify_lib() {
   LIB_ARCHS=`lipo -archs $1`
   if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
     error "Library $1 was not successfully build for $ARCH, but ${LIB_ARCHS}"
+  fi
+
+  if otool -L $1 | grep -q /usr/local/lib
+  then
+    otool -L $1
+    error "Library $1 contains /usr/local/lib string <-- CMake picked some homebrew libs!"
   fi
 }
 
@@ -298,7 +316,7 @@ function run_prepare() {
   # create build directory if not found
   test -d $PACKAGES_PATH || mkdir -p $PACKAGES_PATH
   test -d $BUILD_PATH || mkdir -p $BUILD_PATH
-  test -d $LIBS_PATH || mkdir -p $LIBS_PATH
+  test -d $STAGE_PATH/lib || mkdir -p $STAGE_PATH/lib
 }
 
 function in_array() {
