@@ -7,10 +7,10 @@ VERSION_libtasn1=4.16.0
 DEPS_libtasn1=()
 
 # url of the package
-URL_libtasn1=https://gitlab.com/gnutls/libtasn1/-/archive/libtasn1_${VERSION_libtasn1//./_}/libtasn1-libtasn1_${VERSION_libtasn1//./_}.tar.gz
+URL_libtasn1=https://ftp.gnu.org/gnu/libtasn1/libtasn1-${VERSION_libtasn1}.tar.gz
 
 # md5 of the package
-MD5_libtasn1=48fc92bd4ef633dc66ea413bf684763c
+MD5_libtasn1=531208de3729d42e2af0a32890f08736
 
 # default build path
 BUILD_libtasn1=$BUILD_PATH/libtasn1/$(get_directory $URL_libtasn1)
@@ -28,12 +28,6 @@ function prebuild_libtasn1() {
     return
   fi
 
-  try git clone https://gitlab.com/libidn/gnulib-mirror.git gnulib-mirror
-  cd gnulib-mirror
-  git checkout 4c1009ec93e12ee34acd27f6d7e25442bedc16f2
-
-  # patch_configure_file configure
-
   touch .patched
 }
 
@@ -50,19 +44,16 @@ function build_libtasn1() {
   try cd $BUILD_PATH/libtasn1/build-$ARCH
   push_env
 
-  try ./bootstrap --no-git --gnulib-srcdir=$BUILD_PATH/libtasn1/build-$ARCH/gnulib-mirror
-  # try autoreconf
-
-
-
-  try $BUILD_PATH/libtasn1/build-$ARCH/${CONFIGURE}
+  export CFLAGS="$CFLAGS -O2 -DPIC"
   patch_configure_file configure
 
-  #  --disable-dependency-tracking
+  try $BUILD_PATH/libtasn1/build-$ARCH/${CONFIGURE} \
+    --disable-dependency-tracking \
+    --disable-silent-rules
 
-  # check_file_configuration config.status
+  check_file_configuration config.status
 
-  try $MAKESMP VERBOSE=1
+  try $MAKESMP
   try $MAKESMP install
 
   pop_env

@@ -16,6 +16,10 @@ CRESET="\x1b[39;49;00m"
 
 function pop_env() {
   info "Leaving build environment"
+
+  # deactivate python virtualenv
+  deactivate
+
   export PATH=$OLD_PATH
   export CFLAGS=$OLD_CFLAGS
   export CXXFLAGS=$OLD_CXXFLAGS
@@ -31,6 +35,9 @@ function pop_env() {
   export LIB_DIR=$OLD_LIB_DIR
   export LIB=$OLD_LIB
   export SYSROOT=$OLD_SYSROOT
+  export PYTHON=$OLD_PYTHON
+  export PYTHONUSERBASE=$OLD_PYTHONUSERBASE
+  export DYLD_LIBRARY_PATH=$OLD_DYLD_LIBRARY_PATH
 }
 
 function try () {
@@ -124,9 +131,10 @@ STAGE_PATH="${ROOT_OUT_PATH}/stage"
 RECIPES_PATH="$ROOT_PATH/recipes"
 BUILD_PATH="$ROOT_OUT_PATH/build"
 PACKAGES_PATH="${PACKAGES_PATH:-$ROOT_OUT_PATH/.packages}"
+QGIS_SITE_PACKAGES_PATH=${STAGE_PATH}/lib/python${VERSION_python}/site-packages
 
 function add_homebrew_path() {
-   info "Adding /usr/local/opt/$1/bin to PATH"
+   # info "Adding /usr/local/opt/$1/bin to PATH"
    if [ ! -d "/usr/local/opt/$1/bin" ]; then
      error "Missing homebrew $1 /usr/local/opt/$1/bin"
    fi
@@ -170,14 +178,11 @@ function push_env() {
     export OLD_LIB_DIR=$LIB_DIR
     export OLD_LIB=$LIB
     export OLD_SYSROOT=$SYSROOT
+    export OLD_PYTHON=$PYTHON
+    export OLD_PYTHONUSERBASE=$PYTHONUSERBASE
+    export OLD_DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH
 
-    export SYSROOT=$XCODE_DEVELOPER/SDKs/MacOSX.sdk
-    export CFLAGS="--sysroot $SYSROOT -I$STAGE_PATH/include"
-    export LDFLAGS="-L$STAGE_PATH/lib"
-    export CXXFLAGS="${CFLAGS}"
-
-    export PATH="/bin/:/usr/bin:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin"
-
+    export PATH="/sbin/:/bin/:/usr/bin"
     add_homebrew_path bison
     add_homebrew_path flex
     add_homebrew_path cmake
@@ -186,15 +191,38 @@ function push_env() {
     add_homebrew_path autoconf
     add_homebrew_path automake
     add_homebrew_path libtool
+    add_homebrew_path pkg-config
 
-    # some environment for CMAKE search
+    ###################
+    # Configure/Make system
+
+    export SYSROOT=$XCODE_DEVELOPER/SDKs/MacOSX.sdk
+    export CFLAGS="--sysroot $SYSROOT -I$STAGE_PATH/include"
+    export LDFLAGS="-L$STAGE_PATH/lib"
+    export CXXFLAGS="${CFLAGS}"
+
+    export PATH="${PATH}:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin:$QT_BASE/clang_64/bin"
+
+    # export some tools
+    export MAKESMP="${XCODE_DEVELOPER}/usr/bin/make -j$CORES"
+    export MAKE="${XCODE_DEVELOPER}/usr/bin/make"
+    export CONFIGURE="configure --prefix=$STAGE_PATH"
+    export CC="${XCODE_DEVELOPER}/usr/bin/gcc"
+    export CXX="${XCODE_DEVELOPER}/usr/bin/g++"
+
+    # export CC="${XCODE_DEVELOPER}/usr/bin/gcc $CFLAGS"
+    # export CXX="${XCODE_DEVELOPER}/usr/bin/g++ $CXXFLAGS"
+    export LD="${XCODE_DEVELOPER}/usr/bin/ld"
+
+    ###################
+    # CMake
+
     export LIB=$STAGE_PATH
     export INCLUDE=$STAGE_PATH/include
     export LIB_DIR=$STAGE_PATH
 
     CMAKE="cmake"
     if [ $DEBUG -eq 1 ]; then
-      # TODO debug mode for configure/make system
       CMAKE="${CMAKE} -DCMAKE_BUILD_TYPE=Debug"
     else
       CMAKE="${CMAKE} -DCMAKE_BUILD_TYPE=Release"
@@ -208,13 +236,16 @@ function push_env() {
     export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=ON"
     # MACOSX_DEPLOYMENT_TARGET in environment should set minimum version
 
-    # export some tools
-    export MAKESMP="${XCODE_DEVELOPER}/usr/bin/make -j$CORES"
-    export MAKE="${XCODE_DEVELOPER}/usr/bin/make"
-    export CONFIGURE="configure --prefix=$STAGE_PATH"
-    export CC="${XCODE_DEVELOPER}/usr/bin/gcc $CFLAGS"
-    export CXX="${XCODE_DEVELOPER}/usr/bin/g++ $CXXFLAGS"
-    export LD="${XCODE_DEVELOPER}/usr/bin/ld"
+    ###################
+    # PYTHON
+
+    # build_ext sometimes tries to dlopen the libraries
+    export DYLD_LIBRARY_PATH=$STAGE_PATH/lib
+
+    # activate python virtualenv
+    source $STAGE_PATH/bin/activate
+
+
 }
 
 #########################################################################################################
@@ -225,8 +256,7 @@ MD5SUM=$(which md5sum)
 if [ "X$MD5SUM" == "X" ]; then
   MD5SUM=$(which md5)
   if [ "X$MD5SUM" == "X" ]; then
-    echo "Error: you need at least md5sum or md5 installed."
-    exit 1
+    error "you need at least md5sum or md5 installed."
   else
     MD5SUM="$MD5SUM -r"
   fi
@@ -236,8 +266,7 @@ WGET=$(which wget)
 if [ "X$WGET" == "X" ]; then
   WGET=$(which curl)
   if [ "X$WGET" == "X" ]; then
-    echo "Error: you need at least wget or curl installed."
-    exit 1
+    error "you need at least wget or curl installed."
   else
     WGET="$WGET -L -o"
   fi
@@ -247,11 +276,10 @@ else
   WHEAD="wget --spider -q -S"
 fi
 
-for tool in tar bzip2 unzip cmake bison flex autoconf automake libtool; do
+for tool in tar bzip2 unzip cmake bison flex autoconf automake libtool pkg-config; do
   which $tool &>/dev/null
   if [ $? -ne 0 ]; then
     error "Tool $tool is missing"
-    exit -1
   fi
 done
 pop_env
@@ -294,6 +322,7 @@ function usage() {
   echo "Usage:   ./distribute.sh [options]"
   echo
   echo "  -h                     Show this help"
+  echo "  -c                     Run command in the build environment"
   echo "  -l                     Show a list of available modules"
   echo "  -m 'mod1 mod2'         Modules to include"
   echo "  -f                     Restart from scratch (remove the current build)"
@@ -321,13 +350,17 @@ function run_prepare() {
   if [ -e "$STAGE_PATH" ]; then
     info "The directory $STAGE_PATH already exist"
     info "Will continue using and possibly overwrite what is in there"
+  else
+    try mkdir -p "$STAGE_PATH"
+    cd $STAGE_PATH/..
+    try $PYTHON_BASE/bin/python3 -m venv stage
   fi
-  try mkdir -p "$STAGE_PATH"
 
   # create build directory if not found
   test -d $PACKAGES_PATH || mkdir -p $PACKAGES_PATH
   test -d $BUILD_PATH || mkdir -p $BUILD_PATH
   test -d $STAGE_PATH/lib || mkdir -p $STAGE_PATH/lib
+  test -d $QGIS_SITE_PACKAGES_PATH || mkdir -p $QGIS_SITE_PACKAGES_PATH
 }
 
 function in_array() {
@@ -441,32 +474,10 @@ function run_source_modules() {
   info "Pure-Python modules changed to $PYMODULES"
 }
 
-function run_get_packages() {
-  info "Run get packages"
-
-  for module in $MODULES; do
-    # download dependencies for this module
-    # check if there is not an overload from environment
-    module_dir=$(eval "echo \$OSGeo4QGIS_${module}_DIR")
-    if [ "$module_dir" ]
-    then
-      debug "\$OSGeo4QGIS_${module}_DIR is not empty, linking $module_dir dir instead of downloading"
-      directory=$(eval "echo \$BUILD_${module}")
-      if [ -e $directory ]; then
-        try rm -rf "$directory"
-      fi
-      try mkdir -p "$directory"
-      try rmdir "$directory"
-      try ln -s "$module_dir" "$directory"
-      continue
-    fi
-
-    debug "Download package for $module"
-
-    url="URL_$module"
-    url=${!url}
-    md5="MD5_$module"
-    md5=${!md5}
+function download_file() {
+    module=$1
+    url=$2
+    md5=$3
 
     if [ ! -d "$BUILD_PATH/$module" ]; then
       try mkdir -p $BUILD_PATH/$module
@@ -541,8 +552,9 @@ function run_get_packages() {
     # if already decompress, forget it
     cd $BUILD_PATH/$module
     directory=$(get_directory $filename)
+
     if [ -d "$directory" ]; then
-      continue
+      return
     fi
 
     # decompress
@@ -571,6 +583,41 @@ function run_get_packages() {
         fi
         ;;
     esac
+}
+
+function run_get_packages() {
+  info "Run get packages"
+
+  for module in $MODULES; do
+    # download dependencies for this module
+    # check if there is not an overload from environment
+    module_dir=$(eval "echo \$OSGeo4QGIS_${module}_DIR")
+    if [ "$module_dir" ]
+    then
+      debug "\$OSGeo4QGIS_${module}_DIR is not empty, linking $module_dir dir instead of downloading"
+      directory=$(eval "echo \$BUILD_${module}")
+      if [ -e $directory ]; then
+        try rm -rf "$directory"
+      fi
+      try mkdir -p "$directory"
+      try rmdir "$directory"
+      try ln -s "$module_dir" "$directory"
+      continue
+    fi
+
+    url="URL_$module"
+    url=${!url}
+    md5="MD5_$module"
+    md5=${!md5}
+
+    # check if the URL is the path on disk - do not do anything in that case
+    if [ -d "$url" ]; then
+      debug "$module specified directory on disk $url"
+      continue
+    fi
+
+    debug "Download package for $module"
+    download_file $module $url $md5
   done
 }
 
@@ -651,7 +698,7 @@ function list_modules() {
 }
 
 # Do the build
-while getopts ":hvlfxim:u:s:g" opt; do
+while getopts ":hvlfxic:m:u:s:g" opt; do
   case $opt in
     h)
       usage
@@ -676,6 +723,12 @@ while getopts ":hvlfxim:u:s:g" opt; do
       ;;
     m)
       MODULES="$OPTARG"
+      ;;
+    c)
+      push_env
+      eval $OPTARG
+      pop_env
+      exit 0
       ;;
     u)
       MODULES_UPDATE="$OPTARG"

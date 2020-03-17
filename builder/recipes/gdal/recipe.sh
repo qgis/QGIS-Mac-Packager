@@ -4,7 +4,7 @@
 VERSION_gdal=3.0.4
 
 # dependencies of this recipe
-DEPS_gdal=(geos proj libgeotiff xerces)
+DEPS_gdal=(geos proj libgeotiff xerces xz zstd libtiff netcdf hdf5 postgres)
 
 # url of the package
 URL_gdal=https://github.com/OSGeo/gdal/releases/download/v${VERSION_gdal}/gdal-${VERSION_gdal}.tar.gz
@@ -48,13 +48,18 @@ function build_gdal() {
 
 
   WITH_GDAL_DRIVERS=
-  for i in xerces
+  for i in xerces liblzma zstd libtiff geotiff jpeg hdf5 netcdf pg
   do
     WITH_GDAL_DRIVERS="$WITH_GDAL_DRIVERS --with-$i=$STAGE_DIR"
   done
 
   WITHOUT_GDAL_DRIVERS=
-  for i in ecw
+  for i in ecw grass libgrass cfitsio pcraster \
+           png dds gta gif ogdi fme sosi mongocxx \
+           mongocxxv3 hdf4 kea jasper openjpeg fgdb \
+           kakadu mrsid jp2mrsid mrsid_lidar \
+           msg oci mysql ingres expat libkml odbc \
+           dods-root spatialite sqlite3 rasterlite2
   do
     WITHOUT_GDAL_DRIVERS="$WITHOUT_GDAL_DRIVERS --without-$i"
   done

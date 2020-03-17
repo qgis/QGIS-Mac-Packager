@@ -35,7 +35,7 @@ function prebuild_jpeg() {
 
 function shouldbuild_jpeg() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/liblzma.dylib -nt $BUILD_jpeg/.patched ]; then
+  if [ ${STAGE_PATH}/lib/libjpeg.dylib -nt $BUILD_jpeg/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -59,5 +59,5 @@ function build_jpeg() {
 
 # function called after all the compile have been done
 function postbuild_jpeg() {
-  verify_lib "${STAGE_PATH}/lib/liblzma.dylib"
+  verify_lib "${STAGE_PATH}/lib/libjpeg.dylib"
 }
