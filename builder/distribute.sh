@@ -31,7 +31,6 @@ function pop_env() {
   export LIB_DIR=$OLD_LIB_DIR
   export LIB=$OLD_LIB
   export SYSROOT=$OLD_SYSROOT
-  export CMAKE_PREFIX_PATH=$OLD_CMAKE_PREFIX_PATH
 }
 
 function try () {
@@ -67,8 +66,8 @@ DEBUG=0
 
 # Load configuration
 source `dirname $0`/config.conf
-if [ "X$RELEASE_TYPE" == "X" ]; then
-  error "you need at RELEASE_TYPE in config.conf"
+if [ "X$RELEASE_VERSION" == "X" ]; then
+  error "you need at RELEASE_VERSION in config.conf"
 fi
 
 if [ "X$MACOSX_DEPLOYMENT_TARGET" == "X" ]; then
@@ -109,10 +108,18 @@ else
    error "Unable to find clang at ${XCODE_DEVELOPER}/usr/lib/clang/${CLANG_VERSION}"
 fi
 
+if [ "X$ROOT_OUT_PATH" == "X" ]; then
+  error "No ROOT_OUT_PATH environment set, abort"
+fi
+
+if [ -d $ROOT_OUT_PATH ]; then
+   debug "Using root output path: $ROOT_OUT_PATH"
+else
+   error "The root output directory '$ROOT_OUT_PATH' not found."
+fi
 
 # Paths
 ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-ROOT_OUT_PATH="${ROOT_PATH}/../../builds/$RELEASE_TYPE-$ARCH/deps"
 STAGE_PATH="${ROOT_OUT_PATH}/stage"
 RECIPES_PATH="$ROOT_PATH/recipes"
 BUILD_PATH="$ROOT_OUT_PATH/build"
@@ -163,7 +170,6 @@ function push_env() {
     export OLD_LIB_DIR=$LIB_DIR
     export OLD_LIB=$LIB
     export OLD_SYSROOT=$SYSROOT
-    export OLD_CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH
 
     export SYSROOT=$XCODE_DEVELOPER/SDKs/MacOSX.sdk
     export CFLAGS="--sysroot $SYSROOT -I$STAGE_PATH/include"
@@ -171,13 +177,15 @@ function push_env() {
     export CXXFLAGS="${CFLAGS}"
 
     export PATH="/bin/:/usr/bin:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin"
-    export CMAKE_PREFIX_PATH="$STAGE_PATH;$QT_BASE/clang_64;$SYSROOT"
 
     add_homebrew_path bison
     add_homebrew_path flex
     add_homebrew_path cmake
     add_homebrew_path coreutils
     add_homebrew_path ccache
+    add_homebrew_path autoconf
+    add_homebrew_path automake
+    add_homebrew_path libtool
 
     # some environment for CMAKE search
     export LIB=$STAGE_PATH
@@ -192,9 +200,12 @@ function push_env() {
       CMAKE="${CMAKE} -DCMAKE_BUILD_TYPE=Release"
     fi
     export CMAKE="${CMAKE} -DCMAKE_INSTALL_PREFIX:PATH=$STAGE_PATH"
-    export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH"
+    export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64;$SYSROOT"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=FALSE"
+    export CMAKE="${CMAKE} -DCMAKE_INSTALL_RPATH=@rpath"
+    export CMAKE="${CMAKE} -DENABLE_TESTS=OFF"
+    export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=ON"
     # MACOSX_DEPLOYMENT_TARGET in environment should set minimum version
 
     # export some tools
@@ -236,7 +247,7 @@ else
   WHEAD="wget --spider -q -S"
 fi
 
-for tool in tar bzip2 unzip cmake bison flex ; do
+for tool in tar bzip2 unzip cmake bison flex autoconf automake libtool; do
   which $tool &>/dev/null
   if [ $? -ne 0 ]; then
     error "Tool $tool is missing"
@@ -449,6 +460,7 @@ function run_get_packages() {
       try ln -s "$module_dir" "$directory"
       continue
     fi
+
     debug "Download package for $module"
 
     url="URL_$module"

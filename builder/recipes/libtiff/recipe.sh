@@ -48,6 +48,9 @@ function build_libtiff() {
   push_env
 
   try $CMAKE $BUILD_libtiff .
+
+  try $CMAKE $BUILD_libtiff .
+
   check_file_configuration CMakeCache.txt
 
   try $MAKESMP

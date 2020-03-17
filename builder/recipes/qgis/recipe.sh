@@ -4,7 +4,7 @@
 VERSION_qgis=3.12.0
 
 # dependencies of this recipe
-DEPS_qgis=(gdal)
+DEPS_qgis=(gdal hdf5 netcdf libzip qca libtasn1)
 
 # url of the package
 URL_qgis=https://github.com/qgis/QGIS/archive/final-${VERSION_qgis//./_}.tar.gz
@@ -42,22 +42,22 @@ function build_qgis() {
 
   push_env
 
-  try $CMAKE \
-    -DFLEX_EXECUTABLE=`which flex` \
-    -DBISON_EXECUTABLE=`which bison` \
-    -DDISABLE_DEPRECATED=ON \
-    -DWITH_QTWEBKIT=OFF \
-    -DWITH_BINDINGS=OFF \
-    -DWITH_GRASS=OFF \
-    -DENABLE_QT5=ON \
-    -DENABLE_TESTS=OFF \
-    -DWITH_QWTPOLAR=OFF \
-    $BUILD_qgis .
+  # try $CMAKE \
+  #  -DFLEX_EXECUTABLE=`which flex` \
+  #  -DBISON_EXECUTABLE=`which bison` \
+  #  -DDISABLE_DEPRECATED=ON \
+  #  -DWITH_QTWEBKIT=OFF \
+  #  -DWITH_BINDINGS=OFF \
+  #  -DWITH_GRASS=OFF \
+  #  -DENABLE_QT5=ON \
+  #  -DENABLE_TESTS=OFF \
+  #  -DWITH_QWTPOLAR=OFF \
+  #  $BUILD_qgis .
 
-  check_file_configuration CMakeCache.txt
+  # check_file_configuration CMakeCache.txt
 
-  try $MAKESMP
-  try $MAKE install
+  # try $MAKESMP
+  # try $MAKE install
 
   pop_env
 }

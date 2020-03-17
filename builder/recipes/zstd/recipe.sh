@@ -33,7 +33,7 @@ function prebuild_zstd() {
 
 function shouldbuild_zstd() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/liblzma.dylib -nt $BUILD_zstd/.patched ]; then
+  if [ ${STAGE_PATH}/lib/libzstd.dylib -nt $BUILD_zstd/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -51,5 +51,5 @@ function build_zstd() {
 
 # function called after all the compile have been done
 function postbuild_zstd() {
-  verify_lib "${STAGE_PATH}/lib/liblzma.dylib"
+  verify_lib "${STAGE_PATH}/lib/libzstd.dylib"
 }
