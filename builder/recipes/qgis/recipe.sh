@@ -4,7 +4,7 @@
 VERSION_qgis=3.12.0
 
 # dependencies of this recipe
-DEPS_qgis=(gdal hdf5 netcdf libzip qca libtasn1)
+DEPS_qgis=(gdal hdf5 netcdf libzip qca libtasn1 python_packages)
 
 # url of the package
 URL_qgis=https://github.com/qgis/QGIS/archive/final-${VERSION_qgis//./_}.tar.gz

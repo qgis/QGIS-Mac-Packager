@@ -18,7 +18,7 @@ function pop_env() {
   info "Leaving build environment"
 
   # deactivate python virtualenv
-  deactivate
+  deactivate nondestructive
 
   export PATH=$OLD_PATH
   export CFLAGS=$OLD_CFLAGS
@@ -38,6 +38,7 @@ function pop_env() {
   export PYTHON=$OLD_PYTHON
   export PYTHONUSERBASE=$OLD_PYTHONUSERBASE
   export DYLD_LIBRARY_PATH=$OLD_DYLD_LIBRARY_PATH
+  export PIP=$OLD_PIP
 }
 
 function try () {
@@ -81,6 +82,14 @@ if [ "X$MACOSX_DEPLOYMENT_TARGET" == "X" ]; then
   error "you need at MACOSX_DEPLOYMENT_TARGET in config.conf"
 fi
 
+if [ "X$VERSION_qt" == "X" ]; then
+  error "No VERSION_qt environment set, abort"
+fi
+
+if [ "X$VERSION_python" == "X" ]; then
+  error "No VERSION_python environment set, abort"
+fi
+
 if [ "X$QT_BASE" == "X" ]; then
   error "No QT_BASE environment set, abort"
 fi
@@ -96,11 +105,10 @@ if [ "X$PYTHON_BASE" == "X" ]; then
   error "No PYTHON_BASE environment set, abort"
 fi
 
-PYTHON=$PYTHON_BASE/bin/python3.7
-if [ -f $PYTHON ]; then
-   debug "Using Python: $PYTHON_BASE"
+if [ -f $PYTHON_BASE/bin/python${VERSION_python} ]; then
+   debug "Using Python: $PYTHON_BASE/bin/python${VERSION_python}"
 else
-   error "The file '$PYTHON' in not found."
+   error "The file '$PYTHON_BASE/bin/python${VERSION_python}' in not found."
 fi
 
 if hash ${XCODE_DEVELOPER}/usr/bin/gcc 2>/dev/null; then
@@ -151,6 +159,32 @@ function check_file_configuration() {
   fi
 }
 
+function python_package_installed() {
+    i=$1
+    arr=(${i//==/ })
+    package_name=${arr[0]}
+    package_version=${arr[1]}
+    dist_name=${package_name}-${package_version}.dist-info
+    if [ ! -d $QGIS_SITE_PACKAGES_PATH/$package_name ] && [ ! -d $QGIS_SITE_PACKAGES_PATH/$dist_name ] ; then
+      return 1
+    fi
+
+    python_import=$package_name
+
+    # Exception for imports
+    if [ "$package_name" == "sip" ]; then
+      python_import=sipconfig
+    fi
+    # End of exceptions
+
+    push_env
+    which $PYTHON
+    $PYTHON -c import\ $python_import > /dev/null 2>&1 || return 1
+    pop_env
+
+    return 0
+}
+
 function patch_configure_file() {
     try ${SED} 's;/usr/local/lib/ ;;g' $1
     try ${SED} 's; /usr/local/lib/;;g' $1
@@ -181,6 +215,7 @@ function push_env() {
     export OLD_PYTHON=$PYTHON
     export OLD_PYTHONUSERBASE=$PYTHONUSERBASE
     export OLD_DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH
+    export OLD_PIP=$PIP
 
     export PATH="/sbin/:/bin/:/usr/bin"
     add_homebrew_path bison
@@ -244,8 +279,11 @@ function push_env() {
 
     # activate python virtualenv
     source $STAGE_PATH/bin/activate
-
-
+    export PYTHON="$STAGE_PATH/bin/python3"
+    export PIP="pip3 install --global-option=build_ext"
+    export PIP="$PIP --global-option=--include-dirs=$STAGE_PATH/include"
+    export PIP="$PIP --global-option=--library-dirs=$STAGE_PATH/lib"
+    export PIP="$PIP --no-binary all"
 }
 
 #########################################################################################################
@@ -352,8 +390,18 @@ function run_prepare() {
     info "Will continue using and possibly overwrite what is in there"
   else
     try mkdir -p "$STAGE_PATH"
+  fi
+
+  if [ ! -f $STAGE_PATH/bin/python3 ]; then
+    info "Creating Python virtual environment"
     cd $STAGE_PATH/..
-    try $PYTHON_BASE/bin/python3 -m venv stage
+    try $PYTHON_BASE/bin/python${VERSION_python} -m venv stage
+    push_env
+    # install pip and some default stuff
+    pip3 install --upgrade pip
+    pip3 install --upgrade setuptools
+    pip3 install --upgrade wheel
+    pop_env
   fi
 
   # create build directory if not found
@@ -398,7 +446,6 @@ function run_source_modules() {
 
   needed=($MODULES)
   declare -a processed
-  declare -a pymodules
   processed=()
 
   fn_deps=$BUILD_PATH'/.deps'
@@ -434,9 +481,7 @@ function run_source_modules() {
     debug "Read $module recipe"
     recipe=$RECIPES_PATH/$module/recipe.sh
     if [ ! -f $recipe ]; then
-      error "Recipe $module does not exist, adding the module as pure-python package"
-      pymodules+=($original_module)
-      continue;
+      error "Recipe $module does not exist"
     fi
     source $RECIPES_PATH/$module/recipe.sh
 
@@ -465,13 +510,12 @@ function run_source_modules() {
   done
 
   info `pwd`
+  push_env
+  cd $ROOT_PATH
   MODULES="$($PYTHON tools/depsort.py --optional $fn_optional_deps < $fn_deps)"
+  pop_env
 
   info "Modules changed to $MODULES"
-
-  PYMODULES="${pymodules[@]}"
-
-  info "Pure-Python modules changed to $PYMODULES"
 }
 
 function download_file() {
@@ -609,6 +653,12 @@ function run_get_packages() {
     url=${!url}
     md5="MD5_$module"
     md5=${!md5}
+
+    # if string is empty means we do not need to download anything
+    if [ "X$url" == "X" ]; then
+      debug "$module does not specified download URL, skipping"
+      continue
+    fi
 
     # check if the URL is the path on disk - do not do anything in that case
     if [ -d "$url" ]; then

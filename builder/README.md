@@ -15,13 +15,9 @@ Build QGIS-deps
 Build QGIS (Qt Creator)
 -----------------------
 
-1. Open Qt Creator
-2. Open QGIS CMakeLists.txt
-3. In Kits, setup native Qt (from prerequisities)
-4. In Build Environment, setup LIB_DIR=<path from config.conf>/qgis-deps-<release_version>/stage 
-5. In Build Environment, setup CMAKE_PREFIX_PATH=/opt/Qt/<qt_version>/clang_64:${LIB_DIR}
-6. Rerun cmake from menu (Clear Cmake Configration + run Cmake)
-7. Build
+1. run `./distribute.sh -c "open /opt/Qt/Qt\ Creator.app/"`
+2. Rerun cmake from menu (Clear Cmake Configration + run Cmake)
+3. Build
 
 License & Acknowledgement
 -------------------------

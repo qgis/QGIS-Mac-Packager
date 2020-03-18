@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # version of your package
-VERSION_hdf5_major=1.12
+VERSION_hdf5_major=1.10
 VERSION_hdf5=${VERSION_hdf5_major}.0
 
 # dependencies of this recipe
@@ -11,7 +11,7 @@ DEPS_hdf5=()
 URL_hdf5=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${VERSION_hdf5_major}/hdf5-${VERSION_hdf5}/src/hdf5-${VERSION_hdf5}.tar.bz2
 
 # md5 of the package
-MD5_hdf5=1fa68c4b11b6ef7a9d72ffa55995f898
+MD5_hdf5=355243bda5df386aea25f079d550947b
 
 # default build path
 BUILD_hdf5=$BUILD_PATH/hdf5/$(get_directory $URL_hdf5)
@@ -35,7 +35,6 @@ function prebuild_hdf5() {
 }
 
 function shouldbuild_hdf5() {
-  # If lib is newer than the sourcecode skip build
   if [ ${STAGE_PATH}/lib/libhdf5.dylib -nt $BUILD_hdf5/.patched ]; then
     DO_BUILD=0
   fi
@@ -54,6 +53,8 @@ function build_hdf5() {
     --enable-cxx \
     --disable-fortran \
     --with-szlib=no
+
+    # enable-parallel ??? MPI Support
 
   check_file_configuration config.status
   try $MAKESMP
