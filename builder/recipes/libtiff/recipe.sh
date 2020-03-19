@@ -50,10 +50,11 @@ function build_libtiff() {
   push_env
 
   try ${CONFIGURE} \
-      --disable-dependency-tracking
-      --disable-lzma
-      --with-jpeg-include-dir=$STAGE_PATH/include
-      --with-jpeg-lib-dir=$STAGE_PATH/lib
+      --disable-debug \
+      --disable-dependency-tracking \
+      --disable-lzma \
+      --with-jpeg-include-dir=$STAGE_PATH/include \
+      --with-jpeg-lib-dir=$STAGE_PATH/lib \
       --without-x
 
   check_file_configuration config.status
@@ -61,10 +62,12 @@ function build_libtiff() {
   try $MAKESMP
   try $MAKE install
 
+  install_name_tool -id "@rpath/libtiff.dylib" ${STAGE_PATH}/lib/libtiff.dylib
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_libtiff() {
-  verify_lib "${STAGE_PATH}/lib/libtiff.dylib"
+  verify_lib "libtiff.dylib"
 }

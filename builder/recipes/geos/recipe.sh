@@ -55,5 +55,5 @@ function build_geos() {
 
 # function called after all the compile have been done
 function postbuild_geos() {
-  verify_lib "${STAGE_PATH}/lib/libgeos_c.dylib"
+  verify_lib "libgeos_c.dylib"
 }

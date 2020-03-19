@@ -55,5 +55,5 @@ function build_qca() {
 
 # function called after all the compile have been done
 function postbuild_qca() {
-  verify_lib "${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5"
+  verify_lib "qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5"
 }

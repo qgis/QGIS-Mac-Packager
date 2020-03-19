@@ -47,19 +47,19 @@ function build_libtasn1() {
   export CFLAGS="$CFLAGS -O2 -DPIC"
   patch_configure_file configure
 
-  try ${CONFIGURE} \
-    --disable-dependency-tracking \
-    --disable-silent-rules
+  try ${CONFIGURE} --disable-debug
 
   check_file_configuration config.status
 
   try $MAKESMP
   try $MAKESMP install
 
+  install_name_tool -id "@rpath/libtasn1.dylib" ${STAGE_PATH}/lib/libtasn1.dylib
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_libtasn1() {
-  verify_lib "${STAGE_PATH}/lib/libtasn1.dylib"
+  verify_lib "libtasn1.dylib"
 }

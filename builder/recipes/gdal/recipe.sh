@@ -4,7 +4,7 @@
 VERSION_gdal=3.0.4
 
 # dependencies of this recipe
-DEPS_gdal=(geos proj libgeotiff libxml2 xerces xz zstd libtiff netcdf hdf5 postgres jpeg)
+DEPS_gdal=(geos proj libgeotiff libxml2 xerces xz zstd libtiff netcdf hdf5 postgres jpeg png)
 
 # url of the package
 URL_gdal=https://github.com/OSGeo/gdal/releases/download/v${VERSION_gdal}/gdal-${VERSION_gdal}.tar.gz
@@ -48,14 +48,14 @@ function build_gdal() {
 
 
   WITH_GDAL_DRIVERS=
-  for i in xerces liblzma zstd libtiff geotiff jpeg hdf5 netcdf pg
+  for i in xerces liblzma zstd libtiff geotiff jpeg hdf5 netcdf pg png
   do
     WITH_GDAL_DRIVERS="$WITH_GDAL_DRIVERS --with-$i=$STAGE_DIR"
   done
 
   WITHOUT_GDAL_DRIVERS=
   for i in ecw grass libgrass cfitsio pcraster \
-           png dds gta gif ogdi fme sosi mongocxx \
+           dds gta gif ogdi fme sosi mongocxx \
            mongocxxv3 hdf4 kea jasper openjpeg fgdb \
            kakadu mrsid jp2mrsid mrsid_lidar \
            msg oci mysql ingres expat libkml odbc \
@@ -64,7 +64,8 @@ function build_gdal() {
     WITHOUT_GDAL_DRIVERS="$WITHOUT_GDAL_DRIVERS --without-$i"
   done
 
-  try ${CONFIGURE}
+  try ${CONFIGURE} \
+    --disable-debug \
     ${WITH_GDAL_DRIVERS} \
     ${WITHOUT_GDAL_DRIVERS}
 
@@ -72,10 +73,12 @@ function build_gdal() {
   try $MAKESMP
   try $MAKESMP install
 
+  install_name_tool -id "@rpath/libgdal.dylib" ${STAGE_PATH}/lib/libgdal.dylib
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_gdal() {
-  verify_lib "${STAGE_PATH}/lib/libgdal.dylib"
+  verify_lib "libgdal.dylib"
 }

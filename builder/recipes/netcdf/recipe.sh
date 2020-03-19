@@ -55,5 +55,5 @@ function build_netcdf() {
 
 # function called after all the compile have been done
 function postbuild_netcdf() {
-  verify_lib "${STAGE_PATH}/lib/libnetcdf.dylib"
+  verify_lib "libnetcdf.dylib"
 }

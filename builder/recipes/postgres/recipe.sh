@@ -46,16 +46,45 @@ function build_postgres() {
   try cd $BUILD_PATH/postgres/build-$ARCH
   push_env
 
-  try ${CONFIGURE}
+  try ${CONFIGURE} \
+    --disable-debug \
+    --enable-rpath
 
   check_file_configuration config.status
   try $MAKESMP
   try $MAKESMP install
+
+  install_name_tool -id "@rpath/libpq.dylib" ${STAGE_PATH}/lib/libpq.dylib
+  install_name_tool -id "@rpath/libpgtypes.dylib" ${STAGE_PATH}/lib/libpgtypes.dylib
+  install_name_tool -id "@rpath/libecpg.dylib" ${STAGE_PATH}/lib/libecpg.dylib
+  install_name_tool -id "@rpath/libecpg_compat.dylib" ${STAGE_PATH}/lib/libecpg_compat.dylib
+
+  if [ ! -f "${STAGE_PATH}/lib/libpq.5.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/libpq.5.dylib does not exist... maybe you updated the postgres version?"
+  fi
+  install_name_tool -change "${STAGE_PATH}/lib/libpq.5.dylib" "@rpath/libpq.5.dylib" ${STAGE_PATH}/lib/libecpg.dylib
+  install_name_tool -change "${STAGE_PATH}/lib/libpq.5.dylib" "@rpath/libpq.5.dylib" ${STAGE_PATH}/lib/libecpg_compat.dylib
+
+  if [ ! -f "${STAGE_PATH}/lib/libpgtypes.3.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/libpgtypes.3.dylib does not exist... maybe you updated the postgres version?"
+  fi
+  install_name_tool -change "${STAGE_PATH}/lib/libpgtypes.3.dylib" "@rpath/libpgtypes.3.dylib" ${STAGE_PATH}/lib/libecpg.dylib
+  install_name_tool -change "${STAGE_PATH}/lib/libpgtypes.3.dylib" "@rpath/libpgtypes.3.dylib" ${STAGE_PATH}/lib/libecpg_compat.dylib
+
+  if [ ! -f "${STAGE_PATH}/lib/libecpg.6.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/libecpg.6.dylib does not exist... maybe you updated the postgres version?"
+  fi
+  install_name_tool -change "${STAGE_PATH}/lib/libecpg.6.dylib" "@rpath/lib/libecpg.6.dylib" ${STAGE_PATH}/lib/libecpg_compat.dylib
+
+  # TODO install names for the binaries in bin/ ... do we need it?
 
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_postgres() {
-  verify_lib "${STAGE_PATH}/lib/libpq.dylib"
+  verify_lib libpq.dylib
+  verify_lib libpgtypes.dylib
+  verify_lib libecpg.dylib
+  verify_lib libecpg_compat.dylib
 }

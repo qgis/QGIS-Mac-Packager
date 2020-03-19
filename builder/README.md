@@ -17,7 +17,11 @@ Build QGIS (Qt Creator)
 
 1. run `./distribute.sh -B`
 2. Rerun cmake from menu (Clear Cmake Configration + run Cmake)
-3. Build
+3. Set Projects>Build Settings>Cmake option QGIS_MACAPP_BUNDLE=0
+4. If it stops on "unable to find Qt5WebKit module or Qt5SerialPort", 
+   your Qt installation is probably without this module. 
+   Open Projects>Build Settings>Cmake and add "WITH_QTWEBKIT=FALSE" and/or "WITH_QT5SERIALPORT=FALSE"
+5. Build
 
 License & Acknowledgement
 -------------------------

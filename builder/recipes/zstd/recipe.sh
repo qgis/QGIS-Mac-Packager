@@ -46,10 +46,12 @@ function build_zstd() {
 
   try $MAKE install PREFIX=$STAGE_PATH
 
+  install_name_tool -id "@rpath/libzstd.dylib" ${STAGE_PATH}/lib/libzstd.dylib
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_zstd() {
-  verify_lib "${STAGE_PATH}/lib/libzstd.dylib"
+  verify_lib "libzstd.dylib"
 }

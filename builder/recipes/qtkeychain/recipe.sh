@@ -60,5 +60,5 @@ function build_qtkeychain() {
 
 # function called after all the compile have been done
 function postbuild_qtkeychain() {
-  verify_lib "${STAGE_PATH}/lib/libqt5keychain.dylib"
+  verify_lib "libqt5keychain.dylib"
 }

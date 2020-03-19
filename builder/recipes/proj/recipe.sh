@@ -55,5 +55,5 @@ function build_proj() {
 
 # function called after all the compile have been done
 function postbuild_proj() {
-  verify_lib "${STAGE_PATH}/lib/libproj.dylib"
+  verify_lib "libproj.dylib"
 }

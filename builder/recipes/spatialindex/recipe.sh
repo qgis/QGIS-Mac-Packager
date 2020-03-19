@@ -56,5 +56,5 @@ function build_spatialindex() {
 
 # function called after all the compile have been done
 function postbuild_spatialindex() {
-  verify_lib "${STAGE_PATH}/lib/libspatialindex.dylib"
+  verify_lib "libspatialindex.dylib"
 }

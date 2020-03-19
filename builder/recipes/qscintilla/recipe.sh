@@ -4,7 +4,7 @@
 VERSION_qscintilla=2.11.4
 
 # dependencies of this recipe
-DEPS_qscintilla=()
+DEPS_qscintilla=(python_sip)
 
 # url of the package
 URL_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${VERSION_qscintilla}/QScintilla-${VERSION_qscintilla}.tar.gz
@@ -64,7 +64,7 @@ function build_qscintilla() {
 
 # function called after all the compile have been done
 function postbuild_qscintilla() {
-  verify_lib "${STAGE_PATH}/lib/libqscintilla2_qt5.dylib"
+  verify_lib "libqscintilla2_qt5.dylib"
   # This builds also python module
   # TODO check the python qscintilla module
 }

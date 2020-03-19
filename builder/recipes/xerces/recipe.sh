@@ -58,5 +58,5 @@ function build_xerces() {
 
 # function called after all the compile have been done
 function postbuild_xerces() {
-  verify_lib "${STAGE_PATH}/lib/libxerces-c.so"
+  verify_lib "libxerces-c.so"
 }

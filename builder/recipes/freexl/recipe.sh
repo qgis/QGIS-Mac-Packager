@@ -46,16 +46,18 @@ function build_freexl() {
   try cd $BUILD_PATH/freexl/build-$ARCH
   push_env
 
-  try ${CONFIGURE}
+  try ${CONFIGURE} --disable-debug
 
   check_file_configuration config.status
   try $MAKESMP
   try $MAKESMP install
+
+  install_name_tool -id "@rpath/libfreexl.dylib" ${STAGE_PATH}/lib/libfreexl.dylib
 
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_freexl() {
-  verify_lib "${STAGE_PATH}/lib/libfreexl.dylib"
+  verify_lib "libfreexl.dylib"
 }

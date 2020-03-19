@@ -177,7 +177,7 @@ function python_package_installed() {
     fi
 
     push_env
-    $PYTHON -c import\ $python_import > /dev/null 2>&1 || return 1
+    DYLD_LIBRARY_PATH=$STAGE_PATH/lib $PYTHON -c import\ $python_import > /dev/null 2>&1 || return 1
     pop_env
 
     return 0
@@ -248,7 +248,7 @@ function push_env() {
     # export some tools
     export MAKESMP="/usr/bin/make -j$CORES"
     export MAKE="/usr/bin/make"
-    export CONFIGURE="./configure --prefix=$STAGE_PATH --disable-debug --disable-dependency-tracking --disable-silent-rules"
+    export CONFIGURE="./configure --prefix=$STAGE_PATH --disable-dependency-tracking --disable-silent-rules"
     export CC="/usr/bin/clang"
     export CXX="/usr/bin/clang++"
     export OBJCXX=${CXX}
@@ -360,6 +360,7 @@ function get_directory() {
 }
 
 function verify_lib() {
+  cd ${STAGE_PATH}/lib/
   LIB_ARCHS=`lipo -archs $1`
   if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
     error "Library $1 was not successfully build for $ARCH, but ${LIB_ARCHS}"
@@ -369,6 +370,12 @@ function verify_lib() {
   then
     otool -L $1
     error "Library $1 contains /usr/local/lib string <-- CMake picked some homebrew libs!"
+  fi
+
+  if otool -L $1 | grep -q $STAGE_PATH
+  then
+    otool -L $1
+    error "Library $1 contains $STAGE_PATH string <-- forgot to change install_name for the linked library?"
   fi
 }
 

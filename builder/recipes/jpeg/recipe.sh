@@ -47,18 +47,19 @@ function build_jpeg() {
   push_env
 
   try ${CONFIGURE} \
-    --disable-dependency-tracking \
-    --disable-silent-rules
+    --disable-debug
 
   check_file_configuration config.status
 
   try $MAKESMP
   try $MAKESMP install
 
+  install_name_tool -id "@rpath/libjpeg.dylib" ${STAGE_PATH}/lib/libjpeg.dylib
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_jpeg() {
-  verify_lib "${STAGE_PATH}/lib/libjpeg.dylib"
+  verify_lib "libjpeg.dylib"
 }

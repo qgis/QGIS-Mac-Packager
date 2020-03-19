@@ -60,6 +60,6 @@ function build_qwt() {
 
 # function called after all the compile have been done
 function postbuild_qwt() {
-  verify_lib "${STAGE_PATH}/lib/qt/plugins/designer/libqwt_designer_plugin.dylib"
-  verify_lib "${STAGE_PATH}/lib/qwt.framework/qwt"
+  verify_lib "qt/plugins/designer/libqwt_designer_plugin.dylib"
+  verify_lib "qwt.framework/qwt"
 }

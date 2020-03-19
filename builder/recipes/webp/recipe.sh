@@ -46,16 +46,19 @@ function build_webp() {
   try cd $BUILD_PATH/webp/build-$ARCH
   push_env
 
-  try ${CONFIGURE}
+  try ${CONFIGURE} \
+    --disable-debug
 
   check_file_configuration config.status
   try $MAKESMP
   try $MAKESMP install
+
+  install_name_tool -id "@rpath/libwebp.dylib" ${STAGE_PATH}/lib/libwebp.dylib
 
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_webp() {
-  verify_lib "${STAGE_PATH}/lib/libwebp.dylib"
+  verify_lib "libwebp.dylib"
 }

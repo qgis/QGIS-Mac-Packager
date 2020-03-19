@@ -58,5 +58,5 @@ function build_libgeotiff() {
 
 # function called after all the compile have been done
 function postbuild_libgeotiff() {
-  verify_lib "${STAGE_PATH}/lib/libgeotiff.a"
+  verify_lib "libgeotiff.a"
 }

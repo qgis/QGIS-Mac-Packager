@@ -47,6 +47,7 @@ function build_hdf5() {
   push_env
 
   try ${CONFIGURE} \
+    --enable-build-mode=release \
     --disable-dependency-tracking \
     --disable-silent-rules \
     --enable-build-mode=production \
@@ -60,10 +61,19 @@ function build_hdf5() {
   try $MAKESMP
   try $MAKESMP install
 
+  install_name_tool -id "@rpath/libhdf5.dylib" ${STAGE_PATH}/lib/libhdf5.dylib
+  install_name_tool -id "@rpath/libhdf5_hl.dylib" ${STAGE_PATH}/lib/libhdf5_hl.dylib
+
+  if [ ! -f "${STAGE_PATH}/lib/libhdf5.100.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/libhdf5.100.dylib does not exist... maybe you updated the hdf5 version?"
+  fi
+  install_name_tool -change "${STAGE_PATH}/lib/libhdf5.100.dylib" "@rpath/libhdf5.100.dylib" ${STAGE_PATH}/lib/libhdf5_hl.dylib
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_hdf5() {
-  verify_lib "${STAGE_PATH}/lib/libhdf5.dylib"
+  verify_lib "libhdf5.dylib"
+  verify_lib "libhdf5_hl.dylib"
 }

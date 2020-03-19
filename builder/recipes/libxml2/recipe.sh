@@ -47,6 +47,7 @@ function build_libxml2() {
   push_env
 
   try ${CONFIGURE} \
+    --disable-debug \
     --without-lzma \
     --without-python \
     --with-history
@@ -59,10 +60,12 @@ function build_libxml2() {
     try ln -s "$STAGE_PATH/include/libxml2/libxml/" "$STAGE_PATH/include/libxml"
   fi
 
+  install_name_tool -id "@rpath/libxml2.dylib" ${STAGE_PATH}/lib/libxml2.dylib
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_libxml2() {
-  verify_lib "${STAGE_PATH}/lib/libxml2.dylib"
+  verify_lib "libxml2.dylib"
 }

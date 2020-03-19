@@ -50,6 +50,7 @@ function build_spatialite() {
   # Remove in libspatialite 5.0.0
   CFLAGS="$CFLAGS -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H" \
   try ${CONFIGURE} \
+    --disable-debug \
     --enable-geocallbacks \
     --disable-dependency-tracking
 
@@ -57,10 +58,13 @@ function build_spatialite() {
   try $MAKESMP
   try $MAKESMP install
 
+  install_name_tool -id "@rpath/libspatialite.dylib" ${STAGE_PATH}/lib/libspatialite.dylib
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_spatialite() {
-  verify_lib "${STAGE_PATH}/lib/libspatialite.dylib"
+  verify_lib "libspatialite.dylib"
+  verify_lib "mod_spatialite.so"
 }

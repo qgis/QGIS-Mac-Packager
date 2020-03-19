@@ -55,5 +55,5 @@ function build_exiv2() {
 
 # function called after all the compile have been done
 function postbuild_exiv2() {
-  verify_lib "${STAGE_PATH}/lib/libexiv2.dylib"
+  verify_lib "libexiv2.dylib"
 }

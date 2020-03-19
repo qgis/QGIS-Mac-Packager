@@ -1,27 +1,27 @@
 #!/bin/bash
 
 # version of your package
-VERSION_gsl=2.6
+VERSION_png=1.6.37
 
 # dependencies of this recipe
-DEPS_gsl=()
+DEPS_png=()
 
 # url of the package
-URL_gsl=https://ftp.gnu.org/gnu/gsl/gsl-${VERSION_gsl}.tar.gz
+URL_png=https://downloads.sourceforge.net/libpng/libpng-${VERSION_png}.tar.xz
 
 # md5 of the package
-MD5_gsl=bda73a3dd5ff2f30b5956764399db6e7
+MD5_png=015e8e15db1eecde5f2eb9eb5b6e59e9
 
 # default build path
-BUILD_gsl=$BUILD_PATH/gsl/$(get_directory $URL_gsl)
+BUILD_png=$BUILD_PATH/png/$(get_directory $URL_png)
 
 # default recipe path
-RECIPE_gsl=$RECIPES_PATH/gsl
+RECIPE_png=$RECIPES_PATH/png
 
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
-function prebuild_gsl() {
-  cd $BUILD_gsl
+function prebuild_png() {
+  cd $BUILD_png
 
   # check marker
   if [ -f .patched ]; then
@@ -33,17 +33,17 @@ function prebuild_gsl() {
   touch .patched
 }
 
-function shouldbuild_gsl() {
+function shouldbuild_png() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libgsl.dylib -nt $BUILD_gsl/.patched ]; then
+  if [ ${STAGE_PATH}/lib/libpng.dylib -nt $BUILD_png/.patched ]; then
     DO_BUILD=0
   fi
 }
 
 # function called to build the source code
-function build_gsl() {
-  try rsync -a $BUILD_gsl/ $BUILD_PATH/gsl/build-$ARCH/
-  try cd $BUILD_PATH/gsl/build-$ARCH
+function build_png() {
+  try rsync -a $BUILD_png/ $BUILD_PATH/png/build-$ARCH/
+  try cd $BUILD_PATH/png/build-$ARCH
   push_env
 
   try ${CONFIGURE} --disable-debug
@@ -52,12 +52,12 @@ function build_gsl() {
   try $MAKESMP
   try $MAKESMP install
 
-  install_name_tool -id "@rpath/libgsl.dylib" ${STAGE_PATH}/lib/libgsl.dylib
+  install_name_tool -id "@rpath/libpng.dylib" ${STAGE_PATH}/lib/libpng.dylib
 
   pop_env
 }
 
 # function called after all the compile have been done
-function postbuild_gsl() {
-  verify_lib "libgsl.dylib"
+function postbuild_png() {
+  verify_lib "libpng.dylib"
 }

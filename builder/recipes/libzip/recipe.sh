@@ -55,5 +55,5 @@ function build_libzip() {
 
 # function called after all the compile have been done
 function postbuild_libzip() {
-  verify_lib "${STAGE_PATH}/lib/libzip.dylib"
+  verify_lib "libzip.dylib"
 }
