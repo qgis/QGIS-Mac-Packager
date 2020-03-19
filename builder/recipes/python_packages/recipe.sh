@@ -20,13 +20,8 @@ RECIPE_python_packages=$RECIPES_PATH/python_packages
 
 # requirements
 REQUIREMENTS_python_packages=(
-  six==1.14.0
   numpy==1.18.2
   h5py==2.10.0
-  chardet==3.0.4
-  idna==2.9
-  urllib3==1.25.8
-  certifi==2019.11.28
   requests==2.23.0
   PyQt5==${VERSION_qt}
 )
@@ -48,7 +43,8 @@ function prebuild_python_packages() {
 function shouldbuild_python_packages() {
   for i in ${REQUIREMENTS_python_packages[*]}
   do
-    if ! python_package_installed $i; then
+    arr=(${i//==/ })
+    if ! python_package_installed ${arr[0]} ${arr[1]} ${arr[0]}; then
       debug "Missing python package $i, requested build"
       return
     fi
@@ -66,6 +62,9 @@ function build_python_packages() {
   for i in ${REQUIREMENTS_python_packages[*]}
   do
     info "Installing python_packages package $i"
+    # build_ext sometimes tries to dlopen the libraries
+    # to determine the linked library version (e.g. hdf5)
+    DYLD_LIBRARY_PATH=$STAGE_PATH/lib \
     try $PIP $i
   done
 
@@ -76,7 +75,8 @@ function build_python_packages() {
 function postbuild_python_packages() {
  for i in ${REQUIREMENTS_python_packages[*]}
   do
-    if ! python_package_installed $i; then
+    arr=(${i//==/ })
+    if ! python_package_installed ${arr[0]} ${arr[1]} ${arr[0]} ; then
       error "Missing python package $i"
     fi
   done

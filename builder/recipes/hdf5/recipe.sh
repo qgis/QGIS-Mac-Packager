@@ -46,7 +46,7 @@ function build_hdf5() {
   try cd $BUILD_PATH/hdf5/build-$ARCH
   push_env
 
-  try ${BUILD_hdf5}/${CONFIGURE} \
+  try ${CONFIGURE} \
     --disable-dependency-tracking \
     --disable-silent-rules \
     --enable-build-mode=production \

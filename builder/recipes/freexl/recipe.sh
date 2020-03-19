@@ -1,27 +1,27 @@
 #!/bin/bash
 
 # version of your package
-VERSION_webp=1.1.0
+VERSION_freexl=1.0.5
 
 # dependencies of this recipe
-DEPS_webp=()
+DEPS_freexl=()
 
 # url of the package
-URL_webp=https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${VERSION_webp}.tar.gz
+URL_freexl=https://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-${VERSION_freexl}.tar.gz
 
 # md5 of the package
-MD5_webp=7e047f2cbaf584dff7a8a7e0f8572f18
+MD5_freexl=3ed2a0486f03318820b25f0ccae5e14d
 
 # default build path
-BUILD_webp=$BUILD_PATH/webp/$(get_directory $URL_webp)
+BUILD_freexl=$BUILD_PATH/freexl/$(get_directory $URL_freexl)
 
 # default recipe path
-RECIPE_webp=$RECIPES_PATH/webp
+RECIPE_freexl=$RECIPES_PATH/freexl
 
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
-function prebuild_webp() {
-  cd $BUILD_webp
+function prebuild_freexl() {
+  cd $BUILD_freexl
 
   # check marker
   if [ -f .patched ]; then
@@ -33,17 +33,17 @@ function prebuild_webp() {
   touch .patched
 }
 
-function shouldbuild_webp() {
+function shouldbuild_freexl() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libwebp.dylib -nt $BUILD_webp/.patched ]; then
+  if [ ${STAGE_PATH}/lib/libfreexl.dylib -nt $BUILD_freexl/.patched ]; then
     DO_BUILD=0
   fi
 }
 
 # function called to build the source code
-function build_webp() {
-  try rsync -a $BUILD_webp/ $BUILD_PATH/webp/build-$ARCH/
-  try cd $BUILD_PATH/webp/build-$ARCH
+function build_freexl() {
+  try rsync -a $BUILD_freexl/ $BUILD_PATH/freexl/build-$ARCH/
+  try cd $BUILD_PATH/freexl/build-$ARCH
   push_env
 
   try ${CONFIGURE}
@@ -56,6 +56,6 @@ function build_webp() {
 }
 
 # function called after all the compile have been done
-function postbuild_webp() {
-  verify_lib "${STAGE_PATH}/lib/libwebp.dylib"
+function postbuild_freexl() {
+  verify_lib "${STAGE_PATH}/lib/libfreexl.dylib"
 }

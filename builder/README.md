@@ -15,7 +15,7 @@ Build QGIS-deps
 Build QGIS (Qt Creator)
 -----------------------
 
-1. run `./distribute.sh -c "open /opt/Qt/Qt\ Creator.app/"`
+1. run `./distribute.sh -B`
 2. Rerun cmake from menu (Clear Cmake Configration + run Cmake)
 3. Build
 

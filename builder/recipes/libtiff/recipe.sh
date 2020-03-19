@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # version of your package
-VERSION_libtiff=4.0.10
+VERSION_libtiff=4.1.0
 
 # dependencies of this recipe
-DEPS_libtiff=(xz zstd jpeg webp)
+DEPS_libtiff=(xz zstd webp jpeg)
 
 # url of the package
 URL_libtiff=http://download.osgeo.org/libtiff/tiff-${VERSION_libtiff}.tar.gz
 
 # md5 of the package
-MD5_libtiff=114192d7ebe537912a2b97408832e7fd
+MD5_libtiff=2165e7aba557463acc0664e71a3ed424
 
 # default build path
 BUILD_libtiff=$BUILD_PATH/libtiff/$(get_directory $URL_libtiff)
@@ -28,6 +28,8 @@ function prebuild_libtiff() {
     return
   fi
 
+  patch_configure_file configure
+
   touch .patched
 }
 
@@ -42,16 +44,19 @@ function shouldbuild_libtiff() {
 
 # function called to build the source code
 function build_libtiff() {
-  try mkdir -p $BUILD_PATH/libtiff/build-$ARCH
+  try rsync -a $BUILD_libtiff/ $BUILD_PATH/libtiff/build-$ARCH/
   try cd $BUILD_PATH/libtiff/build-$ARCH
 
   push_env
 
-  try $CMAKE $BUILD_libtiff .
+  try ${CONFIGURE} \
+      --disable-dependency-tracking
+      --disable-lzma
+      --with-jpeg-include-dir=$STAGE_PATH/include
+      --with-jpeg-lib-dir=$STAGE_PATH/lib
+      --without-x
 
-  try $CMAKE $BUILD_libtiff .
-
-  check_file_configuration CMakeCache.txt
+  check_file_configuration config.status
 
   try $MAKESMP
   try $MAKE install

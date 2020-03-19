@@ -47,7 +47,7 @@ function build_libtasn1() {
   export CFLAGS="$CFLAGS -O2 -DPIC"
   patch_configure_file configure
 
-  try $BUILD_PATH/libtasn1/build-$ARCH/${CONFIGURE} \
+  try ${CONFIGURE} \
     --disable-dependency-tracking \
     --disable-silent-rules
 

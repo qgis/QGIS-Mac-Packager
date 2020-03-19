@@ -46,8 +46,7 @@ function build_postgres() {
   try cd $BUILD_PATH/postgres/build-$ARCH
   push_env
 
-  try ${BUILD_postgres}/${CONFIGURE} \
-    --disable-debug
+  try ${CONFIGURE}
 
   check_file_configuration config.status
   try $MAKESMP

@@ -31,8 +31,6 @@ function prebuild_xerces() {
     return
   fi
 
-  patch_configure_file configure
-
   touch .patched
 }
 

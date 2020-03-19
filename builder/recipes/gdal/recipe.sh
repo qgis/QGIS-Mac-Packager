@@ -4,7 +4,7 @@
 VERSION_gdal=3.0.4
 
 # dependencies of this recipe
-DEPS_gdal=(geos proj libgeotiff xerces xz zstd libtiff netcdf hdf5 postgres)
+DEPS_gdal=(geos proj libgeotiff libxml2 xerces xz zstd libtiff netcdf hdf5 postgres jpeg)
 
 # url of the package
 URL_gdal=https://github.com/OSGeo/gdal/releases/download/v${VERSION_gdal}/gdal-${VERSION_gdal}.tar.gz
@@ -64,8 +64,7 @@ function build_gdal() {
     WITHOUT_GDAL_DRIVERS="$WITHOUT_GDAL_DRIVERS --without-$i"
   done
 
-  try ${BUILD_gdal}/${CONFIGURE} \
-    --disable-debug \
+  try ${CONFIGURE}
     ${WITH_GDAL_DRIVERS} \
     ${WITHOUT_GDAL_DRIVERS}
 

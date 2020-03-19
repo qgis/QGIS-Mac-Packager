@@ -4,7 +4,7 @@
 VERSION_libgeotiff=1.5.1
 
 # dependencies of this recipe
-DEPS_libgeotiff=(libtiff)
+DEPS_libgeotiff=(proj libtiff)
 
 # url of the package
 URL_libgeotiff=https://github.com/OSGeo/libgeotiff/releases/download/${VERSION_libgeotiff}/libgeotiff-${VERSION_libgeotiff}.tar.gz

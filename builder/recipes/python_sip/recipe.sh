@@ -35,7 +35,7 @@ function prebuild_python_sip() {
 }
 
 function shouldbuild_python_sip() {
-   if python_package_installed sip==${VERSION_python_sip}; then
+   if python_package_installed sip ${VERSION_python_sip} sipconfig; then
       DO_BUILD=0
    fi
 }
@@ -47,6 +47,7 @@ function build_python_sip() {
 
   push_env
 
+  # TODO put sip.so in the /lib directory?
   $PYTHON ./configure.py
   try $MAKESMP
   try $MAKESMP install
@@ -55,7 +56,7 @@ function build_python_sip() {
 }
 
 function postbuild_python_sip() {
-   if ! python_package_installed sip==${VERSION_python_sip}; then
+   if ! python_package_installed sip ${VERSION_python_sip} sipconfig; then
       error "Missing python package sip"
    fi
 }

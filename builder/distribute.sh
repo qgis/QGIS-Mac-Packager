@@ -100,6 +100,14 @@ else
    error "The file '$QT_BASE/clang_64/bin/qmake' in not found."
 fi
 
+if [ "X$SDKROOT" == "X" ]; then
+  error "No SDKROOT environment set, abort"
+fi
+if [ -d $SDKROOT ]; then
+   debug "Using SDK: $SDKROOT"
+else
+   error "The SDK directory '$SDKROOT' not found."
+fi
 
 if [ "X$PYTHON_BASE" == "X" ]; then
   error "No PYTHON_BASE environment set, abort"
@@ -111,17 +119,17 @@ else
    error "The file '$PYTHON_BASE/bin/python${VERSION_python}' in not found."
 fi
 
-if hash ${XCODE_DEVELOPER}/usr/bin/gcc 2>/dev/null; then
-   debug "Compiler found at ${XCODE_DEVELOPER}/usr/bin"
-else
-   error "Unable to find compiler at ${XCODE_DEVELOPER}/usr/bin! Ensure that XCode is installed!"
-fi
+# if hash ${XCODE_DEVELOPER}/usr/bin/clang 2>/dev/null; then
+#   debug "Compiler found at ${XCODE_DEVELOPER}/usr/bin"
+#else
+#   error "Unable to find compiler at ${XCODE_DEVELOPER}/usr/bin! Ensure that XCode is installed!"
+#fi
 
-if [ -d "${XCODE_DEVELOPER}/usr/lib/clang/${CLANG_VERSION}" ]; then
-   debug "Clang found at ${XCODE_DEVELOPER}/usr/bin"
-else
-   error "Unable to find clang at ${XCODE_DEVELOPER}/usr/lib/clang/${CLANG_VERSION}"
-fi
+#if [ -d "${XCODE_DEVELOPER}/usr/lib/clang" ]; then
+#   debug "Clang found at ${XCODE_DEVELOPER}/usr/bin"
+#else
+#   error "Unable to find clang at ${XCODE_DEVELOPER}/usr/lib/clang"
+#fi
 
 if [ "X$ROOT_OUT_PATH" == "X" ]; then
   error "No ROOT_OUT_PATH environment set, abort"
@@ -160,25 +168,15 @@ function check_file_configuration() {
 }
 
 function python_package_installed() {
-    i=$1
-    arr=(${i//==/ })
-    package_name=${arr[0]}
-    package_version=${arr[1]}
+    package_name=$1
+    package_version=$2
+    python_import=$3
     dist_name=${package_name}-${package_version}.dist-info
     if [ ! -d $QGIS_SITE_PACKAGES_PATH/$package_name ] && [ ! -d $QGIS_SITE_PACKAGES_PATH/$dist_name ] ; then
       return 1
     fi
 
-    python_import=$package_name
-
-    # Exception for imports
-    if [ "$package_name" == "sip" ]; then
-      python_import=sipconfig
-    fi
-    # End of exceptions
-
     push_env
-    which $PYTHON
     $PYTHON -c import\ $python_import > /dev/null 2>&1 || return 1
     pop_env
 
@@ -192,6 +190,14 @@ function patch_configure_file() {
     try ${SED} 's; /usr/local/lib;;g' $1
     try $SED 's;/usr/local/lib ;;g' $1
     try $SED 's;/usr/local/lib;;g' $1
+}
+
+function patch_qmake_pri_file() {
+  # Install in stage path
+  try ${SED} "s;QWT_INSTALL_PREFIX.*=.*;QWT_INSTALL_PREFIX=$STAGE_PATH;g" $1
+
+  # Install Qt plugin in `lib/qt/plugins/designer`, not `plugins/designer`
+  try ${SED} "s;= \$\${QWT_INSTALL_PREFIX}/plugins/designer;=$STAGE_PATH/lib/qt/plugins/designer;g" $1
 }
 
 function push_env() {
@@ -231,23 +237,26 @@ function push_env() {
     ###################
     # Configure/Make system
 
-    export SYSROOT=$XCODE_DEVELOPER/SDKs/MacOSX.sdk
-    export CFLAGS="--sysroot $SYSROOT -I$STAGE_PATH/include"
+    # export SYSROOT=$XCODE_DEVELOPER/SDKs/MacOSX.sdk
+    # export CFLAGS="--sysroot $SYSROOT -I$STAGE_PATH/include"
+    export CFLAGS="-I$STAGE_PATH/include"
     export LDFLAGS="-L$STAGE_PATH/lib"
     export CXXFLAGS="${CFLAGS}"
 
     export PATH="${PATH}:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin:$QT_BASE/clang_64/bin"
 
     # export some tools
-    export MAKESMP="${XCODE_DEVELOPER}/usr/bin/make -j$CORES"
-    export MAKE="${XCODE_DEVELOPER}/usr/bin/make"
-    export CONFIGURE="configure --prefix=$STAGE_PATH"
-    export CC="${XCODE_DEVELOPER}/usr/bin/gcc"
-    export CXX="${XCODE_DEVELOPER}/usr/bin/g++"
+    export MAKESMP="/usr/bin/make -j$CORES"
+    export MAKE="/usr/bin/make"
+    export CONFIGURE="./configure --prefix=$STAGE_PATH --disable-debug --disable-dependency-tracking --disable-silent-rules"
+    export CC="/usr/bin/clang"
+    export CXX="/usr/bin/clang++"
+    export OBJCXX=${CXX}
+    export OBJC=${CC}
 
     # export CC="${XCODE_DEVELOPER}/usr/bin/gcc $CFLAGS"
     # export CXX="${XCODE_DEVELOPER}/usr/bin/g++ $CXXFLAGS"
-    export LD="${XCODE_DEVELOPER}/usr/bin/ld"
+    export LD="/usr/bin/ld"
 
     ###################
     # CMake
@@ -263,7 +272,8 @@ function push_env() {
       CMAKE="${CMAKE} -DCMAKE_BUILD_TYPE=Release"
     fi
     export CMAKE="${CMAKE} -DCMAKE_INSTALL_PREFIX:PATH=$STAGE_PATH"
-    export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64;$SYSROOT"
+    # export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64;$SYSROOT"
+    export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=FALSE"
     export CMAKE="${CMAKE} -DCMAKE_INSTALL_RPATH=@rpath"
@@ -272,12 +282,20 @@ function push_env() {
     # MACOSX_DEPLOYMENT_TARGET in environment should set minimum version
 
     ###################
+    # QMAKE
+    # ImageIO framework contains libTIFF and libJPEG libraries
+    # we have these libraries in $STAGE_PATH/lib
+    # so we should not set DYLD_LIBRARY_PATH=$STAGE_PATH/lib
+    # otherwise qmake command will not go through
+    export QMAKE="qmake -config release -spec macx-clang"
+
+    ###################
     # PYTHON
+    # activate python virtualenv
 
     # build_ext sometimes tries to dlopen the libraries
-    export DYLD_LIBRARY_PATH=$STAGE_PATH/lib
-
-    # activate python virtualenv
+    # use DYLD_LIBRARY_PATH=$STAGE_PATH/lib try ${PIP} in the
+    # recipes if you have dlopen() problem finding the libraries
     source $STAGE_PATH/bin/activate
     export PYTHON="$STAGE_PATH/bin/python3"
     export PIP="pip3 install --global-option=build_ext"
@@ -314,7 +332,7 @@ else
   WHEAD="wget --spider -q -S"
 fi
 
-for tool in tar bzip2 unzip cmake bison flex autoconf automake libtool pkg-config; do
+for tool in tar bzip2 unzip cmake bison flex autoconf automake libtool pkg-config autoreconf; do
   which $tool &>/dev/null
   if [ $? -ne 0 ]; then
     error "Tool $tool is missing"
@@ -361,6 +379,7 @@ function usage() {
   echo
   echo "  -h                     Show this help"
   echo "  -c                     Run command in the build environment"
+  echo "  -B                     open Qt Creator for QGIS development"
   echo "  -l                     Show a list of available modules"
   echo "  -m 'mod1 mod2'         Modules to include"
   echo "  -f                     Restart from scratch (remove the current build)"
@@ -710,7 +729,7 @@ function run_build() {
     # if the module should be build, or if the marker is not present,
     # do the build
     if [ "X$DO_BUILD" == "X1" ] || [ ! -f "$MARKER_FN" ]; then
-      debug "Call $fn"
+      debug "Call $fn":
       rm -f "$MARKER_FN"
       $fn
       touch "$MARKER_FN"
@@ -748,7 +767,7 @@ function list_modules() {
 }
 
 # Do the build
-while getopts ":hvlfxic:m:u:s:g" opt; do
+while getopts ":hBvlfxic:m:u:s:g" opt; do
   case $opt in
     h)
       usage
@@ -780,11 +799,17 @@ while getopts ":hvlfxic:m:u:s:g" opt; do
       pop_env
       exit 0
       ;;
+    B)
+      push_env
+      open $QT_BASE/../Qt\ Creator.app
+      pop_env
+      exit 0
+      ;;
     u)
       MODULES_UPDATE="$OPTARG"
       ;;
     f)
-      DO_CLEAN_BUILD=1
+      builds/qgis-deps-0.1.0/build/=1
       ;;
     x)
       DO_SET_X=1

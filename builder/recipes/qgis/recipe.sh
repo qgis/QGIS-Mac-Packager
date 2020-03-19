@@ -4,7 +4,22 @@
 VERSION_qgis=3.12.0
 
 # dependencies of this recipe
-DEPS_qgis=(gdal hdf5 netcdf libzip qca libtasn1 python_packages)
+DEPS_qgis=(
+  exiv2
+  gdal
+  hdf5
+  netcdf
+  libzip
+  qca
+  libtasn1
+  python_packages
+  python_sip
+  spatialindex
+  gsl
+  qscintilla
+  spatialite
+  qtkeychain
+)
 
 # url of the package
 URL_qgis=https://github.com/qgis/QGIS/archive/final-${VERSION_qgis//./_}.tar.gz
