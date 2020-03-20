@@ -3,6 +3,9 @@
 # version of your package
 VERSION_gsl=2.6
 
+LINK_libgsl_version=25
+LINK_libgslcblas_version=0
+
 # dependencies of this recipe
 DEPS_gsl=()
 
@@ -17,6 +20,26 @@ BUILD_gsl=$BUILD_PATH/gsl/$(get_directory $URL_gsl)
 
 # default recipe path
 RECIPE_gsl=$RECIPES_PATH/gsl
+
+patch_gsl_linker_links () {
+  install_name_tool -id "@rpath/libgsl.dylib" ${STAGE_PATH}/lib/libgsl.dylib
+  install_name_tool -id "@rpath/libgslcblas.dylib" ${STAGE_PATH}/lib/libgslcblas.dylib
+
+  if [ ! -f "${STAGE_PATH}/lib/libgsl.${LINK_libgsl_version}.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/libgsl.${LINK_libgsl_version}.dylib does not exist... maybe you updated the gsl version?"
+  fi
+  if [ ! -f "${STAGE_PATH}/lib/libgslcblas.${LINK_libgslcblas_version}.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/libgslcblas.${LINK_libgslcblas_version}.dylib does not exist... maybe you updated the gsl version?"
+  fi
+
+  install_name_tool -change "${STAGE_PATH}/lib/libgsl.${LINK_libgsl_version}.dylib" "@rpath/libgsl.${LINK_libgsl_version}.dylib" ${STAGE_PATH}/bin/gsl-histogram
+  install_name_tool -change "${STAGE_PATH}/lib/libgslcblas.${LINK_libgslcblas_version}.dylib" "@rpath/libgslcblas.${LINK_libgslcblas_version}.dylib" ${STAGE_PATH}/bin/gsl-histogram
+  install_name_tool -add_rpath @executable_path/../lib $STAGE_PATH/bin/gsl-histogram
+
+  install_name_tool -change "${STAGE_PATH}/lib/libgsl.${LINK_libgsl_version}.dylib" "@rpath/libgsl.${LINK_libgsl_version}.dylib" ${STAGE_PATH}/bin/gsl-randist
+  install_name_tool -change "${STAGE_PATH}/lib/libgslcblas.${LINK_libgslcblas_version}.dylib" "@rpath/libgslcblas.${LINK_libgslcblas_version}.dylib" ${STAGE_PATH}/bin/gsl-randist
+  install_name_tool -add_rpath @executable_path/../lib $STAGE_PATH/bin/gsl-randist
+}
 
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
@@ -52,7 +75,7 @@ function build_gsl() {
   try $MAKESMP
   try $MAKESMP install
 
-  install_name_tool -id "@rpath/libgsl.dylib" ${STAGE_PATH}/lib/libgsl.dylib
+  patch_gsl_linker_links
 
   pop_env
 }
@@ -60,4 +83,8 @@ function build_gsl() {
 # function called after all the compile have been done
 function postbuild_gsl() {
   verify_lib "libgsl.dylib"
+  verify_lib "libgslcblas.dylib"
+
+  verify_bin gsl-histogram
+  verify_bin gsl-randist
 }

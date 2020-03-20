@@ -3,6 +3,8 @@
 # version of your package
 VERSION_jpeg=9d
 
+LINK_jpeg_version=9
+
 # dependencies of this recipe
 DEPS_jpeg=()
 
@@ -17,6 +19,27 @@ BUILD_jpeg=$BUILD_PATH/jpeg/$(get_directory $URL_jpeg)
 
 # default recipe path
 RECIPE_jpeg=$RECIPES_PATH/jpeg
+
+patch_jpeg_linker_links () {
+  install_name_tool -id "@rpath/libjpeg.dylib" ${STAGE_PATH}/lib/libjpeg.dylib
+
+  if [ ! -f "${STAGE_PATH}/lib/libjpeg.${LINK_jpeg_version}.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/libjpeg.${LINK_jpeg_version}.dylib does not exist... maybe you updated the jpeg version?"
+  fi
+
+  install_name_tool -change "${STAGE_PATH}/lib/libjpeg.${LINK_jpeg_version}.dylib" "@rpath/libjpeg.${LINK_jpeg_version}.dylib" ${STAGE_PATH}/bin/cjpeg
+  install_name_tool -add_rpath @executable_path/../lib $STAGE_PATH/bin/cjpeg
+
+  install_name_tool -change "${STAGE_PATH}/lib/libjpeg.${LINK_jpeg_version}.dylib" "@rpath/libjpeg.${LINK_jpeg_version}.dylib" ${STAGE_PATH}/bin/djpeg
+  install_name_tool -add_rpath @executable_path/../lib $STAGE_PATH/bin/djpeg
+
+  install_name_tool -change "${STAGE_PATH}/lib/libjpeg.${LINK_jpeg_version}.dylib" "@rpath/libjpeg.${LINK_jpeg_version}.dylib" ${STAGE_PATH}/bin/jpegtran
+  install_name_tool -add_rpath @executable_path/../lib $STAGE_PATH/bin/jpegtran
+
+  # this one does not link, do we need to rpath ?
+  install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/bin/wrjpgcom
+  install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/bin/rdjpgcom
+}
 
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
@@ -54,7 +77,7 @@ function build_jpeg() {
   try $MAKESMP
   try $MAKESMP install
 
-  install_name_tool -id "@rpath/libjpeg.dylib" ${STAGE_PATH}/lib/libjpeg.dylib
+  patch_jpeg_linker_links
 
   pop_env
 }

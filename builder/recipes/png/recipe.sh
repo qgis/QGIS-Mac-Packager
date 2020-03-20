@@ -3,6 +3,8 @@
 # version of your package
 VERSION_png=1.6.37
 
+LINK_libpng_version=16
+
 # dependencies of this recipe
 DEPS_png=()
 
@@ -17,6 +19,22 @@ BUILD_png=$BUILD_PATH/png/$(get_directory $URL_png)
 
 # default recipe path
 RECIPE_png=$RECIPES_PATH/png
+
+patch_png_linker_links () {
+  install_name_tool -id "@rpath/libpng.dylib" ${STAGE_PATH}/lib/libpng.dylib
+
+  targets=(
+    bin/png-fix-itxt
+    bin/pngfix
+  )
+
+  # Change linked libs
+  for i in ${targets[*]}
+  do
+      install_name_tool -change "${STAGE_PATH}/lib/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib" "@rpath/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib" ${STAGE_PATH}/$i
+      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
+  done
+}
 
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
@@ -52,7 +70,7 @@ function build_png() {
   try $MAKESMP
   try $MAKESMP install
 
-  install_name_tool -id "@rpath/libpng.dylib" ${STAGE_PATH}/lib/libpng.dylib
+  patch_png_linker_links
 
   pop_env
 }

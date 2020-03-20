@@ -18,7 +18,9 @@ function pop_env() {
   info "Leaving build environment"
 
   # deactivate python virtualenv
-  deactivate nondestructive
+  if [ -f $STAGE_PATH/bin/activate ]; then
+    deactivate nondestructive
+  fi
 
   export PATH=$OLD_PATH
   export CFLAGS=$OLD_CFLAGS
@@ -200,6 +202,17 @@ function patch_qmake_pri_file() {
   try ${SED} "s;= \$\${QWT_INSTALL_PREFIX}/plugins/designer;=$STAGE_PATH/lib/qt/plugins/designer;g" $1
 }
 
+# function run_qmake() {
+  # ImageIO framework contains libTIFF and libJPEG libraries
+  # we have these libraries in $STAGE_PATH/lib
+  # so we should not set DYLD_LIBRARY_PATH=$STAGE_PATH/lib
+  # otherwise qmake command will not go through
+
+#  export OLD2_DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH
+#  try ${QMAKE} "$@"
+#  export DYLD_LIBRARY_PATH=$OLD2_DYLD_LIBRARY_PATH
+#}
+
 function push_env() {
     info "Entering in build environment"
 
@@ -276,17 +289,15 @@ function push_env() {
     export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=FALSE"
-    export CMAKE="${CMAKE} -DCMAKE_INSTALL_RPATH=@rpath"
+    export CMAKE="${CMAKE} -DCMAKE_INSTALL_RPATH=@executable_path/../lib"
+    export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=ON"
     export CMAKE="${CMAKE} -DENABLE_TESTS=OFF"
     export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=ON"
     # MACOSX_DEPLOYMENT_TARGET in environment should set minimum version
 
     ###################
     # QMAKE
-    # ImageIO framework contains libTIFF and libJPEG libraries
-    # we have these libraries in $STAGE_PATH/lib
-    # so we should not set DYLD_LIBRARY_PATH=$STAGE_PATH/lib
-    # otherwise qmake command will not go through
+    # use run_qmake in the receipts
     export QMAKE="qmake -config release -spec macx-clang"
 
     ###################
@@ -294,14 +305,17 @@ function push_env() {
     # activate python virtualenv
 
     # build_ext sometimes tries to dlopen the libraries
-    # use DYLD_LIBRARY_PATH=$STAGE_PATH/lib try ${PIP} in the
-    # recipes if you have dlopen() problem finding the libraries
-    source $STAGE_PATH/bin/activate
+    # TODO THIS SHOULD NOT BE NECCESARRY IF ALL RPATHS are correct in binaries
+    # to @executable_path/../lib/ and we should only fix the pip install global options
+    # DYLD_LIBRARY_PATH=$STAGE_PATH/lib
+    if [ -f $STAGE_PATH/bin/activate ]; then
+      source $STAGE_PATH/bin/activate
+    fi
     export PYTHON="$STAGE_PATH/bin/python3"
-    export PIP="pip3 install --global-option=build_ext"
+    export PIP="pip3 install --no-binary all"
+    export PIP="$PIP --global-option=build_ext"
     export PIP="$PIP --global-option=--include-dirs=$STAGE_PATH/include"
     export PIP="$PIP --global-option=--library-dirs=$STAGE_PATH/lib"
-    export PIP="$PIP --no-binary all"
 }
 
 #########################################################################################################
@@ -359,24 +373,90 @@ function get_directory() {
   echo $directory
 }
 
-function verify_lib() {
-  cd ${STAGE_PATH}/lib/
-  LIB_ARCHS=`lipo -archs $1`
-  if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
-    error "Library $1 was not successfully build for $ARCH, but ${LIB_ARCHS}"
-  fi
 
+function check_linked_rpath() {
+  cd ${STAGE_PATH}
   if otool -L $1 | grep -q /usr/local/lib
   then
     otool -L $1
-    error "Library $1 contains /usr/local/lib string <-- CMake picked some homebrew libs!"
+    error "$1 contains /usr/local/lib string <-- CMake picked some homebrew libs!"
   fi
 
-  if otool -L $1 | grep -q $STAGE_PATH
+  if otool -L $1 | grep -q $ROOT_OUT_PATH
   then
     otool -L $1
-    error "Library $1 contains $STAGE_PATH string <-- forgot to change install_name for the linked library?"
+    error "$1 contains $ROOT_OUT_PATH string <-- forgot to change install_name for the linked library?"
   fi
+}
+
+function verify_lib() {
+  cd ${STAGE_PATH}/
+  LIB_ARCHS=`lipo -archs lib/$1`
+  if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
+    error "Library lib/$1 was not successfully build for $ARCH, but ${LIB_ARCHS}"
+  fi
+
+  check_linked_rpath lib/$1
+}
+
+function verify_bin() {
+  cd ${STAGE_PATH}/
+  LIB_ARCHS=`lipo -archs bin/$1`
+  if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
+    error "Executable bin/$1 was not successfully build for $ARCH, but ${LIB_ARCHS}"
+  fi
+
+  check_linked_rpath bin/$1
+
+  # check that the binary has the rpath to the lib folder
+  if otool -l bin/$1 |grep -q "@executable_path/../lib"
+  then
+    : # OK!
+  else
+    otool -l bin/$1
+    error "Executable bin/$1 does not contain rpath to lib folder $STAGE_PATH string <-- forgot to call install_name_tool -add_rpath @executable_path/../lib <exe> ? "
+  fi
+
+  # check that the binary has the rpath to the lib folder
+  if otool -l bin/$1 |grep -q "$ROOT_OUT_PATH"
+  then
+    otool -l bin/$1
+    error "Executable bin/$1 does contain rpath to lib folder $ROOT_OUT_PATH string <-- forgot to call install_name_tool -delete_rpath @executable_path/../lib <exe> ? "
+  fi
+}
+
+run_final_check() {
+  info "Running final check for all libraries in the ${STAGE_PATH}/lib"
+
+  # libs
+  cd ${STAGE_PATH}/lib
+  LIBS1=`find . -type f -name "*.so"`
+  LIBS2=`find . -type f -name "*.dylib"`
+  LIBS="$LIBS1 $LIBS2"
+  for lib in $LIBS; do
+    verify_lib $lib
+  done
+
+  # frameworks
+  cd ${STAGE_PATH}/lib
+  LIBS=`find . -type f ! -name "*.*"`
+  for lib in $LIBS; do
+    attachmenttype=$(file ${STAGE_PATH}/bin/$lib | cut -d\  -f2 )
+    if [[ $attachmenttype = "Mach-O" ]]; then
+      verify_lib $lib
+    fi
+  done
+
+  info "Running final check for all binaries in the ${STAGE_PATH}/bin"
+  # binaries
+  cd ${STAGE_PATH}/bin
+  EXEC=`find . -type f -name "*" ! -name "sip" ! -name "pip*" ! -name "activate*" ! -name "easy_install*" ! -name "python*"`
+  for bin in $EXEC; do
+    attachmenttype=$(file ${STAGE_PATH}/bin/$bin | cut -d\  -f2 )
+    if [[ $attachmenttype = "Mach-O" ]]; then
+      verify_bin $bin
+    fi
+  done
 }
 
 function usage() {
@@ -736,7 +816,7 @@ function run_build() {
     # if the module should be build, or if the marker is not present,
     # do the build
     if [ "X$DO_BUILD" == "X1" ] || [ ! -f "$MARKER_FN" ]; then
-      debug "Call $fn":
+      debug "Call $fn"
       rm -f "$MARKER_FN"
       $fn
       touch "$MARKER_FN"
@@ -764,6 +844,7 @@ function run() {
   run_prebuild
   run_build
   run_postbuild
+  run_final_check
   info "All done !"
 }
 
@@ -772,6 +853,9 @@ function list_modules() {
   echo "Available modules: $modules"
   exit 0
 }
+
+# run_final_check
+# exit 0;
 
 # Do the build
 while getopts ":hBvlfxic:m:u:s:g" opt; do

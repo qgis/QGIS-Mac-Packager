@@ -63,9 +63,8 @@ function build_python_packages() {
   do
     info "Installing python_packages package $i"
     # build_ext sometimes tries to dlopen the libraries
-    # to determine the linked library version (e.g. hdf5)
-    DYLD_LIBRARY_PATH=$STAGE_PATH/lib \
-    try $PIP $i
+    # to determine the library version
+    DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP $i
   done
 
   pop_env

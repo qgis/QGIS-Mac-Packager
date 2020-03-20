@@ -3,6 +3,9 @@
 # version of your package
 VERSION_webp=1.1.0
 
+LINK_libwebp_version=7
+LINK_libwebpdemux_version=2
+
 # dependencies of this recipe
 DEPS_webp=()
 
@@ -17,6 +20,33 @@ BUILD_webp=$BUILD_PATH/webp/$(get_directory $URL_webp)
 
 # default recipe path
 RECIPE_webp=$RECIPES_PATH/webp
+
+patch_webp_linker_links () {
+  install_name_tool -id "@rpath/libwebp.dylib" ${STAGE_PATH}/lib/libwebp.dylib
+  install_name_tool -id "@rpath/libwebpdemux.dylib" ${STAGE_PATH}/lib/libwebpdemux.dylib
+
+  if [ ! -f "${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib does not exist... maybe you updated the webp version?"
+  fi
+  if [ ! -f "${STAGE_PATH}/lib/libwebpdemux.${LINK_libwebpdemux_version}.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/libwebpdemux.${LINK_libwebpdemux_version}.dylib does not exist... maybe you updated the webp version?"
+  fi
+
+  install_name_tool -change "${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib" "@rpath/libwebp.${LINK_libwebp_version}.dylib" ${STAGE_PATH}/lib/libwebpdemux.dylib
+
+  targets=(
+    bin/dwebp
+    bin/cwebp
+  )
+
+  # Change linked libs
+  for i in ${targets[*]}
+  do
+      install_name_tool -change "${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib" "@rpath/libwebp.${LINK_libwebp_version}.dylib" ${STAGE_PATH}/$i
+      install_name_tool -change "${STAGE_PATH}/lib/libwebpdemux.${LINK_libwebpdemux_version}.dylib" "@rpath/libwebpdemux.${LINK_libwebpdemux_version}.dylib" ${STAGE_PATH}/$i
+      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
+  done
+}
 
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
@@ -53,7 +83,7 @@ function build_webp() {
   try $MAKESMP
   try $MAKESMP install
 
-  install_name_tool -id "@rpath/libwebp.dylib" ${STAGE_PATH}/lib/libwebp.dylib
+  patch_webp_linker_links
 
   pop_env
 }
@@ -61,4 +91,7 @@ function build_webp() {
 # function called after all the compile have been done
 function postbuild_webp() {
   verify_lib "libwebp.dylib"
+  verify_lib "libwebpdemux.dylib"
+
+  verify_bin dwebp
 }

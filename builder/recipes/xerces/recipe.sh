@@ -21,6 +21,34 @@ BUILD_xerces=$BUILD_PATH/xerces/$(get_directory $URL_xerces)
 # default recipe path
 RECIPE_xerces=$RECIPES_PATH/xerces
 
+patch_xerces_linker_links () {
+  targets=(
+    bin/XInclude
+    bin/SAX2Print
+    bin/CreateDOMDocument
+    bin/StdInParse
+    bin/PParse
+    bin/SAX2Count
+    bin/EnumVal
+    bin/DOMCount
+    bin/DOMPrint
+    bin/MemParse
+    bin/PSVIWriter
+    bin/SAXCount
+    bin/SEnumVal
+    bin/SCMPrint
+    bin/Redirect
+    bin/SAXPrint
+  )
+
+  # Change linked libs
+  for i in ${targets[*]}
+  do
+      install_name_tool -delete_rpath $BUILD_PATH/xerces/build-$ARCH/src ${STAGE_PATH}/$i
+      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
+  done
+}
+
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_xerces() {
@@ -53,10 +81,13 @@ function build_xerces() {
   try $MAKESMP
   try $MAKESMP install
 
+  patch_xerces_linker_links
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_xerces() {
   verify_lib "libxerces-c.so"
+  verify_bin CreateDOMDocument
 }

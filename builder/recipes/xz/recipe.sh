@@ -3,6 +3,8 @@
 # version of your package
 VERSION_xz=5.2.4
 
+LINK_liblzma_version=5
+
 # dependencies of this recipe
 DEPS_xz=()
 
@@ -17,6 +19,34 @@ BUILD_xz=$BUILD_PATH/xz/$(get_directory $URL_xz)
 
 # default recipe path
 RECIPE_xz=$RECIPES_PATH/xz
+
+patch_xz_linker_links () {
+  install_name_tool -id "@rpath/liblzma.dylib" ${STAGE_PATH}/lib/liblzma.dylib
+
+  if [ ! -f "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib does not exist... maybe you updated the xz version?"
+  fi
+
+  install_name_tool -change "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" "@rpath/liblzma.${LINK_liblzma_version}.dylib" ${STAGE_PATH}/bin/lzmainfo
+  install_name_tool -change "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" "@rpath/liblzma.${LINK_liblzma_version}.dylib" ${STAGE_PATH}/bin/xzdec
+  install_name_tool -change "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" "@rpath/liblzma.${LINK_liblzma_version}.dylib" ${STAGE_PATH}/bin/xz
+  install_name_tool -change "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" "@rpath/liblzma.${LINK_liblzma_version}.dylib" ${STAGE_PATH}/bin/zstd
+
+  targets=(
+    bin/lzmainfo
+    bin/xzdec
+    bin/xz
+    bin/lzmadec
+    bin/zstd
+  )
+
+  # Change linked libs
+  for i in ${targets[*]}
+  do
+      install_name_tool -change "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" "@rpath/liblzma.${LINK_liblzma_version}.dylib" ${STAGE_PATH}/$i
+      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
+  done
+}
 
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
@@ -54,7 +84,7 @@ function build_xz() {
   try $MAKESMP
   try $MAKESMP install
 
-  install_name_tool -id "@rpath/liblzma.dylib" ${STAGE_PATH}/lib/liblzma.dylib
+  patch_xz_linker_links
 
   pop_env
 }
@@ -62,4 +92,7 @@ function build_xz() {
 # function called after all the compile have been done
 function postbuild_xz() {
   verify_lib "liblzma.dylib"
+
+  verify_bin lzmainfo
+  verify_bin xzdec
 }

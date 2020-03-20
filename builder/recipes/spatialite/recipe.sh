@@ -18,6 +18,11 @@ BUILD_spatialite=$BUILD_PATH/spatialite/$(get_directory $URL_spatialite)
 # default recipe path
 RECIPE_spatialite=$RECIPES_PATH/spatialite
 
+function patch_spatialite_linker_links() {
+  install_name_tool -id "@rpath/libspatialite.dylib" ${STAGE_PATH}/lib/libspatialite.dylib
+
+}
+
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_spatialite() {
@@ -58,7 +63,7 @@ function build_spatialite() {
   try $MAKESMP
   try $MAKESMP install
 
-  install_name_tool -id "@rpath/libspatialite.dylib" ${STAGE_PATH}/lib/libspatialite.dylib
+  patch_spatialite_linker_links
 
   pop_env
 }
