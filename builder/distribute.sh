@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Well, build tools are available only on MacOS
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -76,72 +76,77 @@ DEBUG=0
 
 # Load configuration
 source `dirname $0`/config.conf
-if [ "X$RELEASE_VERSION" == "X" ]; then
-  error "you need at RELEASE_VERSION in config.conf"
-fi
 
-if [ "X$MACOSX_DEPLOYMENT_TARGET" == "X" ]; then
-  error "you need at MACOSX_DEPLOYMENT_TARGET in config.conf"
-fi
+function check_config_conf_vars() {
+    if [ "X$RELEASE_VERSION" == "X" ]; then
+      error "you need at RELEASE_VERSION in config.conf"
+    fi
 
-if [ "X$VERSION_qt" == "X" ]; then
-  error "No VERSION_qt environment set, abort"
-fi
+    if [ "X$MACOSX_DEPLOYMENT_TARGET" == "X" ]; then
+      error "you need at MACOSX_DEPLOYMENT_TARGET in config.conf"
+    fi
 
-if [ "X$VERSION_python" == "X" ]; then
-  error "No VERSION_python environment set, abort"
-fi
+    if [ "X$VERSION_qt" == "X" ]; then
+      error "No VERSION_qt environment set, abort"
+    fi
 
-if [ "X$QT_BASE" == "X" ]; then
-  error "No QT_BASE environment set, abort"
-fi
+    if [ "X$VERSION_python" == "X" ]; then
+      error "No VERSION_python environment set, abort"
+    fi
 
-if [ -f $QT_BASE/clang_64/bin/qmake ]; then
-   debug "Using QT: $QT_BASE"
-else
-   error "The file '$QT_BASE/clang_64/bin/qmake' in not found."
-fi
+    if [ "X$QT_BASE" == "X" ]; then
+      error "No QT_BASE environment set, abort"
+    fi
 
-if [ "X$SDKROOT" == "X" ]; then
-  error "No SDKROOT environment set, abort"
-fi
-if [ -d $SDKROOT ]; then
-   debug "Using SDK: $SDKROOT"
-else
-   error "The SDK directory '$SDKROOT' not found."
-fi
+    if [ -f $QT_BASE/clang_64/bin/qmake ]; then
+       debug "Using QT: $QT_BASE"
+    else
+       error "The file '$QT_BASE/clang_64/bin/qmake' in not found."
+    fi
 
-if [ "X$PYTHON_BASE" == "X" ]; then
-  error "No PYTHON_BASE environment set, abort"
-fi
+    if [ "X$SDKROOT" == "X" ]; then
+      error "No SDKROOT environment set, abort"
+    fi
+    if [ -d $SDKROOT ]; then
+       debug "Using SDK: $SDKROOT"
+    else
+       error "The SDK directory '$SDKROOT' not found."
+    fi
 
-if [ -f $PYTHON_BASE/bin/python${VERSION_python} ]; then
-   debug "Using Python: $PYTHON_BASE/bin/python${VERSION_python}"
-else
-   error "The file '$PYTHON_BASE/bin/python${VERSION_python}' in not found."
-fi
+    if [ "X$PYTHON_BASE" == "X" ]; then
+      error "No PYTHON_BASE environment set, abort"
+    fi
 
-# if hash ${XCODE_DEVELOPER}/usr/bin/clang 2>/dev/null; then
-#   debug "Compiler found at ${XCODE_DEVELOPER}/usr/bin"
-#else
-#   error "Unable to find compiler at ${XCODE_DEVELOPER}/usr/bin! Ensure that XCode is installed!"
-#fi
+    if [ -f $PYTHON_BASE/bin/python${VERSION_python} ]; then
+       debug "Using Python: $PYTHON_BASE/bin/python${VERSION_python}"
+    else
+       error "The file '$PYTHON_BASE/bin/python${VERSION_python}' in not found."
+    fi
 
-#if [ -d "${XCODE_DEVELOPER}/usr/lib/clang" ]; then
-#   debug "Clang found at ${XCODE_DEVELOPER}/usr/bin"
-#else
-#   error "Unable to find clang at ${XCODE_DEVELOPER}/usr/lib/clang"
-#fi
+    # if hash ${XCODE_DEVELOPER}/usr/bin/clang 2>/dev/null; then
+    #   debug "Compiler found at ${XCODE_DEVELOPER}/usr/bin"
+    #else
+    #   error "Unable to find compiler at ${XCODE_DEVELOPER}/usr/bin! Ensure that XCode is installed!"
+    #fi
 
-if [ "X$ROOT_OUT_PATH" == "X" ]; then
-  error "No ROOT_OUT_PATH environment set, abort"
-fi
+    #if [ -d "${XCODE_DEVELOPER}/usr/lib/clang" ]; then
+    #   debug "Clang found at ${XCODE_DEVELOPER}/usr/bin"
+    #else
+    #   error "Unable to find clang at ${XCODE_DEVELOPER}/usr/lib/clang"
+    #fi
 
-if [ -d $ROOT_OUT_PATH ]; then
-   debug "Using root output path: $ROOT_OUT_PATH"
-else
-   error "The root output directory '$ROOT_OUT_PATH' not found."
-fi
+    if [ "X$ROOT_OUT_PATH" == "X" ]; then
+      error "No ROOT_OUT_PATH environment set, abort"
+    fi
+
+    if [ -d $ROOT_OUT_PATH ]; then
+       debug "Using root output path: $ROOT_OUT_PATH"
+    else
+       error "The root output directory '$ROOT_OUT_PATH' not found."
+    fi
+}
+
+check_config_conf_vars
 
 # Paths
 ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -170,19 +175,18 @@ function check_file_configuration() {
 }
 
 function python_package_installed() {
-    package_name=$1
-    package_version=$2
-    python_import=$3
-    dist_name=${package_name}-${package_version}.dist-info
-    if [ ! -d $QGIS_SITE_PACKAGES_PATH/$package_name ] && [ ! -d $QGIS_SITE_PACKAGES_PATH/$dist_name ] ; then
-      return 1
-    fi
+    python_import=$1
 
     push_env
-    DYLD_LIBRARY_PATH=$STAGE_PATH/lib $PYTHON -c import\ $python_import > /dev/null 2>&1 || return 1
+    if DYLD_LIBRARY_PATH=$STAGE_PATH/lib;$PYTHON -c import\ $python_import > /dev/null 2>&1
+    then
+      # echo "$1 a"
+      return 0
+    fi
+    # echo "$1 b"
     pop_env
 
-    return 0
+    return 1
 }
 
 function patch_configure_file() {
@@ -298,7 +302,8 @@ function push_env() {
     ###################
     # QMAKE
     # use run_qmake in the receipts
-    export QMAKE="qmake -config release -spec macx-clang"
+    export QSPEC="macx-clang"
+    export QMAKE="qmake -config release -spec ${QSPEC}"
 
     ###################
     # PYTHON
@@ -312,6 +317,8 @@ function push_env() {
       source $STAGE_PATH/bin/activate
     fi
     export PYTHON="$STAGE_PATH/bin/python3"
+    export PYCONFIGURE="$PYTHON ./configure.py"
+
     export PIP="pip3 install --no-binary all"
     export PIP="$PIP --global-option=build_ext"
     export PIP="$PIP --global-option=--include-dirs=$STAGE_PATH/include"
@@ -346,7 +353,7 @@ else
   WHEAD="wget --spider -q -S"
 fi
 
-for tool in tar bzip2 unzip cmake bison flex autoconf automake libtool pkg-config autoreconf; do
+for tool in tar bzip2 unzip cmake bison flex autoconf automake libtool pkg-config autoreconf perl; do
   which $tool &>/dev/null
   if [ $? -ne 0 ]; then
     error "Tool $tool is missing"
@@ -414,14 +421,26 @@ function verify_bin() {
     : # OK!
   else
     otool -l bin/$1
-    error "Executable bin/$1 does not contain rpath to lib folder $STAGE_PATH string <-- forgot to call install_name_tool -add_rpath @executable_path/../lib <exe> ? "
+    error "Executable bin/$1 does not contain rpath to lib folder $STAGE_PATH string <-- forgot to add to receipt: install_name_tool -add_rpath @executable_path/../lib bin/$1 ? "
   fi
 
   # check that the binary has the rpath to the lib folder
   if otool -l bin/$1 |grep -q "$ROOT_OUT_PATH"
   then
     otool -l bin/$1
-    error "Executable bin/$1 does contain rpath to lib folder $ROOT_OUT_PATH string <-- forgot to call install_name_tool -delete_rpath @executable_path/../lib <exe> ? "
+    error "Executable bin/$1 does contain rpath to lib folder $ROOT_OUT_PATH string <-- forgot to add to receipt: install_name_tool -delete_rpath @executable_path/../lib bin/$1 ? "
+  fi
+
+  # check that the binary that links QT has the QT rpath
+  if otool -L bin/$1 |grep -q "@rpath/Qt"
+  then
+    if otool -l bin/$1 |grep -q "$QT_BASE/clang_64/lib"
+    then
+      : # OK!
+    else
+      otool -l bin/$1
+      error "Executable bin/$1 does contain rpath to QT folder $QT_BASE/clang_64/lib <-- forgot to add to receipt: install_name_tool -add_rpath \$QT_BASE/clang_64/lib bin/$1 ? "
+    fi
   fi
 }
 
@@ -890,9 +909,9 @@ while getopts ":hBvlfxic:m:u:s:g" opt; do
       pop_env
       exit 0
       ;;
-    B)
+    B) # TODO do we need this at all?
       push_env
-      open $QT_BASE/../Qt\ Creator.app
+      $STAGE_PATH/lib open $QT_BASE/../Qt\ Creator.app
       pop_env
       exit 0
       ;;
@@ -900,7 +919,7 @@ while getopts ":hBvlfxic:m:u:s:g" opt; do
       MODULES_UPDATE="$OPTARG"
       ;;
     f)
-      builds/qgis-deps-0.1.0/build/=1
+      DO_CLEAN_BUILD=1
       ;;
     x)
       DO_SET_X=1

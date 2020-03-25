@@ -35,9 +35,9 @@ function prebuild_python_sip() {
 }
 
 function shouldbuild_python_sip() {
-   if python_package_installed sip ${VERSION_python_sip} sipconfig; then
-      DO_BUILD=0
-   fi
+  if [ "$QGIS_SITE_PACKAGES_PATH/PyQt5/sip.so" -nt $BUILD_python_qscintilla/.patched ]; then
+    DO_BUILD=0
+  fi
 }
 
 # function called to build the source code
@@ -47,16 +47,28 @@ function build_python_sip() {
 
   push_env
 
-  # TODO put sip.so in the /lib directory?
-  $PYTHON ./configure.py
+  try $PYCONFIGURE \
+    --sipdir=$STAGE_PATH/share/sip \
+    --bindir=$STAGE_PATH/bin \
+    --deployment-target=$MACOSX_DEPLOYMENT_TARGET \
+    --destdir=$QGIS_SITE_PACKAGES_PATH \
+    --incdir=$STAGE_PATH/include \
+    --sip-module=PyQt5.sip
+
   try $MAKESMP
-  try $MAKESMP install
+  try $MAKE install
+  try $MAKE clean
+
+
+  # default directory for sip files
+  mkdir -p ${STAGE_PATH}/share/sip
 
   pop_env
 }
 
 function postbuild_python_sip() {
-   if ! python_package_installed sip ${VERSION_python_sip} sipconfig; then
+   # if ! python_package_installed sip ${VERSION_python_sip} sipconfig; then
+   if ! python_package_installed sipconfig; then
       error "Missing python package sip"
    fi
 }

@@ -13,12 +13,13 @@ DEPS_qgis=(
   qca
   libtasn1
   python_packages
-  python_sip
   spatialindex
   gsl
   qscintilla
   spatialite
   qtkeychain
+  qwt
+  xz
 )
 
 # url of the package

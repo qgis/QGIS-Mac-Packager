@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # version of your package
+# keep in SYNC with python_qscintilla receipt
 VERSION_qscintilla=2.11.4
 
 # dependencies of this recipe
-DEPS_qscintilla=(python_sip)
+DEPS_qscintilla=()
 
 # url of the package
 URL_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${VERSION_qscintilla}/QScintilla-${VERSION_qscintilla}.tar.gz
@@ -51,9 +52,10 @@ function shouldbuild_qscintilla() {
 # function called to build the source code
 function build_qscintilla() {
   try rsync -a $BUILD_qscintilla/ $BUILD_PATH/qscintilla/build-$ARCH/
-  try cd $BUILD_PATH/qscintilla/build-$ARCH/Qt4Qt5
+  try cd $BUILD_PATH/qscintilla/build-$ARCH
   push_env
 
+  cd Qt4Qt5
   try ${QMAKE} qscintilla.pro
 
   try $MAKESMP
@@ -65,6 +67,4 @@ function build_qscintilla() {
 # function called after all the compile have been done
 function postbuild_qscintilla() {
   verify_lib "libqscintilla2_qt5.dylib"
-  # This builds also python module
-  # TODO check the python qscintilla module
 }

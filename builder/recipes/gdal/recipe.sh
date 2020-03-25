@@ -69,8 +69,6 @@ patch_gdal_linker_links () {
 function prebuild_gdal() {
   cd $BUILD_gdal
 
-  patch_gdal_linker_links
-
   # check marker
   if [ -f .patched ]; then
     return

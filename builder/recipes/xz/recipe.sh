@@ -27,11 +27,6 @@ patch_xz_linker_links () {
     error "file ${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib does not exist... maybe you updated the xz version?"
   fi
 
-  install_name_tool -change "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" "@rpath/liblzma.${LINK_liblzma_version}.dylib" ${STAGE_PATH}/bin/lzmainfo
-  install_name_tool -change "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" "@rpath/liblzma.${LINK_liblzma_version}.dylib" ${STAGE_PATH}/bin/xzdec
-  install_name_tool -change "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" "@rpath/liblzma.${LINK_liblzma_version}.dylib" ${STAGE_PATH}/bin/xz
-  install_name_tool -change "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" "@rpath/liblzma.${LINK_liblzma_version}.dylib" ${STAGE_PATH}/bin/zstd
-
   targets=(
     bin/lzmainfo
     bin/xzdec
@@ -76,8 +71,7 @@ function build_xz() {
   try cd $BUILD_PATH/xz/build-$ARCH
   push_env
 
-  try ${CONFIGURE} \
-    --disable-debug
+  try ${CONFIGURE} --disable-debug
 
   check_file_configuration config.status
 
@@ -95,4 +89,5 @@ function postbuild_xz() {
 
   verify_bin lzmainfo
   verify_bin xzdec
+  verify_bin zstd
 }

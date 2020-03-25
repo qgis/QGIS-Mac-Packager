@@ -4,7 +4,7 @@
 VERSION_python_packages=${VERSION_python}
 
 # dependencies of this recipe
-DEPS_python_packages=(hdf5)
+DEPS_python_packages=(hdf5 python_sip python_pyqt5 python_qscintilla )
 
 # url of the package
 URL_python_packages=
@@ -23,7 +23,6 @@ REQUIREMENTS_python_packages=(
   numpy==1.18.2
   h5py==2.10.0
   requests==2.23.0
-  PyQt5==${VERSION_qt}
 )
 
 # function called for preparing source code if needed
@@ -75,7 +74,7 @@ function postbuild_python_packages() {
  for i in ${REQUIREMENTS_python_packages[*]}
   do
     arr=(${i//==/ })
-    if ! python_package_installed ${arr[0]} ${arr[1]} ${arr[0]} ; then
+    if ! python_package_installed ${arr[0]} ; then
       error "Missing python package $i"
     fi
   done
