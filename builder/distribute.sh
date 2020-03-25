@@ -41,6 +41,8 @@ function pop_env() {
   export PYTHONUSERBASE=$OLD_PYTHONUSERBASE
   export DYLD_LIBRARY_PATH=$OLD_DYLD_LIBRARY_PATH
   export PIP=$OLD_PIP
+  export QSPEC=$OLD_QSPEC
+  export PYCONFIGURE=$OLD_PYCONFIGURE
 }
 
 function try () {
@@ -178,7 +180,8 @@ function python_package_installed() {
     python_import=$1
 
     push_env
-    if DYLD_LIBRARY_PATH=$STAGE_PATH/lib;$PYTHON -c import\ $python_import > /dev/null 2>&1
+    #if DYLD_LIBRARY_PATH=$STAGE_PATH/lib;$PYTHON -c import\ $python_import > /dev/null 2>&1
+    if $PYTHON -c import\ $python_import > /dev/null 2>&1
     then
       # echo "$1 a"
       return 0
@@ -206,17 +209,6 @@ function patch_qmake_pri_file() {
   try ${SED} "s;= \$\${QWT_INSTALL_PREFIX}/plugins/designer;=$STAGE_PATH/lib/qt/plugins/designer;g" $1
 }
 
-# function run_qmake() {
-  # ImageIO framework contains libTIFF and libJPEG libraries
-  # we have these libraries in $STAGE_PATH/lib
-  # so we should not set DYLD_LIBRARY_PATH=$STAGE_PATH/lib
-  # otherwise qmake command will not go through
-
-#  export OLD2_DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH
-#  try ${QMAKE} "$@"
-#  export DYLD_LIBRARY_PATH=$OLD2_DYLD_LIBRARY_PATH
-#}
-
 function push_env() {
     info "Entering in build environment"
 
@@ -239,6 +231,8 @@ function push_env() {
     export OLD_PYTHONUSERBASE=$PYTHONUSERBASE
     export OLD_DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH
     export OLD_PIP=$PIP
+    export OLD_QSPEC=$QSPEC
+    export OLD_PYCONFIGURE=$PYCONFIGURE
 
     export PATH="/sbin/:/bin/:/usr/bin"
     add_homebrew_path bison
@@ -253,9 +247,6 @@ function push_env() {
 
     ###################
     # Configure/Make system
-
-    # export SYSROOT=$XCODE_DEVELOPER/SDKs/MacOSX.sdk
-    # export CFLAGS="--sysroot $SYSROOT -I$STAGE_PATH/include"
     export CFLAGS="-I$STAGE_PATH/include"
     export LDFLAGS="-L$STAGE_PATH/lib"
     export CXXFLAGS="${CFLAGS}"
@@ -271,13 +262,10 @@ function push_env() {
     export OBJCXX=${CXX}
     export OBJC=${CC}
 
-    # export CC="${XCODE_DEVELOPER}/usr/bin/gcc $CFLAGS"
-    # export CXX="${XCODE_DEVELOPER}/usr/bin/g++ $CXXFLAGS"
     export LD="/usr/bin/ld"
 
     ###################
     # CMake
-
     export LIB=$STAGE_PATH
     export INCLUDE=$STAGE_PATH/include
     export LIB_DIR=$STAGE_PATH
@@ -289,7 +277,6 @@ function push_env() {
       CMAKE="${CMAKE} -DCMAKE_BUILD_TYPE=Release"
     fi
     export CMAKE="${CMAKE} -DCMAKE_INSTALL_PREFIX:PATH=$STAGE_PATH"
-    # export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64;$SYSROOT"
     export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=FALSE"
@@ -308,11 +295,6 @@ function push_env() {
     ###################
     # PYTHON
     # activate python virtualenv
-
-    # build_ext sometimes tries to dlopen the libraries
-    # TODO THIS SHOULD NOT BE NECCESARRY IF ALL RPATHS are correct in binaries
-    # to @executable_path/../lib/ and we should only fix the pip install global options
-    # DYLD_LIBRARY_PATH=$STAGE_PATH/lib
     if [ -f $STAGE_PATH/bin/activate ]; then
       source $STAGE_PATH/bin/activate
     fi
@@ -476,6 +458,13 @@ run_final_check() {
       verify_bin $bin
     fi
   done
+
+  # all other files
+  #if grep -rni $STAGE_PATH $STAGE_PATH --exclude-dir=__pycache__
+  #then
+  #  grep -rni $STAGE_PATH $STAGE_PATH --exclude-dir=__pycache__
+  #  error "Some scripts reference absolute STAGE_PATH dir $STAGE_PATH"
+  #fi
 }
 
 function usage() {

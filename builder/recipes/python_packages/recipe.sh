@@ -25,6 +25,17 @@ REQUIREMENTS_python_packages=(
   requests==2.23.0
 )
 
+patch_python_packages_linker_links () {
+  targets=(
+    $QGIS_SITE_PACKAGES_PATH/h5py/_errors.cpython-37m-darwin.so
+  )
+
+  for i in ${targets[*]}
+  do
+      install_name_tool -add_rpath @loader_path/../../../ $i
+  done
+}
+
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_python_packages() {
@@ -43,7 +54,7 @@ function shouldbuild_python_packages() {
   for i in ${REQUIREMENTS_python_packages[*]}
   do
     arr=(${i//==/ })
-    if ! python_package_installed ${arr[0]} ${arr[1]} ${arr[0]}; then
+    if ! python_package_installed ${arr[0]}; then
       debug "Missing python package $i, requested build"
       return
     fi
@@ -65,6 +76,8 @@ function build_python_packages() {
     # to determine the library version
     DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP $i
   done
+
+  patch_python_packages_linker_links
 
   pop_env
 }

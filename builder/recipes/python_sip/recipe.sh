@@ -35,9 +35,9 @@ function prebuild_python_sip() {
 }
 
 function shouldbuild_python_sip() {
-  if [ "$QGIS_SITE_PACKAGES_PATH/PyQt5/sip.so" -nt $BUILD_python_qscintilla/.patched ]; then
-    DO_BUILD=0
-  fi
+   if python_package_installed sipconfig; then
+      DO_BUILD=0
+   fi
 }
 
 # function called to build the source code

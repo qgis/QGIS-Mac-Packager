@@ -22,12 +22,12 @@ RECIPE_python_qscintilla=$RECIPES_PATH/python_qscintilla
 
 patch_qscintilla_linker_links () {
   targets=(
-    lib/python3.7/site-packages/PyQt5/Qsci.so
+    $QGIS_SITE_PACKAGES_PATH/PyQt5/Qsci.so
   )
 
   for i in ${targets[*]}
   do
-      install_name_tool -add_rpath @loader_path/../../../ ${STAGE_PATH}/$i
+      install_name_tool -add_rpath @loader_path/../../../ $i
   done
 }
 
@@ -40,6 +40,10 @@ function prebuild_python_qscintilla() {
   if [ -f .patched ]; then
     return
   fi
+
+  # without QtWidgets it cannot compile with
+  # fatal error: 'QAbstractScrollArea' file not found
+  # try ${SED} "s;# Work around QTBUG-39300.;pro.write('QT += widgets printsupport\\\n');g" Python/configure.py
 
   touch .patched
 }
@@ -61,17 +65,14 @@ function build_python_qscintilla() {
   cd Python
   mkdir -p ${STAGE_PATH}/share/sip/PyQt5/Qsci
 
-   if ! python_package_installed PyQt5.QtCore; then
-      error "Missing python package PyQt5.QtCore"
-   fi
-
-  QMAKEFEATURES=$STAGE_PATH/data/mkspecs/features;\
+  # QMAKEFEATURES=$STAGE_PATH/data/mkspecs/features;\
   try $PYCONFIGURE \
     -o ${STAGE_PATH}/lib \
     -n ${STAGE_PATH}/include \
     --apidir=${STAGE_PATH}/qsci \
     --stubsdir=$QGIS_SITE_PACKAGES_PATH/PyQt5 \
     --destdir=$QGIS_SITE_PACKAGES_PATH/PyQt5 \
+    --qsci-featuresdir=$STAGE_PATH/data/mkspecs/features/ \
     --qsci-sipdir=${STAGE_PATH}/share/sip/PyQt5 \
     --qsci-incdir=${STAGE_PATH}/include \
     --qsci-libdir=${STAGE_PATH}/lib \

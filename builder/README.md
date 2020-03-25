@@ -42,7 +42,7 @@ cmake -DQGIS_MAC_DEPS_DIR=$QGIS_DEPS \
 ```
 5. Rerun cmake from menu (Clear Cmake Configration + run Cmake)
 6. Build
-      
+
 License & Acknowledgement
 -------------------------
 - [distribute.sh](https://github.com/opengisch/OSGeo4A/blob/master/LICENSE-for-distribute-sh) 

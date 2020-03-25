@@ -1,22 +1,19 @@
 #!/bin/bash
 
-# https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5-5.14.2.dev2003150552.tar.gz
-
 # version of your package
 VERSION_MAJOR_python_pyqt5=5.14.2
-VERSION_python_pyqt5=${VERSION_MAJOR_python_pyqt5}.dev2003150552 # ${VERSION_MAJOR_python_pyqt5}.dev2003150552
+VERSION_python_pyqt5=${VERSION_MAJOR_python_pyqt5}.dev2003150552
 
 # dependencies of this recipe
 DEPS_python_pyqt5=(python_sip)
 
-# https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5-5.14.2.dev2003150552.tar.gz
 # url of the package
 URL_python_pyqt5=https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5-${VERSION_python_pyqt5}.tar.gz
 
 # echo "${URL_python_pyqt5}"
 
 # md5 of the package
-MD5_python_pyqt5=c3d9f0cf8a17186d70adb82dd9f931e0
+MD5_python_pyqt5=f6aaf805d73074f1eb23a00ad37ef66f
 
 # default build path
 BUILD_python_pyqt5=$BUILD_PATH/python_pyqt5/$(get_directory $URL_python_pyqt5)
