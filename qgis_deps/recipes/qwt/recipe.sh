@@ -55,6 +55,8 @@ function build_qwt() {
   try $MAKESMP
   try $MAKESMP install
 
+  install_name_tool -id "@rpath/qwt.framework/qwt" ${STAGE_PATH}/lib/qwt.framework/qwt
+
   pop_env
 }
 

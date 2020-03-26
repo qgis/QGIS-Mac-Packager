@@ -9,13 +9,14 @@ Prerequisities
 Build QGIS-deps
 ---------------
 
-1. Update config.conf
-2. run `./distribute.sh -mqgis`
+1. Update config.conf (usually not needed)
+2. Run `./distribute.sh -mqgis_deps`
+3. Enjoy
 
 Build QGIS (Qt Creator)
 -----------------------
 
-0. build QGIS-deps or download&extract from qgis download area
+0. Build QGIS-deps or download&extract from qgis download area
 1. Go to the qgis-deps folder and activate virtualenv (source bin/activate)
 2. Open QT Creator and load CMakeLists of QGIS
 3. Setup Kit in Qt Creator with QT from /opt/QT (as in prerequisities)
@@ -45,4 +46,4 @@ cmake -DQGIS_MAC_DEPS_DIR=$QGIS_DEPS \
 
 License & Acknowledgement
 -------------------------
-- [distribute.sh](https://github.com/opengisch/OSGeo4A/blob/master/LICENSE-for-distribute-sh) 
+- original copy of [distribute.sh](https://github.com/opengisch/OSGeo4A/blob/master/LICENSE-for-distribute-sh) 

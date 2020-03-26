@@ -19,7 +19,7 @@ BUILD_qca=$BUILD_PATH/qca/$(get_directory $URL_qca)
 RECIPE_qca=$RECIPES_PATH/qca
 
 patch_qca_linker_links () {
-  install_name_tool -id "@rpath/lib/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5" ${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5
+  install_name_tool -id "@rpath/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5" ${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5
 
   targets=(
     bin/mozcerts-qt5
@@ -28,7 +28,7 @@ patch_qca_linker_links () {
 
   for i in ${targets[*]}
   do
-     install_name_tool -change "${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5" "@rpath/lib/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5" ${STAGE_PATH}/$i
+     install_name_tool -change "${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5" "@rpath/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5" ${STAGE_PATH}/$i
      install_name_tool -add_rpath $QT_BASE/clang_64/lib ${STAGE_PATH}/$i
   done
 }

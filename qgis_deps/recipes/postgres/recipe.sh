@@ -75,7 +75,7 @@ function patch_pg_linker_links() {
   do
     install_name_tool -change "${STAGE_PATH}/lib/libpq.${LINK_libpq_version}.dylib" "@rpath/libpq.${LINK_libpq_version}.dylib" ${STAGE_PATH}/$i
     install_name_tool -change "${STAGE_PATH}/lib/libpgtypes.${LINK_libpgtypes_version}.dylib" "@rpath/libpgtypes.${LINK_libpgtypes_version}.dylib" ${STAGE_PATH}/$i
-    install_name_tool -change "${STAGE_PATH}/lib/libecpg.${LINK_libecpg_version}.dylib" "@rpath/lib/libecpg.${LINK_libecpg_version}.dylib"  ${STAGE_PATH}/$i
+    install_name_tool -change "${STAGE_PATH}/lib/libecpg.${LINK_libecpg_version}.dylib" "@rpath/libecpg.${LINK_libecpg_version}.dylib"  ${STAGE_PATH}/$i
     if [[ $i == *"bin/"* ]]; then install_name_tool -add_rpath @executable_path/../lib $STAGE_PATH/$i; fi
   done
 }

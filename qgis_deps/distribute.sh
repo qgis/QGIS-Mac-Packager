@@ -301,7 +301,7 @@ function push_env() {
     export PYTHON="$STAGE_PATH/bin/python3"
     export PYCONFIGURE="$PYTHON ./configure.py"
 
-    export PIP="pip3 install --no-binary all"
+    export PIP="$STAGE_PATH/bin/pip3 install --no-binary all"
     export PIP="$PIP --global-option=build_ext"
     export PIP="$PIP --global-option=--include-dirs=$STAGE_PATH/include"
     export PIP="$PIP --global-option=--library-dirs=$STAGE_PATH/lib"
@@ -375,6 +375,12 @@ function check_linked_rpath() {
   then
     otool -L $1
     error "$1 contains $ROOT_OUT_PATH string <-- forgot to change install_name for the linked library?"
+  fi
+
+  if otool -L $1 | grep -q @rpath/lib/
+  then
+    otool -L $1
+    info "$1 contains  @rpath/lib string <-- typo in the receipt, should be without lib"
   fi
 }
 
@@ -471,10 +477,10 @@ function usage() {
   echo "QGIS deps - distribute.sh"
   echo
   echo "Usage:   ./distribute.sh [options]"
+  echo "To build whole package, run:   ./distribute.sh -mqgis_deps"
   echo
   echo "  -h                     Show this help"
   echo "  -c                     Run command in the build environment"
-  echo "  -B                     open Qt Creator for QGIS development"
   echo "  -l                     Show a list of available modules"
   echo "  -m 'mod1 mod2'         Modules to include"
   echo "  -f                     Restart from scratch (remove the current build)"
@@ -895,12 +901,6 @@ while getopts ":hBvlfxic:m:u:s:g" opt; do
     c)
       push_env
       eval $OPTARG
-      pop_env
-      exit 0
-      ;;
-    B) # TODO do we need this at all?
-      push_env
-      $STAGE_PATH/lib open $QT_BASE/../Qt\ Creator.app
       pop_env
       exit 0
       ;;

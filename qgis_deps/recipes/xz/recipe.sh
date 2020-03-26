@@ -32,7 +32,6 @@ patch_xz_linker_links () {
     bin/xzdec
     bin/xz
     bin/lzmadec
-    bin/zstd
   )
 
   # Change linked libs

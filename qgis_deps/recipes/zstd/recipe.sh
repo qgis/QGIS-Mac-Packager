@@ -18,6 +18,20 @@ BUILD_zstd=$BUILD_PATH/zstd/$(get_directory $URL_zstd)
 # default recipe path
 RECIPE_zstd=$RECIPES_PATH/zstd
 
+patch_zstd_linker_links () {
+  install_name_tool -id "@rpath/libzstd.dylib" ${STAGE_PATH}/lib/libzstd.dylib
+
+  targets=(
+    bin/zstd
+  )
+
+  # Change linked libs
+  for i in ${targets[*]}
+  do
+      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
+  done
+}
+
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_zstd() {
@@ -46,7 +60,7 @@ function build_zstd() {
 
   try $MAKE install PREFIX=$STAGE_PATH
 
-  install_name_tool -id "@rpath/libzstd.dylib" ${STAGE_PATH}/lib/libzstd.dylib
+  patch_zstd_linker_links
 
   pop_env
 }

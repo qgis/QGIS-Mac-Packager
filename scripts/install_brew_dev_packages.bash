@@ -15,6 +15,7 @@ brew install gnu-sed
 brew install coreutils
 brew install ccache
 brew install libtool
+brew install astyle
 
 brew install python3
 pip3 install dmgbuild
