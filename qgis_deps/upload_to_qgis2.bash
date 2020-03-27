@@ -36,6 +36,6 @@ echo "Upload QGIS DEPS to qgis2.qgis.org"
 ssh -o LogLevel=Error -i $KEY $SERVER "mkdir -p $ROOT"
 
 # upload files
-# process_file $QT_PACKAGE
-# process_file $QGIS_DEPS_PACKAGE
+process_file $QT_PACKAGE
+process_file $QGIS_DEPS_PACKAGE
 process_file $INSTALL_SCRIPT
