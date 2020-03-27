@@ -70,7 +70,7 @@ cd $ROOT_OUT_PATH/stage/
 $COMPRESS ${QGIS_DEPS_PACKAGE} ./
 cd $PWD
 echo "echo \"----------------------\"" >> $INSTALL_SCRIPT
-echo "if [ -f \$ROOT_PATH/$QGIS_DEPS_PACKAGE_FILE ] && [ ! -d $QGIS_INSTALL_DIR  ]; then" >> $INSTALL_SCRIPT
+echo "if [ -f \$ROOT_PATH/$QGIS_DEPS_PACKAGE_FILE ] && [ ! -d $QGIS_INSTALL_DIR ]; then" >> $INSTALL_SCRIPT
 echo "  echo \"Installing QGIS_deps ${RELEASE_VERSION} to $QGIS_INSTALL_DIR\"" >> $INSTALL_SCRIPT
 echo "  mkdir -p $QGIS_INSTALL_DIR" >> $INSTALL_SCRIPT
 echo "  cd $QGIS_INSTALL_DIR" >> $INSTALL_SCRIPT
