@@ -62,7 +62,7 @@ function debug() {
 info "Loading configuration"
 #########################################################################################################
 
-SED="sed -i ''"
+SED="sed -i.orig"
 XCODE_DEVELOPER="$(xcode-select -print-path)"
 CORES=$(sysctl -n hw.ncpu)
 ARCH=x86_64
@@ -220,7 +220,7 @@ function push_env() {
     # export some tools
     export MAKESMP="/usr/bin/make -j$CORES"
     export MAKE="/usr/bin/make"
-    export CONFIGURE="./configure --prefix=$STAGE_PATH --disable-dependency-tracking --disable-silent-rules"
+    export CONFIGURE="./configure --prefix=$STAGE_PATH"
     export CC="/usr/bin/clang"
     export CXX="/usr/bin/clang++"
     export OBJCXX=${CXX}
@@ -342,6 +342,24 @@ function check_linked_rpath() {
     otool -L $1
     info "$1 contains  @rpath/lib string <-- typo in the receipt, should be without lib"
   fi
+
+  targets=(
+    libz
+    libssl
+    libcrypto
+    libpq
+    lib
+    libxml2
+    libsqlite3
+  )
+  for i in ${targets[*]}
+  do
+      if otool -L $1 | grep -q /usr/lib/$i.dylib
+      then
+        otool -L $1
+        info "$1 contains /usr/lib/$i.dylib string -- we should be using our $i, not system!"
+      fi
+  done
 }
 
 function verify_lib() {

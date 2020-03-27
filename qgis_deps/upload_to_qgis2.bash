@@ -20,9 +20,7 @@ if [ ! -f $QT_PACKAGE ] || [ ! -f $QGIS_DEPS_PACKAGE ] || [ ! -f $INSTALL_SCRIPT
 fi
 
 KEY="$DIR/../../ssh/id_rsa"
-# KEY="~/.ssh/id_rsa"
 SERVER="qgis-mac-packager-bot@qgis2.qgis.org"
-# SERVER="zilolv@qgis2.qgis.org"
 FOLDER="/var/www/downloads/macos"
 ROOT="$FOLDER/deps"
 
@@ -31,13 +29,13 @@ process_file () {
     FILENAME=$(basename -- "$LOCAL")
     REMOTE=$ROOT/$FILENAME
     # scp -o LogLevel=Error -i $KEY $LOCAL $SERVER:$REMOTE
-    rsync -v -e ssh -i $KEY $LOCAL $SERVER:$REMOTE
+    rsync -v -e "ssh -i $KEY" $LOCAL $SERVER:$REMOTE --progress
 }
 
 echo "Upload QGIS DEPS to qgis2.qgis.org"
 ssh -o LogLevel=Error -i $KEY $SERVER "mkdir -p $ROOT"
 
 # upload files
-process_file $QT_PACKAG
+process_file $QT_PACKAGE
 process_file $QGIS_DEPS_PACKAGE
 process_file $INSTALL_SCRIPT

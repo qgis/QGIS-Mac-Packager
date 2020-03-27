@@ -62,13 +62,13 @@ QGIS_DEPS_PACKAGE_FILE=qgis-deps-${RELEASE_VERSION}.tar.gz
 QGIS_DEPS_PACKAGE=$ROOT_OUT_PATH/${QGIS_DEPS_PACKAGE_FILE}
 QGIS_INSTALL_DIR=\$\{QGIS_DEPS_PREFIX\}$ROOT_OUT_PATH
 if [ -f $QGIS_DEPS_PACKAGE ]; then
-  echo "Archive $QGIS_DEPS_PACKAGE exists, skipping"
-else
-  cd $ROOT_OUT_PATH/stage/
-  $COMPRESS ${QGIS_DEPS_PACKAGE} ./
-  cd $PWD
+  echo "Archive $QGIS_DEPS_PACKAGE exists, removing"
+  rm -rf $QGIS_DEPS_PACKAGE
 fi
 
+cd $ROOT_OUT_PATH/stage/
+$COMPRESS ${QGIS_DEPS_PACKAGE} ./
+cd $PWD
 echo "echo \"----------------------\"" >> $INSTALL_SCRIPT
 echo "if [ -f \$ROOT_PATH/$QGIS_DEPS_PACKAGE_FILE ] && [ ! -d $QGIS_INSTALL_DIR  ]; then" >> $INSTALL_SCRIPT
 echo "  echo \"Installing QGIS_deps ${RELEASE_VERSION} to $QGIS_INSTALL_DIR\"" >> $INSTALL_SCRIPT

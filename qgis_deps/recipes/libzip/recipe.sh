@@ -4,7 +4,7 @@
 VERSION_libzip=1.6.1
 
 # dependencies of this recipe
-DEPS_libzip=(xz)
+DEPS_libzip=( zlib xz openssl )
 
 # url of the package
 URL_libzip=https://libzip.org/download/libzip-${VERSION_libzip}.tar.xz

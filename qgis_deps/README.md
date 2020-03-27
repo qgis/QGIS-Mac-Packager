@@ -17,30 +17,13 @@ Build QGIS (Qt Creator)
 -----------------------
 
 1. Build QGIS-deps or download&extract from qgis download area
+2. Run `./configure_qgis_build.bash <path/to/qgis/QGIS/repo> </path/to/build-QGIS>`
+3. Run make in </path/to/build-QGIS>
+
+Alternatively you can 
 2. Open QT Creator and load CMakeLists of QGIS
 3. Setup Kit in Qt Creator with QT from /opt/QT (as in prerequisities)
-4. Set/Add in Projects>Build Settings>Cmake
-  - QGIS_MAC_DEPS_DIR=dir with stage/lib dir 
-  - QGIS_MACAPP_BUNDLE=0
-  - WITH_QTWEBKIT=FALSE
-  - WITH_QT5SERIALPORT=FALSE
-  - BISON_EXECUTABLE=/usr/local/opt/bison/bin/bison
-  - FLEX_EXECUTABLE=/usr/local/opt/flex/bin/flex
-  
-Alternatively create a folder build-QGIS (next to QGIS repo), cd into folder and run 
-```
-QGIS_DEPS=<path/to/qgis-deps-0.1.0/stage>;\
-QT_BASE=/opt/Qt/<QT version>/clang_64;\
-PATH=$QGIS_DEPS/bin:$PATH;\
-cmake -DQGIS_MAC_DEPS_DIR=$QGIS_DEPS \
-      -DCMAKE_PREFIX_PATH=$QT_BASE \
-      -DQGIS_MACAPP_BUNDLE=0 \
-      -DWITH_QTWEBKIT=FALSE \
-      -DWITH_QT5SERIALPORT=FALSE \
-      -DBISON_EXECUTABLE=/usr/local/opt/bison/bin/bison \
-      -DFLEX_EXECUTABLE=/usr/local/opt/flex/bin/flex ../QGIS/ \
-      -DWITH_GRASS=OFF
-```
+4. Set/Add in Projects>Build Settings>Cmake similarly to `configure_qgis_build.bash`
 5. Rerun cmake from menu (Clear Cmake Configration + run Cmake)
 6. Build
 

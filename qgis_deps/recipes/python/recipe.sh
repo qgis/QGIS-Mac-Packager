@@ -4,7 +4,7 @@
 VERSION_python=${VERSION_major_python}.7
 
 # dependencies of this recipe
-DEPS_python=( openssl xz libffi )
+DEPS_python=( openssl xz libffi zlib libzip sqlite )
 
 # url of the package
 URL_python=https://www.python.org/ftp/python/${VERSION_python}/Python-${VERSION_python}.tar.xz
@@ -18,15 +18,62 @@ BUILD_python=$BUILD_PATH/python/$(get_directory $URL_python)
 # default recipe path
 RECIPE_python=$RECIPES_PATH/python
 
-patch_python_linker_links () {
-  targets=(
-    bin/python${VERSION_major_python}
-  )
+# requirements
+REQUIREMENTS_python=(
+  setuptools==https://files.pythonhosted.org/packages/df/ed/bea598a87a8f7e21ac5bbf464102077c7102557c07db9ff4e207bd9f7806/setuptools-46.0.0.zip==74de3ab356d1246d251977e16a44ef1e
+  pip==https://files.pythonhosted.org/packages/8e/76/66066b7bc71817238924c7e4b448abdb17eb0c92d645769c223f9ace478f/pip-20.0.2.tar.gz==7d42ba49b809604f0df3d55df1c3fd86
+  wheel==https://files.pythonhosted.org/packages/75/28/521c6dc7fef23a68368efefdcd682f5b3d1d58c2b90b06dc1d0b805b51ae/wheel-0.34.2.tar.gz==ce2a27f99c130a927237b5da1ff5ceaf
+)
 
-  # Change linked libs
+patch_python_linker_links () {
+  if [ ! -f "${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib does not exist... maybe you updated the python version?"
+  fi
+
+  chmod +w ${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib
+  install_name_tool -id "@rpath/libpython${VERSION_major_python}m.dylib" "${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib"
+
+  targets=(
+    bin/python3
+  )
   for i in ${targets[*]}
   do
-    if [[ $i == *"bin/"* ]]; then install_name_tool -add_rpath @executable_path/../lib $STAGE_PATH/$i; fi
+      install_name_tool -change "${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib" "@rpath/libpython${VERSION_major_python}m.dylib" ${STAGE_PATH}/$i
+      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
+  done
+
+  PYMODULES=`find $STAGE_PATH/lib/python3.7/lib-dynload -type f -name "*.so"`
+
+  for i in $PYMODULES; do
+    install_name_tool -add_rpath @loader_path/../../ $i
+  done
+}
+
+install_default_packages () {
+  for i in ${REQUIREMENTS_python[*]}
+  do
+    arr=(${i//==/ })
+    NAME=${arr[0]}
+    URL=${arr[1]}
+    MD5=${arr[2]}
+    download_file $NAME $URL $MD5
+
+    info "Installing $NAME"
+
+    cd $BUILD_PATH/$NAME/$(get_directory $URL)
+    push_env
+
+    try $PYTHON -s setup.py \
+      --no-user-cfg install \
+      --force \
+      --verbose \
+      --install-scripts=$STAGE_PATH/bin \
+      --install-lib=$QGIS_SITE_PACKAGES_PATH \
+      --single-version-externally-managed \
+      --record=installed.txt
+
+    pop_env
+
   done
 }
 
@@ -61,9 +108,14 @@ function build_python() {
 
   unset PYTHONHOME
   unset PYTHONPATH
-  # export CFLAGS="-isysroot $STAGE_PATH "${CFLAGS}
-  # export LDFLAGS="-isysroot $STAGE_PATH "${LDFLAGS}
-  # export CPPFLAGS="-isysroot $STAGE_PATH "${CPPFLAGS}
+
+  # this sets cross_compiling flag in setup.py
+  # so it does not pick /usr/local libs
+  export _PYTHON_HOST_PLATFORM=darwin
+
+  # when building extensions in setup.py it
+  # dlopen some libraries (e.g. _ssl -> libcrypto.dylib)
+  export DYLD_LIBRARY_PATH=$STAGE_PATH/lib
 
   try ${CONFIGURE} \
       --enable-ipv6 \
@@ -73,37 +125,18 @@ function build_python() {
       --with-openssl=$STAGE_PATH \
       --enable-optimizations \
       --enable-shared \
+      --with-ensurepip=no \
       --with-ssl-default-suites=openssl \
       --enable-loadable-sqlite-extensions \
-      --disable-profiling
-
-#       --enable-loadable-sqlite-extensions \
-#      --enable-framework=${STAGE_PATH}/Frameworks \
-            # --without-ensurepip \
-#       --with-dtrace \
+      --with-system-ffi
 
   check_file_configuration config.status
 
-  # during build time it load extensions to check. need to
-  # add rpath to the libs, but we need to do it after build
-  # so we do not have like this
-  # *** WARNING: renaming "_ssl" since importing it failed:
-  # dlopen(build/lib.macosx-10.13.0-x86_64-3.7/_ssl.cpython-37m-darwin.so, 2): Symbol not found: _BIO_up_ref
-
-  # this sets cross_compiling flag in setup.py
-  export _PYTHON_HOST_PLATFORM=darwin
-
-  # TODO how to skip running tests?
   try $MAKESMP
   try $MAKE install PYTHONAPPSDIR=${STAGE_PATH}
-  # try $MAKE frameworkinstallextras PYTHONAPPSDIR=${STAGE_PATH}/share
 
-  exit 1
   patch_python_linker_links
-
-  try $STAGE_PATH/bin/pip3 install --upgrade pip
-  try $STAGE_PATH/bin/pip3 install --upgrade setuptools
-  try $STAGE_PATH/bin/pip3 install --upgrade wheel
+  install_default_packages
 
   pop_env
 }

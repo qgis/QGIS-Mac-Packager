@@ -8,8 +8,6 @@ VERSION_libffi=3.2.1
 # dependencies of this recipe
 DEPS_libffi=()
 
-LINK_libffi_version=6
-
 # url of the package
 URL_libffi=https://sourceware.org/pub/libffi/libffi-${VERSION_libffi}.tar.gz
 
@@ -56,13 +54,18 @@ function build_libffi() {
 
 
   try ${CONFIGURE} \
-    --disable-debug
+    --disable-debug \
+    --enable-static=no
 
   check_file_configuration config.status
   try $MAKESMP
-  try $MAKESMP install
+  try $MAKE install
 
   patch_libffi_linker_links
+
+  mkdir -p $STAGE_PATH/include
+  cp $STAGE_PATH/lib/libffi-${VERSION_libffi}/include/* $STAGE_PATH/include/
+  rm -rf $STAGE_PATH/lib/libffi-${VERSION_libffi}
 
   pop_env
 }

@@ -42,7 +42,6 @@ patch_openssl_linker_links () {
     bin/openssl
   )
 
-
   # Change linked libs
   for i in ${targets[*]}
   do

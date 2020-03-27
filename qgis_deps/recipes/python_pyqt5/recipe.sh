@@ -21,11 +21,34 @@ BUILD_python_pyqt5=$BUILD_PATH/python_pyqt5/$(get_directory $URL_python_pyqt5)
 # default recipe path
 RECIPE_python_pyqt5=$RECIPES_PATH/python_pyqt5
 
+function fix_python_pyqt5_paths() {
+
+  # these are sh scripts that calls plain python{VERSION_major_python}
+  # so when on path there is homebrew python or other
+  # it fails
+  targets=(
+    bin/pylupdate5
+    bin/pyrcc5
+    bin/pyuic5
+  )
+
+  for i in ${targets[*]}
+  do
+    try ${SED} 's;exec python3.7;exec `dirname $0`/python3.7;g' $STAGE_PATH/$i
+    # remove backup file
+    rm -f $STAGE_PATH/$i.orig
+  done
+
+  # TODO fix bash scripts to not use abs path!
+}
+
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_python_pyqt5() {
   try mkdir -p $BUILD_python_pyqt5
   cd $BUILD_python_pyqt5
+
+  fix_python_pyqt5_paths
 
   # check marker
   if [ -f .patched ]; then
@@ -67,6 +90,8 @@ function build_python_pyqt5() {
   try $MAKESMP
   try $MAKE install
   try $MAKE clean
+
+  fix_python_pyqt5_paths
 
   pop_env
 }

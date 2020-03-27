@@ -6,6 +6,7 @@ VERSION_qgis_deps=${RELEASE_VERSION}
 # dependencies of this recipe
 DEPS_qgis_deps=(
   python
+  sqlite
   exiv2
   gdal
   hdf5

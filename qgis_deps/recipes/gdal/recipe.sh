@@ -4,7 +4,7 @@
 VERSION_gdal=3.0.4
 
 # dependencies of this recipe
-DEPS_gdal=(geos proj libgeotiff libxml2 xerces xz zstd libtiff netcdf hdf5 postgres jpeg png)
+DEPS_gdal=(geos proj libgeotiff libxml2 xerces xz zstd libtiff netcdf hdf5 postgres jpeg png sqlite)
 
 LINK_libgdal_version=26
 
@@ -94,7 +94,7 @@ function build_gdal() {
 
 
   WITH_GDAL_DRIVERS=
-  for i in xerces liblzma zstd libtiff geotiff jpeg hdf5 netcdf pg png
+  for i in xerces liblzma zstd libtiff geotiff jpeg hdf5 netcdf pg png spatialite sqlite3
   do
     WITH_GDAL_DRIVERS="$WITH_GDAL_DRIVERS --with-$i=$STAGE_DIR"
   done
@@ -105,7 +105,7 @@ function build_gdal() {
            mongocxxv3 hdf4 kea jasper openjpeg fgdb \
            kakadu mrsid jp2mrsid mrsid_lidar \
            msg oci mysql ingres expat libkml odbc \
-           dods-root spatialite sqlite3 rasterlite2
+           dods-root rasterlite2
   do
     WITHOUT_GDAL_DRIVERS="$WITHOUT_GDAL_DRIVERS --without-$i"
   done
