@@ -6,7 +6,7 @@
 VERSION_python_sip=4.19.21
 
 # dependencies of this recipe
-DEPS_python_sip=()
+DEPS_python_sip=(python)
 
 # url of the package
 URL_python_sip=https://www.riverbankcomputing.com/static/Downloads/sip/${VERSION_python_sip}/sip-${VERSION_python_sip}.tar.gz

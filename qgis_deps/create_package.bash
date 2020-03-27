@@ -57,29 +57,6 @@ echo "  echo \"Skipped installation of QT ${VERSION_qt} to $QT_INSTALL_DIR\"" >>
 echo "fi" >> $INSTALL_SCRIPT
 
 ##############################################
-# Create Python package
-PY_PACKAGE_FILE=python-${VERSION_python}.tar.gz
-PY_PACKAGE=$ROOT_OUT_PATH/${PY_PACKAGE_FILE}
-PY_INSTALL_DIR=\$\{QGIS_DEPS_PREFIX\}$PYTHON_BASE
-if [ -f $PY_PACKAGE ]; then
-  echo "Archive $PY_PACKAGE exists, skipping"
-else
-  cd $PYTHON_BASE
-  $COMPRESS ${PY_PACKAGE} ./
-  cd $PWD
-fi
-
-echo "echo \"----------------------\"" >> $INSTALL_SCRIPT
-echo "if [ -f \$ROOT_PATH/$PY_PACKAGE_FILE ] && [ ! -d $PY_INSTALL_DIR ]; then" >> $INSTALL_SCRIPT
-echo "  echo \"Installing Python ${VERSION_python} to $PY_INSTALL_DIR\"" >> $INSTALL_SCRIPT
-echo "  mkdir -p $PY_INSTALL_DIR" >> $INSTALL_SCRIPT
-echo "  cd $PY_INSTALL_DIR" >> $INSTALL_SCRIPT
-echo "  $DECOMPRESS \$ROOT_PATH/$PY_PACKAGE_FILE" >> $INSTALL_SCRIPT
-echo "else " >> $INSTALL_SCRIPT
-echo "  echo \"Skipped installation of Python ${VERSION_python} to $PY_INSTALL_DIR\"" >> $INSTALL_SCRIPT
-echo "fi" >> $INSTALL_SCRIPT
-
-##############################################
 # Create Deps package
 QGIS_DEPS_PACKAGE_FILE=qgis-deps-${RELEASE_VERSION}.tar.gz
 QGIS_DEPS_PACKAGE=$ROOT_OUT_PATH/${QGIS_DEPS_PACKAGE_FILE}
@@ -106,11 +83,9 @@ echo "fi" >> $INSTALL_SCRIPT
 # finalize create_package script
 echo "echo \"----------------------\"" >> $INSTALL_SCRIPT
 echo "echo \"QT installed $QT_INSTALL_DIR\"" >> $INSTALL_SCRIPT
-echo "echo \"Python installed $PY_INSTALL_DIR\"" >> $INSTALL_SCRIPT
 echo "echo \"QGIS deps installed $QGIS_INSTALL_DIR\"" >> $INSTALL_SCRIPT
 
 echo ""
 echo "QT archive $QT_PACKAGE (`filesize $QT_PACKAGE`)"
-echo "Python archive $PY_PACKAGE (`filesize $PY_PACKAGE`)"
 echo "QGIS deps archive $QGIS_DEPS_PACKAGE (`filesize $QGIS_DEPS_PACKAGE`)"
 echo "Install script $INSTALL_SCRIPT (`filesize $INSTALL_SCRIPT`)"

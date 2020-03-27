@@ -17,11 +17,6 @@ CRESET="\x1b[39;49;00m"
 function pop_env() {
   info "Leaving build environment"
 
-  # deactivate python virtualenv
-  if [ -f $STAGE_PATH/bin/activate ]; then
-    deactivate nondestructive
-  fi
-
   export PATH=$OLD_PATH
   export CFLAGS=$OLD_CFLAGS
   export CXXFLAGS=$OLD_CXXFLAGS
@@ -38,7 +33,6 @@ function pop_env() {
   export LIB=$OLD_LIB
   export SYSROOT=$OLD_SYSROOT
   export PYTHON=$OLD_PYTHON
-  export PYTHONUSERBASE=$OLD_PYTHONUSERBASE
   export DYLD_LIBRARY_PATH=$OLD_DYLD_LIBRARY_PATH
   export PIP=$OLD_PIP
   export QSPEC=$OLD_QSPEC
@@ -92,50 +86,19 @@ function check_config_conf_vars() {
       error "No VERSION_qt environment set, abort"
     fi
 
-    if [ "X$VERSION_python" == "X" ]; then
-      error "No VERSION_python environment set, abort"
+    if [ "X$VERSION_major_python" == "X" ]; then
+      error "No VERSION_major_python environment set, abort"
     fi
 
     if [ "X$QT_BASE" == "X" ]; then
       error "No QT_BASE environment set, abort"
     fi
 
-    if [ -f $QT_BASE/clang_64/bin/qmake ]; then
+    if [ -f "$QT_BASE/clang_64/bin/qmake" ]; then
        debug "Using QT: $QT_BASE"
     else
        error "The file '$QT_BASE/clang_64/bin/qmake' in not found."
     fi
-
-    if [ "X$SDKROOT" == "X" ]; then
-      error "No SDKROOT environment set, abort"
-    fi
-    if [ -d $SDKROOT ]; then
-       debug "Using SDK: $SDKROOT"
-    else
-       error "The SDK directory '$SDKROOT' not found."
-    fi
-
-    if [ "X$PYTHON_BASE" == "X" ]; then
-      error "No PYTHON_BASE environment set, abort"
-    fi
-
-    if [ -f $PYTHON_BASE/bin/python${VERSION_python} ]; then
-       debug "Using Python: $PYTHON_BASE/bin/python${VERSION_python}"
-    else
-       error "The file '$PYTHON_BASE/bin/python${VERSION_python}' in not found."
-    fi
-
-    # if hash ${XCODE_DEVELOPER}/usr/bin/clang 2>/dev/null; then
-    #   debug "Compiler found at ${XCODE_DEVELOPER}/usr/bin"
-    #else
-    #   error "Unable to find compiler at ${XCODE_DEVELOPER}/usr/bin! Ensure that XCode is installed!"
-    #fi
-
-    #if [ -d "${XCODE_DEVELOPER}/usr/lib/clang" ]; then
-    #   debug "Clang found at ${XCODE_DEVELOPER}/usr/bin"
-    #else
-    #   error "Unable to find clang at ${XCODE_DEVELOPER}/usr/lib/clang"
-    #fi
 
     if [ "X$ROOT_OUT_PATH" == "X" ]; then
       error "No ROOT_OUT_PATH environment set, abort"
@@ -156,7 +119,8 @@ STAGE_PATH="${ROOT_OUT_PATH}/stage"
 RECIPES_PATH="$ROOT_PATH/recipes"
 BUILD_PATH="$ROOT_OUT_PATH/build"
 PACKAGES_PATH="${PACKAGES_PATH:-$ROOT_OUT_PATH/.packages}"
-QGIS_SITE_PACKAGES_PATH=${STAGE_PATH}/lib/python${VERSION_python}/site-packages
+QGIS_SITE_PACKAGES_PATH=${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages
+
 
 function add_homebrew_path() {
    # info "Adding /usr/local/opt/$1/bin to PATH"
@@ -180,7 +144,6 @@ function python_package_installed() {
     python_import=$1
 
     push_env
-    #if DYLD_LIBRARY_PATH=$STAGE_PATH/lib;$PYTHON -c import\ $python_import > /dev/null 2>&1
     if $PYTHON -c import\ $python_import > /dev/null 2>&1
     then
       # echo "$1 a"
@@ -228,11 +191,12 @@ function push_env() {
     export OLD_LIB=$LIB
     export OLD_SYSROOT=$SYSROOT
     export OLD_PYTHON=$PYTHON
-    export OLD_PYTHONUSERBASE=$PYTHONUSERBASE
     export OLD_DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH
     export OLD_PIP=$PIP
     export OLD_QSPEC=$QSPEC
     export OLD_PYCONFIGURE=$PYCONFIGURE
+    export OLD_OBJCXX=${OBJCXX}
+    export OLD_OBJC=${OBJC}
 
     export PATH="/sbin/:/bin/:/usr/bin"
     add_homebrew_path bison
@@ -294,10 +258,6 @@ function push_env() {
 
     ###################
     # PYTHON
-    # activate python virtualenv
-    if [ -f $STAGE_PATH/bin/activate ]; then
-      source $STAGE_PATH/bin/activate
-    fi
     export PYTHON="$STAGE_PATH/bin/python3"
     export PYCONFIGURE="$PYTHON ./configure.py"
 
@@ -335,7 +295,7 @@ else
   WHEAD="wget --spider -q -S"
 fi
 
-for tool in tar bzip2 unzip cmake bison flex autoconf automake libtool pkg-config autoreconf perl; do
+for tool in tar bzip2 unzip cmake bison flex autoconf automake libtool pkg-config autoreconf perl python3; do
   which $tool &>/dev/null
   if [ $? -ne 0 ]; then
     error "Tool $tool is missing"
@@ -454,8 +414,18 @@ run_final_check() {
     fi
   done
 
+  cd ${STAGE_PATH}/Frameworks
+  LIBS=`find . -type f ! -name "*.*"`
+  for lib in $LIBS; do
+    attachmenttype=$(file ${STAGE_PATH}/bin/$lib | cut -d\  -f2 )
+    if [[ $attachmenttype = "Mach-O" ]]; then
+      verify_lib $lib
+    fi
+  done
+
   info "Running final check for all binaries in the ${STAGE_PATH}/bin"
   # binaries
+  mkdir -p ${STAGE_PATH}/bin
   cd ${STAGE_PATH}/bin
   EXEC=`find . -type f -name "*" ! -name "sip" ! -name "pip*" ! -name "activate*" ! -name "easy_install*" ! -name "python*"`
   for bin in $EXEC; do
@@ -512,23 +482,11 @@ function run_prepare() {
     try mkdir -p "$STAGE_PATH"
   fi
 
-  if [ ! -f $STAGE_PATH/bin/python3 ]; then
-    info "Creating Python virtual environment"
-    cd $STAGE_PATH/..
-    try $PYTHON_BASE/bin/python${VERSION_python} -m venv stage
-    push_env
-    # install pip and some default stuff
-    pip3 install --upgrade pip
-    pip3 install --upgrade setuptools
-    pip3 install --upgrade wheel
-    pop_env
-  fi
-
   # create build directory if not found
   test -d $PACKAGES_PATH || mkdir -p $PACKAGES_PATH
   test -d $BUILD_PATH || mkdir -p $BUILD_PATH
   test -d $STAGE_PATH/lib || mkdir -p $STAGE_PATH/lib
-  test -d $QGIS_SITE_PACKAGES_PATH || mkdir -p $QGIS_SITE_PACKAGES_PATH
+  test -d ${STAGE_PATH}/Frameworks || mkdir -p ${STAGE_PATH}/Frameworks
 }
 
 function in_array() {
@@ -632,7 +590,7 @@ function run_source_modules() {
   info `pwd`
   push_env
   cd $ROOT_PATH
-  MODULES="$($PYTHON tools/depsort.py --optional $fn_optional_deps < $fn_deps)"
+  MODULES="$(python3 tools/depsort.py --optional $fn_optional_deps < $fn_deps)"
   pop_env
 
   info "Modules changed to $MODULES"
@@ -755,10 +713,10 @@ function run_get_packages() {
   for module in $MODULES; do
     # download dependencies for this module
     # check if there is not an overload from environment
-    module_dir=$(eval "echo \$OSGeo4QGIS_${module}_DIR")
+    module_dir=$(eval "echo \$QGISDEPS_${module}_DIR")
     if [ "$module_dir" ]
     then
-      debug "\$OSGeo4QGIS_${module}_DIR is not empty, linking $module_dir dir instead of downloading"
+      debug "\$QGISDEPS_${module}_DIR is not empty, linking $module_dir dir instead of downloading"
       directory=$(eval "echo \$BUILD_${module}")
       if [ -e $directory ]; then
         try rm -rf "$directory"

@@ -16,8 +16,7 @@ Build QGIS-deps
 Build QGIS (Qt Creator)
 -----------------------
 
-0. Build QGIS-deps or download&extract from qgis download area
-1. Go to the qgis-deps folder and activate virtualenv (source bin/activate)
+1. Build QGIS-deps or download&extract from qgis download area
 2. Open QT Creator and load CMakeLists of QGIS
 3. Setup Kit in Qt Creator with QT from /opt/QT (as in prerequisities)
 4. Set/Add in Projects>Build Settings>Cmake
@@ -32,6 +31,7 @@ Alternatively create a folder build-QGIS (next to QGIS repo), cd into folder and
 ```
 QGIS_DEPS=<path/to/qgis-deps-0.1.0/stage>;\
 QT_BASE=/opt/Qt/<QT version>/clang_64;\
+PATH=$QGIS_DEPS/bin:$PATH;\
 cmake -DQGIS_MAC_DEPS_DIR=$QGIS_DEPS \
       -DCMAKE_PREFIX_PATH=$QT_BASE \
       -DQGIS_MACAPP_BUNDLE=0 \

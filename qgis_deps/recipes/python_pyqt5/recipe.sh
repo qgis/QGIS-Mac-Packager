@@ -5,7 +5,7 @@ VERSION_MAJOR_python_pyqt5=5.14.2
 VERSION_python_pyqt5=${VERSION_MAJOR_python_pyqt5}.dev2003150552
 
 # dependencies of this recipe
-DEPS_python_pyqt5=(python_sip)
+DEPS_python_pyqt5=(python python_sip)
 
 # url of the package
 URL_python_pyqt5=https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5-${VERSION_python_pyqt5}.tar.gz

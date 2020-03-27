@@ -8,14 +8,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 source `dirname $0`/config.conf
 
 QT_PACKAGE=$ROOT_OUT_PATH/qt-${VERSION_qt}.tar.gz
-PY_PACKAGE=$ROOT_OUT_PATH/python-${VERSION_python}.tar.gz
 QGIS_DEPS_PACKAGE=$ROOT_OUT_PATH/qgis-deps-${RELEASE_VERSION}.tar.gz
 INSTALL_SCRIPT=$ROOT_OUT_PATH/install_qgis_deps-${RELEASE_VERSION}.bash
 
-if [ ! -f $QT_PACKAGE ] || [ ! -f $PY_PACKAGE ] || [ ! -f $QGIS_DEPS_PACKAGE ] || [ ! -f $INSTALL_SCRIPT ] ; then
+if [ ! -f $QT_PACKAGE ] || [ ! -f $QGIS_DEPS_PACKAGE ] || [ ! -f $INSTALL_SCRIPT ] ; then
   echo "Missing archives to upload, maybe you forgot to run ./create_package.bash?"
   echo "QT archive $QT_PACKAGE"
-  echo "Python archive $PY_PACKAGE"
   echo "QGIS deps archive $QGIS_DEPS_PACKAGE"
   echo "Install script $INSTALL_SCRIPT"
   exit 1
@@ -40,7 +38,6 @@ echo "Upload QGIS DEPS to qgis2.qgis.org"
 ssh -o LogLevel=Error -i $KEY $SERVER "mkdir -p $ROOT"
 
 # upload files
-process_file $QT_PACKAGE
-process_file $PY_PACKAGE
+process_file $QT_PACKAG
 process_file $QGIS_DEPS_PACKAGE
 process_file $INSTALL_SCRIPT

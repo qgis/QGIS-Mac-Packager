@@ -88,5 +88,4 @@ function postbuild_xz() {
 
   verify_bin lzmainfo
   verify_bin xzdec
-  verify_bin zstd
 }

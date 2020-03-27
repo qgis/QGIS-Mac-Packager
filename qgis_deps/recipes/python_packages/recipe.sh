@@ -4,7 +4,7 @@
 VERSION_python_packages=${VERSION_python}
 
 # dependencies of this recipe
-DEPS_python_packages=(hdf5 python_sip python_pyqt5 python_qscintilla )
+DEPS_python_packages=(python hdf5 python_sip python_pyqt5 python_qscintilla )
 
 # url of the package
 URL_python_packages=
