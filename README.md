@@ -14,7 +14,7 @@
 | [SHA256](https://qgis.org/downloads/macos/qgis-macos-pr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-ltr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-nightly.sha256sum?raw=true) |
 | [DEPS](https://qgis.org/downloads/macos/qgis-macos-pr.deps?raw=true) | [DEPS](https://qgis.org/downloads/macos/qgis-macos-ltr.deps?raw=true)| [DEPS](https://qgis.org/downloads/macos/qgis-macos-nightly.deps?raw=true) |
 
-# QGIS Deps 
+# QGIS dependencies for development
 
 Experimental!
 - See [qgis_deps/README.md](qgis_deps/README.md)
@@ -25,10 +25,6 @@ Experimental!
 Set of scripts to create MacOS standalone QGIS package (dmg)
 
 To know when we release, see [QGIS release schedule](https://www.qgis.org/en/site/getinvolved/development/roadmap.html#release-schedule)
-
-# Building OSGeo dependencies and QGIS for development
-
-see [builder/README.md]
 
 # How to report issues 
 
