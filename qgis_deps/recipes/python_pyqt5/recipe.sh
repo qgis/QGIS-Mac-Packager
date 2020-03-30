@@ -1,17 +1,16 @@
 #!/bin/bash
 
 # version of your package
-VERSION_MAJOR_python_pyqt5=5.14.2
-VERSION_python_pyqt5=${VERSION_MAJOR_python_pyqt5}.dev2003150552
+VERSION_python_pyqt5=5.14.1
 
 # dependencies of this recipe
-DEPS_python_pyqt5=(python python_sip)
+DEPS_python_pyqt5=(python python_sip qtwebkit)
 
 # url of the package
-URL_python_pyqt5=https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5-${VERSION_python_pyqt5}.tar.gz
+URL_python_pyqt5=https://files.pythonhosted.org/packages/3a/fb/eb51731f2dc7c22d8e1a63ba88fb702727b324c6352183a32f27f73b8116/PyQt5-${VERSION_python_pyqt5}.tar.gz
 
 # md5 of the package
-MD5_python_pyqt5=c903137b7ee72884ac8e1536a5d904af
+MD5_python_pyqt5=404ea30ccc1e0ae1c5c0c4318c9a952b
 
 # default build path
 BUILD_python_pyqt5=$BUILD_PATH/python_pyqt5/$(get_directory $URL_python_pyqt5)
@@ -32,7 +31,7 @@ function fix_python_pyqt5_paths() {
 
   for i in ${targets[*]}
   do
-    try ${SED} 's;exec python3.7;exec `dirname $0`/python3.7;g' $STAGE_PATH/$i
+    try ${SED} 's;exec python${VERSION_major_python};exec `dirname $0`/python${VERSION_major_python};g' $STAGE_PATH/$i
     # remove backup file
     rm -f $STAGE_PATH/$i.orig
   done
@@ -74,8 +73,6 @@ function build_python_pyqt5() {
     --bindir=$STAGE_PATH/bin \
     --sip-incdir=$STAGE_PATH/include \
     --destdir=$QGIS_SITE_PACKAGES_PATH \
-    --disable=QtWebKit \
-    --disable=QtWebKitWidgets \
     --disable=QAxContainer \
     --disable=QtX11Extras \
     --disable=QtWinExtras \

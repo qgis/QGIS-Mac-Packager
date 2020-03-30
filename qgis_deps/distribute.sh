@@ -198,9 +198,11 @@ function push_env() {
     export OLD_OBJCXX=${OBJCXX}
     export OLD_OBJC=${OBJC}
 
+    ###################
+    # Path
     export PATH="/sbin/:/bin/:/usr/bin"
-    add_homebrew_path bison
-    add_homebrew_path flex
+    export PATH="${PATH}:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin:$QT_BASE/clang_64/bin"
+
     add_homebrew_path cmake
     add_homebrew_path coreutils
     add_homebrew_path ccache
@@ -208,6 +210,7 @@ function push_env() {
     add_homebrew_path automake
     add_homebrew_path libtool
     add_homebrew_path pkg-config
+    add_homebrew_path help2man
 
     ###################
     # Configure/Make system

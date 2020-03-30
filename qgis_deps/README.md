@@ -3,7 +3,7 @@ Prerequisities
 
 1. XCode and xcode command line tools. Check by opening XCode and try to build hello world
 2. Install QT 5.x from the official Maintanance tool from https://www.qt.io/download. Qt for MacOS should be installed in location /opt/Qt/5.13.1 or similar
-3. Cmake and other build tools. Use homebrew  (see scripts/install_brew.bash and scripts/install_brew_dev_packages)
+3. Cmake and other build tools. You can use homebrew (see scripts/install_brew_dev_packages) or other means
 
 Build QGIS-deps
 ---------------

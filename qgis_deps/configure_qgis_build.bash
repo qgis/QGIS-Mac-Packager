@@ -15,16 +15,6 @@ if [ ! -d $QT_BASE/clang_64 ]; then
   exit 1
 fi
 
-if [ ! -f /usr/local/opt/bison/bin/bison ]; then
-  echo "Missing /usr/local/opt/bison/bin/bison"
-  exit 1
-fi
-
-if [ ! -f /usr/local/opt/flex/bin/flex ]; then
-  echo "Missing /usr/local/opt/flex/bin/flex"
-  exit 1
-fi
-
 if (( $# < 2 )); then
     echo "usage: $0 qgis_dir build_dir"
     echo "qgis_dir: Directory with cloned qgis/QGIS source code"
@@ -49,8 +39,6 @@ cmake -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DQGIS_MACAPP_BUNDLE=0 \
       -DWITH_QTWEBKIT=FALSE \
       -DWITH_QT5SERIALPORT=FALSE \
-      -DBISON_EXECUTABLE=/usr/local/opt/bison/bin/bison \
-      -DFLEX_EXECUTABLE=/usr/local/opt/flex/bin/flex \
       -DWITH_GRASS=OFF \
       $QGIS_DIR
 """

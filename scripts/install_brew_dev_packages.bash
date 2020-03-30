@@ -5,8 +5,6 @@ set -e
 brew install git
 brew install cmake
 brew install ninja
-brew install bison
-brew install flex
 brew install pkg-config
 brew install wget
 brew install bash-completion
@@ -16,6 +14,6 @@ brew install coreutils
 brew install ccache
 brew install libtool
 brew install astyle
-
-brew install python3
-pip3 install dmgbuild
+brew install help2man
+brew install autoconf
+brew install automake

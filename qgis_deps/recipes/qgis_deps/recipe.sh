@@ -22,6 +22,8 @@ DEPS_qgis_deps=(
   qtkeychain
   qwt
   xz
+  bison
+  flex
 )
 
 # url of the package
