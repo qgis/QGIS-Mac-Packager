@@ -91,3 +91,9 @@ function postbuild_xz() {
   verify_bin lzmainfo
   verify_bin xzdec
 }
+
+# function to append information to config file
+function add_config_info_xz() {
+  append_to_config_file "# xz-${VERSION_xz}: ${DESC_xz}"
+  append_to_config_file "export VERSION_xz=${VERSION_xz}"
+}

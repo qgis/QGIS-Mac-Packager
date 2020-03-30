@@ -131,3 +131,9 @@ function postbuild_gdal() {
   verify_lib "libgdal.dylib"
   verify_bin gdalmanage
 }
+
+# function to append information to config file
+function add_config_info_gdal() {
+  append_to_config_file "# gdal-${VERSION_gdal}: ${DESC_gdal}"
+  append_to_config_file "export VERSION_gdal=${VERSION_gdal}"
+}

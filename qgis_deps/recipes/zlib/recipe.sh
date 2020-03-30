@@ -68,3 +68,9 @@ function build_zlib() {
 function postbuild_zlib() {
   verify_lib "libz.dylib"
 }
+
+# function to append information to config file
+function add_config_info_zlib() {
+  append_to_config_file "# zlib-${VERSION_zlib}: ${DESC_zlib}"
+  append_to_config_file "export VERSION_zlib=${VERSION_zlib}"
+}

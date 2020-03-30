@@ -90,3 +90,9 @@ function postbuild_gsl() {
   verify_bin gsl-histogram
   verify_bin gsl-randist
 }
+
+# function to append information to config file
+function add_config_info_gsl() {
+  append_to_config_file "# gsl-${VERSION_gsl}: ${DESC_gsl}"
+  append_to_config_file "export VERSION_gsl=${VERSION_gsl}"
+}

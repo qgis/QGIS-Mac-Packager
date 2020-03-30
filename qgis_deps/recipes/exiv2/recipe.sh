@@ -110,3 +110,9 @@ function postbuild_exiv2() {
 
   verify_bin addmoddel
 }
+
+# function to append information to config file
+function add_config_info_exiv2() {
+  append_to_config_file "# exiv2-${VERSION_exiv2}: ${DESC_exiv2}"
+  append_to_config_file "export VERSION_exiv2=${VERSION_exiv2}"
+}

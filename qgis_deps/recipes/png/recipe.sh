@@ -81,3 +81,9 @@ function build_png() {
 function postbuild_png() {
   verify_lib "libpng.dylib"
 }
+
+# function to append information to config file
+function add_config_info_png() {
+  append_to_config_file "# png-${VERSION_png}: ${DESC_png}"
+  append_to_config_file "export VERSION_png=${VERSION_png}"
+}

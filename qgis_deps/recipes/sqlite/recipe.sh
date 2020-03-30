@@ -90,3 +90,9 @@ function build_sqlite() {
 function postbuild_sqlite() {
   verify_lib "libsqlite3.dylib"
 }
+
+# function to append information to config file
+function add_config_info_sqlite() {
+  append_to_config_file "# sqlite-${VERSION_sqlite}: ${DESC_sqlite}"
+  append_to_config_file "export VERSION_sqlite=${VERSION_sqlite}"
+}

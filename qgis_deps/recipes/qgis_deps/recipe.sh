@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DESC_qgis="QGIS Dependancies"
+DESC_qgis_deps="QGIS dependancies package"
 
 # version of your package
 VERSION_qgis_deps=${RELEASE_VERSION}
@@ -26,6 +26,7 @@ DEPS_qgis_deps=(
   xz
   bison
   flex
+  mysql
 )
 
 # url of the package
@@ -58,4 +59,10 @@ function build_qgis_deps() {
 # function called after all the compile have been done
 function postbuild_qgis_deps() {
   : # noop
+}
+
+# function to append information to config file
+function add_config_info_qgis_deps() {
+  append_to_config_file "# qgis_deps-${VERSION_qgis_deps}: ${DESC_qgis_deps}"
+  append_to_config_file "export VERSION_qgis_deps=${VERSION_qgis_deps}"
 }

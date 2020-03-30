@@ -67,3 +67,9 @@ function postbuild_qwt() {
   verify_lib "qt/plugins/designer/libqwt_designer_plugin.dylib"
   verify_lib "qwt.framework/qwt"
 }
+
+# function to append information to config file
+function add_config_info_qwt() {
+  append_to_config_file "# qwt-${VERSION_qwt}: ${DESC_qwt}"
+  append_to_config_file "export VERSION_qwt=${VERSION_qwt}"
+}

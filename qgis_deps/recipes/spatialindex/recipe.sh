@@ -60,3 +60,9 @@ function build_spatialindex() {
 function postbuild_spatialindex() {
   verify_lib "libspatialindex.dylib"
 }
+
+# function to append information to config file
+function add_config_info_spatialindex() {
+  append_to_config_file "# spatialindex-${VERSION_spatialindex}: ${DESC_spatialindex}"
+  append_to_config_file "export VERSION_spatialindex=${VERSION_spatialindex}"
+}

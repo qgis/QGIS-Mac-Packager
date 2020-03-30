@@ -88,3 +88,9 @@ function build_flex() {
 function postbuild_flex() {
   verify_lib "libfl.dylib"
 }
+
+# function to append information to config file
+function add_config_info_flex() {
+  append_to_config_file "# flex-${VERSION_flex}: ${DESC_flex}"
+  append_to_config_file "export VERSION_flex=${VERSION_flex}"
+}

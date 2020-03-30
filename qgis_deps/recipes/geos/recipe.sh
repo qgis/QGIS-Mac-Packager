@@ -59,3 +59,9 @@ function build_geos() {
 function postbuild_geos() {
   verify_lib "libgeos_c.dylib"
 }
+
+# function to append information to config file
+function add_config_info_geos() {
+  append_to_config_file "# geos-${VERSION_geos}: ${DESC_geos}"
+  append_to_config_file "export VERSION_geos=${VERSION_geos}"
+}

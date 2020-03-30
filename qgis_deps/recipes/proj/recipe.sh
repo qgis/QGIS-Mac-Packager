@@ -81,3 +81,9 @@ function postbuild_proj() {
 
   verify_bin proj
 }
+
+# function to append information to config file
+function add_config_info_proj() {
+  append_to_config_file "# proj-${VERSION_proj}: ${DESC_proj}"
+  append_to_config_file "export VERSION_proj=${VERSION_proj}"
+}

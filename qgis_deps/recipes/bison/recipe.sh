@@ -70,3 +70,9 @@ function build_bison() {
 function postbuild_bison() {
   verify_bin bison
 }
+
+# function to append information to config file
+function add_config_info_bison() {
+  append_to_config_file "# bison-${VERSION_bison}: ${DESC_bison}"
+  append_to_config_file "export VERSION_bison=${VERSION_bison}"
+}

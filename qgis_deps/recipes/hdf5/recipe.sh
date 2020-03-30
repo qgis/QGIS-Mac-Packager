@@ -136,3 +136,9 @@ function postbuild_hdf5() {
 
   verify_bin "h5copy"
 }
+
+# function to append information to config file
+function add_config_info_hdf5() {
+  append_to_config_file "# hdf5-${VERSION_hdf5}: ${DESC_hdf5}"
+  append_to_config_file "export VERSION_hdf5=${VERSION_hdf5}"
+}

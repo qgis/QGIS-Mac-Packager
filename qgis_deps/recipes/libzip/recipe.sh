@@ -81,3 +81,9 @@ function postbuild_libzip() {
   verify_lib "libzip.dylib"
   verify_bin ziptool
 }
+
+# function to append information to config file
+function add_config_info_libzip() {
+  append_to_config_file "# libzip-${VERSION_libzip}: ${DESC_libzip}"
+  append_to_config_file "export VERSION_libzip=${VERSION_libzip}"
+}

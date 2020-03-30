@@ -51,7 +51,7 @@ patch_protobuf_linker_links () {
 # (you can apply patch etc here.)
 function prebuild_protobuf() {
   cd $BUILD_protobuf
-  patch_protobuf_linker_links
+
   # check marker
   if [ -f .patched ]; then
     return
@@ -98,4 +98,10 @@ function postbuild_protobuf() {
   verify_lib "libprotoc.dylib"
 
   verify_bin "protoc"
+}
+
+# function to append information to config file
+function add_config_info_protobuf() {
+  append_to_config_file "# protobuf-${VERSION_protobuf}: ${DESC_protobuf}"
+  append_to_config_file "export VERSION_protobuf=${VERSION_protobuf}"
 }

@@ -80,3 +80,9 @@ function build_libgeotiff() {
 function postbuild_libgeotiff() {
   verify_lib "libgeotiff.a"
 }
+
+# function to append information to config file
+function add_config_info_libgeotiff() {
+  append_to_config_file "# libgeotiff-${VERSION_libgeotiff}: ${DESC_libgeotiff}"
+  append_to_config_file "export VERSION_libgeotiff=${VERSION_libgeotiff}"
+}

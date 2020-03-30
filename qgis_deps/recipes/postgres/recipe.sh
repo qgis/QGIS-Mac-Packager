@@ -141,3 +141,9 @@ function postbuild_postgres() {
 
   verify_bin pg_rewind
 }
+
+# function to append information to config file
+function add_config_info_postgres() {
+  append_to_config_file "# postgres-${VERSION_postgres}: ${DESC_postgres}"
+  append_to_config_file "export VERSION_postgres=${VERSION_postgres}"
+}

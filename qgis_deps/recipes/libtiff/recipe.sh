@@ -118,3 +118,9 @@ function postbuild_libtiff() {
 
   verify_bin tiffsplit
 }
+
+# function to append information to config file
+function add_config_info_libtiff() {
+  append_to_config_file "# libtiff-${VERSION_libtiff}: ${DESC_libtiff}"
+  append_to_config_file "export VERSION_libtiff=${VERSION_libtiff}"
+}

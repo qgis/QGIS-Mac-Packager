@@ -65,6 +65,7 @@ info "Loading configuration"
 SED="sed -i.orig"
 XCODE_DEVELOPER="$(xcode-select -print-path)"
 CORES=$(sysctl -n hw.ncpu)
+export CORES=$CORES
 ARCH=x86_64
 DO_CLEAN_BUILD=0
 DO_SET_X=0
@@ -120,7 +121,7 @@ RECIPES_PATH="$ROOT_PATH/recipes"
 BUILD_PATH="$ROOT_OUT_PATH/build"
 PACKAGES_PATH="${PACKAGES_PATH:-$ROOT_OUT_PATH/.packages}"
 QGIS_SITE_PACKAGES_PATH=${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages
-
+BUILD_CONFIG_FILE="${STAGE_PATH}/qgis-deps.config"
 
 function add_homebrew_path() {
    # info "Adding /usr/local/opt/$1/bin to PATH"
@@ -211,6 +212,7 @@ function push_env() {
     add_homebrew_path libtool
     add_homebrew_path pkg-config
     add_homebrew_path help2man
+    add_homebrew_path git
 
     ###################
     # Configure/Make system
@@ -829,6 +831,30 @@ function run_postbuild() {
   done
 }
 
+function append_to_config_file() {
+  echo "$@" >> $BUILD_CONFIG_FILE
+}
+
+function run_create_config_file() {
+  info "Create $BUILD_CONFIG_FILE"
+  rm -f $BUILD_CONFIG_FILE
+  touch $BUILD_CONFIG_FILE
+
+  append_to_config_file "export VERSION_major_python=${VERSION_major_python}"
+  append_to_config_file "export VERSION_qt=${VERSION_qt}"
+  append_to_config_file "export QT_BASE=/opt/Qt/${VERSION_qt}"
+  append_to_config_file "export MACOSX_DEPLOYMENT_TARGET=10.13.0"
+  append_to_config_file "export RELEASE_VERSION=0.2.0"
+
+  cd $BUILD_PATH
+  for module in $MODULES; do
+    fn=$(echo add_config_info_$module)
+    debug "Call $fn"
+    append_to_config_file " "
+    $fn
+  done
+}
+
 function run() {
   cd ${ROOT_PATH}
   run_prepare
@@ -838,6 +864,7 @@ function run() {
   run_build
   run_postbuild
   run_final_check
+  run_create_config_file
   info "All done !"
 }
 

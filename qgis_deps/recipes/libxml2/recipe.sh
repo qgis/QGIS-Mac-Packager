@@ -90,3 +90,9 @@ function build_libxml2() {
 function postbuild_libxml2() {
   verify_lib "libxml2.dylib"
 }
+
+# function to append information to config file
+function add_config_info_libxml2() {
+  append_to_config_file "# libxml2-${VERSION_libxml2}: ${DESC_libxml2}"
+  append_to_config_file "export VERSION_libxml2=${VERSION_libxml2}"
+}

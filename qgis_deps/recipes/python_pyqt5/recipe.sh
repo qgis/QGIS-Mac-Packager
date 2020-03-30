@@ -96,3 +96,9 @@ function postbuild_python_pyqt5() {
       error "Missing python package PyQt5"
    fi
 }
+
+# function to append information to config file
+function add_config_info_python_pyqt5() {
+  append_to_config_file "# python_pyqt5-${VERSION_python_pyqt5}: ${DESC_python_pyqt5}"
+  append_to_config_file "export VERSION_python_pyqt5=${VERSION_python_pyqt5}"
+}

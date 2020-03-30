@@ -74,3 +74,9 @@ function build_libffi() {
 function postbuild_libffi() {
   verify_lib "libffi.dylib"
 }
+
+# function to append information to config file
+function add_config_info_libffi() {
+  append_to_config_file "# libffi-${VERSION_libffi}: ${DESC_libffi}"
+  append_to_config_file "export VERSION_libffi=${VERSION_libffi}"
+}

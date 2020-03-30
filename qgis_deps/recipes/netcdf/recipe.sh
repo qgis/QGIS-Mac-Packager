@@ -78,3 +78,9 @@ function build_netcdf() {
 function postbuild_netcdf() {
   verify_lib "libnetcdf.dylib"
 }
+
+# function to append information to config file
+function add_config_info_netcdf() {
+  append_to_config_file "# netcdf-${VERSION_netcdf}: ${DESC_netcdf}"
+  append_to_config_file "export VERSION_netcdf=${VERSION_netcdf}"
+}

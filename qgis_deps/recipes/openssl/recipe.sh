@@ -114,3 +114,9 @@ function postbuild_openssl() {
   verify_bin openssl
   # bin/c_rehash is bash script
 }
+
+# function to append information to config file
+function add_config_info_openssl() {
+  append_to_config_file "# openssl-${VERSION_openssl}: ${DESC_openssl}"
+  append_to_config_file "export VERSION_openssl=${VERSION_openssl}"
+}

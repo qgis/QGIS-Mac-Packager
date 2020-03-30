@@ -90,3 +90,9 @@ function postbuild_xerces() {
   verify_lib "libxerces-c.so"
   verify_bin CreateDOMDocument
 }
+
+# function to append information to config file
+function add_config_info_xerces() {
+  append_to_config_file "# xerces-${VERSION_xerces}: ${DESC_xerces}"
+  append_to_config_file "export VERSION_xerces=${VERSION_xerces}"
+}

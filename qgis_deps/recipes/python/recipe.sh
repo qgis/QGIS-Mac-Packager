@@ -147,3 +147,9 @@ function build_python() {
 function postbuild_python() {
     verify_bin python3
 }
+
+# function to append information to config file
+function add_config_info_python() {
+  append_to_config_file "# python-${VERSION_python}: ${DESC_python}"
+  append_to_config_file "export VERSION_python=${VERSION_python}"
+}

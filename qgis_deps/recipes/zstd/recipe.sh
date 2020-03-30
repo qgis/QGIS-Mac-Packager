@@ -71,3 +71,9 @@ function build_zstd() {
 function postbuild_zstd() {
   verify_lib "libzstd.dylib"
 }
+
+# function to append information to config file
+function add_config_info_zstd() {
+  append_to_config_file "# zstd-${VERSION_zstd}: ${DESC_zstd}"
+  append_to_config_file "export VERSION_zstd=${VERSION_zstd}"
+}

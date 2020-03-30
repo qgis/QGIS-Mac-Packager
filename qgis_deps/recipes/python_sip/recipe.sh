@@ -74,3 +74,9 @@ function postbuild_python_sip() {
       error "Missing python package sip"
    fi
 }
+
+# function to append information to config file
+function add_config_info_python_sip() {
+  append_to_config_file "# python_sip-${VERSION_python_sip}: ${DESC_python_sip}"
+  append_to_config_file "export VERSION_python_sip=${VERSION_python_sip}"
+}

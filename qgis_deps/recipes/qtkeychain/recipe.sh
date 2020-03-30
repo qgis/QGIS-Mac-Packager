@@ -64,3 +64,9 @@ function build_qtkeychain() {
 function postbuild_qtkeychain() {
   verify_lib "libqt5keychain.dylib"
 }
+
+# function to append information to config file
+function add_config_info_qtkeychain() {
+  append_to_config_file "# qtkeychain-${VERSION_qtkeychain}: ${DESC_qtkeychain}"
+  append_to_config_file "export VERSION_qtkeychain=${VERSION_qtkeychain}"
+}

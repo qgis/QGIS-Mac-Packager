@@ -70,3 +70,9 @@ function build_qscintilla() {
 function postbuild_qscintilla() {
   verify_lib "libqscintilla2_qt5.dylib"
 }
+
+# function to append information to config file
+function add_config_info_qscintilla() {
+  append_to_config_file "# qscintilla-${VERSION_qscintilla}: ${DESC_qscintilla}"
+  append_to_config_file "export VERSION_qscintilla=${VERSION_qscintilla}"
+}

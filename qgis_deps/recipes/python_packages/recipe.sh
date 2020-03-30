@@ -95,3 +95,13 @@ function postbuild_python_packages() {
     fi
   done
 }
+
+# function to append information to config file
+function add_config_info_python_package() {
+  append_to_config_file "# python_package-${VERSION_python_package}: ${DESC_python_package}"
+  for i in ${REQUIREMENTS_python_packages[*]}
+  do
+    arr=(${i//==/ })
+    append_to_config_file "export VERSION_python_package_${arr[0]}=${arr[1]}"
+  done
+}

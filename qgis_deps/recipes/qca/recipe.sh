@@ -87,3 +87,9 @@ function postbuild_qca() {
   verify_lib "qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5"
   verify_bin qcatool-qt5
 }
+
+# function to append information to config file
+function add_config_info_qca() {
+  append_to_config_file "# qca-${VERSION_qca}: ${DESC_qca}"
+  append_to_config_file "export VERSION_qca=${VERSION_qca}"
+}

@@ -8,7 +8,7 @@ LINK_libxslt_version=1
 LINK_libexslt_version=0
 
 # dependencies of this recipe
-DEPS_libxslt=(libxml2)
+DEPS_libxslt=(libxslt)
 
 # url of the package
 URL_libxslt=http://xmlsoft.org/sources/libxslt-${VERSION_libxslt}.tar.gz
@@ -87,4 +87,10 @@ function build_libxslt() {
 function postbuild_libxslt() {
   verify_lib "libxslt.dylib"
   verify_lib "libexslt.dylib"
+}
+
+# function to append information to config file
+function add_config_info_libxslt() {
+  append_to_config_file "# libxslt-${VERSION_libxslt}: ${DESC_libxslt}"
+  append_to_config_file "export VERSION_libxslt=${VERSION_libxslt}"
 }

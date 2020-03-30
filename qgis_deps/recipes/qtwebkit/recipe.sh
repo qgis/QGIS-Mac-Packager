@@ -67,3 +67,9 @@ function postbuild_qtwebkit() {
   verify_lib qml/QtWebKit/experimental/libqmlwebkitexperimentalplugin.so
   verify_lib qml/QtWebKit/libqmlwebkitplugin.so
 }
+
+# function to append information to config file
+function add_config_info_qtwebkit() {
+  append_to_config_file "# qtwebkit-${VERSION_qtwebkit}: ${DESC_qtwebkit}"
+  append_to_config_file "export VERSION_qtwebkit=${VERSION_qtwebkit}"
+}

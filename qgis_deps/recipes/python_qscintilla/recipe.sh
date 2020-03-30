@@ -8,7 +8,7 @@ VERSION_python_qscintilla=2.11.4
 
 # dependencies of this recipe
 # depends on PyQt5
-DEPS_python_qscintilla=(python qscintilla python_sip python_pyqt5)
+DEPS_python_qscintilla=(python qscintilla python_sip python_qscintilla)
 
 # url of the package
 URL_python_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${VERSION_python_qscintilla}/QScintilla-${VERSION_python_qscintilla}.tar.gz
@@ -98,4 +98,10 @@ function postbuild_python_qscintilla() {
    if ! python_package_installed PyQt5.Qsci; then
       error "Missing python package qsci"
    fi
+}
+
+# function to append information to config file
+function add_config_info_python_qscintilla() {
+  append_to_config_file "# python_qscintilla-${VERSION_python_qscintilla}: ${DESC_python_qscintilla}"
+  append_to_config_file "export VERSION_python_qscintilla=${VERSION_python_qscintilla}"
 }

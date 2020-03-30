@@ -97,3 +97,9 @@ function postbuild_webp() {
 
   verify_bin dwebp
 }
+
+# function to append information to config file
+function add_config_info_webp() {
+  append_to_config_file "# webp-${VERSION_webp}: ${DESC_webp}"
+  append_to_config_file "export VERSION_webp=${VERSION_webp}"
+}

@@ -88,3 +88,9 @@ function build_jpeg() {
 function postbuild_jpeg() {
   verify_lib "libjpeg.dylib"
 }
+
+# function to append information to config file
+function add_config_info_jpeg() {
+  append_to_config_file "# jpeg-${VERSION_jpeg}: ${DESC_jpeg}"
+  append_to_config_file "export VERSION_jpeg=${VERSION_jpeg}"
+}

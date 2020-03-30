@@ -63,3 +63,9 @@ function build_freexl() {
 function postbuild_freexl() {
   verify_lib "libfreexl.dylib"
 }
+
+# function to append information to config file
+function add_config_info_freexl() {
+  append_to_config_file "# freexl-${VERSION_freexl}: ${DESC_freexl}"
+  append_to_config_file "export VERSION_freexl=${VERSION_freexl}"
+}

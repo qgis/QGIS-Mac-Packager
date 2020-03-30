@@ -84,3 +84,9 @@ function build_libtasn1() {
 function postbuild_libtasn1() {
   verify_lib "libtasn1.dylib"
 }
+
+# function to append information to config file
+function add_config_info_libtasn1() {
+  append_to_config_file "# libtasn1-${VERSION_libtasn1}: ${DESC_libtasn1}"
+  append_to_config_file "export VERSION_libtasn1=${VERSION_libtasn1}"
+}
