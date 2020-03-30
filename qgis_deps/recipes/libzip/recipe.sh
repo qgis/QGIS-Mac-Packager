@@ -59,7 +59,11 @@ function build_libzip() {
   try cd $BUILD_PATH/libzip/build-$ARCH
   push_env
 
-  try ${CMAKE} $BUILD_libzip
+  # see issue #38: with ENABLE_GNUTLS it requires nette library
+  try ${CMAKE} \
+    ENABLE_GNUTLS=FALSE \
+    $BUILD_libzip
+
   check_file_configuration CMakeCache.txt
 
   try $MAKESMP
