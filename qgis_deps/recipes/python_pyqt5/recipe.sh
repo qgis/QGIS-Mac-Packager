@@ -48,8 +48,6 @@ function prebuild_python_pyqt5() {
   try mkdir -p $BUILD_python_pyqt5
   cd $BUILD_python_pyqt5
 
-  fix_python_pyqt5_paths
-
   # check marker
   if [ -f .patched ]; then
     return
