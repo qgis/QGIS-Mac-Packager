@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_postgres="Postgres database"
+
 # version of your package
 VERSION_postgres=12.2
 

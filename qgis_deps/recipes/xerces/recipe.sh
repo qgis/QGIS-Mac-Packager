@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# http://xerces.apache.org/xerces-c/index.html
-# Xerces-C++ is a validating XML parser written in a portable subset of C++.
+DESC_xerces="Validating XML parser written in a portable subset of C++"
 
 # version of your package
 VERSION_xerces=3.2.2

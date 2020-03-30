@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DESC_sqlite="sqlite: Portable Foreign Function Interface library"
+DESC_sqlite="Portable Foreign Function Interface library"
 
 # version of your package
 VERSION_sqlite=3.31.1

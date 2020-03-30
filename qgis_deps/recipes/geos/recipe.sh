@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_geos="Geometry Engine"
+
 # version of your package
 VERSION_geos=3.8.1
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_qca="Qt Cryptographic Architecture (QCA)"
+
 # version of your package
 VERSION_qca=2.3.0
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_netcdf="Libraries and data formats for array-oriented scientific data"
+
 # version of your package
 VERSION_netcdf=4.7.3
 

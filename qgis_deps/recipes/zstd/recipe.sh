@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_zstd="Zstandard is a real-time compression algorithm"
+
 # version of your package
 VERSION_zstd=1.4.4
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_libxslt="C XSLT library for GNOME"
+
 # version of your package
 VERSION_libxslt=1.1.34
 LINK_libxslt_version=1

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_gsl="Numerical library for C and C++"
+
 # version of your package
 VERSION_gsl=2.6
 

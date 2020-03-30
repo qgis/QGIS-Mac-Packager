@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_jpeg="Image manipulation library"
+
 # version of your package
 VERSION_jpeg=9d
 

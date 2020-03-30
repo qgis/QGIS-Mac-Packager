@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_qtkeychain="Platform-independent Qt API for storing passwords securely"
+
 # version of your package
 VERSION_qtkeychain=0.10.0
 

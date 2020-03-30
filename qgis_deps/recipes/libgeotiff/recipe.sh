@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_libgeotiff="Library and tools for dealing with GeoTIFF"
+
 # version of your package
 VERSION_libgeotiff=1.5.1
 

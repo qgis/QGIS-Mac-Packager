@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DESC_libffi="libffi: Portable Foreign Function Interface library"
+DESC_libffi="Portable Foreign Function Interface library"
 
 # version of your package
 VERSION_libffi=3.2.1

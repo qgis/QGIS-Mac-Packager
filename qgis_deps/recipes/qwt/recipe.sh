@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_qwt="Qt Widgets for Technical Applications"
+
 # version of your package
 VERSION_qwt=6.1.4
 

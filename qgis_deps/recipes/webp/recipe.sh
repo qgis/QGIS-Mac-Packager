@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_webp="Image format providing lossless and lossy compression for web images"
+
 # version of your package
 VERSION_webp=1.1.0
 

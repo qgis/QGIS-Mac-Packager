@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_libtiff="TIFF library and utilities"
+
 # version of your package
 VERSION_libtiff=4.1.0
 

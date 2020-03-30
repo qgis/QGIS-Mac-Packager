@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_libzip="C library for reading, creating, and modifying zip archives"
+
 # version of your package
 VERSION_libzip=1.6.1
 

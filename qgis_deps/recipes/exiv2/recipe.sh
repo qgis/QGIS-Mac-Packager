@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_exiv2="EXIF and IPTC metadata manipulation library and tools"
+
 # version of your package
 VERSION_exiv2=0.27.2
 

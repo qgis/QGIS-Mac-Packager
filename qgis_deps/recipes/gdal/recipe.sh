@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_gdal="Geospatial Data Abstraction Library"
+
 # version of your package
 VERSION_gdal=3.0.4
 

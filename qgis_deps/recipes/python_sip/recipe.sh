@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_python_sip="SIP bindings package for python"
+
 # version of your package
 # we need SIP 4.x and the version is not longer updated in pip
 # so we need to compile directly

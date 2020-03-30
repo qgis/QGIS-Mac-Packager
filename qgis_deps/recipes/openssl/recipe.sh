@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_openssl="Cryptography and SSL/TLS Toolkit"
+
 # version of your package
 # NOTE openssl version must be compatible with QT version, for example
 # for Qt 5.14 see https://wiki.qt.io/Qt_5.14.1_Known_Issues

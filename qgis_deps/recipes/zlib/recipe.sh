@@ -1,8 +1,9 @@
 #!/bin/bash
 
+DESC_zlib="General-purpose lossless data-compression library"
+
 # version of your package
 VERSION_zlib=1.2.11
-
 
 # dependencies of this recipe
 DEPS_zlib=()

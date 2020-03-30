@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_libtasn1="ASN.1 structure parser library"
+
 # version of your package
 VERSION_libtasn1=4.16.0
 

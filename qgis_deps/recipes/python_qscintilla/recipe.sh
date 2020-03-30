@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_python_qscintilla="QScintilla package for python"
+
 # version of your package
 # keep in SYNC with qscintilla receipt
 VERSION_python_qscintilla=2.11.4

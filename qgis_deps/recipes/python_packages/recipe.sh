@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_python_packages="Packages for python"
+
 # version of your package (set in config.conf)
 VERSION_python_packages=${VERSION_python}
 
@@ -23,6 +25,7 @@ REQUIREMENTS_python_packages=(
   numpy==1.18.2
   h5py==2.10.0
   requests==2.23.0
+  six
 )
 
 patch_python_packages_linker_links () {

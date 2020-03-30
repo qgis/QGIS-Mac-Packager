@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_freexl="Library to extract data from Excel .xls files"
+
 # version of your package
 VERSION_freexl=1.0.5
 

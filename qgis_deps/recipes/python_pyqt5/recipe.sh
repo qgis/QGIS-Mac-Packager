@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_python_pyqt5="PyQt5 package for python"
+
 # version of your package
 VERSION_python_pyqt5=5.14.1
 

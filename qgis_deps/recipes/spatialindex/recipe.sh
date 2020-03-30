@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_spatialindex="General framework for developing spatial indices"
+
 # version of your package
 VERSION_spatialindex=1.9.3
 

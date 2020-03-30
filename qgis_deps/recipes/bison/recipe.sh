@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_bison="Parser generator"
+
 # version of your package
 VERSION_bison=3.5.3
 

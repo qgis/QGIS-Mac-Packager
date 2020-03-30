@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_proj="Cartographic Projections Library"
+
 # version of your package
 VERSION_proj=6.3.1
 

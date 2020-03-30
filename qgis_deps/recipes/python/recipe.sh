@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_python="Interpreted, interactive, object-oriented programming language"
+
 # version of your package (set in config.conf)
 VERSION_python=${VERSION_major_python}.7
 

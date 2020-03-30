@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_png="PNG Image library"
+
 # version of your package
 VERSION_png=1.6.37
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_spatialite="SpatiaLite database"
+
 # version of your package
 VERSION_spatialite=4.3.0a
 

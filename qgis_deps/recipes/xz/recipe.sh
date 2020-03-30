@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_xz="General-purpose data compression with high compression ratio"
+
 # version of your package
 VERSION_xz=5.2.4
 

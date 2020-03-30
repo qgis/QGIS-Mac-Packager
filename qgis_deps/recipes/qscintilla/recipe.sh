@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_qscintilla="Port to Qt of the Scintilla editing component"
+
 # version of your package
 # keep in SYNC with python_qscintilla receipt
 VERSION_qscintilla=2.11.4

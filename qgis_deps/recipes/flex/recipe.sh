@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESC_flex="Fast Lexical Analyzer, generates Scanners (tokenizers)"
+
 # version of your package
 VERSION_flex=2.6.4
 LINK_flex_version=2
