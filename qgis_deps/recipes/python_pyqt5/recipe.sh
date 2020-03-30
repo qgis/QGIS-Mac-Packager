@@ -10,10 +10,8 @@ DEPS_python_pyqt5=(python python_sip)
 # url of the package
 URL_python_pyqt5=https://www.riverbankcomputing.com/static/Downloads/PyQt5/PyQt5-${VERSION_python_pyqt5}.tar.gz
 
-# echo "${URL_python_pyqt5}"
-
 # md5 of the package
-MD5_python_pyqt5=f6aaf805d73074f1eb23a00ad37ef66f
+MD5_python_pyqt5=c903137b7ee72884ac8e1536a5d904af
 
 # default build path
 BUILD_python_pyqt5=$BUILD_PATH/python_pyqt5/$(get_directory $URL_python_pyqt5)
