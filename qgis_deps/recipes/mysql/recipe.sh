@@ -22,43 +22,51 @@ BUILD_mysql=$BUILD_PATH/mysql/$(get_directory $URL_mysql)
 RECIPE_mysql=$RECIPES_PATH/mysql
 
 function patch_mysql_linker_links() {
+
+# server-only
+# REMOVE ME
+# bin/mysqlxtest
+# bin/mysqltest_safe_process
+#     bin/mysqlrouter
+#    bin/mysqlrouter_keyring
+#    bin/mysqlrouter_passwd
+#    bin/mysqlrouter_plugin_info
+#  bin/mysqldumpslow
+#     bin/mysqld
+#    bin/mysqld_multi
+#    bin/mysqld_safe
+#
+#     bin/mysql_tzinfo_to_sql
+# bin/ibd2sdi
+
+# bin/innochecksum
+# mysql_upgrade
+# bin/mysql_client_test
+#     bin/myisam_ftdump
+#    bin/myisamchk
+#    bin/myisamlog
+#    bin/myisampack
+
+# not binary
+# bin/mysql_config
+
   targets=(
     bin/comp_err
-    bin/ibd2sdi
-    bin/innochecksum
+    bin/mysqldump
     bin/lz4_decompress
     bin/my_print_defaults
-    bin/myisam_ftdump
-    bin/myisamchk
-    bin/myisamlog
-    bin/myisampack
     bin/mysql
-    bin/mysql_client_test
-    bin/mysql_config
     bin/mysql_config_editor
     bin/mysql_secure_installation
     bin/mysql_ssl_rsa_setup
-    bin/mysql_tzinfo_to_sql
-    bin/mysql_upgrade
     bin/mysqladmin
     bin/mysqlbinlog
     bin/mysqlcheck
-    bin/mysqld
-    bin/mysqld_multi
-    bin/mysqld_safe
-    bin/mysqldump
-    bin/mysqldumpslow
     bin/mysqlimport
     bin/mysqlpump
-    bin/mysqlrouter
-    bin/mysqlrouter_keyring
-    bin/mysqlrouter_passwd
-    bin/mysqlrouter_plugin_info
     bin/mysqlshow
     bin/mysqlslap
     bin/mysqltest
-    bin/mysqltest_safe_process
-    bin/mysqlxtest
     bin/perror
     bin/zlib_decompress
   )
@@ -78,8 +86,6 @@ function patch_mysql_linker_links() {
 # (you can apply patch etc here.)
 function prebuild_mysql() {
   cd $BUILD_mysql
-
-  patch_mysql_linker_links
 
   # check marker
   if [ -f .patched ]; then
@@ -105,7 +111,9 @@ function build_mysql() {
 
   # -DINSTALL_* are relative to `CMAKE_INSTALL_PREFIX` (`prefix`)
   try ${CMAKE}  \
+      -DWITHOUT_SERVER=ON \
       -DFORCE_INSOURCE_BUILD=1 \
+      -ENABLED_PROFILING=OFF \
       -DCOMPILATION_COMMENT=qgis_deps \
       -DINSTALL_DOCDIR=share/doc/mysql \
       -DINSTALL_INCLUDEDIR=include/mysql \
@@ -133,10 +141,11 @@ function build_mysql() {
 
   check_file_configuration CMakeCache.txt
 
+  # xprotocol_plugin
+
   targets=(
-    xprotocol_plugin
-    comp_client_err
     comp_err
+    comp_client_err
   )
 
   # hack a bit RPATH, since the output dir is added

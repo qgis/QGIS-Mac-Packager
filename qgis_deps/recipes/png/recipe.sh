@@ -23,7 +23,14 @@ BUILD_png=$BUILD_PATH/png/$(get_directory $URL_png)
 RECIPE_png=$RECIPES_PATH/png
 
 patch_png_linker_links () {
-  install_name_tool -id "@rpath/libpng.dylib" ${STAGE_PATH}/lib/libpng.dylib
+  # install_name_tool -id "@rpath/libpng.dylib" ${STAGE_PATH}/lib/libpng.dylib
+
+  if [ ! -f "${STAGE_PATH}/lib/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib" ]; then
+    error "file ${STAGE_PATH}/lib/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib does not exist... maybe you updated the png version?"
+  fi
+
+
+  install_name_tool -id "@rpath/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib" ${STAGE_PATH}/lib/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib
 
   targets=(
     bin/png-fix-itxt
@@ -55,7 +62,7 @@ function prebuild_png() {
 
 function shouldbuild_png() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libpng.dylib -nt $BUILD_png/.patched ]; then
+  if [ ${STAGE_PATH}/lib/libpng${LINK_libpng_version}.dylib -nt $BUILD_png/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -79,7 +86,7 @@ function build_png() {
 
 # function called after all the compile have been done
 function postbuild_png() {
-  verify_lib "libpng.dylib"
+  verify_lib "libpng${LINK_libpng_version}.dylib"
 }
 
 # function to append information to config file

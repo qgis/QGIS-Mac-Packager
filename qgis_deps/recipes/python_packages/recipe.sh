@@ -26,6 +26,7 @@ REQUIREMENTS_python_packages=(
   h5py==2.10.0
   requests==2.23.0
   six
+  yaml
 )
 
 patch_python_packages_linker_links () {

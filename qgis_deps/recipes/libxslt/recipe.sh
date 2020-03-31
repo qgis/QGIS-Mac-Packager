@@ -8,7 +8,7 @@ LINK_libxslt_version=1
 LINK_libexslt_version=0
 
 # dependencies of this recipe
-DEPS_libxslt=(libxslt)
+DEPS_libxslt=(libxml2)
 
 # url of the package
 URL_libxslt=http://xmlsoft.org/sources/libxslt-${VERSION_libxslt}.tar.gz

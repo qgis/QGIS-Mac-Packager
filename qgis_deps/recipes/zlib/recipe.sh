@@ -5,6 +5,8 @@ DESC_zlib="General-purpose lossless data-compression library"
 # version of your package
 VERSION_zlib=1.2.11
 
+LINK_zlib_version=${VERSION_zlib}
+
 # dependencies of this recipe
 DEPS_zlib=()
 
@@ -21,7 +23,7 @@ BUILD_zlib=$BUILD_PATH/zlib/$(get_directory $URL_zlib)
 RECIPE_zlib=$RECIPES_PATH/zlib
 
 patch_zlib_linker_links () {
-  install_name_tool -id "@rpath/libz.dylib" ${STAGE_PATH}/lib/libz.dylib
+  install_name_tool -id "@rpath/libz.${LINK_zlib_version}.dylib" ${STAGE_PATH}/lib/libz.${LINK_zlib_version}.dylib
 }
 
 # function called for preparing source code if needed

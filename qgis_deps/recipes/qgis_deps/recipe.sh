@@ -27,6 +27,7 @@ DEPS_qgis_deps=(
   bison
   flex
   mysql
+  saga
 )
 
 # url of the package

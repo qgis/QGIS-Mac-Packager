@@ -202,7 +202,6 @@ function push_env() {
     ###################
     # Path
     export PATH="/sbin/:/bin/:/usr/bin"
-    export PATH="${PATH}:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin:$QT_BASE/clang_64/bin"
 
     add_homebrew_path cmake
     add_homebrew_path coreutils

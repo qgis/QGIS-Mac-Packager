@@ -25,6 +25,13 @@ BUILD_postgres=$BUILD_PATH/postgres/$(get_directory $URL_postgres)
 RECIPE_postgres=$RECIPES_PATH/postgres
 
 function patch_pg_linker_links() {
+  # Change install names
+  install_name_tool -id "@rpath/libpq.dylib" ${STAGE_PATH}/lib/libpq.dylib
+  install_name_tool -id "@rpath/libpgtypes.dylib" ${STAGE_PATH}/lib/libpgtypes.dylib
+  install_name_tool -id "@rpath/libecpg.dylib" ${STAGE_PATH}/lib/libecpg.dylib
+  install_name_tool -id "@rpath/libecpg_compat.dylib" ${STAGE_PATH}/lib/libecpg_compat.dylib
+  install_name_tool -id "@rpath/libpqwalreceiver.so" ${STAGE_PATH}/lib/postgresql/libpqwalreceiver.so
+
   # check libs are the same
   if [ ! -f "${STAGE_PATH}/lib/libpq.${LINK_libpq_version}.dylib" ]; then
     error "file ${STAGE_PATH}/lib/libpq.${LINK_libpq_version}.dylib does not exist... maybe you updated the postgres version?"
@@ -75,6 +82,10 @@ function patch_pg_linker_links() {
   # Change linked libs
   for i in ${targets[*]}
   do
+    if [ ! -f ${STAGE_PATH}/$i ]; then
+      echo "missing $i"
+    fi
+
     install_name_tool -change "${STAGE_PATH}/lib/libpq.${LINK_libpq_version}.dylib" "@rpath/libpq.${LINK_libpq_version}.dylib" ${STAGE_PATH}/$i
     install_name_tool -change "${STAGE_PATH}/lib/libpgtypes.${LINK_libpgtypes_version}.dylib" "@rpath/libpgtypes.${LINK_libpgtypes_version}.dylib" ${STAGE_PATH}/$i
     install_name_tool -change "${STAGE_PATH}/lib/libecpg.${LINK_libecpg_version}.dylib" "@rpath/libecpg.${LINK_libecpg_version}.dylib"  ${STAGE_PATH}/$i
@@ -117,14 +128,12 @@ function build_postgres() {
 
   check_file_configuration config.status
   try $MAKESMP
-  try $MAKESMP install
 
-  # Change install names
-  install_name_tool -id "@rpath/libpq.dylib" ${STAGE_PATH}/lib/libpq.dylib
-  install_name_tool -id "@rpath/libpgtypes.dylib" ${STAGE_PATH}/lib/libpgtypes.dylib
-  install_name_tool -id "@rpath/libecpg.dylib" ${STAGE_PATH}/lib/libecpg.dylib
-  install_name_tool -id "@rpath/libecpg_compat.dylib" ${STAGE_PATH}/lib/libecpg_compat.dylib
-  install_name_tool -id "@rpath/libpqwalreceiver.so" ${STAGE_PATH}/lib/postgresql/libpqwalreceiver.so
+  # client only install
+  try $MAKE -C src/bin install
+  try $MAKE -C src/include install
+  try $MAKE -C src/interfaces install
+  try $MAKE -C doc install
 
   patch_pg_linker_links
 
@@ -137,7 +146,7 @@ function postbuild_postgres() {
   verify_lib libpgtypes.dylib
   verify_lib libecpg.dylib
   verify_lib libecpg_compat.dylib
-  verify_lib postgresql/libpqwalreceiver.so
+  # verify_lib postgresql/libpqwalreceiver.so
 
   verify_bin pg_rewind
 }

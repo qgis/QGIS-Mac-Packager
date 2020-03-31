@@ -6,7 +6,7 @@ DESC_qtwebkit="WebKit extension for QT5"
 VERSION_qtwebkit=${VERSION_qt}
 
 # dependencies of this recipe
-DEPS_qtwebkit=( sqlite bison webp zlib libxslt jpeg png libtiff)
+DEPS_qtwebkit=( sqlite bison webp zlib libxslt jpeg png libtiff )
 
 # url of the package
 URL_qtwebkit=https://github.com/qt/qtwebkit/archive/ab1bd15209abaf7effc51dbc2f272c5681af7223.tar.gz

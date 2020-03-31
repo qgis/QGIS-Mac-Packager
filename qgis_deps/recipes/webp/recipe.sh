@@ -24,15 +24,15 @@ BUILD_webp=$BUILD_PATH/webp/$(get_directory $URL_webp)
 RECIPE_webp=$RECIPES_PATH/webp
 
 patch_webp_linker_links () {
-  install_name_tool -id "@rpath/libwebp.dylib" ${STAGE_PATH}/lib/libwebp.dylib
-  install_name_tool -id "@rpath/libwebpdemux.dylib" ${STAGE_PATH}/lib/libwebpdemux.dylib
-
   if [ ! -f "${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib" ]; then
     error "file ${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib does not exist... maybe you updated the webp version?"
   fi
   if [ ! -f "${STAGE_PATH}/lib/libwebpdemux.${LINK_libwebpdemux_version}.dylib" ]; then
     error "file ${STAGE_PATH}/lib/libwebpdemux.${LINK_libwebpdemux_version}.dylib does not exist... maybe you updated the webp version?"
   fi
+
+  install_name_tool -id "@rpath/libwebp.${LINK_libwebp_version}.dylib" ${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib
+  install_name_tool -id "@rpath/libwebpdemux.${LINK_libwebpdemux_version}.dylib" ${STAGE_PATH}/lib/libwebpdemux.${LINK_libwebpdemux_version}.dylib
 
   install_name_tool -change "${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib" "@rpath/libwebp.${LINK_libwebp_version}.dylib" ${STAGE_PATH}/lib/libwebpdemux.dylib
 
