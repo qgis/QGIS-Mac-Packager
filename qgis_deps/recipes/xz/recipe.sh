@@ -22,28 +22,6 @@ BUILD_xz=$BUILD_PATH/xz/$(get_directory $URL_xz)
 # default recipe path
 RECIPE_xz=$RECIPES_PATH/xz
 
-patch_xz_linker_links () {
-  install_name_tool -id "@rpath/liblzma.dylib" ${STAGE_PATH}/lib/liblzma.dylib
-
-  if [ ! -f "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib does not exist... maybe you updated the xz version?"
-  fi
-
-  targets=(
-    bin/lzmainfo
-    bin/xzdec
-    bin/xz
-    bin/lzmadec
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -change "${STAGE_PATH}/lib/liblzma.${LINK_liblzma_version}.dylib" "@rpath/liblzma.${LINK_liblzma_version}.dylib" ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_xz() {
@@ -78,8 +56,6 @@ function build_xz() {
 
   try $MAKESMP
   try $MAKESMP install
-
-  patch_xz_linker_links
 
   pop_env
 }

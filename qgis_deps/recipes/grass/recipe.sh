@@ -22,25 +22,6 @@ BUILD_grass=$BUILD_PATH/grass/$(get_directory $URL_grass)
 # default recipe path
 RECIPE_grass=$RECIPES_PATH/grass
 
-patch_grass_linker_links () {
-  install_name_tool -id "@rpath/libgrass.dylib" ${STAGE_PATH}/lib/libgrass.dylib
-
-  # check libs are the same
-  if [ ! -f "${STAGE_PATH}/lib/libgrass.${LINK_libgrass_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libgrass.${LINK_libgrass_version}.dylib does not exist... maybe you updated the grass version?"
-  fi
-
-  targets=(
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-    install_name_tool -change "${STAGE_PATH}/lib/libgrass.${LINK_libgrass_version}.dylib" "@rpath/libgrass.${LINK_libgrass_version}.dylib" ${STAGE_PATH}/$i
-    if [[ $i == *"bin/"* ]]; then install_name_tool -add_rpath @executable_path/../lib $STAGE_PATH/$i; fi
-  done
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_grass() {
@@ -152,8 +133,6 @@ function build_grass() {
 
   try $MAKESMP GDAL_DYNAMIC=
   try $MAKE GDAL_DYNAMIC= install
-
-  patch_grass_linker_links
 
   pop_env
 }

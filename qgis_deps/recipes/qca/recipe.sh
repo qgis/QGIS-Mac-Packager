@@ -20,21 +20,6 @@ BUILD_qca=$BUILD_PATH/qca/$(get_directory $URL_qca)
 # default recipe path
 RECIPE_qca=$RECIPES_PATH/qca
 
-patch_qca_linker_links () {
-  install_name_tool -id "@rpath/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5" ${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5
-
-  targets=(
-    bin/mozcerts-qt5
-    bin/qcatool-qt5
-  )
-
-  for i in ${targets[*]}
-  do
-     install_name_tool -change "${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5" "@rpath/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5" ${STAGE_PATH}/$i
-     install_name_tool -add_rpath $QT_BASE/clang_64/lib ${STAGE_PATH}/$i
-  done
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_qca() {
@@ -76,8 +61,6 @@ function build_qca() {
 
   try $MAKESMP
   try $MAKESMP install
-
-  patch_qca_linker_links
 
   pop_env
 }

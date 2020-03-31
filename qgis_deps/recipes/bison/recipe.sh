@@ -20,12 +20,6 @@ BUILD_bison=$BUILD_PATH/bison/$(get_directory $URL_bison)
 # default recipe path
 RECIPE_bison=$RECIPES_PATH/bison
 
-patch_bison_linker_links () {
-  install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/bin/bison
-
-  # bin/yacc contains abs path to $STAGE_PATH
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_bison() {
@@ -60,8 +54,6 @@ function build_bison() {
 
   try $MAKESMP
   try $MAKESMP install
-
-  patch_bison_linker_links
 
   pop_env
 }

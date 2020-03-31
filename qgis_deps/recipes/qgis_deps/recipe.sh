@@ -7,28 +7,31 @@ VERSION_qgis_deps=${RELEASE_VERSION}
 
 # dependencies of this recipe
 DEPS_qgis_deps=(
-  python
-  sqlite
-  exiv2
-  gdal
-  hdf5
-  netcdf
-  libzip
-  qca
-  libtasn1
-  python_packages
-  spatialindex
-  gsl
-  qscintilla
-  spatialite
-  qtkeychain
-  qwt
-  xz
-  bison
-  flex
-  mysql
-  saga
+    bison
+    boost
+    exiv2
+    flex
+    gdal
+    gsl
+    hdf5
+    libtasn1
+    libzip
+    mysql
+    netcdf
+    python
+    python_packages
+    qca
+    qscintilla
+    qtkeychain
+    qtwebkit
+    qwt
+    saga
+    spatialindex
+    spatialite
+    sqlite
+    xz
 )
+# TODO grass!
 
 # url of the package
 URL_qgis_deps=

@@ -22,17 +22,6 @@ BUILD_python_qscintilla=$BUILD_PATH/python_qscintilla/$(get_directory $URL_pytho
 # default recipe path
 RECIPE_python_qscintilla=$RECIPES_PATH/python_qscintilla
 
-patch_qscintilla_linker_links () {
-  targets=(
-    $QGIS_SITE_PACKAGES_PATH/PyQt5/Qsci.so
-  )
-
-  for i in ${targets[*]}
-  do
-      install_name_tool -add_rpath @loader_path/../../../ $i
-  done
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_python_qscintilla() {
@@ -88,7 +77,7 @@ function build_python_qscintilla() {
   try $MAKE install
   try $MAKE clean
 
-  patch_qscintilla_linker_links
+  install_name_tool -add_rpath "${STAGE_PATH}/lib" $QGIS_SITE_PACKAGES_PATH/PyQt5/Qsci.so
 
   pop_env
 }

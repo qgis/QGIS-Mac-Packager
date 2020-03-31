@@ -21,67 +21,6 @@ BUILD_mysql=$BUILD_PATH/mysql/$(get_directory $URL_mysql)
 # default recipe path
 RECIPE_mysql=$RECIPES_PATH/mysql
 
-function patch_mysql_linker_links() {
-
-# server-only
-# REMOVE ME
-# bin/mysqlxtest
-# bin/mysqltest_safe_process
-#     bin/mysqlrouter
-#    bin/mysqlrouter_keyring
-#    bin/mysqlrouter_passwd
-#    bin/mysqlrouter_plugin_info
-#  bin/mysqldumpslow
-#     bin/mysqld
-#    bin/mysqld_multi
-#    bin/mysqld_safe
-#
-#     bin/mysql_tzinfo_to_sql
-# bin/ibd2sdi
-
-# bin/innochecksum
-# mysql_upgrade
-# bin/mysql_client_test
-#     bin/myisam_ftdump
-#    bin/myisamchk
-#    bin/myisamlog
-#    bin/myisampack
-
-# not binary
-# bin/mysql_config
-
-  targets=(
-    bin/comp_err
-    bin/mysqldump
-    bin/lz4_decompress
-    bin/my_print_defaults
-    bin/mysql
-    bin/mysql_config_editor
-    bin/mysql_secure_installation
-    bin/mysql_ssl_rsa_setup
-    bin/mysqladmin
-    bin/mysqlbinlog
-    bin/mysqlcheck
-    bin/mysqlimport
-    bin/mysqlpump
-    bin/mysqlshow
-    bin/mysqlslap
-    bin/mysqltest
-    bin/perror
-    bin/zlib_decompress
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -delete_rpath $BUILD_PATH/mysql/build-$ARCH/library_output_directory/. ${STAGE_PATH}/$i
-      install_name_tool -delete_rpath $BUILD_PATH/mysql/build-$ARCH/library_output_directory ${STAGE_PATH}/$i
-      install_name_tool -delete_rpath $BUILD_PATH/mysql/build-$ARCH/runtime_output_directory/. ${STAGE_PATH}/$i
-      install_name_tool -delete_rpath $STAGE_PATH/lib ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_mysql() {
@@ -141,36 +80,9 @@ function build_mysql() {
 
   check_file_configuration CMakeCache.txt
 
-  # xprotocol_plugin
-
-  targets=(
-    comp_err
-    comp_client_err
-  )
-
-  # hack a bit RPATH, since the output dir is added
-  # and some binaries are called during build of other
-  # targets
-  try mkdir -p library_output_directory/
-  try ln -sF "$STAGE_PATH/lib/libzstd.dylib" "library_output_directory/libzstd.dylib"
-
-  try mkdir -p runtime_output_directory/
-  try ln -sF "$STAGE_PATH/lib/libzstd.dylib" "runtime_output_directory/libzstd.dylib"
-
-  # build binaries that are run during build time for other targets
-  # and fix their rpath to be able to load libs from stage lib dir
-  for i in ${targets[*]}
-  do
-      try $MAKESMP $i
-      install_name_tool -add_rpath $STAGE_PATH/lib runtime_output_directory/$i
-  done
-
   try $MAKESMP
   try $MAKE install
-
   rm -rf $STAGE_PATH/mysql-test
-
-  patch_mysql_linker_links
 
   pop_env
 }

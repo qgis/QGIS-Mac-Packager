@@ -22,24 +22,6 @@ BUILD_libxslt=$BUILD_PATH/libxslt/$(get_directory $URL_libxslt)
 # default recipe path
 RECIPE_libxslt=$RECIPES_PATH/libxslt
 
-patch_libxslt_linker_links () {
-  install_name_tool -id "@rpath/libxslt.dylib" ${STAGE_PATH}/lib/libxslt.dylib
-  install_name_tool -id "@rpath/libexslt.dylib" ${STAGE_PATH}/lib/libexslt.dylib
-
-  if [ ! -f "${STAGE_PATH}/lib/libxslt.${LINK_libxslt_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libxslt.${LINK_libxslt_version}.dylib does not exist... maybe you updated the libxslt version?"
-  fi
-  if [ ! -f "${STAGE_PATH}/lib/libexslt.${LINK_libexslt_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libexslt.${LINK_libexslt_version}.dylib does not exist... maybe you updated the libxslt version?"
-  fi
-
-  install_name_tool -change "${STAGE_PATH}/lib/libxslt.${LINK_libxslt_version}.dylib" "@rpath/libxslt.${LINK_libxslt_version}.dylib" ${STAGE_PATH}/lib/libexslt.dylib
-
-  install_name_tool -change "${STAGE_PATH}/lib/libxslt.${LINK_libxslt_version}.dylib" "@rpath/libxslt.${LINK_libxslt_version}.dylib" ${STAGE_PATH}/bin/xsltproc
-  install_name_tool -change "${STAGE_PATH}/lib/libexslt.${LINK_libexslt_version}.dylib" "@rpath/libexslt.${LINK_libexslt_version}.dylib" ${STAGE_PATH}/bin/xsltproc
-  install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/bin/xsltproc
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_libxslt() {
@@ -77,8 +59,6 @@ function build_libxslt() {
   check_file_configuration config.status
   try $MAKESMP
   try $MAKESMP install
-
-  patch_libxslt_linker_links
 
   pop_env
 }

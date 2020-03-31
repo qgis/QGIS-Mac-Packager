@@ -20,10 +20,6 @@ BUILD_libffi=$BUILD_PATH/libffi/$(get_directory $URL_libffi)
 # default recipe path
 RECIPE_libffi=$RECIPES_PATH/libffi
 
-patch_libffi_linker_links () {
-  install_name_tool -id "@rpath/libffi.dylib" ${STAGE_PATH}/lib/libffi.dylib
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_libffi() {
@@ -60,8 +56,6 @@ function build_libffi() {
   check_file_configuration config.status
   try $MAKESMP
   try $MAKE install
-
-  patch_libffi_linker_links
 
   mkdir -p $STAGE_PATH/include
   cp $STAGE_PATH/lib/libffi-${VERSION_libffi}/include/* $STAGE_PATH/include/

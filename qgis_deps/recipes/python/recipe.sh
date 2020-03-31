@@ -27,30 +27,6 @@ REQUIREMENTS_python=(
   wheel==https://files.pythonhosted.org/packages/75/28/521c6dc7fef23a68368efefdcd682f5b3d1d58c2b90b06dc1d0b805b51ae/wheel-0.34.2.tar.gz==ce2a27f99c130a927237b5da1ff5ceaf
 )
 
-patch_python_linker_links () {
-  if [ ! -f "${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib does not exist... maybe you updated the python version?"
-  fi
-
-  chmod +w ${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib
-  install_name_tool -id "@rpath/libpython${VERSION_major_python}m.dylib" "${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib"
-
-  targets=(
-    bin/python3
-  )
-  for i in ${targets[*]}
-  do
-      install_name_tool -change "${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib" "@rpath/libpython${VERSION_major_python}m.dylib" ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
-
-  PYMODULES=`find $STAGE_PATH/lib/python3.7/lib-dynload -type f -name "*.so"`
-
-  for i in $PYMODULES; do
-    install_name_tool -add_rpath @loader_path/../../ $i
-  done
-}
-
 install_default_packages () {
   for i in ${REQUIREMENTS_python[*]}
   do
@@ -137,7 +113,6 @@ function build_python() {
   try $MAKESMP
   try $MAKE install PYTHONAPPSDIR=${STAGE_PATH}
 
-  patch_python_linker_links
   install_default_packages
 
   pop_env

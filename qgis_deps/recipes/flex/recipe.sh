@@ -21,26 +21,6 @@ BUILD_flex=$BUILD_PATH/flex/$(get_directory $URL_flex)
 # default recipe path
 RECIPE_flex=$RECIPES_PATH/flex
 
-patch_flex_linker_links () {
-  install_name_tool -id "@rpath/libfl.dylib" ${STAGE_PATH}/lib/libfl.dylib
-
-  if [ ! -f "${STAGE_PATH}/lib/libfl.${LINK_flex_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libfl.${LINK_flex_version}.dylib does not exist... maybe you updated the flex version?"
-  fi
-
-  targets=(
-    bin/flex
-    bin/flex++
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -change "${STAGE_PATH}/lib/libfl.${LINK_flex_version}.dylib" "@rpath/libfl.${LINK_flex_version}.dylib" ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_flex() {
@@ -78,8 +58,6 @@ function build_flex() {
 
   try $MAKESMP
   try $MAKESMP install
-
-  patch_flex_linker_links
 
   pop_env
 }

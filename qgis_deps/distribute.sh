@@ -248,10 +248,10 @@ function push_env() {
     export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=FALSE"
-    export CMAKE="${CMAKE} -DCMAKE_INSTALL_RPATH=@executable_path/../lib"
-    export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=ON"
+    # export CMAKE="${CMAKE} -DCMAKE_INSTALL_RPATH=@executable_path/../lib"
+    export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=OFF"
     export CMAKE="${CMAKE} -DENABLE_TESTS=OFF"
-    export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=ON"
+    # export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=ON"
     # MACOSX_DEPLOYMENT_TARGET in environment should set minimum version
 
     ###################
@@ -335,17 +335,23 @@ function check_linked_rpath() {
     error "$1 contains /usr/local/lib string <-- CMake picked some homebrew libs!"
   fi
 
-  if otool -L $1 | grep -q $ROOT_OUT_PATH
-  then
-    otool -L $1
-    error "$1 contains $ROOT_OUT_PATH string <-- forgot to change install_name for the linked library?"
-  fi
+  # if otool -L $1 | grep -q $ROOT_OUT_PATH
+  # then
+  #  otool -L $1
+  #  error "$1 contains $ROOT_OUT_PATH string <-- forgot to change install_name for the linked library?"
+  #fi
 
-  if otool -L $1 | grep -q @rpath/lib/
-  then
-    otool -L $1
-    info "$1 contains  @rpath/lib string <-- typo in the receipt, should be without lib"
-  fi
+  # if otool -L $1 | grep -q @rpath/lib/
+  # then
+  #  otool -L $1
+  #  info "$1 contains  @rpath/lib string <-- typo in the receipt, should be without lib"
+  #fi
+
+  #if otool -L $1 | grep -q @rpath
+  #then
+  #  otool -L $1
+  #  info "$1 contains  @rpath string <-- typo in the receipt, should not use rpath"
+  #fi
 
   targets=(
     libz
@@ -368,6 +374,11 @@ function check_linked_rpath() {
 
 function verify_lib() {
   cd ${STAGE_PATH}/
+
+  if [ ! -f "lib/$1" ]; then
+       debug "Missing library: ${STAGE_PATH}/lib/$1"
+  fi
+
   LIB_ARCHS=`lipo -archs lib/$1`
   if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
     error "Library lib/$1 was not successfully build for $ARCH, but ${LIB_ARCHS}"
@@ -378,6 +389,11 @@ function verify_lib() {
 
 function verify_bin() {
   cd ${STAGE_PATH}/
+
+  if [ ! -f "bin/$1" ]; then
+       debug "Missing binary: ${STAGE_PATH}/bin/$1"
+  fi
+
   LIB_ARCHS=`lipo -archs bin/$1`
   if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
     error "Executable bin/$1 was not successfully build for $ARCH, but ${LIB_ARCHS}"
@@ -386,32 +402,32 @@ function verify_bin() {
   check_linked_rpath bin/$1
 
   # check that the binary has the rpath to the lib folder
-  if otool -l bin/$1 |grep -q "@executable_path/../lib"
-  then
+  # if otool -l bin/$1 |grep -q "@executable_path/../lib"
+  # then
     : # OK!
-  else
-    otool -l bin/$1
-    error "Executable bin/$1 does not contain rpath to lib folder $STAGE_PATH string <-- forgot to add to receipt: install_name_tool -add_rpath @executable_path/../lib bin/$1 ? "
-  fi
+  # else
+  #  otool -l bin/$1
+  #  error "Executable bin/$1 does not contain rpath to lib folder $STAGE_PATH string <-- forgot to add to receipt: install_name_tool -add_rpath @executable_path/../lib bin/$1 ? "
+  #fi
 
   # check that the binary has the rpath to the lib folder
-  if otool -l bin/$1 |grep -q "$ROOT_OUT_PATH"
-  then
-    otool -l bin/$1
-    error "Executable bin/$1 does contain rpath to lib folder $ROOT_OUT_PATH string <-- forgot to add to receipt: install_name_tool -delete_rpath @executable_path/../lib bin/$1 ? "
-  fi
+  #if otool -l bin/$1 |grep -q "$ROOT_OUT_PATH"
+  #then
+  #  otool -l bin/$1
+  #  error "Executable bin/$1 does contain rpath to lib folder $ROOT_OUT_PATH string <-- forgot to add to receipt: install_name_tool -delete_rpath @executable_path/../lib bin/$1 ? "
+  #fi
 
   # check that the binary that links QT has the QT rpath
-  if otool -L bin/$1 |grep -q "@rpath/Qt"
-  then
-    if otool -l bin/$1 |grep -q "$QT_BASE/clang_64/lib"
-    then
-      : # OK!
-    else
-      otool -l bin/$1
-      error "Executable bin/$1 does contain rpath to QT folder $QT_BASE/clang_64/lib <-- forgot to add to receipt: install_name_tool -add_rpath \$QT_BASE/clang_64/lib bin/$1 ? "
-    fi
-  fi
+  #if otool -L bin/$1 |grep -q "@rpath/Qt"
+  #then
+  #  if otool -l bin/$1 |grep -q "$QT_BASE/clang_64/lib"
+  #  then
+  #    : # OK!
+  #  else
+  #    otool -l bin/$1
+  #    error "Executable bin/$1 does contain rpath to QT folder $QT_BASE/clang_64/lib <-- forgot to add to receipt: install_name_tool -add_rpath \$QT_BASE/clang_64/lib bin/$1 ? "
+  #  fi
+  #fi
 }
 
 run_final_check() {

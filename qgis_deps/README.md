@@ -12,16 +12,25 @@ Note: if you want to just develop QGIS and not the qgis-deps package,
 skip this and go to build QGIS step
 
 1. Update config.conf (usually not needed)
-2. Run `./distribute.sh -mqgis_deps`
+2. Run `./qgis_deps.bash`
 3. Enjoy
 
 Build QGIS
 -----------------------
 
 1. Build QGIS-deps or download&extract from [qgis download area](https://qgis.org/downloads/macos/deps/)
-2. Run `./configure_qgis_build.bash <path/to/qgis/QGIS/repo> </path/to/build-QGIS>` (or look at the script to 
-see the CMAKE vars needed, critical variable is `QGIS_MAC_DEPS_DIR`)
-3. Run make in </path/to/build-QGIS>
+2. Run 
+```
+cd <qgis-build-dir>
+PATH=<qgis-deps>/stage/bin:$PATH \
+cmake -DQGIS_MAC_DEPS_DIR=<qgis-deps>/stage \
+      -DCMAKE_PREFIX_PATH=<qt-path>/clang_64 \
+      -DQGIS_MACAPP_BUNDLE=0 \
+      -DWITH_QT5SERIALPORT=FALSE \
+      -DWITH_GRASS=OFF \
+      <qgis-git-repo>
+```
+3. Run `make`
 
 Alternatively you can 
 2. Open QT Creator and load CMakeLists of QGIS

@@ -22,23 +22,6 @@ BUILD_libxml2=$BUILD_PATH/libxml2/$(get_directory $URL_libxml2)
 # default recipe path
 RECIPE_libxml2=$RECIPES_PATH/libxml2
 
-patch_libxml2_linker_links () {
-  install_name_tool -id "@rpath/libxml2.dylib" ${STAGE_PATH}/lib/libxml2.dylib
-
-  targets=(
-    bin/xml2-config
-    bin/xmlcatalog
-    bin/xmllint
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -change "${STAGE_PATH}/lib/libxml2.${LINK_libxml2_version}.dylib" "@rpath/libxml2.${LINK_libwebp_version}.dylib" ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_libxml2() {
@@ -80,8 +63,6 @@ function build_libxml2() {
   if [ ! -e $STAGE_PATH/include/libxml ]; then
     try ln -s "$STAGE_PATH/include/libxml2/libxml/" "$STAGE_PATH/include/libxml"
   fi
-
-  patch_libxml2_linker_links
 
   pop_env
 }

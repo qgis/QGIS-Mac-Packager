@@ -20,19 +20,6 @@ BUILD_sqlite=$BUILD_PATH/sqlite/$(get_directory $URL_sqlite)
 # default recipe path
 RECIPE_sqlite=$RECIPES_PATH/sqlite
 
-patch_sqlite_linker_links () {
-  install_name_tool -id "@rpath/libsqlite3.dylib" ${STAGE_PATH}/lib/libsqlite3.dylib
-
-  targets=(
-    bin/sqlite3
-  )
-
-  for i in ${targets[*]}
-  do
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_sqlite() {
@@ -80,8 +67,6 @@ function build_sqlite() {
   check_file_configuration config.status
   try $MAKESMP
   try $MAKE install
-
-  patch_sqlite_linker_links
 
   pop_env
 }

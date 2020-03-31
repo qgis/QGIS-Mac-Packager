@@ -22,10 +22,6 @@ BUILD_zlib=$BUILD_PATH/zlib/$(get_directory $URL_zlib)
 # default recipe path
 RECIPE_zlib=$RECIPES_PATH/zlib
 
-patch_zlib_linker_links () {
-  install_name_tool -id "@rpath/libz.${LINK_zlib_version}.dylib" ${STAGE_PATH}/lib/libz.${LINK_zlib_version}.dylib
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_zlib() {
@@ -60,8 +56,6 @@ function build_zlib() {
 
   try $MAKESMP
   try $MAKESMP install
-
-  patch_zlib_linker_links
 
   pop_env
 }

@@ -47,12 +47,9 @@ function build_qtwebkit() {
   push_env
 
   try ${CMAKE} \
-    -DCMAKE_FIND_FRAMEWORK=LAST \
-    -DCMAKE_VERBOSE_MAKEFILE=ON \
-    -Wno-dev \
     -DPORT=Qt \
-    -DENABLE_TOOLS=OFF \
     $BUILD_qtwebkit
+  # try ${QMAKE}
 
   check_file_configuration CMakeCache.txt
 

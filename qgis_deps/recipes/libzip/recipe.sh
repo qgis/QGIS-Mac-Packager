@@ -20,21 +20,6 @@ BUILD_libzip=$BUILD_PATH/libzip/$(get_directory $URL_libzip)
 # default recipe path
 RECIPE_libzip=$RECIPES_PATH/libzip
 
-patch_zip_linker_links () {
-  targets=(
-    bin/zipcmp
-    bin/zipmerge
-    bin/ziptool
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -delete_rpath $BUILD_PATH/libzip/build-$ARCH/lib ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_libzip() {
@@ -70,8 +55,6 @@ function build_libzip() {
 
   try $MAKESMP
   try $MAKESMP install
-
-  patch_zip_linker_links
 
   pop_env
 }

@@ -54,8 +54,6 @@ function build_freexl() {
   try $MAKESMP
   try $MAKESMP install
 
-  install_name_tool -id "@rpath/libfreexl.dylib" ${STAGE_PATH}/lib/libfreexl.dylib
-
   pop_env
 }
 

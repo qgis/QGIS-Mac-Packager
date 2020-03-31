@@ -20,24 +20,6 @@ BUILD_proj=$BUILD_PATH/proj/$(get_directory $URL_proj)
 # default recipe path
 RECIPE_proj=$RECIPES_PATH/proj
 
-patch_proj_linker_links () {
-  targets=(
-    bin/proj
-    bin/gie
-    bin/geod
-    bin/projinfo
-    bin/cct
-    bin/cs2cs
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -delete_rpath $BUILD_PATH/proj/build-$ARCH/lib ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_proj() {
@@ -69,8 +51,6 @@ function build_proj() {
 
   try $MAKESMP
   try $MAKE install
-
-  patch_proj_linker_links
 
   pop_env
 }
