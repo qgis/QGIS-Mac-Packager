@@ -56,16 +56,30 @@ done
 export STAGE_PATH=$ROOT_OUT_PATH/stage
 export RECIPES_PATH=$DIR/recipes
 
+export DEPS_FRAMEWORKS_DIR=$STAGE_PATH/Frameworks
+export DEPS_SHARE_DIR=$STAGE_PATH/share
+export DEPS_BIN_DIR=$STAGE_PATH/bin
+export DEPS_LIB_DIR=$STAGE_PATH/lib
+export DEPS_PYTHON_SITE_PACKAGES_DIR=$STAGE_PATH/lib/python${VERSION_major_python}
+
+if [ ! -d $DEPS_PYTHON_SITE_PACKAGES_DIR ]; then
+       error "Missing DEPS_PYTHON_SITE_PACKAGES_DIR directory '$DEPS_PYTHON_SITE_PACKAGES_DIR'"
+fi
+
+export QGIS_DEPS_LIB
 # From step qgis_build
 export QGIS_VERSION=3.13
-export QGIS_INSTALL_DIR=$ROOT_OUT_PATH/../qgis/stage/QGIS-${QGIS_VERSION}-deps-${RELEASE_VERSION}
+export QGIS_INSTALL_DIR=$ROOT_OUT_PATH/../qgis-${QGIS_VERSION}-deps-${RELEASE_VERSION}/install
+
 if [ ! -d $QGIS_INSTALL_DIR ]; then
        error "Missing QGIS directory 'QGIS_INSTALL_DIR: $QGIS_INSTALL_DIR'"
 fi
 
 # From step qgis_bundle
-export APPLICATION_PATH=/Applications/QGIS-NEW
-export BUNDLE_DIR=$ROOT_OUT_PATH/../qgis/bundle/QGIS-${QGIS_VERSION}-deps-${RELEASE_VERSION}
+
+export APPLICATION_PATH=/Applications/QGIS-${QGIS_VERSION}
+
+export BUNDLE_DIR=$ROOT_OUT_PATH/../qgis-${QGIS_VERSION}-deps-${RELEASE_VERSION}/bundle
 export BUNDLE_CONTENTS_DIR=$BUNDLE_DIR/QGIS.app/Contents
 export BUNDLE_FRAMEWORKS_DIR=$BUNDLE_CONTENTS_DIR/Frameworks
 export BUNDLE_RESOURCES_DIR=$BUNDLE_CONTENTS_DIR/Resources
@@ -73,6 +87,7 @@ export BUNDLE_MACOS_DIR=$BUNDLE_CONTENTS_DIR/MacOS
 export BUNDLE_BIN_DIR=$BUNDLE_MACOS_DIR/bin
 export BUNDLE_PLUGINS_DIR=$BUNDLE_MACOS_DIR/PlugIns
 export BUNDLE_LIB_DIR=$BUNDLE_MACOS_DIR/lib
+export BUNDLE_PYTHON_SITE_PACKAGES_DIR=$BUNDLE_RESOURCES_DIR/python
 
 # COMMANDS
 RSYNCDIR="rsync -r"
@@ -135,31 +150,33 @@ function run_add_config_info() {
   done
 }
 
-function check_linked_rpath() {
-  cd ${STAGE_PATH}
-  if otool -L $1 | grep -q /usr/local/lib
+function check_binary_linker_links() {
+  OTOOL_L=$(otool -L ${BUNDLE_DIR}/$1)
+  OTOOL_RPATH=$(otool -l ${BUNDLE_DIR}/$1)
+
+  if echo "${OTOOL_L}" | grep -q /usr/local/
   then
-    otool -L $1
-    error "$1 contains /usr/local/lib string <-- Picked some homebrew libraries!"
+    echo "${OTOOL_L}"
+    error "$1 contains /usr/local/ string <-- Picked some homebrew libraries!"
   fi
 
-  if otool -L $1 | grep -q $ROOT_OUT_PATH
+  if echo "${OTOOL_L}"  | grep -q $QGIS_INSTALL_DIR
   then
-    otool -L $1
-    error "$1 contains $ROOT_OUT_PATH string <-- forgot to change install_name for the linked library?"
+    echo "${OTOOL_L}"
+    error "$1 contains $QGIS_INSTALL_DIR string <-- forgot to change install_name for the linked library?"
   fi
 
-  # if otool -L $1 | grep -q @rpath/lib/
-  # then
-  #  otool -L $1
-  #  info "$1 contains  @rpath/lib string <-- typo in the receipt, should be without lib"
-  #fi
+  if echo "${OTOOL_L}"  | grep -q $STAGE_PATH
+  then
+    echo "${OTOOL_L}"
+    error "$1 contains $STAGE_PATH string <-- forgot to change install_name for the linked library?"
+  fi
 
-  #if otool -L $1 | grep -q @rpath
-  #then
-  #  otool -L $1
-  #  info "$1 contains  @rpath string <-- typo in the receipt, should not use rpath"
-  #fi
+  if echo ${OTOOL_L} | grep -q $BUNDLE_DIR
+  then
+    echo "${OTOOL_L}"
+    error "$1 contains $BUNDLE_DIR string <-- forgot to change install_name for the linked library?"
+  fi
 
   targets=(
     libz
@@ -170,121 +187,42 @@ function check_linked_rpath() {
     libxml2
     libsqlite3
   )
+
   for i in ${targets[*]}
   do
-      if otool -L $1 | grep -q /usr/lib/$i.dylib
+      if echo "${OTOOL_L}" | grep -q /usr/lib/$i.dylib
       then
-        otool -L $1
+        echo "${OTOOL_L}"
         info "$1 contains /usr/lib/$i.dylib string -- we should be using our $i, not system!"
       fi
   done
-}
-
-function verify_lib() {
-  cd ${STAGE_PATH}/
-
-  if [ ! -f "lib/$1" ]; then
-       debug "Missing library: ${STAGE_PATH}/lib/$1"
-  fi
-
-  LIB_ARCHS=`lipo -archs lib/$1`
-  if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
-    error "Library lib/$1 was not successfully build for $ARCH, but ${LIB_ARCHS}"
-  fi
-
-  check_linked_rpath lib/$1
-}
-
-function verify_bin() {
-  cd ${STAGE_PATH}/
-
-  if [ ! -f "bin/$1" ]; then
-       debug "Missing binary: ${STAGE_PATH}/bin/$1"
-  fi
-
-  LIB_ARCHS=`lipo -archs bin/$1`
-  if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
-    error "Executable bin/$1 was not successfully build for $ARCH, but ${LIB_ARCHS}"
-  fi
-
-  check_linked_rpath bin/$1
-
-  # check that the binary has the rpath to the lib folder
-  # if otool -l bin/$1 |grep -q "@executable_path/../lib"
-  # then
-    : # OK!
-  # else
-  #  otool -l bin/$1
-  #  error "Executable bin/$1 does not contain rpath to lib folder $STAGE_PATH string <-- forgot to add to receipt: install_name_tool -add_rpath @executable_path/../lib bin/$1 ? "
-  #fi
-
-  # check that the binary has the rpath to the lib folder
-  #if otool -l bin/$1 |grep -q "$ROOT_OUT_PATH"
-  #then
-  #  otool -l bin/$1
-  #  error "Executable bin/$1 does contain rpath to lib folder $ROOT_OUT_PATH string <-- forgot to add to receipt: install_name_tool -delete_rpath @executable_path/../lib bin/$1 ? "
-  #fi
-
-  # check that the binary that links QT has the QT rpath
-  #if otool -L bin/$1 |grep -q "@rpath/Qt"
-  #then
-  #  if otool -l bin/$1 |grep -q "$QT_BASE/clang_64/lib"
-  #  then
-  #    : # OK!
-  #  else
-  #    otool -l bin/$1
-  #    error "Executable bin/$1 does contain rpath to QT folder $QT_BASE/clang_64/lib <-- forgot to add to receipt: install_name_tool -add_rpath \$QT_BASE/clang_64/lib bin/$1 ? "
-  #  fi
-  #fi
 }
 
 run_final_check() {
   info "Running final check in the ${BUNDLE_DIR}"
 
   # libs
-  cd ${STAGE_PATH}/lib
+  cd ${BUNDLE_DIR}
   LIBS1=`find . -type f -name "*.so"`
   LIBS2=`find . -type f -name "*.dylib"`
   LIBS="$LIBS1 $LIBS2"
   for lib in $LIBS; do
-    verify_lib $lib
+    check_binary_linker_links $lib
   done
 
-  # frameworks
-  cd ${STAGE_PATH}/lib
+  # frameworks (Mach-O without binaries)
   LIBS=`find . -type f ! -name "*.*"`
   for lib in $LIBS; do
     attachmenttype=$(file ${STAGE_PATH}/bin/$lib | cut -d\  -f2 )
     if [[ $attachmenttype = "Mach-O" ]]; then
-      verify_lib $lib
-    fi
-  done
-
-  cd ${STAGE_PATH}/Frameworks
-  LIBS=`find . -type f ! -name "*.*"`
-  for lib in $LIBS; do
-    attachmenttype=$(file ${STAGE_PATH}/bin/$lib | cut -d\  -f2 )
-    if [[ $attachmenttype = "Mach-O" ]]; then
-      verify_lib $lib
-    fi
-  done
-
-  info "Running final check for all binaries in the ${STAGE_PATH}/bin"
-  # binaries
-  mkdir -p ${STAGE_PATH}/bin
-  cd ${STAGE_PATH}/bin
-  EXEC=`find . -type f -name "*" ! -name "sip" ! -name "pip*" ! -name "activate*" ! -name "easy_install*" ! -name "python*"`
-  for bin in $EXEC; do
-    attachmenttype=$(file ${STAGE_PATH}/bin/$bin | cut -d\  -f2 )
-    if [[ $attachmenttype = "Mach-O" ]]; then
-      verify_bin $bin
+      check_binary_linker_links $lib
     fi
   done
 
   # all other files
-  #if grep -rni $STAGE_PATH $STAGE_PATH --exclude-dir=__pycache__
+  #if grep -rni $STAGE_PATH $STAGE_PATH
   #then
-  #  grep -rni $STAGE_PATH $STAGE_PATH --exclude-dir=__pycache__
+  #  grep -rni $STAGE_PATH $STAGE_PATH
   #  error "Some scripts reference absolute STAGE_PATH dir $STAGE_PATH"
   #fi
 }

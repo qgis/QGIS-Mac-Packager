@@ -47,8 +47,8 @@ CORES=$(sysctl -n hw.ncpu)
 # TODO replace with something configurable
 export QGIS_VERSION=3.13
 export QGIS_SOURCE_DIR=~/Projects/mesh/QGIS
-export QGIS_BUILD_DIR=$ROOT_OUT_PATH/../qgis/build/QGIS-${QGIS_VERSION}
-export QGIS_INSTALL_DIR=$ROOT_OUT_PATH/../qgis/stage/QGIS-${QGIS_VERSION}-deps-${RELEASE_VERSION}
+export QGIS_BUILD_DIR=$ROOT_OUT_PATH/../qgis-${QGIS_VERSION}-deps-${RELEASE_VERSION}/build
+export QGIS_INSTALL_DIR=$ROOT_OUT_PATH/../qgis-${QGIS_VERSION}-deps-${RELEASE_VERSION}/install
 
 OLD_PATH=$PATH
 
@@ -61,10 +61,10 @@ PATH=$ROOT_OUT_PATH/stage/bin:$PATH \
 cmake -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DCMAKE_PREFIX_PATH=$QT_BASE/clang_64 \
       -DQGIS_MACAPP_BUNDLE=0 \
-      -DWITH_QT5SERIALPORT=FALSE \
-      -DWITH_GRASS=OFF \
       -DCMAKE_INSTALL_PREFIX:PATH=$QGIS_INSTALL_DIR\
       $QGIS_SOURCE_DIR
+
+#       -DWITH_QT5SERIALPORT=FALSE \
 
 try cd $QGIS_BUILD_DIR
 try make -j ${CORES}
