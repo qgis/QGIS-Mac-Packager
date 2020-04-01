@@ -82,8 +82,9 @@ function build_mysql() {
 
   try $MAKESMP
   try $MAKE install
-  rm -rf $STAGE_PATH/mysql-test
-
+  try rm -rf $STAGE_PATH/mysql-test
+  try rm -f $STAGE_PATH/LICENCE
+  try rm -f $STAGE_PATH/README
   pop_env
 }
 

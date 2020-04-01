@@ -3,7 +3,9 @@
 DESC_grass="Geographic Resources Analysis Support System"
 
 # version of your package
-VERSION_grass=7.8.2
+VERSION_grass_major=7.8
+VERSION_grass=${VERSION_grass_major}.2
+
 
 # dependencies of this recipe
 DEPS_grass=(python boost bison flex libtiff png  sqlite geos zlib wxmac zstd zlib xz netcdf proj gdal libgeotiff python_pyqt5 mysql postgres openssl )
@@ -32,6 +34,12 @@ function prebuild_grass() {
     return
   fi
 
+  # it tries to install HELP to system
+  try mkdir -p $BUILD_grass/Library/Documentation/Help
+  try mkdir -p $BUILD_grass/Home/Library/Documentation/Help
+  try ${SED} "s; /Library/Documentation/Help; $BUILD_grass/Library/Documentation/Help;g" include/Make/Install.make
+  try ${SED} "s; $HOME/Library/Documentation/Help; $BUILD_grass/Home/Library/Documentation/Help;g" macosx/app/build_html_user_index.sh
+
   patch_configure_file configure
 
   touch .patched
@@ -39,7 +47,7 @@ function prebuild_grass() {
 
 function shouldbuild_grass() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libgrass.dylib -nt $BUILD_grass/.patched ]; then
+  if [ ${STAGE_PATH}/grass78/lib/libgrass_calc.dylib -nt $BUILD_grass/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -50,39 +58,23 @@ function build_grass() {
   try cd $BUILD_PATH/grass/build-$ARCH
   push_env
 
-#--with-readline \
-#--with-readline-includes=#{Formula["readline"]include \
-#--with-readline-libs=#{Formula["readline"/lib \
-#--with-blas \
-#--with-blas-includes=#{Formula["openblas"]include \
-#--with-blas-libs=#{Formula["openblas"/lib \
-#--with-lapack \
-#--with-lapack-includes=#{Formula["lapack"]include \
-#--with-lapack-libs=#{Formula["lapack"/lib \
-#    --with-odbc \
-#    --with-odbc-includes=#{Formula["unixodbc"]include \
-#    --with-odbc-libs=#{Formula["unixodbc"/lib \
-#     --with-bzlib \
-#    --with-bzlib-includes=#{Formula["bzip2"]include \
-#    --with-bzlib-libs=#{Formula["bzip2"/lib \
-#     --with-cairo \
-#    --with-cairo-includes=#{Formula["cairo"]include/cairo \
-#    --with-cairo-libs=#{Formula["cairo"/lib \
-#    --with-cairo-ldflags=-lfontconfig \
-#    --with-freetype \
-#    --with-freetype-includes=#{Formula["freetype"]include/freetype2 \
-#    --with-freetype-libs=#{Formula["freetype"/lib \
-#          # "--with-proj \
-#    --with-regex \
-#          # "--with-regex-includes=#{Formula["regex-opt"/lib \
-#          # "--with-regex-libs=#{Formula["regex-opt"/lib \
-#     --with-fftw \
-#    --with-fftw-includes=#{Formula["fftw"]include \
-#    --with-fftw-libs=#{Formula["fftw"/lib \
+  # No DEBUG symbols!
+  export CFLAGS="-O2"
+  export CXXFLAGS="-O2"
+
+  # when building with LIB=...
+  # lib/gpde fails with undefined symbols to _G_calloc and others
+  # see
+
+  unset LDFLAGS
+  unset LIB
+  unset INCLUDE
+  unset LIB_DIR
 
   try ${CONFIGURE} \
     --with-cxx \
     --enable-shared \
+    --exec_prefix=$STAGE_PATH \
     --with-includes=$STAGE_PATH/include \
     --with-libs=$STAGE_PATH/lib \
     --without-tcltk \
@@ -124,23 +116,20 @@ function build_grass() {
     --without-cairo \
     --without-freetype \
     --enable-64bit \
-    --with-macosx-sdk=`xcrun --show-sdk-path`
-
-    # --with-opengl-includes=#{MacOS.sdk_path}/System/Library/Frameworks/OpenGL.framework/Headers
-
+    --with-python=no \
+    --with-macosx-archs=x86_64
 
   check_file_configuration config.status
 
-  try $MAKESMP GDAL_DYNAMIC=
-  try $MAKE GDAL_DYNAMIC= install
+  try $MAKESMP
+  try $MAKE install
 
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_grass() {
-  verify_lib "libgrass.dylib"
-  verify_bin grassmanage
+  verify_lib "../grass78/lib/libgrass_calc.dylib"
 }
 
 # function to append information to config file
