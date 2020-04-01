@@ -35,6 +35,7 @@ function prebuild_grass() {
   fi
 
   # it tries to install HELP to system
+  # see https://github.com/OSGeo/grass/issues/474
   try mkdir -p $BUILD_grass/Library/Documentation/Help
   try mkdir -p $BUILD_grass/Home/Library/Documentation/Help
   try ${SED} "s; /Library/Documentation/Help; $BUILD_grass/Library/Documentation/Help;g" include/Make/Install.make
@@ -64,8 +65,7 @@ function build_grass() {
 
   # when building with LIB=...
   # lib/gpde fails with undefined symbols to _G_calloc and others
-  # see
-
+  # see https://github.com/OSGeo/grass/issues/457#issuecomment-607272665
   unset LDFLAGS
   unset LIB
   unset INCLUDE
