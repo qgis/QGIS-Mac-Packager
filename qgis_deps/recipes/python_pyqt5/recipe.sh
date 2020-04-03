@@ -53,7 +53,7 @@ function prebuild_python_pyqt5() {
 }
 
 function shouldbuild_python_pyqt5() {
-  if python_package_installed PyQt5; then
+  if python_package_installed PyQt5.QtCore; then
     DO_BUILD=0
   fi
 }
@@ -87,8 +87,8 @@ function build_python_pyqt5() {
 }
 
 function postbuild_python_pyqt5() {
-   if ! python_package_installed PyQt5; then
-      error "Missing python package PyQt5"
+   if ! python_package_installed PyQt5.QtCore; then
+      error "Missing python package PyQt5.QtCore.QtCore"
    fi
 }
 

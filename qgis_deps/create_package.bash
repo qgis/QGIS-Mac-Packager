@@ -20,6 +20,8 @@ if [ ! -d $ROOT_OUT_PATH ]; then
   error "The root output directory '$ROOT_OUT_PATH' not found."
 fi
 
+echo "Create packages for qgis-deps-${RELEASE_VERSION}"
+
 ##############################################
 # Create install script
 INSTALL_SCRIPT=$ROOT_OUT_PATH/install_qgis_deps-${RELEASE_VERSION}.bash
