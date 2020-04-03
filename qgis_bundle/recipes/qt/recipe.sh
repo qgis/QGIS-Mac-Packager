@@ -43,6 +43,16 @@ function bundle_qt() {
   try rsync -av $QT_ROOT_DIR/lib/QtPositioning.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtBluetooth.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/Qt3DLogic.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtSql.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtConcurrent.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtSerialBus.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtGamepad.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtNetwork.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtXmlPatterns.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtSvg.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtMultimediaWidgets.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtSensors.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtTextToSpeech.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
 
   # try rsync -av $QT_ROOT_DIR/lib/QtNetworkAuth.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   # try rsync -av $QT_ROOT_DIR/lib/QtVirtualKeyboard.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers

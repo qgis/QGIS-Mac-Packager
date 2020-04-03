@@ -5,11 +5,16 @@ function check_saga() {
 }
 
 function bundle_saga() {
-    : # install_name_tool -id "@rpath/libsaga.dylib" ${STAGE_PATH}/lib/libsaga.dylib
+  try mkdir -p $BUNDLE_RESOURCES_DIR/saga/toolchains
+  try rsync -av $DEPS_SHARE_DIR/saga/toolchains/ $BUNDLE_RESOURCES_DIR/saga/toolchains/
+
+  try rsync -av $DEPS_LIB_DIR/saga/ $BUNDLE_LIB_DIR/saga/ --exclude=*.la
+
+  try cp -v $DEPS_BIN_DIR/saga_cmd $BUNDLE_BIN_DIR/
 }
 
 function postbundle_saga() {
-    :
+    :  # install_name_tool -id "@rpath/libsaga.dylib" ${STAGE_PATH}/lib/libsaga.dylib
 }
 
 function add_config_info_saga() {

@@ -56,6 +56,7 @@ done
 export STAGE_PATH=$ROOT_OUT_PATH/stage
 export RECIPES_PATH=$DIR/recipes
 
+export DEPS_ROOT_DIR=$STAGE_PATH
 export DEPS_FRAMEWORKS_DIR=$STAGE_PATH/Frameworks
 export DEPS_SHARE_DIR=$STAGE_PATH/share
 export DEPS_BIN_DIR=$STAGE_PATH/bin
@@ -88,6 +89,9 @@ export BUNDLE_BIN_DIR=$BUNDLE_MACOS_DIR/bin
 export BUNDLE_PLUGINS_DIR=$BUNDLE_MACOS_DIR/PlugIns
 export BUNDLE_LIB_DIR=$BUNDLE_MACOS_DIR/lib
 export BUNDLE_PYTHON_SITE_PACKAGES_DIR=$BUNDLE_RESOURCES_DIR/python
+
+export RPATH_LIB_DIR=@rpath
+
 
 # COMMANDS
 RSYNCDIR="rsync -r"
@@ -202,6 +206,7 @@ run_final_check() {
   info "Running final check in the ${BUNDLE_DIR}"
 
   # libs
+  info "Check libraries"
   cd ${BUNDLE_DIR}
   LIBS1=`find . -type f -name "*.so"`
   LIBS2=`find . -type f -name "*.dylib"`
@@ -210,6 +215,7 @@ run_final_check() {
     check_binary_linker_links $lib
   done
 
+  info "Check binaries"
   # frameworks (Mach-O without binaries)
   LIBS=`find . -type f ! -name "*.*"`
   for lib in $LIBS; do
@@ -219,12 +225,13 @@ run_final_check() {
     fi
   done
 
+  info "Check other files"
   # all other files
-  #if grep -rni $STAGE_PATH $STAGE_PATH
-  #then
-  #  grep -rni $STAGE_PATH $STAGE_PATH
-  #  error "Some scripts reference absolute STAGE_PATH dir $STAGE_PATH"
-  #fi
+  if grep -rni $BUNDLE_DIR .
+  then
+    grep -rni $STAGE_PATH $STAGE_PATH
+    error "Some scripts reference absolute BUNDLE_DIR dir $BUNDLE_DIR"
+  fi
 }
 
 function run() {

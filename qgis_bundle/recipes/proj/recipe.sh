@@ -5,11 +5,11 @@ function check_proj() {
 }
 
 function bundle_proj() {
-    : # install_name_tool -id "@rpath/libproj.dylib" ${STAGE_PATH}/lib/libproj.dylib
+  try rsync -av $DEPS_SHARE_DIR/proj $BUNDLE_RESOURCES_DIR/
 }
 
 function postbundle_proj() {
-    :
+    : # install_name_tool -id "@rpath/libproj.dylib" ${STAGE_PATH}/lib/libproj.dylib
 }
 
 function add_config_info_proj() {

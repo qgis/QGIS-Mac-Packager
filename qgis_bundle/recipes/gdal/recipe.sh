@@ -5,11 +5,11 @@ function check_gdal() {
 }
 
 function bundle_gdal() {
-    : # install_name_tool -id "@rpath/libgdal.dylib" ${STAGE_PATH}/lib/libgdal.dylib
+  try rsync -av $DEPS_SHARE_DIR/gdal $BUNDLE_RESOURCES_DIR/
 }
 
 function postbundle_gdal() {
-    :
+    : # install_name_tool -id "@rpath/libgdal.dylib" ${STAGE_PATH}/lib/libgdal.dylib
 }
 
 function add_config_info_gdal() {

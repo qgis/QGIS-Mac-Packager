@@ -372,11 +372,28 @@ function check_linked_rpath() {
   done
 }
 
+function verify_binary() {
+  BINARY=$1
+  cd ${STAGE_PATH}/
+
+  if [ ! -f "$BINARY" ]; then
+    error "Missing library: ${STAGE_PATH}/${BINARY}... Maybe you updated the library version in the receipt?"
+  fi
+
+  LIB_ARCHS=`lipo -archs $BINARY`
+  if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
+    error "Binary $BINARY was not successfully build for $ARCH, but ${LIB_ARCHS}"
+  fi
+
+  check_linked_rpath $BINARY
+}
+
+# TODO remove this function!
 function verify_lib() {
   cd ${STAGE_PATH}/
 
   if [ ! -f "lib/$1" ]; then
-       debug "Missing library: ${STAGE_PATH}/lib/$1"
+    debug "Missing library: ${STAGE_PATH}/lib/$1"
   fi
 
   LIB_ARCHS=`lipo -archs lib/$1`
@@ -387,6 +404,7 @@ function verify_lib() {
   check_linked_rpath lib/$1
 }
 
+# TODO remove this function!
 function verify_bin() {
   cd ${STAGE_PATH}/
 
@@ -878,7 +896,7 @@ function run() {
   run_prebuild
   run_build
   run_postbuild
-  run_final_check
+  # run_final_check
   run_create_config_file
   info "All done !"
 }

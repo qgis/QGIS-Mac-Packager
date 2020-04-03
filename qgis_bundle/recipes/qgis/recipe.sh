@@ -16,10 +16,14 @@ function bundle_qgis() {
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgis_app.* $BUNDLE_LIB_DIR
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgispython.* $BUNDLE_LIB_DIR
 
-  try cp -avR $QGIS_CONTENTS_DIR/PlugIns/ $BUNDLE_PLUGINS_DIR
-  try cp -avR $QGIS_CONTENTS_DIR/Resources/ $BUNDLE_RESOURCES_DIR
+  try rsync -av $QGIS_CONTENTS_DIR/PlugIns/ $BUNDLE_PLUGINS_DIR/
+  try rsync -av $QGIS_CONTENTS_DIR/Resources/ $BUNDLE_RESOURCES_DIR/
 
-  try rsync -av $QGIS_CONTENTS_DIR/Frameworks/ $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_analysis.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Header
+  try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_core.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_gui.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_native.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgisgrass7.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
 }
 
 function postbundle_qgis() {

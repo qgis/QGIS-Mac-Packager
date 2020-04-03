@@ -5,7 +5,9 @@ function check_qwt() {
 }
 
 function bundle_qwt() {
-    : # install_name_tool -id "@rpath/libqwt.dylib" ${STAGE_PATH}/lib/libqwt.dylib
+  try rsync -av $DEPS_LIB_DIR/qwt.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+
+   # install_name_tool -id "@rpath/libqwt.dylib" ${STAGE_PATH}/lib/libqwt.dylib
 }
 
 function postbundle_qwt() {

@@ -6,6 +6,9 @@ DESC_qscintilla="Port to Qt of the Scintilla editing component"
 # keep in SYNC with python_qscintilla receipt
 VERSION_qscintilla=2.11.4
 
+# full link version of the library
+LINK_libqscintilla2_qt5=libqscintilla2_qt5.15.dylib
+
 # dependencies of this recipe
 DEPS_qscintilla=()
 
@@ -46,7 +49,7 @@ function prebuild_qscintilla() {
 
 function shouldbuild_qscintilla() {
   # If lib is newer than the sourcecode skip build
-  if [ "${STAGE_PATH}/lib/libqscintilla2_qt5.dylib" -nt $BUILD_qscintilla/.patched ]; then
+  if [ "${STAGE_PATH}/lib/${LINK_libqscintilla2_qt5}" -nt $BUILD_qscintilla/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -68,11 +71,12 @@ function build_qscintilla() {
 
 # function called after all the compile have been done
 function postbuild_qscintilla() {
-  verify_lib "libqscintilla2_qt5.dylib"
+  verify_binary lib/$LINK_libqscintilla2_qt5
 }
 
 # function to append information to config file
 function add_config_info_qscintilla() {
   append_to_config_file "# qscintilla-${VERSION_qscintilla}: ${DESC_qscintilla}"
   append_to_config_file "export VERSION_qscintilla=${VERSION_qscintilla}"
+  append_to_config_file "export LINK_libqscintilla2_qt5=${LINK_libqscintilla2_qt5}"
 }
