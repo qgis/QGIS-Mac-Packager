@@ -5,6 +5,8 @@ DESC_proj="Cartographic Projections Library"
 # version of your package
 VERSION_proj=6.3.1
 
+LINK_libproj=libproj.18.dylib
+
 # dependencies of this recipe
 DEPS_proj=()
 
@@ -34,7 +36,7 @@ function prebuild_proj() {
 }
 
 function shouldbuild_proj() {
-  if [ ${STAGE_PATH}/lib/libproj.dylib -nt $BUILD_proj/.patched ]; then
+  if [ ${STAGE_PATH}/lib/${LINK_libproj} -nt $BUILD_proj/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -52,18 +54,22 @@ function build_proj() {
   try $MAKESMP
   try $MAKE install
 
+  try install_name_tool -id $STAGE_PATH/lib/$LINK_libproj $STAGE_PATH/lib/$LINK_libproj
+  try install_name_tool -change $BUILD_PATH/proj/build-$ARCH/lib/$LINK_libproj $STAGE_PATH/lib/$LINK_libproj $STAGE_PATH/bin/proj
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_proj() {
-  verify_lib "libproj.dylib"
+  verify_binary lib/$LINK_libproj
 
-  verify_bin proj
+  verify_binary bin/proj
 }
 
 # function to append information to config file
 function add_config_info_proj() {
   append_to_config_file "# proj-${VERSION_proj}: ${DESC_proj}"
   append_to_config_file "export VERSION_proj=${VERSION_proj}"
+  append_to_config_file "export LINK_libproj=${LINK_libproj}"
 }

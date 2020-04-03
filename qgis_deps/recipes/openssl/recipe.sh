@@ -14,10 +14,10 @@ LINK_libssl_version=1.1
 LINK_libcrypto_version=${LINK_libssl_version}
 
 # url of the package
-URL_openssl=https://www.openssl.org/source/openssl-${VERSION_openssl}.tar.gz
+URL_openssl=https://github.com/openssl/openssl/archive/OpenSSL_${VERSION_openssl//./_}.tar.gz
 
 # md5 of the package
-MD5_openssl=3be209000dbc7e1b95bcdf47980a3baa
+MD5_openssl=148010aa1eff4c317fb9f68b78b1216e
 
 # default build path
 BUILD_openssl=$BUILD_PATH/openssl/$(get_directory $URL_openssl)

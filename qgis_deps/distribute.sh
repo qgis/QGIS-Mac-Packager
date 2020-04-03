@@ -335,23 +335,13 @@ function check_linked_rpath() {
     error "$1 contains /usr/local/lib string <-- CMake picked some homebrew libs!"
   fi
 
-  # if otool -L $1 | grep -q $ROOT_OUT_PATH
-  # then
-  #  otool -L $1
-  #  error "$1 contains $ROOT_OUT_PATH string <-- forgot to change install_name for the linked library?"
-  #fi
-
-  # if otool -L $1 | grep -q @rpath/lib/
-  # then
-  #  otool -L $1
-  #  info "$1 contains  @rpath/lib string <-- typo in the receipt, should be without lib"
-  #fi
-
-  #if otool -L $1 | grep -q @rpath
-  #then
-  #  otool -L $1
-  #  info "$1 contains  @rpath string <-- typo in the receipt, should not use rpath"
-  #fi
+  # the binaries cannot contain reference to build path since this path is not present when
+  # the deps are downloaded from the web
+  if otool -L $1 | grep -q $BUILD_PATH
+  then
+    otool -L $1
+    error "$1 contains $BUILD_PATH string <-- forgot to change install_name for the linked library?"
+  fi
 
   targets=(
     libz

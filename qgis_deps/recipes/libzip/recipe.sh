@@ -5,6 +5,8 @@ DESC_libzip="C library for reading, creating, and modifying zip archives"
 # version of your package
 VERSION_libzip=1.6.1
 
+LINK_libzip=libzip.5.dylib
+
 # dependencies of this recipe
 DEPS_libzip=( zlib xz openssl )
 
@@ -56,17 +58,20 @@ function build_libzip() {
   try $MAKESMP
   try $MAKESMP install
 
+  try install_name_tool -change $BUILD_PATH/libzip/build-$ARCH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/bin/ziptool
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_libzip() {
-  verify_lib "libzip.dylib"
-  verify_bin ziptool
+  verify_binary lib/$LINK_libzip
+  verify_binary bin/ziptool
 }
 
 # function to append information to config file
 function add_config_info_libzip() {
   append_to_config_file "# libzip-${VERSION_libzip}: ${DESC_libzip}"
   append_to_config_file "export VERSION_libzip=${VERSION_libzip}"
+  append_to_config_file "export LINK_libzip=${LINK_libzip}"
 }
