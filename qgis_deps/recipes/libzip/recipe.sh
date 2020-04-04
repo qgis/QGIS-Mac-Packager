@@ -37,7 +37,7 @@ function prebuild_libzip() {
 
 function shouldbuild_libzip() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libzip.dylib -nt $BUILD_libzip/.patched ]; then
+  if [ ${STAGE_PATH}/lib/${LINK_libzip} -nt $BUILD_libzip/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -50,7 +50,8 @@ function build_libzip() {
 
   # see issue #38: with ENABLE_GNUTLS it requires nette library
   try ${CMAKE} \
-    ENABLE_GNUTLS=FALSE \
+    -DENABLE_GNUTLS=FALSE \
+    -DCMAKE_DISABLE_FIND_PACKAGE_NETTLE=TRUE \
     $BUILD_libzip
 
   check_file_configuration CMakeCache.txt

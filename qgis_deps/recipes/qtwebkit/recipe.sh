@@ -48,8 +48,11 @@ function build_qtwebkit() {
 
   try ${CMAKE} \
     -DPORT=Qt \
+    -DENABLE_TOOLS=FALSE \
+    -DENABLE_API_TESTS=FALSE \
+    -DSHOULD_INSTALL_JS_SHELL=FALSE \
+    -DQT_INSTALL_PREFIX=$QT_BASE/clang_64 \
     $BUILD_qtwebkit
-  # try ${QMAKE}
 
   check_file_configuration CMakeCache.txt
 

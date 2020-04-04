@@ -32,10 +32,12 @@ function fix_python_pyqt5_paths() {
 
   for i in ${targets[*]}
   do
-    REPL="s;exec ./python${VERSION_major_python};exec $STAGE_PATH/bin/python${VERSION_major_python};g"
-    try ${SED} "$REPL" $STAGE_PATH/$i
+    try ${SED} "s;exec ./python${VERSION_major_python};exec $STAGE_PATH/bin/python${VERSION_major_python};g" $STAGE_PATH/$i
+    try ${SED} "s;exec python${VERSION_major_python};exec $STAGE_PATH/bin/python${VERSION_major_python};g" $STAGE_PATH/$i
     rm -f $STAGE_PATH/$i.orig
   done
+
+  echo ${REPL}
 }
 
 # function called for preparing source code if needed
@@ -82,6 +84,8 @@ function build_python_pyqt5() {
   try $MAKESMP
   try $MAKE install
   try $MAKE clean
+
+  fix_python_pyqt5_paths
 
   pop_env
 }

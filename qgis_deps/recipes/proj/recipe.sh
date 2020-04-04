@@ -8,7 +8,7 @@ VERSION_proj=6.3.1
 LINK_libproj=libproj.18.dylib
 
 # dependencies of this recipe
-DEPS_proj=()
+DEPS_proj=(sqlite libxml2 openssl)
 
 # url of the package
 URL_proj=https://github.com/OSGeo/PROJ/releases/download/$VERSION_proj/proj-$VERSION_proj.tar.gz

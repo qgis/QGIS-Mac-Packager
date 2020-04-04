@@ -34,21 +34,32 @@ function prebuild_grass() {
     return
   fi
 
+  # Usage of cc instead of clang (/usr/bin/cc -> clang)
+  try ${SED} "s;cc ;clang ;g" aclocal.m4
+
+  # Usage of cc instead of clang
+  patch_configure_file configure
+  try ${SED} "s;cc ;clang ;g" configure
+
+  # Usage of /usr/local
+  try ${SED} "s;/usr/local/lib' ;$STAGE_PATH/lib', '$STAGE_PATH/grass${VERSION_grass_major//./}/lib ;g" lib/python/ctypes/loader.py
+
   # it tries to install HELP to system
   # see https://github.com/OSGeo/grass/issues/474
   try mkdir -p $BUILD_grass/Library/Documentation/Help
   try mkdir -p $BUILD_grass/Home/Library/Documentation/Help
   try ${SED} "s; /Library/Documentation/Help; $BUILD_grass/Library/Documentation/Help;g" include/Make/Install.make
-  try ${SED} "s; $HOME/Library/Documentation/Help; $BUILD_grass/Home/Library/Documentation/Help;g" macosx/app/build_html_user_index.sh
+  try ${SED} "s; \$HOME/Library/Documentation/Help; $BUILD_grass/Home/Library/Documentation/Help;g" macosx/app/build_html_user_index.sh
 
-  patch_configure_file configure
+  # missing space in gpde Makefile
+  try ${SED} "s;EXTRA_LIBS=\$(GISLIB);EXTRA_LIBS = \$(GISLIB);g" lib/gpde/Makefile
 
   touch .patched
 }
 
 function shouldbuild_grass() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/grass78/lib/libgrass_calc.dylib -nt $BUILD_grass/.patched ]; then
+  if [ ${STAGE_PATH}/grass{VERSION_grass_major//./}/lib/libgrass_calc.dylib -nt $BUILD_grass/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -60,8 +71,10 @@ function build_grass() {
   push_env
 
   # No DEBUG symbols!
+  export PATH="$STAGE_PATH/grass${VERSION_grass_major//./}/bin:$PATH"
   export CFLAGS="-O2"
-  export CXXFLAGS="-O2"
+  export CXXFLAGS="${CFLAGS}"
+  export GRASS_PYTHON=$STAGE_PATH/bin/python3
 
   # when building with LIB=...
   # lib/gpde fails with undefined symbols to _G_calloc and others
@@ -114,15 +127,26 @@ function build_grass() {
     --without-glw \
     --without-wxwidgets \
     --without-cairo \
-    --without-freetype \
     --enable-64bit \
-    --with-python=no \
-    --with-macosx-archs=x86_64
+    --without-freetype
 
   check_file_configuration config.status
 
+  # plain Make fails to run, since it expects some libraries in stage,
+  # even before libs like libgrass_gis.dylib are installed in stage dir
+  # see https://github.com/OSGeo/grass/issues/474#issuecomment-609011156
+  $MAKESMP
+  try $MAKE install
+
+  # OK now we can build everything else
   try $MAKESMP
   try $MAKE install
+
+  # NOTE 1:
+  # bunch of errors from stdio.h similar to
+  # SDKs/MacOSX.sdk/usr/include/sys/stdio.h:39: Syntax error at '__attribute__'
+  # very scary but compilation passes?
+  # see https://github.com/OSGeo/grass/issues/474#issuecomment-609011006
 
   pop_env
 }

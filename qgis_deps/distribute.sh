@@ -348,7 +348,6 @@ function check_linked_rpath() {
     libssl
     libcrypto
     libpq
-    lib
     libxml2
     libsqlite3
   )

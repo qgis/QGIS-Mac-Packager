@@ -12,12 +12,15 @@ DEPS_qgis_deps=(
     exiv2
     flex
     gdal
+    grass
     gsl
     hdf5
     libtasn1
     libzip
     mysql
     netcdf
+    postgres
+    protobuf
     python
     python_packages
     qca
