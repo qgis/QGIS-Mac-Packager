@@ -11,7 +11,8 @@ VERSION_openssl=1.1.1d
 DEPS_openssl=()
 
 LINK_libssl_version=1.1
-LINK_libcrypto_version=${LINK_libssl_version}
+LINK_libssl=libssl.${LINK_libssl_version}.dylib
+LINK_libcrypto=libcrypto.${LINK_libssl_version}.dylib
 
 # url of the package
 URL_openssl=https://github.com/openssl/openssl/archive/OpenSSL_${VERSION_openssl//./_}.tar.gz
@@ -42,7 +43,7 @@ function prebuild_openssl() {
 
 function shouldbuild_openssl() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libssl.dylib -nt $BUILD_openssl/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_libssl -nt $BUILD_openssl/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -77,16 +78,18 @@ function build_openssl() {
 
 # function called after all the compile have been done
 function postbuild_openssl() {
-  verify_lib "libssl.dylib"
-  verify_lib "libcrypto.dylib"
-  verify_lib "engines-${LINK_libssl_version}/padlock.dylib"
-  verify_lib engines-${LINK_libssl_version}/capi.dylib
-  verify_bin openssl
-  # bin/c_rehash is bash script
+  verify_binary lib/$LINK_libssl
+  verify_binary lib/$LINK_libcrypto
+  verify_binary lib/engines-${LINK_libssl_version}/padlock.dylib
+  verify_binary lib/engines-${LINK_libssl_version}/capi.dylib
+  verify_binary bin/openssl
 }
 
 # function to append information to config file
 function add_config_info_openssl() {
   append_to_config_file "# openssl-${VERSION_openssl}: ${DESC_openssl}"
   append_to_config_file "export VERSION_openssl=${VERSION_openssl}"
+  append_to_config_file "export LINK_libssl=${LINK_libssl}"
+  append_to_config_file "export LINK_libcrypto=${LINK_libcrypto}"
+
 }

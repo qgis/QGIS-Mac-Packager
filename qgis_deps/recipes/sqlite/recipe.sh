@@ -4,6 +4,7 @@ DESC_sqlite="Portable Foreign Function Interface library"
 
 # version of your package
 VERSION_sqlite=3.31.1
+LINK_sqlite=libsqlite3.0.dylib
 
 # dependencies of this recipe
 DEPS_sqlite=()
@@ -37,7 +38,7 @@ function prebuild_sqlite() {
 
 function shouldbuild_sqlite() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libsqlite3.dylib -nt $BUILD_sqlite/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_sqlite -nt $BUILD_sqlite/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -73,11 +74,12 @@ function build_sqlite() {
 
 # function called after all the compile have been done
 function postbuild_sqlite() {
-  verify_lib "libsqlite3.dylib"
+  verify_binary lib/$LINK_sqlite
 }
 
 # function to append information to config file
 function add_config_info_sqlite() {
   append_to_config_file "# sqlite-${VERSION_sqlite}: ${DESC_sqlite}"
   append_to_config_file "export VERSION_sqlite=${VERSION_sqlite}"
+  append_to_config_file "export LINK_sqlite=${LINK_sqlite}"
 }

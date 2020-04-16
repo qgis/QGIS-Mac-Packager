@@ -23,6 +23,13 @@ DEPS_qgis_deps=(
     protobuf
     python
     python_packages
+    python_sip
+    python_pyqt5
+    python_qscintilla
+    python_pyproj
+    python_owslib
+    python_gdal
+    python_h5py
     qca
     qscintilla
     qtkeychain

@@ -3,7 +3,10 @@
 DESC_gdal="Geospatial Data Abstraction Library"
 
 # version of your package
+# keep in SYNC with python_gdal receipt
 VERSION_gdal=3.0.4
+
+LINK_gdal=libgdal.26.dylib
 
 # dependencies of this recipe
 DEPS_gdal=(geos proj libgeotiff libxml2 xerces xz zstd libtiff netcdf hdf5 postgres jpeg png sqlite)
@@ -39,7 +42,7 @@ function prebuild_gdal() {
 
 function shouldbuild_gdal() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libgdal.dylib -nt $BUILD_gdal/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_gdal -nt $BUILD_gdal/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -82,12 +85,13 @@ function build_gdal() {
 
 # function called after all the compile have been done
 function postbuild_gdal() {
-  verify_lib "libgdal.dylib"
-  verify_bin gdalmanage
+  verify_binary lib/$LINK_gdal
+  verify_binary bin/gdalmanage
 }
 
 # function to append information to config file
 function add_config_info_gdal() {
   append_to_config_file "# gdal-${VERSION_gdal}: ${DESC_gdal}"
   append_to_config_file "export VERSION_gdal=${VERSION_gdal}"
+  append_to_config_file "export LINK_gdal=${LINK_gdal}"
 }

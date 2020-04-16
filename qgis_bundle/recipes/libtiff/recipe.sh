@@ -5,53 +5,27 @@ function check_libtiff() {
 }
 
 function bundle_libtiff() {
-    : # install_name_tool -id "@rpath/liblibtiff.dylib" ${STAGE_PATH}/lib/liblibtiff.dylib
+    try cp -av $DEPS_LIB_DIR/libtiff.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_libtiff() {
-    :
+ install_name_id @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libtiff.5.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
+
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_gl-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_aui-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_qa-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_xrc-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_stc-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_ribbon-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_core-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_adv-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_html-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_propgrid-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_richtext-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libtiff.5.dylib @rpath/libtiff.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_media-3.0.0.4.0.dylib
 }
 
 function add_config_info_libtiff() {
     :
-}
-
-patch_libtiff_linker_links () {
-  install_name_tool -id "@rpath/libtiff.dylib" ${STAGE_PATH}/lib/libtiff.dylib
-  install_name_tool -id "@rpath/libtiffxx.dylib" ${STAGE_PATH}/lib/libtiffxx.dylib
-
-  if [ ! -f "${STAGE_PATH}/lib/libtiff.${LINK_libtiff_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libtiff.${LINK_libtiff_version}.dylib does not exist... maybe you updated the tiff version?"
-  fi
-
-  install_name_tool -change "${STAGE_PATH}/lib/libtiff.${LINK_libtiff_version}.dylib" "@rpath/libtiff.${LINK_libtiff_version}.dylib" ${STAGE_PATH}/lib/libtiffxx.dylib
-
-  targets=(
-    bin/tiff2bw
-    bin/tiff2pdf
-    bin/tiff2ps
-    bin/tiff2rgba
-    bin/tiffcmp
-    bin/tiffcp
-    bin/tiffcrop
-    bin/tiffdither
-    bin/tiffdump
-    bin/tiffinfo
-    bin/tiffmedian
-    bin/tiffset
-    bin/tiffsplit
-    bin/fax2tiff
-    bin/pal2rgb
-    bin/fax2ps
-    bin/raw2tiff
-    bin/ppm2tiff
-    bin/raw2tiff
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -change "${STAGE_PATH}/lib/libtiff.${LINK_libtiff_version}.dylib" "@rpath/libtiff${LINK_libtiff_version}.dylib" ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
 }

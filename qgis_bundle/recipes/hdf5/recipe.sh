@@ -2,69 +2,29 @@
 
 function check_hdf5() {
   env_var_exists VERSION_hdf5
+  env_var_exists LINK_libhdf5
 }
 
 function bundle_hdf5() {
-    : # install_name_tool -id "@rpath/libhdf5.dylib" ${STAGE_PATH}/lib/libhdf5.dylib
+    try cp -av $DEPS_LIB_DIR/libhdf5.*dylib $BUNDLE_LIB_DIR
+    try cp -av $DEPS_LIB_DIR/libhdf5_hl.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_hdf5() {
-    :
+
+ install_name_id @rpath/$LINK_libhdf5 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libhdf5
+ install_name_id @rpath/libhdf5_hl.100.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libhdf5_hl.100.dylib
+
+ install_name_change $DEPS_LIB_DIR/$LINK_libhdf5 @rpath/$LINK_libhdf5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libhdf5 @rpath/$LINK_libhdf5 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libhdf5
+ install_name_change $DEPS_LIB_DIR/$LINK_libhdf5 @rpath/$LINK_libhdf5 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_netcdf
+ install_name_change $DEPS_LIB_DIR/$LINK_libhdf5 @rpath/$LINK_libhdf5 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
+
+ install_name_change $DEPS_LIB_DIR/$LINK_libhdf5 @rpath/$LINK_libhdf5 $BUNDLE_CONTENTS_DIR/MacOS/lib/libhdf5_hl.100.dylib
+
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libhdf5_hl.100.dylib @rpath/libhdf5_hl.100.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libnetcdf.15.dylib
 }
 
 function add_config_info_hdf5() {
     :
-}
-
-patch_hdf5_linker_links () {
-  # check libs are the same
-  if [ ! -f "${STAGE_PATH}/lib/libhdf5.${LINK_libhdf5_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libhdf5.${LINK_libhdf5_version}.dylib does not exist... maybe you updated the hdf5 version?"
-  fi
-  if [ ! -f "${STAGE_PATH}/lib/libhdf5_cpp.100.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libhdf5_cpp.${LINK_libhdf5_version}.dylib does not exist... maybe you updated the hdf5 version?"
-  fi
-  if [ ! -f "${STAGE_PATH}/lib/libhdf5_hl.100.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libhdf5_hl.${LINK_libhdf5_version}.dylib does not exist... maybe you updated the hdf5 version?"
-  fi
-
-  # these are bash scripts
-  # bin/h5c++
-  # bin/h5cc
-  # bin/h5redeploy
-
-  targets=(
-    lib/libhdf5_hl.dylib
-    lib/libhdf5_hl_cpp.dylib
-    lib/libhdf5_cpp.dylib
-    bin/gif2h5
-    bin/h52gif
-
-    bin/h5clear
-    bin/h5copy
-    bin/h5debug
-    bin/h5diff
-    bin/h5dump
-    bin/h5format_convert
-    bin/h5import
-    bin/h5jam
-    bin/h5ls
-    bin/h5mkgrp
-    bin/h5perf_serial
-
-    bin/h5repack
-    bin/h5repart
-    bin/h5stat
-    bin/h5unjam
-    bin/h5watch
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-    install_name_tool -change "${STAGE_PATH}/lib/libhdf5.${LINK_libhdf5_version}.dylib" "@rpath/libhdf5.${LINK_libhdf5_version}.dylib" ${STAGE_PATH}/$i
-    install_name_tool -change "${STAGE_PATH}/lib/libhdf5_cpp.${LINK_libhdf5_version}.dylib" "@rpath/libhdf5_cpp.${LINK_libhdf5_version}.dylib" ${STAGE_PATH}/$i
-    install_name_tool -change "${STAGE_PATH}/lib/libhdf5_hl.${LINK_libhdf5_version}.dylib" "@rpath/libhdf5_hl.${LINK_libhdf5_version}.dylib" ${STAGE_PATH}/$i
-    if [[ $i == *"bin/"* ]]; then install_name_tool -add_rpath @executable_path/../lib $STAGE_PATH/$i; fi
-  done
 }

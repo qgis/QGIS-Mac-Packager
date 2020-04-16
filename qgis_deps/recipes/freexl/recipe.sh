@@ -4,6 +4,7 @@ DESC_freexl="Library to extract data from Excel .xls files"
 
 # version of your package
 VERSION_freexl=1.0.5
+LINK_freexl=libfreexl.1.dylib
 
 # dependencies of this recipe
 DEPS_freexl=()
@@ -37,7 +38,7 @@ function prebuild_freexl() {
 
 function shouldbuild_freexl() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libfreexl.dylib -nt $BUILD_freexl/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_freexl -nt $BUILD_freexl/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -59,11 +60,12 @@ function build_freexl() {
 
 # function called after all the compile have been done
 function postbuild_freexl() {
-  verify_lib "libfreexl.dylib"
+  verify_binary lib/$LINK_freexl
 }
 
 # function to append information to config file
 function add_config_info_freexl() {
   append_to_config_file "# freexl-${VERSION_freexl}: ${DESC_freexl}"
   append_to_config_file "export VERSION_freexl=${VERSION_freexl}"
+  append_to_config_file "export LINK_freexl=${LINK_freexl}"
 }

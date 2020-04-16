@@ -2,63 +2,26 @@
 
 function check_exiv2() {
   env_var_exists VERSION_exiv2
+  env_var_exists QGIS_VERSION
+  env_var_exists VERSION_grass_major
+  env_var_exists LINK_exiv2
 }
 
 function bundle_exiv2() {
-    :
+    try cp -av $DEPS_LIB_DIR/libexiv2.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_exiv2() {
-    :
+    install_name_id @rpath/$LINK_exiv2 $BUNDLE_LIB_DIR/$LINK_exiv2
+
+     install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libexiv2.27.dylib @rpath/libexiv2.27.dylib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libexiv2.27.dylib @rpath/libexiv2.27.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/3.13/qgis_analysis
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libexiv2.27.dylib @rpath/libexiv2.27.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libexiv2.27.dylib @rpath/libexiv2.27.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin7.so
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libexiv2.27.dylib @rpath/libexiv2.27.dylib $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libexiv2.27.dylib @rpath/libexiv2.27.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.3.13.0.dylib
 }
 
 function add_config_info_exiv2() {
     :
-}
-
-patch_exiv2_linker_links () {
-  targets=(
-    bin/exifcomment
-    bin/exifdata
-    bin/exifprint
-    bin/exifvalue
-    bin/exiv2
-    bin/exiv2json
-    bin/xmpdump
-    bin/xmpparse
-    bin/xmpprint
-    bin/xmpsample
-    bin/iotest
-    bin/addmoddel
-    bin/geotag
-    bin/mrwthumb
-    bin/convert-test
-    bin/easyaccess-test
-    bin/exifdata-test
-    bin/ini-test
-    bin/iotest
-    bin/iptctest
-    bin/key-test
-    bin/largeiptc-test
-    bin/mmap-test
-    bin/path-test
-    bin/prevtest
-    bin/stringto-test
-    bin/tiff-test
-    bin/werror-test
-    bin/write-test
-    bin/write2-test
-    bin/xmpparser-test
-    bin/taglist
-    bin/iptceasy
-    bin/iptcprint
-    bin/metacopy
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -delete_rpath $BUILD_PATH/exiv2/build-$ARCH/lib ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
 }

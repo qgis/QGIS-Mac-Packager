@@ -5,7 +5,7 @@ DESC_xz="General-purpose data compression with high compression ratio"
 # version of your package
 VERSION_xz=5.2.4
 
-LINK_liblzma_version=5
+LINK_liblzma=liblzma.5.dylib
 
 # dependencies of this recipe
 DEPS_xz=()
@@ -39,7 +39,7 @@ function prebuild_xz() {
 
 function shouldbuild_xz() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/liblzma.dylib -nt $BUILD_xz/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_liblzma -nt $BUILD_xz/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -62,14 +62,15 @@ function build_xz() {
 
 # function called after all the compile have been done
 function postbuild_xz() {
-  verify_lib "liblzma.dylib"
+  verify_binary lib/$LINK_liblzma
 
-  verify_bin lzmainfo
-  verify_bin xzdec
+  verify_binary bin/lzmainfo
+  verify_binary bin/xzdec
 }
 
 # function to append information to config file
 function add_config_info_xz() {
   append_to_config_file "# xz-${VERSION_xz}: ${DESC_xz}"
   append_to_config_file "export VERSION_xz=${VERSION_xz}"
+  append_to_config_file "export LINK_liblzma=${LINK_liblzma}"
 }

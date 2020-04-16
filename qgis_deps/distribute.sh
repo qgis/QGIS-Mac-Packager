@@ -263,12 +263,12 @@ function push_env() {
     ###################
     # PYTHON
     export PYTHON="$STAGE_PATH/bin/python3"
-    export PYCONFIGURE="$PYTHON ./configure.py"
+    export PIP="$STAGE_PATH/bin/pip3"
 
-    export PIP="$STAGE_PATH/bin/pip3 install --no-binary all"
-    export PIP="$PIP --global-option=build_ext"
-    export PIP="$PIP --global-option=--include-dirs=$STAGE_PATH/include"
-    export PIP="$PIP --global-option=--library-dirs=$STAGE_PATH/lib"
+    export PIP_NO_BINARY="$PIP install --no-binary all"
+    export PIP_NO_BINARY="$PIP_NO_BINARY --global-option=build_ext"
+    export PIP_NO_BINARY="$PIP_NO_BINARY --global-option=--include-dirs=$STAGE_PATH/include"
+    export PIP_NO_BINARY="$PIP_NO_BINARY --global-option=--library-dirs=$STAGE_PATH/lib"
 }
 
 #########################################################################################################

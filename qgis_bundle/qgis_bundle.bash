@@ -34,6 +34,22 @@ function debug() {
   echo -e "$CGRAY"$@"$CRESET";
 }
 
+function install_name_change {
+
+  if [ ! -f "$3" ]; then
+    error "Missing $3 (install_name_change)"
+  fi
+  install_name_tool -change $1 $2 $3
+}
+
+function install_name_id {
+
+  if [ ! -f "$2" ]; then
+    error "Missing $2 (install_name_id)"
+  fi
+  install_name_tool -id $1 $2
+}
+
 source `dirname $0`/../qgis_deps/config.conf
 if [ -d $ROOT_OUT_PATH/stage ]; then
        info "Using qgis_deps: $ROOT_OUT_PATH/stage"
@@ -70,7 +86,8 @@ fi
 export QGIS_DEPS_LIB
 # From step qgis_build
 export QGIS_VERSION=3.13
-export QGIS_INSTALL_DIR=$ROOT_OUT_PATH/../qgis-${QGIS_VERSION}-deps-${RELEASE_VERSION}/install
+export QGIS_BUILD_DIR=$ROOT_OPT_PATH/qgis-${QGIS_VERSION}-deps-${RELEASE_VERSION}/build
+export QGIS_INSTALL_DIR=$ROOT_OPT_PATH/qgis-${QGIS_VERSION}-deps-${RELEASE_VERSION}/install
 
 if [ ! -d $QGIS_INSTALL_DIR ]; then
        error "Missing QGIS directory 'QGIS_INSTALL_DIR: $QGIS_INSTALL_DIR'"
@@ -80,13 +97,13 @@ fi
 
 export APPLICATION_PATH=/Applications/QGIS-${QGIS_VERSION}
 
-export BUNDLE_DIR=$ROOT_OUT_PATH/../qgis-${QGIS_VERSION}-deps-${RELEASE_VERSION}/bundle
+export BUNDLE_DIR=$ROOT_OPT_PATH/qgis-${QGIS_VERSION}-deps-${RELEASE_VERSION}/bundle
 export BUNDLE_CONTENTS_DIR=$BUNDLE_DIR/QGIS.app/Contents
 export BUNDLE_FRAMEWORKS_DIR=$BUNDLE_CONTENTS_DIR/Frameworks
 export BUNDLE_RESOURCES_DIR=$BUNDLE_CONTENTS_DIR/Resources
 export BUNDLE_MACOS_DIR=$BUNDLE_CONTENTS_DIR/MacOS
 export BUNDLE_BIN_DIR=$BUNDLE_MACOS_DIR/bin
-export BUNDLE_PLUGINS_DIR=$BUNDLE_MACOS_DIR/PlugIns
+export BUNDLE_PLUGINS_DIR=$BUNDLE_CONTENTS_DIR/PlugIns
 export BUNDLE_LIB_DIR=$BUNDLE_MACOS_DIR/lib
 export BUNDLE_PYTHON_SITE_PACKAGES_DIR=$BUNDLE_RESOURCES_DIR/python
 
@@ -155,8 +172,9 @@ function run_add_config_info() {
 }
 
 function check_binary_linker_links() {
-  OTOOL_L=$(otool -L ${BUNDLE_DIR}/$1)
-  OTOOL_RPATH=$(otool -l ${BUNDLE_DIR}/$1)
+  cd ${BUNDLE_DIR}
+  OTOOL_L=$(otool -L $1)
+  OTOOL_RPATH=$(otool -l $1)
 
   if echo "${OTOOL_L}" | grep -q /usr/local/
   then

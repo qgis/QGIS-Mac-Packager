@@ -6,7 +6,7 @@ DESC_python_packages="Packages for python"
 VERSION_python_packages=${VERSION_python}
 
 # dependencies of this recipe
-DEPS_python_packages=(python hdf5 python_sip python_pyqt5 python_qscintilla )
+DEPS_python_packages=(python hdf5 python_sip python_pyqt5)
 
 # url of the package
 URL_python_packages=
@@ -21,92 +21,70 @@ BUILD_python_packages=$BUILD_PATH/python_packages/v${VERSION_python_packages}
 RECIPE_python_packages=$RECIPES_PATH/python_packages
 
 # requirements
-# TODO
-# pip3 install --no-binary=pyproj pyproj==1.9.6
-# pip3 install --no-binary=shapely shapely
-# pip3 install --no-binary=GDAL GDAL==2.4.0
-# pip3 install certifi
-#pip3 install chardet
-#pip3 install idna
-#pip3 install OWSLib
-#pip3 install cython
-#pip3 install pytz
-#pip3 install urllib3
-#pip3 install coverage
-#pip3 install funcsigs
-#pip3 install future
-#pip3 install mock
-#pip3 install nose2
-#pip3 install pbr
-#pip3 install psycopg2
-#pip3 install Jinja2
-#pip3 install MarkupSafe
-#pip3 install Pygments
-#pip3 install termcolor
-#pip3 install oauthlib
-#pip3 install pyOpenSSL
-#pip3 install numpy
-#pip3 install certifi
-#pip3 install chardet
-#pip3 install coverage
-#pip3 install cycler
-#pip3 install decorator
-#pip3 install exifread
-#pip3 install future
-#pip3 install httplib2
-#pip3 install idna
-#pip3 install ipython-genutils
-#pip3 install jinja2
-#pip3 install jsonschema
-#pip3 install jupyter-core
-#pip3 install kiwisolver
-#pip3 install markupsafe
-#pip3 install matplotlib
-#pip3 install mock
-#pip3 install mock
-#pip3 install nbformat
-#pip3 install networkx
-#pip3 install nose2
-#pip3 install numpy
-#pip3 install owslib
-#pip3 install pandas
-#pip3 install pbr
-#pip3 install plotly
-#pip3 install ply
-#pip3 install psycopg2
-#pip3 install pygments
-#pip3 install pyodbc
-#pip3 install pyparsing
-#pip3 install pypubsub
-#pip3 install pysal
-#pip3 install pytz
-#pip3 install retrying
-#pip3 install scipy
-#pip3 install simplejson
-#pip3 install test
-#pip3 install tools
-#pip3 install traitlets
-#pip3 install urllib3
-#pip3 install xlrd
-#pip3 install xlwt
-#   Pillow==7.0.0
-
+# ORDER matters!
 REQUIREMENTS_python_packages=(
-  six==1.14.0
-  numpy==1.18.2
-  h5py==2.10.0
-  requests==2.23.0
-  python-dateutil==2.8.1
-  PyYAML==5.3.1
+    six==1.14.0
+    python-dateutil==2.8.0
+    cython==0.29.16
+    decorator==4.4.2
+    coverage==5.1
+    nose2==0.9.2
+    certifi==2020.4.5.1
+    chardet==3.0.4
+    cycler==0.10.0
+    exifread==2.1.2
+    funcsigs==1.0.2
+    future==0.18.2
+    httplib2==0.17.2
+    idna==2.9
+    ipython-genutils==0.2.0
+    markupsafe==1.1.1
+    jinja2==2.11.2
+    jsonschema==3.2.0
+    jupyter-core==4.6.3
+    kiwisolver==1.2.0
+    mock==4.0.2
+    nbformat==5.0.5
+    networkx==2.4
+    oauthlib==3.1.0
+    pbr==5.4.5
+    ply==3.11
+    psycopg2==2.8.5
+    pyopenssl==19.1.0
+    pygments==2.6.1
+    pyodbc==4.0.30
+    pyparsing==2.4.7
+    pypubsub==4.0.3
+    pytz==2019.3
+    pyyaml==5.3.1
+    urllib3==1.24.3
+    requests==2.23.0
+    retrying==1.3.3
+    shapely==1.7.0
+    simplejson==3.17.0
+    termcolor==1.1.0
+    tools==0.1.9
+    traitlets==4.3.3
+    xlrd==1.2.0
+    xlwt==1.3.0
+    pysal==2.2.0
+    numpy==1.18.2
+    scipy==1.4.1
+    pandas==1.0.3
+    plotly==4.6.0
+    pillow==7.1.1
+    matplotlib==3.2.1
 )
 
 IMPORTS_python_packages=(
   six
   numpy
-  h5py
   requests
   dateutil
   yaml
+  shapely
+  plotly
+  matplotlib
 )
 
 # function called for preparing source code if needed
@@ -141,7 +119,8 @@ function build_python_packages() {
     info "Installing python_packages package $i"
     # build_ext sometimes tries to dlopen the libraries
     # to determine the library version
-    DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP $i
+    # this does not force --no-binary all strictly
+    DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP install $i
   done
 
   pop_env

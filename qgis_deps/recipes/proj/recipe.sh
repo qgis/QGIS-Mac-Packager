@@ -3,6 +3,7 @@
 DESC_proj="Cartographic Projections Library"
 
 # version of your package
+# keep in SYNC with python_pyproj receipt
 VERSION_proj=6.3.1
 
 LINK_libproj=libproj.18.dylib

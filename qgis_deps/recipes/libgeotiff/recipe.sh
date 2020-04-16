@@ -49,6 +49,7 @@ function build_libgeotiff() {
 
   push_env
 
+  # TODO why this is only static library!??
   try $CMAKE $BUILD_libgeotiff .
   check_file_configuration CMakeCache.txt
 

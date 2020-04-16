@@ -5,40 +5,18 @@ function check_webp() {
 }
 
 function bundle_webp() {
-    : # install_name_tool -id "@rpath/libwebp.dylib" ${STAGE_PATH}/lib/libwebp.dylib
+    try cp -av $DEPS_LIB_DIR/libwebp.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_webp() {
-    :
+ install_name_id @rpath/libwebp.7.dylib $BUNDLE_LIB_DIR/libwebp.7.dylib
+
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwebp.7.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libtiff.5.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
 }
 
 function add_config_info_webp() {
     :
-}
-
-patch_webp_linker_links () {
-  if [ ! -f "${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib does not exist... maybe you updated the webp version?"
-  fi
-  if [ ! -f "${STAGE_PATH}/lib/libwebpdemux.${LINK_libwebpdemux_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libwebpdemux.${LINK_libwebpdemux_version}.dylib does not exist... maybe you updated the webp version?"
-  fi
-
-  install_name_tool -id "@rpath/libwebp.${LINK_libwebp_version}.dylib" ${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib
-  install_name_tool -id "@rpath/libwebpdemux.${LINK_libwebpdemux_version}.dylib" ${STAGE_PATH}/lib/libwebpdemux.${LINK_libwebpdemux_version}.dylib
-
-  install_name_tool -change "${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib" "@rpath/libwebp.${LINK_libwebp_version}.dylib" ${STAGE_PATH}/lib/libwebpdemux.dylib
-
-  targets=(
-    bin/dwebp
-    bin/cwebp
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -change "${STAGE_PATH}/lib/libwebp.${LINK_libwebp_version}.dylib" "@rpath/libwebp.${LINK_libwebp_version}.dylib" ${STAGE_PATH}/$i
-      install_name_tool -change "${STAGE_PATH}/lib/libwebpdemux.${LINK_libwebpdemux_version}.dylib" "@rpath/libwebpdemux.${LINK_libwebpdemux_version}.dylib" ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
 }

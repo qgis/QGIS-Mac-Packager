@@ -5,8 +5,8 @@ DESC_gsl="Numerical library for C and C++"
 # version of your package
 VERSION_gsl=2.6
 
-LINK_libgsl_version=25
-LINK_libgslcblas_version=0
+LINK_libgsl=libgsl.25.dylib
+LINK_libgslcblas=libgslcblas.0.dylib
 
 # dependencies of this recipe
 DEPS_gsl=()
@@ -40,7 +40,7 @@ function prebuild_gsl() {
 
 function shouldbuild_gsl() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libgsl.dylib -nt $BUILD_gsl/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_libgsl -nt $BUILD_gsl/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -62,15 +62,17 @@ function build_gsl() {
 
 # function called after all the compile have been done
 function postbuild_gsl() {
-  verify_lib "libgsl.dylib"
-  verify_lib "libgslcblas.dylib"
+  verify_binary lib/$LINK_libgsl
+  verify_binary lib/$LINK_libgslcblas
 
-  verify_bin gsl-histogram
-  verify_bin gsl-randist
+  verify_binary bin/gsl-histogram
+  verify_binary bin/gsl-randist
 }
 
 # function to append information to config file
 function add_config_info_gsl() {
   append_to_config_file "# gsl-${VERSION_gsl}: ${DESC_gsl}"
   append_to_config_file "export VERSION_gsl=${VERSION_gsl}"
+  append_to_config_file "export LINK_libgsl=${LINK_libgsl}"
+  append_to_config_file "export LINK_libgslcblas=${LINK_libgslcblas}"
 }

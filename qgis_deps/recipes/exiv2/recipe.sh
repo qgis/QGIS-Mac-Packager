@@ -4,6 +4,7 @@ DESC_exiv2="EXIF and IPTC metadata manipulation library and tools"
 
 # version of your package
 VERSION_exiv2=0.27.2
+LINK_exiv2=libexiv2.27.dylib
 
 # dependencies of this recipe
 DEPS_exiv2=()
@@ -35,7 +36,7 @@ function prebuild_exiv2() {
 
 function shouldbuild_exiv2() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libexiv2.dylib -nt $BUILD_exiv2/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_exiv2 -nt $BUILD_exiv2/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -57,12 +58,13 @@ function build_exiv2() {
 
 # function called after all the compile have been done
 function postbuild_exiv2() {
-  verify_lib "libexiv2.dylib"
-  verify_bin addmoddel
+  verify_binary lib/$LINK_exiv2
+  verify_binary bin/addmoddel
 }
 
 # function to append information to config file
 function add_config_info_exiv2() {
   append_to_config_file "# exiv2-${VERSION_exiv2}: ${DESC_exiv2}"
   append_to_config_file "export VERSION_exiv2=${VERSION_exiv2}"
+  append_to_config_file "export LINK_exiv2=${LINK_exiv2}"
 }

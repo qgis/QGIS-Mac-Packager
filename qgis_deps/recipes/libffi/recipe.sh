@@ -4,6 +4,7 @@ DESC_libffi="Portable Foreign Function Interface library"
 
 # version of your package
 VERSION_libffi=3.2.1
+LINK_libffi=libffi.6.dylib
 
 # dependencies of this recipe
 DEPS_libffi=()
@@ -37,7 +38,7 @@ function prebuild_libffi() {
 
 function shouldbuild_libffi() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libffi.dylib -nt $BUILD_libffi/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_libffi -nt $BUILD_libffi/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -66,11 +67,12 @@ function build_libffi() {
 
 # function called after all the compile have been done
 function postbuild_libffi() {
-  verify_lib "libffi.dylib"
+  verify_binary lib/$LINK_libffi
 }
 
 # function to append information to config file
 function add_config_info_libffi() {
   append_to_config_file "# libffi-${VERSION_libffi}: ${DESC_libffi}"
   append_to_config_file "export VERSION_libffi=${VERSION_libffi}"
+  append_to_config_file "export LINK_libffi=${LINK_libffi}"
 }

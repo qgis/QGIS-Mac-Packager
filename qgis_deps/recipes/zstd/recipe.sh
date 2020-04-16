@@ -4,6 +4,7 @@ DESC_zstd="Zstandard is a real-time compression algorithm"
 
 # version of your package
 VERSION_zstd=1.4.4
+LINK_zstd=libzstd.1.dylib
 
 # dependencies of this recipe
 DEPS_zstd=()
@@ -35,7 +36,7 @@ function prebuild_zstd() {
 
 function shouldbuild_zstd() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libzstd.dylib -nt $BUILD_zstd/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_zstd -nt $BUILD_zstd/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -53,11 +54,12 @@ function build_zstd() {
 
 # function called after all the compile have been done
 function postbuild_zstd() {
-  verify_lib "libzstd.dylib"
+  verify_binary lib/$LINK_zstd
 }
 
 # function to append information to config file
 function add_config_info_zstd() {
   append_to_config_file "# zstd-${VERSION_zstd}: ${DESC_zstd}"
   append_to_config_file "export VERSION_zstd=${VERSION_zstd}"
+  append_to_config_file "export LINK_zstd=${LINK_zstd}"
 }

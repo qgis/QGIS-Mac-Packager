@@ -5,27 +5,19 @@ function check_zstd() {
 }
 
 function bundle_zstd() {
-    : # install_name_tool -id "@rpath/libzstd.dylib" ${STAGE_PATH}/lib/libzstd.dylib
+    try cp -av $DEPS_LIB_DIR/libzstd.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_zstd() {
-    :
+ install_name_id  @rpath/$LINK_zstd $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_zstd
+
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/$LINK_zstd @rpath/$LINK_zstd $BUNDLE_CONTENTS_DIR/MacOS/lib/libmysqlclient.21.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/$LINK_zstd @rpath/$LINK_zstd $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gis.7.8.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/$LINK_zstd @rpath/$LINK_zstd $BUNDLE_CONTENTS_DIR/MacOS/lib/libtiff.5.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/$LINK_zstd @rpath/$LINK_zstd $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
+
 }
 
 function add_config_info_zstd() {
     :
-}
-
-patch_zstd_linker_links () {
-  install_name_tool -id "@rpath/libzstd.dylib" ${STAGE_PATH}/lib/libzstd.dylib
-
-  targets=(
-    bin/zstd
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
 }

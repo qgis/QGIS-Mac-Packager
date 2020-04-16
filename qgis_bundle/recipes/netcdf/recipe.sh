@@ -5,30 +5,16 @@ function check_netcdf() {
 }
 
 function bundle_netcdf() {
-    : # install_name_tool -id "@rpath/libnetcdf.dylib" ${STAGE_PATH}/lib/libnetcdf.dylib
+  try cp -av $DEPS_LIB_DIR/libnetcdf.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_netcdf() {
-    :
+ install_name_id @rpath/libnetcdf.15.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libnetcdf.15.dylib
+
+ install_name_change $DEPS_LIB_DIR/$LINK_netcdf @rpath/$LINK_netcdf $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
+ install_name_change $DEPS_LIB_DIR/$LINK_netcdf @rpath/$LINK_netcdf $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
 }
 
 function add_config_info_netcdf() {
     :
-}
-
-patch_nc_linker_links () {
-  targets=(
-    bin/nc-config
-    bin/nccopy
-    bin/ncdump
-    bin/ncgen
-    bin/ncgen3
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -delete_rpath $BUILD_PATH/netcdf/build-$ARCH/liblib ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
 }

@@ -5,9 +5,7 @@ DESC_postgres="Postgres database"
 # version of your package
 VERSION_postgres=12.2
 
-LINK_libpq_version=5
-LINK_libpgtypes_version=3
-LINK_libecpg_version=6
+LINK_libpq=libpq.5.dylib
 
 # dependencies of this recipe
 DEPS_postgres=()
@@ -41,7 +39,7 @@ function prebuild_postgres() {
 
 function shouldbuild_postgres() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libpq.dylib -nt $BUILD_postgres/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_libpq -nt $BUILD_postgres/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -70,11 +68,11 @@ function build_postgres() {
 
 # function called after all the compile have been done
 function postbuild_postgres() {
-  verify_lib libpq.dylib
+  verify_binary lib/$LINK_libpq
+
   verify_lib libpgtypes.dylib
   verify_lib libecpg.dylib
   verify_lib libecpg_compat.dylib
-  # verify_lib postgresql/libpqwalreceiver.so
 
   verify_bin pg_rewind
 }
@@ -83,4 +81,5 @@ function postbuild_postgres() {
 function add_config_info_postgres() {
   append_to_config_file "# postgres-${VERSION_postgres}: ${DESC_postgres}"
   append_to_config_file "export VERSION_postgres=${VERSION_postgres}"
+  append_to_config_file "export LINK_libpq=${LINK_libpq}"
 }

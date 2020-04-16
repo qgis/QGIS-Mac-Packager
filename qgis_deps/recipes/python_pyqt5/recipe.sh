@@ -67,7 +67,7 @@ function build_python_pyqt5() {
 
   push_env
 
-  try $PYCONFIGURE \
+  try $PYTHON ./configure.py \
     --confirm-license \
     --stubsdir=$QGIS_SITE_PACKAGES_PATH/PyQt5 \
     --sipdir=$STAGE_PATH/share/sip/PyQt5 \

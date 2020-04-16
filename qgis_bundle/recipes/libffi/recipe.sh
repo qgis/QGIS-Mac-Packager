@@ -2,20 +2,17 @@
 
 function check_libffi() {
   env_var_exists VERSION_libffi
+  env_var_exists LINK_libffi
 }
 
 function bundle_libffi() {
-    : # install_name_tool -id "@rpath/liblibffi.dylib" ${STAGE_PATH}/lib/liblibffi.dylib
+    try cp -av $DEPS_LIB_DIR/libffi.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_libffi() {
-    :
+    install_name_id  @rpath/$LINK_libffi $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libffi
 }
 
 function add_config_info_libffi() {
     :
-}
-
-patch_libffi_linker_links () {
-  install_name_tool -id "@rpath/libffi.dylib" ${STAGE_PATH}/lib/libffi.dylib
 }

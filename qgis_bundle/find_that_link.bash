@@ -59,17 +59,18 @@ run() {
   BINS=`find . -type f ! -name "*.*"`
   LIBS="$BINS $LIBS1 $LIBS2"
   for lib in $LIBS; do
-      OTOOL_L=$(otool -L $FOLDER/$1)
+      OTOOL_L=$(otool -L $FOLDER/$lib)
       if echo ${OTOOL_L} | grep -q $BINARY
       then
-        RESULT_BIN="$RESULT\n$lib"
-        COMMANDS_BIN="$COMMANDS\n  install_name_tool -change $BINARY @rpath/$BINARY_FILENAME $FOLDER/$1"
+        RESULT_BIN="$RESULT_BIN\n$lib"
+        LIB="\$BUNDLE_CONTENTS_DIR/${lib:2:${#lib}}"
+        COMMANDS_BIN="$COMMANDS_BIN\n install_name_change $BINARY @rpath/$BINARY_FILENAME $LIB"
       fi
   done
 
-  echo "$RESULT_BIN"
+  printf "$RESULT_BIN\n"
   echo "-----------"
-  echo "$COMMANDS_BIN"
+  printf "$COMMANDS_BIN\n"
 
   RESULT_TEXT=
   COMMANDS_TEXT=
@@ -84,11 +85,11 @@ run() {
 }
 
 if (( $# < 2 )); then
-    echo "usage: $0 find_that_link binary folder"
+    echo "usage: $0 bundle_contents_folder binary"
     exit 1
 fi
 
-BINARY=$1
-FOLDER=$2
+FOLDER=$1
+BINARY=$2
 echo "Checking which binaries in $FOLDER link $BINARY"
 run

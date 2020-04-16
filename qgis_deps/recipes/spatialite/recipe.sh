@@ -4,6 +4,7 @@ DESC_spatialite="SpatiaLite database"
 
 # version of your package
 VERSION_spatialite=4.3.0a
+LINK_spatialite=libspatialite.7.dylib
 
 # dependencies of this recipe
 DEPS_spatialite=(proj geos freexl libxml2)
@@ -37,7 +38,7 @@ function prebuild_spatialite() {
 
 function shouldbuild_spatialite() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libspatialite.dylib -nt $BUILD_spatialite/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_spatialite -nt $BUILD_spatialite/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -65,12 +66,13 @@ function build_spatialite() {
 
 # function called after all the compile have been done
 function postbuild_spatialite() {
-  verify_lib "libspatialite.dylib"
-  verify_lib "mod_spatialite.so"
+  verify_binary lib/$LINK_spatialite
+  verify_binary lib/mod_spatialite.so
 }
 
 # function to append information to config file
 function add_config_info_spatialite() {
   append_to_config_file "# spatialite-${VERSION_spatialite}: ${DESC_spatialite}"
   append_to_config_file "export VERSION_spatialite=${VERSION_spatialite}"
+  append_to_config_file "export LINK_spatialite=${LINK_spatialite}"
 }

@@ -8,7 +8,7 @@ VERSION_python_qscintilla=2.11.4
 
 # dependencies of this recipe
 # depends on PyQt5
-DEPS_python_qscintilla=(python qscintilla python_sip python_pyqt5)
+DEPS_python_qscintilla=(python qscintilla python_sip python_pyqt5 python_packages)
 
 # url of the package
 URL_python_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${VERSION_python_qscintilla}/QScintilla-${VERSION_python_qscintilla}.tar.gz
@@ -57,7 +57,7 @@ function build_python_qscintilla() {
   mkdir -p ${STAGE_PATH}/share/sip/PyQt5/Qsci
 
   # QMAKEFEATURES=$STAGE_PATH/data/mkspecs/features;\
-  try $PYCONFIGURE \
+  try $PYTHON ./configure.py \
     -o ${STAGE_PATH}/lib \
     -n ${STAGE_PATH}/include \
     --apidir=${STAGE_PATH}/qsci \

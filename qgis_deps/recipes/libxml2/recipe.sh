@@ -5,7 +5,7 @@ DESC_libxml2="GNOME XML library"
 # version of your package
 VERSION_libxml2=2.9.10
 
-LINK_libxml2_version=2
+LINK_libxml2=libxml2.2.dylib
 
 # dependencies of this recipe
 DEPS_libxml2=()
@@ -39,7 +39,7 @@ function prebuild_libxml2() {
 
 function shouldbuild_libxml2() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libxml2.dylib -nt $BUILD_libxml2/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_libxml2 -nt $BUILD_libxml2/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -69,11 +69,12 @@ function build_libxml2() {
 
 # function called after all the compile have been done
 function postbuild_libxml2() {
-  verify_lib "libxml2.dylib"
+  verify_binary lib/$LINK_libxml2
 }
 
 # function to append information to config file
 function add_config_info_libxml2() {
   append_to_config_file "# libxml2-${VERSION_libxml2}: ${DESC_libxml2}"
   append_to_config_file "export VERSION_libxml2=${VERSION_libxml2}"
+  append_to_config_file "export LINK_libxml2=${LINK_libxml2}"
 }

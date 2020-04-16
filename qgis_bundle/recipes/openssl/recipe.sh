@@ -2,44 +2,27 @@
 
 function check_openssl() {
   env_var_exists VERSION_openssl
+  env_var_exists LINK_libssl
+  env_var_exists LINK_libcrypto
 }
 
 function bundle_openssl() {
-    : # install_name_tool -id "@rpath/libopenssl.dylib" ${STAGE_PATH}/lib/libopenssl.dylib
+    try cp -av $DEPS_LIB_DIR/libssl.*dylib $BUNDLE_LIB_DIR
+    try cp -av $DEPS_LIB_DIR/libcrypto.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_openssl() {
-    :
+ install_name_id  @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libssl
+ install_name_id  @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libcrypto
+
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libcrypto.1.1.dylib @rpath/libcrypto.1.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libmysqlclient.21.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libcrypto.1.1.dylib @rpath/libcrypto.1.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
+
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libssl.1.1.dylib @rpath/libssl.1.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libmysqlclient.21.dylib
+
 }
 
 function add_config_info_openssl() {
     :
 }
 
-patch_openssl_linker_links () {
-  install_name_tool -id "@rpath/libssl.dylib" ${STAGE_PATH}/lib/libssl.dylib
-  install_name_tool -id "@rpath/libcrypto.dylib" ${STAGE_PATH}/lib/libcrypto.dylib
-
-  # check libs are the same
-  if [ ! -f "${STAGE_PATH}/lib/libssl.${LINK_libssl_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libssl.${LINK_libssl_version}.dylib does not exist... maybe you updated the openssl version?"
-  fi
-  if [ ! -f "${STAGE_PATH}/lib/libcrypto.${LINK_libcrypto_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libcrypto.${LINK_libcrypto_version}.dylib does not exist... maybe you updated the openssl version?"
-  fi
-
-  targets=(
-    lib/libssl.dylib
-    lib/engines-${LINK_libssl_version}/capi.dylib
-    lib/engines-${LINK_libssl_version}/padlock.dylib
-    bin/openssl
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-    install_name_tool -change "${STAGE_PATH}/lib/libssl.${LINK_libssl_version}.dylib" "@rpath/libssl.${LINK_libssl_version}.dylib" ${STAGE_PATH}/$i
-    install_name_tool -change "${STAGE_PATH}/lib/libcrypto.${LINK_libcrypto_version}.dylib" "@rpath/libcrypto.${LINK_libcrypto_version}.dylib" ${STAGE_PATH}/$i
-    if [[ $i == *"bin/"* ]]; then install_name_tool -add_rpath @executable_path/../lib $STAGE_PATH/$i; fi
-  done
-}

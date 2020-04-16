@@ -5,7 +5,7 @@ DESC_libtasn1="ASN.1 structure parser library"
 # version of your package
 VERSION_libtasn1=4.16.0
 
-LINK_libtasn1_version=6
+LINK_libtasn1=libtasn1.6.dylib
 
 # dependencies of this recipe
 DEPS_libtasn1=()
@@ -37,7 +37,7 @@ function prebuild_libtasn1() {
 
 function shouldbuild_libtasn1() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libtasn1.dylib -nt $BUILD_libtasn1/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_libtasn1 -nt $BUILD_libtasn1/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -63,11 +63,12 @@ function build_libtasn1() {
 
 # function called after all the compile have been done
 function postbuild_libtasn1() {
-  verify_lib "libtasn1.dylib"
+  verify_binary lib/$LINK_libtasn1
 }
 
 # function to append information to config file
 function add_config_info_libtasn1() {
   append_to_config_file "# libtasn1-${VERSION_libtasn1}: ${DESC_libtasn1}"
   append_to_config_file "export VERSION_libtasn1=${VERSION_libtasn1}"
+  append_to_config_file "export LINK_libtasn1=${LINK_libtasn1}"
 }

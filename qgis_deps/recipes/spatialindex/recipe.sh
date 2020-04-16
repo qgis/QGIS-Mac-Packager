@@ -5,6 +5,8 @@ DESC_spatialindex="General framework for developing spatial indices"
 # version of your package
 VERSION_spatialindex=1.9.3
 
+LINK_spatialindex=libspatialindex.6.dylib
+
 # dependencies of this recipe
 DEPS_spatialindex=()
 
@@ -35,7 +37,7 @@ function prebuild_spatialindex() {
 
 function shouldbuild_spatialindex() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libspatialindex.dylib -nt $BUILD_spatialindex/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_spatialindex -nt $BUILD_spatialindex/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -58,11 +60,12 @@ function build_spatialindex() {
 
 # function called after all the compile have been done
 function postbuild_spatialindex() {
-  verify_lib "libspatialindex.dylib"
+  verify_binary lib/$LINK_spatialindex
 }
 
 # function to append information to config file
 function add_config_info_spatialindex() {
   append_to_config_file "# spatialindex-${VERSION_spatialindex}: ${DESC_spatialindex}"
   append_to_config_file "export VERSION_spatialindex=${VERSION_spatialindex}"
+  append_to_config_file "export LINK_spatialindex=${LINK_spatialindex}"
 }

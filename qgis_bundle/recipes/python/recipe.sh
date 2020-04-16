@@ -5,37 +5,17 @@ function check_python() {
 }
 
 function bundle_python() {
-    : # install_name_tool -id "@rpath/libpython.dylib" ${STAGE_PATH}/lib/libpython.dylib
+    try cp -av $DEPS_LIB_DIR/libpython*dylib $BUNDLE_LIB_DIR
+
+    chmod 755 $BUNDLE_LIB_DIR/libpython*dylib
 }
 
 function postbundle_python() {
-    :
+    install_name_id @rpath/libpython3.7m.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libpython3.7m.dylib
+
+    install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpython3.7m.dylib @rpath/libpython3.7m.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.3.13.0.dylib
 }
 
 function add_config_info_python() {
     :
-}
-
-patch_python_linker_links () {
-  if [ ! -f "${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib does not exist... maybe you updated the python version?"
-  fi
-
-  chmod +w ${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib
-  install_name_tool -id "@rpath/libpython${VERSION_major_python}m.dylib" "${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib"
-
-  targets=(
-    bin/python3
-  )
-  for i in ${targets[*]}
-  do
-      install_name_tool -change "${STAGE_PATH}/lib/libpython${VERSION_major_python}m.dylib" "@rpath/libpython${VERSION_major_python}m.dylib" ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
-
-  PYMODULES=`find $STAGE_PATH/lib/python3.7/lib-dynload -type f -name "*.so"`
-
-  for i in $PYMODULES; do
-    install_name_tool -add_rpath @loader_path/../../ $i
-  done
 }

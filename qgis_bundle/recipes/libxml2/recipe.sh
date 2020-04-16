@@ -2,33 +2,24 @@
 
 function check_libxml2() {
   env_var_exists VERSION_libxml2
+  env_var_exists LINK_libxml2
 }
 
 function bundle_libxml2() {
-    : # install_name_tool -id "@rpath/liblibxml2.dylib" ${STAGE_PATH}/lib/liblibxml2.dylib
+    try cp -av $DEPS_LIB_DIR/libxml2.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_libxml2() {
-    :
+ install_name_id @rpath/libxml2.2.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libxml2.2.dylib
+
+ install_name_change $DEPS_LIB_DIR/$LINK_libxml2 @rpath/$LINK_libxml2 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libxml2 @rpath/$LINK_libxml2 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libxslt
+ install_name_change $DEPS_LIB_DIR/$LINK_libxml2 @rpath/$LINK_libxml2 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
+ install_name_change $DEPS_LIB_DIR/$LINK_libxml2 @rpath/$LINK_libxml2 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
+
+ # install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libxml2.2.dylib @rpath/libxml2.2.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libxml2.2.dylib
 }
 
 function add_config_info_libxml2() {
     :
-}
-
-patch_libxml2_linker_links () {
-  install_name_tool -id "@rpath/libxml2.dylib" ${STAGE_PATH}/lib/libxml2.dylib
-
-  targets=(
-    bin/xml2-config
-    bin/xmlcatalog
-    bin/xmllint
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -change "${STAGE_PATH}/lib/libxml2.${LINK_libxml2_version}.dylib" "@rpath/libxml2.${LINK_libwebp_version}.dylib" ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
 }

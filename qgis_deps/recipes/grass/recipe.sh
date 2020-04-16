@@ -3,8 +3,9 @@
 DESC_grass="Geographic Resources Analysis Support System"
 
 # version of your package
-VERSION_grass_major=7.8
-VERSION_grass=${VERSION_grass_major}.2
+VERSION_grass_major=7
+VERSION_grass_minor=8
+VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.2
 
 
 # dependencies of this recipe
@@ -42,7 +43,7 @@ function prebuild_grass() {
   try ${SED} "s;cc ;clang ;g" configure
 
   # Usage of /usr/local
-  try ${SED} "s;/usr/local/lib' ;$STAGE_PATH/lib', '$STAGE_PATH/grass${VERSION_grass_major//./}/lib ;g" lib/python/ctypes/loader.py
+  try ${SED} "s;/usr/local/lib' ;$STAGE_PATH/lib', '$STAGE_PATH/grass${VERSION_grass_major}${VERSION_grass_minor}/lib ;g" lib/python/ctypes/loader.py
 
   # it tries to install HELP to system
   # see https://github.com/OSGeo/grass/issues/474
@@ -59,7 +60,7 @@ function prebuild_grass() {
 
 function shouldbuild_grass() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/grass{VERSION_grass_major//./}/lib/libgrass_calc.dylib -nt $BUILD_grass/.patched ]; then
+  if [ ${STAGE_PATH}/grass${VERSION_grass_major}${VERSION_grass_minor}/lib/libgrass_calc.dylib -nt $BUILD_grass/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -71,7 +72,7 @@ function build_grass() {
   push_env
 
   # No DEBUG symbols!
-  export PATH="$STAGE_PATH/grass${VERSION_grass_major//./}/bin:$PATH"
+  export PATH="$STAGE_PATH/grass${VERSION_grass_major}${VERSION_grass_minor}/bin:$PATH"
   export CFLAGS="-O2"
   export CXXFLAGS="${CFLAGS}"
   export GRASS_PYTHON=$STAGE_PATH/bin/python3
@@ -153,11 +154,13 @@ function build_grass() {
 
 # function called after all the compile have been done
 function postbuild_grass() {
-  verify_lib "../grass78/lib/libgrass_calc.dylib"
+  verify_binary grass${VERSION_grass_major}${VERSION_grass_minor}/lib/libgrass_calc.dylib
 }
 
 # function to append information to config file
 function add_config_info_grass() {
   append_to_config_file "# grass-${VERSION_grass}: ${DESC_grass}"
+  append_to_config_file "export VERSION_grass_major=${VERSION_grass_major}"
+  append_to_config_file "export VERSION_grass_minor=${VERSION_grass_minor}"
   append_to_config_file "export VERSION_grass=${VERSION_grass}"
 }

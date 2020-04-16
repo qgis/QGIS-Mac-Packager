@@ -5,7 +5,7 @@ DESC_jpeg="Image manipulation library"
 # version of your package
 VERSION_jpeg=9d
 
-LINK_jpeg_version=9
+LINK_jpeg=libjpeg.9.dylib
 
 # dependencies of this recipe
 DEPS_jpeg=()
@@ -39,7 +39,7 @@ function prebuild_jpeg() {
 
 function shouldbuild_jpeg() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libjpeg.dylib -nt $BUILD_jpeg/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_jpeg -nt $BUILD_jpeg/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -63,11 +63,12 @@ function build_jpeg() {
 
 # function called after all the compile have been done
 function postbuild_jpeg() {
-  verify_lib "libjpeg.dylib"
+  verify_binary lib/$LINK_jpeg
 }
 
 # function to append information to config file
 function add_config_info_jpeg() {
   append_to_config_file "# jpeg-${VERSION_jpeg}: ${DESC_jpeg}"
   append_to_config_file "export VERSION_jpeg=${VERSION_jpeg}"
+  append_to_config_file "export LINK_jpeg=${LINK_jpeg}"
 }

@@ -6,7 +6,7 @@ DESC_hdf5="File format designed to store large amounts of data"
 VERSION_hdf5_major=1.10
 VERSION_hdf5=${VERSION_hdf5_major}.0
 
-LINK_libhdf5_version=100
+LINK_libhdf5=libhdf5.100.dylib
 
 # dependencies of this recipe
 DEPS_hdf5=()
@@ -39,7 +39,7 @@ function prebuild_hdf5() {
 }
 
 function shouldbuild_hdf5() {
-  if [ ${STAGE_PATH}/lib/libhdf5.dylib -nt $BUILD_hdf5/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_libhdf5 -nt $BUILD_hdf5/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -69,7 +69,7 @@ function build_hdf5() {
 
 # function called after all the compile have been done
 function postbuild_hdf5() {
-  verify_lib "libhdf5.dylib"
+  verify_binary lib/$LINK_libhdf5
   verify_lib "libhdf5_hl.dylib"
   verify_lib "libhdf5_cpp.dylib"
   verify_lib "libhdf5_hl_cpp.dylib"
@@ -81,4 +81,5 @@ function postbuild_hdf5() {
 function add_config_info_hdf5() {
   append_to_config_file "# hdf5-${VERSION_hdf5}: ${DESC_hdf5}"
   append_to_config_file "export VERSION_hdf5=${VERSION_hdf5}"
+  append_to_config_file "export LINK_libhdf5=${LINK_libhdf5}"
 }

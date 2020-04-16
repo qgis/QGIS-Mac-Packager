@@ -5,36 +5,30 @@ function check_png() {
 }
 
 function bundle_png() {
-    : # install_name_tool -id "@rpath/libpng.dylib" ${STAGE_PATH}/lib/libpng.dylib
+    try cp -av $DEPS_LIB_DIR/libpng*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_png() {
-    :
+ install_name_id @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libpng16.16.dylib
+
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_pngdriver.7.8.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
+
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_gl-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_aui-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_qa-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_xrc-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_stc-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_ribbon-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_core-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_adv-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_html-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_propgrid-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_richtext-3.0.0.4.0.dylib
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_media-3.0.0.4.0.dylib
 }
 
 function add_config_info_png() {
     :
-}
-
-patch_png_linker_links () {
-  # install_name_tool -id "@rpath/libpng.dylib" ${STAGE_PATH}/lib/libpng.dylib
-
-  if [ ! -f "${STAGE_PATH}/lib/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib" ]; then
-    error "file ${STAGE_PATH}/lib/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib does not exist... maybe you updated the png version?"
-  fi
-
-
-  install_name_tool -id "@rpath/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib" ${STAGE_PATH}/lib/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib
-
-  targets=(
-    bin/png-fix-itxt
-    bin/pngfix
-  )
-
-  # Change linked libs
-  for i in ${targets[*]}
-  do
-      install_name_tool -change "${STAGE_PATH}/lib/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib" "@rpath/libpng${LINK_libpng_version}.${LINK_libpng_version}.dylib" ${STAGE_PATH}/$i
-      install_name_tool -add_rpath @executable_path/../lib ${STAGE_PATH}/$i
-  done
 }

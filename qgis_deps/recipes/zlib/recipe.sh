@@ -4,8 +4,7 @@ DESC_zlib="General-purpose lossless data-compression library"
 
 # version of your package
 VERSION_zlib=1.2.11
-
-LINK_zlib_version=${VERSION_zlib}
+LINK_zlib=libz.1.dylib
 
 # dependencies of this recipe
 DEPS_zlib=()
@@ -39,7 +38,7 @@ function prebuild_zlib() {
 
 function shouldbuild_zlib() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libz.dylib -nt $BUILD_zlib/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_zlib -nt $BUILD_zlib/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -62,11 +61,12 @@ function build_zlib() {
 
 # function called after all the compile have been done
 function postbuild_zlib() {
-  verify_lib "libz.dylib"
+  verify_binary lib/$LINK_zlib
 }
 
 # function to append information to config file
 function add_config_info_zlib() {
   append_to_config_file "# zlib-${VERSION_zlib}: ${DESC_zlib}"
   append_to_config_file "export VERSION_zlib=${VERSION_zlib}"
+  append_to_config_file "export LINK_zlib=${LINK_zlib}"
 }

@@ -5,6 +5,8 @@ DESC_qtkeychain="Platform-independent Qt API for storing passwords securely"
 # version of your package
 VERSION_qtkeychain=0.10.0
 
+LINK_qtkeychain=libqt5keychain.1.dylib
+
 # dependencies of this recipe
 DEPS_qtkeychain=()
 
@@ -35,7 +37,7 @@ function prebuild_qtkeychain() {
 
 function shouldbuild_qtkeychain() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libqt5keychain.dylib -nt $BUILD_qtkeychain/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_qtkeychain -nt $BUILD_qtkeychain/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -62,11 +64,12 @@ function build_qtkeychain() {
 
 # function called after all the compile have been done
 function postbuild_qtkeychain() {
-  verify_lib "libqt5keychain.dylib"
+  verify_binary lib/$LINK_qtkeychain
 }
 
 # function to append information to config file
 function add_config_info_qtkeychain() {
   append_to_config_file "# qtkeychain-${VERSION_qtkeychain}: ${DESC_qtkeychain}"
   append_to_config_file "export VERSION_qtkeychain=${VERSION_qtkeychain}"
+  append_to_config_file "export LINK_qtkeychain=${LINK_qtkeychain}"
 }
