@@ -26,9 +26,9 @@ function run() {
     replace_in_place $recipe $DEPS_LIB_DIR "\$DEPS_LIB_DIR"
 
     # qgis
-    # replace_in_place $recipe "framework/Versions/$QGIS_VERSION/qgis" "framework/Versions/\$QGIS_VERSION/qgis"
-
-
+    replace_in_place $recipe "framework/Versions/$QGIS_VERSION/qgis" "framework/Versions/\$QGIS_VERSION/qgis"
+    replace_in_place $recipe libqgis_app.$QGIS_VERSION.0.dylib libqgis_app.\$QGIS_VERSION.0.dylib
+    replace_in_place $recipe libqgispython.$QGIS_VERSION.0.dylib libqgispython.\$QGIS_VERSION.0.dylib
 
     # libs
     replace_in_place $recipe $LINK_exiv2 "\$LINK_exiv2"
@@ -37,7 +37,14 @@ function run() {
     replace_in_place $recipe $LINK_gdal "\$LINK_gdal"
     replace_in_place $recipe $LINK_libgeos_c "\$LINK_libgeos_c"
 
-    replace_in_place $recipe  /opt/QGIS/qgis-deps-0.3.0/stage/grass78/lib
+    replace_in_place $recipe $DEPS_GRASS_LIB_DIR \$DEPS_GRASS_LIB_DIR
+    replace_in_place $recipe "libgrass\([a-z_]*\).${VERSION_grass_major}.${VERSION_grass_minor}.dylib" "libgrass\\1.\$\{VERSION_grass_major}.\$\{VERSION_grass_minor}.dylib"
+    replace_in_place $recipe libgrassplugin${VERSION_grass_major}.so libgrassplugin\$\{VERSION_grass_major}.so
+    replace_in_place $recipe libgrassprovider${VERSION_grass_major}.so libgrassprovider\$\{VERSION_grass_major}.so
+    replace_in_place $recipe libgrassrasterprovider${VERSION_grass_major}.so libgrassrasterprovider\$\{VERSION_grass_major}.so
+    replace_in_place $recipe qgisgrass${VERSION_grass_major} qgisgrass\$\{VERSION_grass_major}
+    replace_in_place $recipe grass${VERSION_grass_major}${VERSION_grass_minor} grass\$\{VERSION_grass_major}\$\{VERSION_grass_minor}
+    replace_in_place $recipe grass${VERSION_grass_major}${VERSION_grass_minor} grass\$\{VERSION_grass_major}\$\{VERSION_grass_minor}
 
     replace_in_place $recipe $LINK_libgsl "\$LINK_libgsl"
     replace_in_place $recipe $LINK_libgslcblas "\$LINK_libgslcblas"
@@ -74,37 +81,8 @@ function run() {
     replace_in_place $recipe $LINK_libwebp "\$LINK_libwebp"
     replace_in_place $recipe $LINK_libwebpdemux "\$LINK_libwebpdemux"
 
-    replace_in_place $recipe libwx_baseu_net-${LINK_wxmac_version}.dylib "libwx_baseu_net-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_gl-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_gl-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_aui-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_aui-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_baseu-${LINK_wxmac_version}.dylib "libwx_baseu-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_qa-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_qa-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_xrc-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_xrc-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_stc-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_stc-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_ribbon-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_ribbon-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_core-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_core-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_adv-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_adv-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_html-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_html-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_propgrid-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_propgrid-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_richtext-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_richtext-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_baseu_xml-${LINK_wxmac_version}.dylib "libwx_baseu_xml-\$\{LINK_wxmac_version}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_media-${LINK_wxmac_version}.dylib "libwx_osx_cocoau_media-\$\{LINK_wxmac_version}.dylib"
-
-    replace_in_place $recipe libwx_baseu_net-${VERSION_wxmac_major}.dylib "libwx_baseu_net-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_gl-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_gl-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_aui-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_aui-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_baseu-${VERSION_wxmac_major}.dylib "libwx_baseu-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_qa-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_qa-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_xrc-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_xrc-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_stc-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_stc-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_ribbon-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_ribbon-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_core-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_core-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_adv-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_adv-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_html-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_html-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_propgrid-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_propgrid-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_richtext-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_richtext-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_baseu_xml-${VERSION_wxmac_major}.dylib "libwx_baseu_xml-\$\{VERSION_wxmac_major}.dylib"
-    replace_in_place $recipe libwx_osx_cocoau_media-${VERSION_wxmac_major}.dylib "libwx_osx_cocoau_media-\$\{VERSION_wxmac_major}.dylib"
+    replace_in_place $recipe "libwx_\([a-z_]*\)-${LINK_wxmac_version}.dylib" "libwx_\\1-\$\{LINK_wxmac_version}.dylib"
+    replace_in_place $recipe "libwx_\([a-z_]*\)-${VERSION_wxmac_major}.dylib" "libwx_\\1-\$\{VERSION_wxmac_major}.dylib"
     
     replace_in_place $recipe $LINK_liblzma "\$LINK_liblzma"
     replace_in_place $recipe $LINK_zlib "\$LINK_zlib"
