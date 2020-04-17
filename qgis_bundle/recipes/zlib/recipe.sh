@@ -60,33 +60,33 @@ function postbundle_zlib() {
  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
 
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libprotobuf-lite.22.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libxslt.1.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_pngdriver.7.8.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libspatialite.7.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gis.7.8.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libzip.5.1.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libtiff.5.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_protobuf_lite
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libxslt
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_pngdriver.7.8.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gis.7.8.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libzip.5.1.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libtiff
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
 
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_baseu_net-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_gl-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_aui-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_baseu-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_qa-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_xrc-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_stc-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_ribbon-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_core-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_adv-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_html-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_propgrid-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_richtext-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_baseu_xml-3.0.0.4.0.dylib
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_media-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_baseu_net-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_gl-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_aui-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_baseu-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_qa-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_xrc-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_stc-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_ribbon-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_core-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_adv-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_html-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_propgrid-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_richtext-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_baseu_xml-3.0.0.4.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_media-3.0.0.4.0.dylib
 
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/zlib.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/binascii.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/zlib.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/binascii.cpython-37m-darwin.so
 
 }
 

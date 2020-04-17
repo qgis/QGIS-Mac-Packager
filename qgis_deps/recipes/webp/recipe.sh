@@ -5,8 +5,8 @@ DESC_webp="Image format providing lossless and lossy compression for web images"
 # version of your package
 VERSION_webp=1.1.0
 
-LINK_libwebp_version=7
-LINK_libwebpdemux_version=2
+LINK_libwebp=libwebp.7.dylib
+LINK_libwebpdemux=libwebpdemux.2.dylib
 
 # dependencies of this recipe
 DEPS_webp=()
@@ -40,7 +40,7 @@ function prebuild_webp() {
 
 function shouldbuild_webp() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libwebp.dylib -nt $BUILD_webp/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_libwebp -nt $BUILD_webp/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -63,14 +63,15 @@ function build_webp() {
 
 # function called after all the compile have been done
 function postbuild_webp() {
-  verify_lib "libwebp.dylib"
-  verify_lib "libwebpdemux.dylib"
-
-  verify_bin dwebp
+  verify_binary lib/$LINK_libwebp
+  verify_binary lib/$LINK_libwebpdemux
+  verify_binary bin/dwebp
 }
 
 # function to append information to config file
 function add_config_info_webp() {
   append_to_config_file "# webp-${VERSION_webp}: ${DESC_webp}"
   append_to_config_file "export VERSION_webp=${VERSION_webp}"
+  append_to_config_file "export LINK_libwebp=${LINK_libwebp}"
+  append_to_config_file "export LINK_libwebpdemux=${LINK_libwebpdemux}"
 }

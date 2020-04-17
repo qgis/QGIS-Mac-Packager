@@ -4,6 +4,7 @@ DESC_qca="Qt Cryptographic Architecture (QCA)"
 
 # version of your package
 VERSION_qca=2.3.0
+LINK_qca=qca-qt5
 
 # dependencies of this recipe
 DEPS_qca=(openssl)
@@ -35,7 +36,7 @@ function prebuild_qca() {
 
 function shouldbuild_qca() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5 -nt $BUILD_qca/.patched ]; then
+  if [ ${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca}/$LINK_qca -nt $BUILD_qca/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -67,12 +68,13 @@ function build_qca() {
 
 # function called after all the compile have been done
 function postbuild_qca() {
-  verify_lib "qca-qt5.framework/Versions/${VERSION_qca}/qca-qt5"
-  verify_bin qcatool-qt5
+  verify_binary lib/qca-qt5.framework/Versions/${VERSION_qca}/$LINK_qca
+  verify_binary bin/qcatool-qt5
 }
 
 # function to append information to config file
 function add_config_info_qca() {
   append_to_config_file "# qca-${VERSION_qca}: ${DESC_qca}"
   append_to_config_file "export VERSION_qca=${VERSION_qca}"
+  append_to_config_file "export LINK_qca=${LINK_qca}"
 }

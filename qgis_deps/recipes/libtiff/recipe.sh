@@ -5,7 +5,7 @@ DESC_libtiff="TIFF library and utilities"
 # version of your package
 VERSION_libtiff=4.1.0
 
-LINK_libtiff_version=5
+LINK_libtiff=libtiff.5.dylib
 
 # dependencies of this recipe
 DEPS_libtiff=(xz zstd webp jpeg)
@@ -42,7 +42,7 @@ function prebuild_libtiff() {
 # set DO_BUILD=0 if you know that it does not require a rebuild
 function shouldbuild_libtiff() {
 # If lib is newer than the sourcecode skip build
-  if [ "${STAGE_PATH}/lib/libtiff.dylib" -nt $BUILD_libtiff/.patched ]; then
+  if [ "${STAGE_PATH}/lib/$LINK_libtiff" -nt $BUILD_libtiff/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -72,14 +72,14 @@ function build_libtiff() {
 
 # function called after all the compile have been done
 function postbuild_libtiff() {
-  verify_lib "libtiff.dylib"
-  verify_lib "libtiffxx.dylib"
-
-  verify_bin tiffsplit
+  verify_binary lib/$LINK_libtiff
+  verify_binary lib/libtiffxx.dylib
+  verify_binary bin/tiffsplit
 }
 
 # function to append information to config file
 function add_config_info_libtiff() {
   append_to_config_file "# libtiff-${VERSION_libtiff}: ${DESC_libtiff}"
   append_to_config_file "export VERSION_libtiff=${VERSION_libtiff}"
+  append_to_config_file "export LINK_libtiff=${LINK_libtiff}"
 }

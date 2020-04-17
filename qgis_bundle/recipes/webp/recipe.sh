@@ -9,12 +9,12 @@ function bundle_webp() {
 }
 
 function postbundle_webp() {
- install_name_id @rpath/libwebp.7.dylib $BUNDLE_LIB_DIR/libwebp.7.dylib
+ install_name_id @rpath/$LINK_libwebp $BUNDLE_LIB_DIR/$LINK_libwebp
 
- install_name_change $DEPS_LIB_DIR/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
- install_name_change $DEPS_LIB_DIR/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwebp.7.dylib
- install_name_change $DEPS_LIB_DIR/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libtiff.5.dylib
- install_name_change $DEPS_LIB_DIR/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_libwebp @rpath/$LINK_libwebp $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
+ install_name_change $DEPS_LIB_DIR/$LINK_libwebp @rpath/$LINK_libwebp $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libwebp
+ install_name_change $DEPS_LIB_DIR/$LINK_libwebp @rpath/$LINK_libwebp $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libtiff
+ install_name_change $DEPS_LIB_DIR/$LINK_libwebp @rpath/$LINK_libwebp $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
 }
 
 function add_config_info_webp() {

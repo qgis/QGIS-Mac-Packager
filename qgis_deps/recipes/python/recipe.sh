@@ -3,7 +3,9 @@
 DESC_python="Interpreted, interactive, object-oriented programming language"
 
 # version of your package (set in config.conf)
-VERSION_python=${VERSION_major_python}.7
+VERSION_minor_python=7
+VERSION_python=${VERSION_major_python}.${VERSION_minor_python}
+LINK_python=libpython3.7m.dylib
 
 # dependencies of this recipe
 DEPS_python=( openssl xz libffi zlib libzip sqlite expat unixodbc )
@@ -83,7 +85,7 @@ function prebuild_python() {
 
 function shouldbuild_python() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/bin/python3 -nt BUILD_python/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_python -nt BUILD_python/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -136,11 +138,13 @@ function build_python() {
 
 # function called after all the compile have been done
 function postbuild_python() {
-    verify_bin python3
+    verify_binary bin/python3
+    verify_binary lib/$LINK_python
 }
 
 # function to append information to config file
 function add_config_info_python() {
   append_to_config_file "# python-${VERSION_python}: ${DESC_python}"
   append_to_config_file "export VERSION_python=${VERSION_python}"
+  append_to_config_file "export LINK_python=${LINK_python}"
 }

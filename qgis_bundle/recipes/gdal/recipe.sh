@@ -61,15 +61,15 @@ function postbundle_gdal() {
  install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/libio_gdal.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
 
- install_name_change $DEPS_LIB_DIR/libgdal.26.dylib @rpath/libgdal.26.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.7.8.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.7.8.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 
- install_name_change $DEPS_LIB_DIR/libgdal.26.dylib @rpath/libgdal.26.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_osr.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/libgdal.26.dylib @rpath/libgdal.26.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_gdal_array.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/libgdal.26.dylib @rpath/libgdal.26.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_gdal.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/libgdal.26.dylib @rpath/libgdal.26.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_ogr.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/libgdal.26.dylib @rpath/libgdal.26.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_gnm.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/libgdal.26.dylib @rpath/libgdal.26.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_gdalconst.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_osr.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_gdal_array.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_gdal.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_ogr.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_gnm.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-3.0.4-py3.7-macosx-10.13.0-x86_64.egg/osgeo/_gdalconst.cpython-37m-darwin.so
 }
 
 function add_config_info_gdal() {

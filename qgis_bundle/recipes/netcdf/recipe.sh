@@ -9,7 +9,7 @@ function bundle_netcdf() {
 }
 
 function postbundle_netcdf() {
- install_name_id @rpath/libnetcdf.15.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libnetcdf.15.dylib
+ install_name_id @rpath/$LINK_netcdf $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_netcdf
 
  install_name_change $DEPS_LIB_DIR/$LINK_netcdf @rpath/$LINK_netcdf $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
  install_name_change $DEPS_LIB_DIR/$LINK_netcdf @rpath/$LINK_netcdf $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal

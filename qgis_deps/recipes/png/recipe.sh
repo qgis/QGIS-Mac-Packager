@@ -5,7 +5,7 @@ DESC_png="PNG Image library"
 # version of your package
 VERSION_png=1.6.37
 
-LINK_libpng_version=16
+LINK_libpng=libpng16.16.dylib
 
 # dependencies of this recipe
 DEPS_png=()
@@ -39,7 +39,7 @@ function prebuild_png() {
 
 function shouldbuild_png() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libpng${LINK_libpng_version}.dylib -nt $BUILD_png/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_libpng -nt $BUILD_png/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -61,11 +61,12 @@ function build_png() {
 
 # function called after all the compile have been done
 function postbuild_png() {
-  verify_lib "libpng${LINK_libpng_version}.dylib"
+  verify_binary lib/$LINK_libpng
 }
 
 # function to append information to config file
 function add_config_info_png() {
   append_to_config_file "# png-${VERSION_png}: ${DESC_png}"
   append_to_config_file "export VERSION_png=${VERSION_png}"
+  append_to_config_file "export LINK_libpng=${LINK_libpng}"
 }

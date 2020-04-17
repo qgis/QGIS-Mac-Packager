@@ -4,7 +4,6 @@ DESC_libxml2="GNOME XML library"
 
 # version of your package
 VERSION_libxml2=2.9.10
-
 LINK_libxml2=libxml2.2.dylib
 
 # dependencies of this recipe

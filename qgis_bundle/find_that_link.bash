@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Script to find which libraries link other libraries for bundle recipes
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source $DIR/config.conf
 

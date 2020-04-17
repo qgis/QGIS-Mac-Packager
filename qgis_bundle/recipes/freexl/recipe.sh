@@ -12,8 +12,8 @@ function bundle_freexl() {
 function postbundle_freexl() {
   install_name_id  @rpath/$LINK_freexl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_freexl
 
-  install_name_change $DEPS_LIB_DIR/libfreexl.1.dylib @rpath/libfreexl.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libspatialite.7.dylib
-  install_name_change $DEPS_LIB_DIR/libfreexl.1.dylib @rpath/libfreexl.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
+  install_name_change $DEPS_LIB_DIR/$LINK_freexl @rpath/$LINK_freexl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
+  install_name_change $DEPS_LIB_DIR/$LINK_freexl @rpath/$LINK_freexl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
 }
 
 function add_config_info_freexl() {

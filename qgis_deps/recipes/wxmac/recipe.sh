@@ -82,14 +82,16 @@ function build_wxmac() {
 
 # function called after all the compile have been done
 function postbuild_wxmac() {
-  verify_lib "libwx_baseu-${VERSION_wxmac_major}.dylib"
-  verify_lib "libwx_baseu_net-${VERSION_wxmac_major}.dylib"
-  verify_lib "libwx_baseu_xml-${VERSION_wxmac_major}.dylib"
-  verify_lib "libwx_osx_cocoau_html-${VERSION_wxmac_major}.dylib"
+  verify_binary lib/"libwx_baseu-${VERSION_wxmac_major}.dylib"
+  verify_binary lib/"libwx_baseu_net-${VERSION_wxmac_major}.dylib"
+  verify_binary lib/"libwx_baseu_xml-${VERSION_wxmac_major}.dylib"
+  verify_binary lib/"libwx_osx_cocoau_html-${VERSION_wxmac_major}.dylib"
 }
 
 # function to append information to config file
 function add_config_info_wxmac() {
   append_to_config_file "# wxmac-${VERSION_wxmac}: ${DESC_wxmac}"
   append_to_config_file "export VERSION_wxmac=${VERSION_wxmac}"
+  append_to_config_file "export LINK_wxmac_version=${LINK_wxmac_version}"
+
 }

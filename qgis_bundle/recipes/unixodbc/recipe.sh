@@ -11,7 +11,7 @@ function bundle_unixodbc() {
 
 function postbundle_unixodbc() {
   install_name_id  @rpath/$LINK_unixodbc $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_unixodbc
-  install_name_change /usr/local/opt/unixodbc/lib/libodbc.2.dylib @rpath/libodbc.2.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyodbc.cpython-37m-darwin.so
+  install_name_change /usr/local/opt/unixodbc/lib/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyodbc.cpython-37m-darwin.so
 }
 
 function add_config_info_unixodbc() {

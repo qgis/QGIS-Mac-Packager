@@ -4,7 +4,7 @@ DESC_mysql="Open source relational database management system"
 
 # version of your package
 VERSION_mysql=8.0.19
-LINK_mysql_version=21
+LINK_libmysqlclient=libmysqlclient.21.dylib
 
 # dependencies of this recipe
 DEPS_mysql=(openssl protobuf boost zstd zlib)
@@ -36,7 +36,7 @@ function prebuild_mysql() {
 
 function shouldbuild_mysql() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libmysqlclient.dylib -nt $BUILD_mysql/.patched ]; then
+  if [ ${STAGE_PATH}/lib/$LINK_libmysqlclient -nt $BUILD_mysql/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -90,11 +90,12 @@ function build_mysql() {
 
 # function called after all the compile have been done
 function postbuild_mysql() {
-  verify_lib "libmysqlclient.dylib"
+  verify_binary lib/$LINK_libmysqlclient
 }
 
 # function to append information to config file
 function add_config_info_mysql() {
   append_to_config_file "# mysql-${VERSION_mysql}: ${DESC_mysql}"
   append_to_config_file "export VERSION_mysql=${VERSION_mysql}"
+  append_to_config_file "export LINK_libmysqlclient=${LINK_libmysqlclient}"
 }

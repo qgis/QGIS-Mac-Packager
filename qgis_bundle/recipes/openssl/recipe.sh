@@ -15,18 +15,18 @@ function postbundle_openssl() {
  install_name_id  @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libssl
  install_name_id  @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libcrypto
 
- install_name_change $DEPS_LIB_DIR/libcrypto.1.1.dylib @rpath/libcrypto.1.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libmysqlclient.21.dylib
- install_name_change $DEPS_LIB_DIR/libcrypto.1.1.dylib @rpath/libcrypto.1.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libmysqlclient
+ install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
 
- install_name_change $DEPS_LIB_DIR/libssl.1.1.dylib @rpath/libssl.1.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libmysqlclient.21.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libmysqlclient
 
- install_name_change $DEPS_LIB_DIR/libssl.1.1.dylib @rpath/libssl.1.1.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/libssl.1.1.dylib @rpath/libssl.1.1.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_hashlib.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/libssl.1.1.dylib @rpath/libssl.1.1.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/psycopg2/_psycopg.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_hashlib.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/psycopg2/_psycopg.cpython-37m-darwin.so
 
- install_name_change $DEPS_LIB_DIR/libcrypto.1.1.dylib @rpath/libcrypto.1.1.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/libcrypto.1.1.dylib @rpath/libcrypto.1.1.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_hashlib.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/libcrypto.1.1.dylib @rpath/libcrypto.1.1.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/psycopg2/_psycopg.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_hashlib.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/psycopg2/_psycopg.cpython-37m-darwin.so
 }
 
 function add_config_info_openssl() {

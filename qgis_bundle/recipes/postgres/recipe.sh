@@ -11,7 +11,7 @@ function bundle_postgres() {
 }
 
 function postbundle_postgres() {
- install_name_id @rpath/libpq.5.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libpq.5.dylib
+ install_name_id @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libpq
 
  install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/QGIS
  install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
@@ -20,7 +20,7 @@ function postbundle_postgres() {
  install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.${QGIS_VERSION}.0.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/libdb_pgsql.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/libpq.5.dylib @rpath/libpq.5.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/psycopg2/_psycopg.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/psycopg2/_psycopg.cpython-37m-darwin.so
 }
 
 function add_config_info_postgres() {

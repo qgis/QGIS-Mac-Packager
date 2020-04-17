@@ -7,6 +7,7 @@ VERSION_hdf5_major=1.10
 VERSION_hdf5=${VERSION_hdf5_major}.0
 
 LINK_libhdf5=libhdf5.100.dylib
+LINK_libhdf5_hl=libhdf5_hl.100.dylib
 
 # dependencies of this recipe
 DEPS_hdf5=()
@@ -70,9 +71,9 @@ function build_hdf5() {
 # function called after all the compile have been done
 function postbuild_hdf5() {
   verify_binary lib/$LINK_libhdf5
-  verify_lib "libhdf5_hl.dylib"
-  verify_lib "libhdf5_cpp.dylib"
-  verify_lib "libhdf5_hl_cpp.dylib"
+  verify_binary lib/$LINK_libhdf5_hl
+  verify_binary lib/"libhdf5_cpp.dylib"
+  verify_binary lib/"libhdf5_hl_cpp.dylib"
 
   verify_bin "h5copy"
 }
@@ -82,4 +83,5 @@ function add_config_info_hdf5() {
   append_to_config_file "# hdf5-${VERSION_hdf5}: ${DESC_hdf5}"
   append_to_config_file "export VERSION_hdf5=${VERSION_hdf5}"
   append_to_config_file "export LINK_libhdf5=${LINK_libhdf5}"
+  append_to_config_file "export LINK_libhdf5_hl=${LINK_libhdf5_hl}"
 }
