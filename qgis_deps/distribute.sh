@@ -36,7 +36,6 @@ function pop_env() {
   export DYLD_LIBRARY_PATH=$OLD_DYLD_LIBRARY_PATH
   export PIP=$OLD_PIP
   export QSPEC=$OLD_QSPEC
-  export PYCONFIGURE=$OLD_PYCONFIGURE
 }
 
 function try () {
@@ -195,7 +194,6 @@ function push_env() {
     export OLD_DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH
     export OLD_PIP=$PIP
     export OLD_QSPEC=$QSPEC
-    export OLD_PYCONFIGURE=$PYCONFIGURE
     export OLD_OBJCXX=${OBJCXX}
     export OLD_OBJC=${OBJC}
 
@@ -350,6 +348,11 @@ function check_linked_rpath() {
     libpq
     libxml2
     libsqlite3
+    libexpat
+    libiconv
+    liblzma
+    libarchive
+    libbz2
   )
   for i in ${targets[*]}
   do
@@ -865,8 +868,8 @@ function run_create_config_file() {
   append_to_config_file "export VERSION_major_python=${VERSION_major_python}"
   append_to_config_file "export VERSION_qt=${VERSION_qt}"
   append_to_config_file "export QT_BASE=/opt/Qt/${VERSION_qt}"
-  append_to_config_file "export MACOSX_DEPLOYMENT_TARGET=10.13.0"
-  append_to_config_file "export RELEASE_VERSION=0.2.0"
+  append_to_config_file "export MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}"
+  append_to_config_file "export RELEASE_VERSION=${RELEASE_VERSION}"
 
   cd $BUILD_PATH
   for module in $MODULES; do

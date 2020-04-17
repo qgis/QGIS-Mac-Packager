@@ -49,7 +49,7 @@ function postbundle_qscintilla() {
  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
-
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libqscintilla2_qt5.15.dylib @rpath/libqscintilla2_qt5.15.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/PyQt5/Qsci.so
 }
 
 function add_config_info_qscintilla() {

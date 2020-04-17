@@ -6,7 +6,7 @@ DESC_python="Interpreted, interactive, object-oriented programming language"
 VERSION_python=${VERSION_major_python}.7
 
 # dependencies of this recipe
-DEPS_python=( openssl xz libffi zlib libzip sqlite )
+DEPS_python=( openssl xz libffi zlib libzip sqlite expat unixodbc )
 
 # url of the package
 URL_python=https://www.python.org/ftp/python/${VERSION_python}/Python-${VERSION_python}.tar.xz
@@ -41,14 +41,25 @@ install_default_packages () {
     cd $BUILD_PATH/$NAME/$(get_directory $URL)
     push_env
 
-    try $PYTHON -s setup.py \
-      --no-user-cfg install \
-      --force \
-      --verbose \
-      --install-scripts=$STAGE_PATH/bin \
-      --install-lib=$QGIS_SITE_PACKAGES_PATH \
-      --single-version-externally-managed \
-      --record=installed.txt
+    # when building extensions in setup.py it
+    # dlopen some libraries (e.g. _ssl -> libcrypto.dylib)
+    export DYLD_LIBRARY_PATH=$STAGE_PATH/lib
+
+    if [ "X$NAME" == "Xsetuptools" ]; then
+        try $PYTHON bootstrap.py
+    fi
+
+    echo `pwd`
+
+    try $PYTHON \
+          -s setup.py \
+          --no-user-cfg install \
+          --force \
+          --verbose \
+          --install-scripts=$STAGE_PATH/bin \
+          --install-lib=$QGIS_SITE_PACKAGES_PATH \
+          --single-version-externally-managed \
+          --record=installed.txt
 
     pop_env
 
@@ -77,8 +88,7 @@ function shouldbuild_python() {
   fi
 }
 
-# function called to build the source code
-function build_python() {
+function install_python() {
   try rsync -a $BUILD_python/ $BUILD_PATH/python/build-$ARCH/
   try cd $BUILD_PATH/python/build-$ARCH
 
@@ -103,6 +113,8 @@ function build_python() {
       --with-openssl=$STAGE_PATH \
       --enable-optimizations \
       --enable-shared \
+      --with-system-expat \
+      --with-system-ffi \
       --with-ensurepip=no \
       --with-ssl-default-suites=openssl \
       --enable-loadable-sqlite-extensions \
@@ -113,9 +125,13 @@ function build_python() {
   try $MAKESMP
   try $MAKE install PYTHONAPPSDIR=${STAGE_PATH}
 
-  install_default_packages
-
   pop_env
+}
+
+# function called to build the source code
+function build_python() {
+   install_python
+   install_default_packages
 }
 
 # function called after all the compile have been done

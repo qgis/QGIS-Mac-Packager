@@ -191,13 +191,13 @@ function check_binary_linker_links() {
   if echo "${OTOOL_L}"  | grep -q $STAGE_PATH
   then
     echo "${OTOOL_L}"
-    error "$1 contains $STAGE_PATH string <-- forgot to change install_name for the linked library?"
+    echo "$1 contains $STAGE_PATH string <-- forgot to change install_name for the linked library?"
   fi
 
   if echo ${OTOOL_L} | grep -q $BUNDLE_DIR
   then
     echo "${OTOOL_L}"
-    error "$1 contains $BUNDLE_DIR string <-- forgot to change install_name for the linked library?"
+    echo "$1 contains $BUNDLE_DIR string <-- forgot to change install_name for the linked library?"
   fi
 
   targets=(
@@ -205,7 +205,8 @@ function check_binary_linker_links() {
     libssl
     libcrypto
     libpq
-    lib
+    libexpat
+    libiconv
     libxml2
     libsqlite3
   )
@@ -215,7 +216,7 @@ function check_binary_linker_links() {
       if echo "${OTOOL_L}" | grep -q /usr/lib/$i.dylib
       then
         echo "${OTOOL_L}"
-        info "$1 contains /usr/lib/$i.dylib string -- we should be using our $i, not system!"
+        error "$1 contains /usr/lib/$i.dylib string -- we should be using our $i, not system!"
       fi
   done
 }

@@ -59,6 +59,7 @@ function build_libzip() {
   try $MAKESMP
   try $MAKESMP install
 
+  try install_name_tool -id $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip
   try install_name_tool -change $BUILD_PATH/libzip/build-$ARCH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/bin/ziptool
 
   pop_env

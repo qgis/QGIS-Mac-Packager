@@ -3,17 +3,17 @@
 DESC_xerces="Validating XML parser written in a portable subset of C++"
 
 # version of your package
-VERSION_xerces=3.2.2
+VERSION_xerces=3.2.3
 
 LINK_libxerces_c=libxerces-c-3.2.dylib
 # dependencies of this recipe
-DEPS_xerces=()
+DEPS_xerces=(expat)
 
 # url of the package
-URL_xerces=http://mirror.hosting90.cz/apache//xerces/c/3/sources/xerces-c-${VERSION_xerces}.tar.gz
+URL_xerces=https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-${VERSION_xerces}.tar.gz
 
 # md5 of the package
-MD5_xerces=7aac41029b0d7a5eadd31cc975b391c2
+MD5_xerces=a5fa4d920fce31c9ca3bfef241644494
 
 # default build path
 BUILD_xerces=$BUILD_PATH/xerces/$(get_directory $URL_xerces)

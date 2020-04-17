@@ -85,6 +85,9 @@ function postbundle_zlib() {
  install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_baseu_xml-3.0.0.4.0.dylib
  install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwx_osx_cocoau_media-3.0.0.4.0.dylib
 
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/zlib.cpython-37m-darwin.so
+ install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libz.1.dylib @rpath/libz.1.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/binascii.cpython-37m-darwin.so
+
 }
 
 function add_config_info_zlib() {

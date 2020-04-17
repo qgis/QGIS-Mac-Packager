@@ -9,10 +9,10 @@ VERSION_qtwebkit=${VERSION_qt}
 DEPS_qtwebkit=( sqlite bison webp zlib libxslt jpeg png libtiff )
 
 # url of the package
-URL_qtwebkit=https://github.com/qt/qtwebkit/archive/ab1bd15209abaf7effc51dbc2f272c5681af7223.tar.gz
+URL_qtwebkit=https://github.com/qt/qtwebkit/archive/v5.212.0-alpha4.tar.gz
 
 # md5 of the package
-MD5_qtwebkit=1327ff09b6d8cf5089fab52c18c03abb
+MD5_qtwebkit=22e442063e7d0362439934442e269ed2
 
 # default build path
 BUILD_qtwebkit=$BUILD_PATH/qtwebkit/$(get_directory $URL_qtwebkit)
@@ -29,6 +29,9 @@ function prebuild_qtwebkit() {
   if [ -f .patched ]; then
     return
   fi
+
+  # Ambiguous Handle (also in MacPorts.h)
+  try ${SED} 's;isReachableFromOpaqueRoots(Handle<JSC::Unknown>;isReachableFromOpaqueRoots(JSC::Handle<JSC::Unknown>;g' Source/JavaScriptCore/jsc.cpp
 
   touch .patched
 }

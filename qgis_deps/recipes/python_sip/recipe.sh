@@ -49,7 +49,7 @@ function build_python_sip() {
 
   push_env
 
-  try $PYCONFIGURE \
+  try $PYTHON ./configure.py \
     --sipdir=$STAGE_PATH/share/sip \
     --bindir=$STAGE_PATH/bin \
     --deployment-target=$MACOSX_DEPLOYMENT_TARGET \
