@@ -61,7 +61,7 @@ function postbundle_geos() {
 
  install_name_change $DEPS_LIB_DIR/libgeos.3.8.1.dylib @rpath/libgeos.3.8.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgeos_c.1.13.3.dylib
 
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.7.8.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
 

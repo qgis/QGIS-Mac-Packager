@@ -50,7 +50,8 @@ function install_name_id {
   install_name_tool -id $1 $2
 }
 
-source `dirname $0`/../qgis_deps/config.conf
+source $DIR/config.conf
+source $DIR/../qgis_deps/config.conf
 if [ -d $ROOT_OUT_PATH/stage ]; then
        info "Using qgis_deps: $ROOT_OUT_PATH/stage"
 else

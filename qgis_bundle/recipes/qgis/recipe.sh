@@ -30,7 +30,7 @@ function bundle_qgis() {
 
 function postbundle_qgis() {
  ## PYTHON
- install_name_id @rpath/libqgispython.3.13.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.3.13.0.dylib
+ install_name_id @rpath/libqgispython.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
 
  ## CORE
  install_name_id @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
