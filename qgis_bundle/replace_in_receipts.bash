@@ -8,8 +8,9 @@ SED="sed -i.orig"
 function replace_in_place() {
   FILE=$1
   SRC=$2
-  DST=$3
-  $SED 's;$SRC;$DEST;g' $FILE
+  DEST=$3
+  $SED "s;$SRC;$DEST;g" $FILE
+  rm $FILE.orig
 }
 
 
@@ -18,7 +19,7 @@ function run() {
   for recipe in $RECIPES; do
     echo "Patching $recipe"
 
-    replace_in_place $recipe $DEPS_LIB_DIR \$DEPS_LIB_DIR
+    replace_in_place $recipe $DEPS_LIB_DIR "\$DEPS_LIB_DIR"
   done
 }
 

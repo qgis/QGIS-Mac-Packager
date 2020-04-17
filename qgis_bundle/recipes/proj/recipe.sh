@@ -61,16 +61,16 @@ function postbundle_proj() {
  install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/libpj_proj4.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
 
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gproj.7.8.dylib
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libspatialite.7.dylib
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
+ install_name_change $DEPS_LIB_DIR/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gproj.7.8.dylib
+ install_name_change $DEPS_LIB_DIR/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libspatialite.7.dylib
+ install_name_change $DEPS_LIB_DIR/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
 
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_list.cpython-37m-darwin.so
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_datadir.cpython-37m-darwin.so
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_crs.cpython-37m-darwin.so
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_geod.cpython-37m-darwin.so
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_proj.cpython-37m-darwin.so
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_transformer.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_list.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_datadir.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_crs.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_geod.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_proj.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/libproj.18.dylib @rpath/libproj.18.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_transformer.cpython-37m-darwin.so
 }
 
 function add_config_info_proj() {

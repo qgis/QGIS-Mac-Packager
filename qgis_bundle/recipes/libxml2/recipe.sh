@@ -17,7 +17,7 @@ function postbundle_libxml2() {
  install_name_change $DEPS_LIB_DIR/$LINK_libxml2 @rpath/$LINK_libxml2 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
  install_name_change $DEPS_LIB_DIR/$LINK_libxml2 @rpath/$LINK_libxml2 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
 
- # install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libxml2.2.dylib @rpath/libxml2.2.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libxml2.2.dylib
+ # install_name_change $DEPS_LIB_DIR/libxml2.2.dylib @rpath/libxml2.2.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libxml2.2.dylib
 }
 
 function add_config_info_libxml2() {

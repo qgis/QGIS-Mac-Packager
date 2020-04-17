@@ -13,7 +13,7 @@ function bundle_python() {
 function postbundle_python() {
     install_name_id @rpath/libpython3.7m.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libpython3.7m.dylib
 
-    install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libpython3.7m.dylib @rpath/libpython3.7m.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.3.13.0.dylib
+    install_name_change $DEPS_LIB_DIR/libpython3.7m.dylib @rpath/libpython3.7m.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.3.13.0.dylib
 }
 
 function add_config_info_python() {

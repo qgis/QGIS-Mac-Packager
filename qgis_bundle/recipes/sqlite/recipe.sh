@@ -61,8 +61,8 @@ function postbundle_sqlite() {
  install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/MacOS/lib/libproj.18.1.3.dylib
 
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libsqlite3.0.dylib @rpath/libsqlite3.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libspatialite.7.dylib
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libsqlite3.0.dylib @rpath/libsqlite3.0.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_sqlite3.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/libsqlite3.0.dylib @rpath/libsqlite3.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libspatialite.7.dylib
+ install_name_change $DEPS_LIB_DIR/libsqlite3.0.dylib @rpath/libsqlite3.0.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_sqlite3.cpython-37m-darwin.so
 }
 
 function add_config_info_sqlite() {

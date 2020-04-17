@@ -12,7 +12,7 @@ function bundle_libffi() {
 function postbundle_libffi() {
     install_name_id  @rpath/$LINK_libffi $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libffi
 
-    install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libffi.6.dylib @rpath/libffi.6.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ctypes.cpython-37m-darwin.so
+    install_name_change $DEPS_LIB_DIR/libffi.6.dylib @rpath/libffi.6.dylib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ctypes.cpython-37m-darwin.so
 }
 
 function add_config_info_libffi() {

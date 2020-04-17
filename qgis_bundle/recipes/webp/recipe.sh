@@ -11,10 +11,10 @@ function bundle_webp() {
 function postbundle_webp() {
  install_name_id @rpath/libwebp.7.dylib $BUNDLE_LIB_DIR/libwebp.7.dylib
 
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwebp.7.dylib
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libtiff.5.dylib
- install_name_change /opt/QGIS/qgis-deps-0.3.0/stage/lib/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
+ install_name_change $DEPS_LIB_DIR/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
+ install_name_change $DEPS_LIB_DIR/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libwebp.7.dylib
+ install_name_change $DEPS_LIB_DIR/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libtiff.5.dylib
+ install_name_change $DEPS_LIB_DIR/libwebp.7.dylib @rpath/libwebp.7.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgdal.26.dylib
 }
 
 function add_config_info_webp() {
