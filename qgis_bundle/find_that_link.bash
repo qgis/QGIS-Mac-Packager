@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+source $DIR/config.conf
+
 function check_binary_linker_links() {
   OTOOL_L=$(otool -L ${BUNDLE_DIR}/$1)
   OTOOL_RPATH=$(otool -l ${BUNDLE_DIR}/$1)
@@ -80,16 +83,14 @@ run() {
   #  grep -rni $STAGE_PATH $STAGE_PATH
   #  error "Some scripts reference absolute BUNDLE_DIR dir $BUNDLE_DIR"
   #fi
-
-
 }
 
-if (( $# < 2 )); then
+if (( $# < 1 )); then
     echo "usage: $0 bundle_contents_folder binary"
     exit 1
 fi
 
-FOLDER=$1
-BINARY=$2
+FOLDER=$BUNDLE_CONTENTS_DIR
+BINARY=$1
 echo "Checking which binaries in $FOLDER link $BINARY"
 run

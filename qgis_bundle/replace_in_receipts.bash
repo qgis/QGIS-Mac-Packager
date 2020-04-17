@@ -2,7 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-source $DIR/qgis_bundle.bash
+source $DIR/config.conf
 SED="sed -i.orig"
 
 function replace_in_place() {
@@ -14,13 +14,14 @@ function replace_in_place() {
 
 
 function run() {
-  RECIPES=`find . -type f ! -name "recipe.*"`
+  RECIPES=`find $DIR/recipes -type f`
   for recipe in $RECIPES; do
     echo "Patching $recipe"
 
-
-
+    replace_in_place $recipe $DEPS_LIB_DIR \$DEPS_LIB_DIR
   done
 }
+
+
 
 run
