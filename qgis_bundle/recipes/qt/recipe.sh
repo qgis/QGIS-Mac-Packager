@@ -53,6 +53,7 @@ function bundle_qt() {
   try rsync -av $QT_ROOT_DIR/lib/QtMultimediaWidgets.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtSensors.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtTextToSpeech.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtQmlModels.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
 
   # try rsync -av $QT_ROOT_DIR/lib/QtNetworkAuth.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   # try rsync -av $QT_ROOT_DIR/lib/QtVirtualKeyboard.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers

@@ -24,6 +24,7 @@ function run() {
 
     # general stuff
     replace_in_place $recipe $DEPS_LIB_DIR "\$DEPS_LIB_DIR"
+    replace_in_place $recipe $QT_BASE "\$QT_BASE"
 
     # qgis
     replace_in_place $recipe "framework/Versions/$QGIS_VERSION/qgis" "framework/Versions/\$QGIS_VERSION/qgis"

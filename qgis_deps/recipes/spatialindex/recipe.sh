@@ -6,6 +6,7 @@ DESC_spatialindex="General framework for developing spatial indices"
 VERSION_spatialindex=1.9.3
 
 LINK_spatialindex=libspatialindex.6.dylib
+LINK_spatialindex_c=libspatialindex_c.6.1.1.dylib
 
 # dependencies of this recipe
 DEPS_spatialindex=()
@@ -55,6 +56,8 @@ function build_spatialindex() {
   try $MAKESMP
   try $MAKE install
 
+  try install_name_tool -delete_rpath $BUILD_PATH/spatialindex/build-$ARCH/bin ${STAGE_PATH}/lib/$LINK_spatialindex_c
+
   pop_env
 }
 
@@ -68,4 +71,5 @@ function add_config_info_spatialindex() {
   append_to_config_file "# spatialindex-${VERSION_spatialindex}: ${DESC_spatialindex}"
   append_to_config_file "export VERSION_spatialindex=${VERSION_spatialindex}"
   append_to_config_file "export LINK_spatialindex=${LINK_spatialindex}"
+  append_to_config_file "export LINK_spatialindex_c=${LINK_spatialindex_c}"
 }

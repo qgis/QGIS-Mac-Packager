@@ -10,7 +10,8 @@ function bundle_qtwebkit() {
 }
 
 function postbundle_qtwebkit() {
-    : # install_name_tool -id "@rpath/libqtwebkit.dylib" ${STAGE_PATH}/lib/libqtwebkit.dylib
+ install_name_delete_rpath /opt/Qt/5.14.1/clang_64/lib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKitWidgets.framework/Versions/5/QtWebKitWidgets
+ install_name_delete_rpath /opt/Qt/5.14.1/clang_64/lib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
 }
 
 function add_config_info_qtwebkit() {

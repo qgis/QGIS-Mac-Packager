@@ -29,6 +29,15 @@ function bundle_qgis() {
 }
 
 function postbundle_qgis() {
+ chmod +x $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+
+ install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+ install_name_delete_rpath /opt/Qt/5.14.1/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+ install_name_delete_rpath $ROOT_OUT_PATH/../qgis-$QGIS_VERSION-deps-${RELEASE_VERSION}/install/QGIS.app/Contents/MacOS/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+
+ install_name_add_rpath @executable_path/../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+ install_name_add_rpath @executable_path/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+
  ## PYTHON
  install_name_id @rpath/libqgispython.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
 

@@ -5,54 +5,6 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source $DIR/config.conf
 
-function check_binary_linker_links() {
-  OTOOL_L=$(otool -L ${BUNDLE_DIR}/$1)
-  OTOOL_RPATH=$(otool -l ${BUNDLE_DIR}/$1)
-
-  if echo "${OTOOL_L}" | grep -q /usr/local/
-  then
-    echo "${OTOOL_L}"
-    error "$1 contains /usr/local/ string <-- Picked some homebrew libraries!"
-  fi
-
-  if echo "${OTOOL_L}"  | grep -q $QGIS_INSTALL_DIR
-  then
-    echo "${OTOOL_L}"
-    error "$1 contains $QGIS_INSTALL_DIR string <-- forgot to change install_name for the linked library?"
-  fi
-
-  if echo "${OTOOL_L}"  | grep -q $STAGE_PATH
-  then
-    echo "${OTOOL_L}"
-    error "$1 contains $STAGE_PATH string <-- forgot to change install_name for the linked library?"
-  fi
-
-  if echo ${OTOOL_L} | grep -q $BUNDLE_DIR
-  then
-    echo "${OTOOL_L}"
-    error "$1 contains $BUNDLE_DIR string <-- forgot to change install_name for the linked library?"
-  fi
-
-  targets=(
-    libz
-    libssl
-    libcrypto
-    libpq
-    lib
-    libxml2
-    libsqlite3
-  )
-
-  for i in ${targets[*]}
-  do
-      if echo "${OTOOL_L}" | grep -q /usr/lib/$i.dylib
-      then
-        echo "${OTOOL_L}"
-        info "$1 contains /usr/lib/$i.dylib string -- we should be using our $i, not system!"
-      fi
-  done
-}
-
 run() {
   BINARY_FILENAME=$(basename -- "$BINARY")
   RESULT_BIN=

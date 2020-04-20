@@ -2,6 +2,7 @@
 
 function check_wxmac() {
   env_var_exists VERSION_wxmac
+  env_var_exusts VERSION_wxmac_major
 }
 
 function bundle_wxmac() {

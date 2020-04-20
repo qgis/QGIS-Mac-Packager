@@ -92,6 +92,6 @@ function postbuild_wxmac() {
 function add_config_info_wxmac() {
   append_to_config_file "# wxmac-${VERSION_wxmac}: ${DESC_wxmac}"
   append_to_config_file "export VERSION_wxmac=${VERSION_wxmac}"
+  append_to_config_file "export VERSION_wxmac_major=${VERSION_wxmac_major}"
   append_to_config_file "export LINK_wxmac_version=${LINK_wxmac_version}"
-
 }

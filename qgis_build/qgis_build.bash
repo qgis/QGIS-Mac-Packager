@@ -8,48 +8,7 @@ else
   exit 1;
 fi
 
-# Internals
-CRED="\x1b[31;01m"
-CBLUE="\x1b[34;01m"
-CGRAY="\x1b[30;01m"
-CRESET="\x1b[39;49;00m"
-
-function try () {
-    "$@" || exit -1
-}
-
-function info() {
-  echo -e "$CBLUE"$@"$CRESET";
-}
-
-function error() {
-  MSG="$CRED"$@"$CRESET"
-  echo -e $MSG;
-  exit -1
-}
-
-function debug() {
-  echo -e "$CGRAY"$@"$CRESET";
-}
-
-source `dirname $0`/../qgis_deps/config.conf
-if [ -d $ROOT_OUT_PATH/stage ]; then
-       info "Using qgis_deps: $ROOT_OUT_PATH/stage"
-else
-       error "Missing qgis_deps directory '$ROOT_OUT_PATH/stage' not found."
-fi
-
-source $ROOT_OUT_PATH/stage/qgis-deps.config
-
-CORES=$(sysctl -n hw.ncpu)
-
-
-# TODO replace with something configurable
-# TODO use MACOSX_DEPLOYMENT_TARGET
-export QGIS_VERSION=3.13
-export QGIS_SOURCE_DIR=~/Projects/mesh/QGIS
-export QGIS_BUILD_DIR=$ROOT_OUT_PATH/../qgis-${QGIS_VERSION}-deps-${RELEASE_VERSION}/build
-export QGIS_INSTALL_DIR=$ROOT_OUT_PATH/../qgis-${QGIS_VERSION}-deps-${RELEASE_VERSION}/install
+source `dirname $0`/config.conf
 
 OLD_PATH=$PATH
 
