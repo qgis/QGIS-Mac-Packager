@@ -1,6 +1,7 @@
 import argparse
 import sys
 
+
 class Graph(object):
     def __init__(self):
         # `graph`: dict that maps each package to a set of its dependencies.
