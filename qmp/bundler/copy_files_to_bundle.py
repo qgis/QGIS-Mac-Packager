@@ -123,6 +123,10 @@ def copy_files_to_bundle(cp, msg, pa):
     if os.path.exists(pa.binDir + "/qgis_bench.app"):
         cp.rmtree(pa.binDir + "/qgis_bench.app")
 
+    msg.info("Remove unneeded qgis_process.app")
+    if os.path.exists(pa.binDir + "/qgis_process.app"):
+        cp.rmtree(pa.binDir + "/qgis_process.app")
+
     msg.info("Append Python site-packages " + pa.host.pySitePackages)
     _append_recursively_site_packages(msg, pa, cp, pa.host.pySitePackages, pa.pythonDir)
     if not os.path.exists(pa.pythonDir + "/PyQt5/Qt.so"):
