@@ -53,11 +53,11 @@ function build_gdal() {
   try cd $BUILD_PATH/gdal/build-$ARCH
   push_env
 
-
   WITH_GDAL_DRIVERS=
-  for i in xerces liblzma zstd libtiff geotiff jpeg hdf5 netcdf pg png spatialite sqlite3
+  for i in liblzma zstd libtiff geotiff jpeg hdf5 \
+           netcdf png spatialite sqlite3
   do
-    WITH_GDAL_DRIVERS="$WITH_GDAL_DRIVERS --with-$i=$STAGE_DIR"
+    WITH_GDAL_DRIVERS="$WITH_GDAL_DRIVERS --with-$i=$STAGE_PATH"
   done
 
   WITHOUT_GDAL_DRIVERS=
@@ -73,10 +73,27 @@ function build_gdal() {
 
   try ${CONFIGURE} \
     --disable-debug \
+    --enable-driver-gpkg \
+    --enable-driver-mbtiles \
+    --enable-driver-gml \
+    --enable-driver-mvt \
+    --with-pg=yes \
+    --with-xerces=yes \
+    --with-xerces-inc=$STAGE_PATH/include \
+    --with-xerces-lib="-lxerces-c" \
     ${WITH_GDAL_DRIVERS} \
     ${WITHOUT_GDAL_DRIVERS}
 
   check_file_configuration config.status
+
+  # missing HAVE_XERCES define needed for ogr_xerces.cpp
+  if grep -q HAVE_XERCES "port/cpl_config.h"; then
+    echo "cpl_config.h already patched with HAVE_XERCES"
+  else
+    echo "Patching cpl_config.h with HAVE_XERCES"
+    echo "#define HAVE_XERCES 1" >> port/cpl_config.h
+  fi
+
   try $MAKESMP
   try $MAKESMP install
 
