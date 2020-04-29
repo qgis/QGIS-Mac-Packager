@@ -15,6 +15,17 @@ skip this and go to build QGIS step
 2. Run `./qgis_deps.bash`
 3. Enjoy
 
+Upload deps to qgis.org
+------------------
+For this you need to have QGIS signing certificate, and ssh access to qgis.org
+Usually this is done on build server and it is not necessary for development of 
+the qgis-deps pacakges
+
+1. Build QGIS-Deps
+2. Run `sign_deps.bash`
+3. Run `create_package.bash`
+4. Run `upload_to_qgis2.bash`
+
 Build QGIS
 -----------------------
 
