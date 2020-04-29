@@ -25,6 +25,7 @@ DEPS_qgis_deps=(
     python_packages
     python_sip
     python_pyqt5
+    python_netcdf4
     python_qscintilla
     python_pyproj
     python_owslib
