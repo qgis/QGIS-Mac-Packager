@@ -33,7 +33,7 @@ mkdir -p $BUILD_DIR
 echo "Building QGIS $GIT for $RELEASE"
 
 echo "Please update qgis-deps package manually to get new deps"
-python3 $DIR/deps.bash $CONFIG_FILE | tee $DEPS
+$DIR/deps.bash $CONFIG_FILE | tee $DEPS
 
 cd $DIR/..
 echo "Run"
