@@ -41,7 +41,7 @@ else
 fi
 
 export failed= ok=
-for i in nightly pr ltr; do
+for i in nightly nightly2 pr ltr; do
 	echo "build $i" >> $LOG 2>&1
 	if $SD/run_pkg.bash $i >> $LOG 2>&1; then
 		ok="$ok $i"

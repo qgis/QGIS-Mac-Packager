@@ -10,6 +10,31 @@ else
   exit 1;
 fi
 
+# Internals
+CRED="\x1b[31;01m"
+CBLUE="\x1b[34;01m"
+CGRAY="\x1b[30;01m"
+CRESET="\x1b[39;49;00m"
+
+function try () {
+    "$@" || exit -1
+}
+
+function info() {
+  echo -e "$CBLUE"$@"$CRESET";
+}
+
+function error() {
+  MSG="$CRED"$@"$CRESET"
+  echo -e $MSG;
+  exit -1
+}
+
+function debug() {
+  echo -e "$CGRAY"$@"$CRESET";
+}
+
+
 function install_name_add_rpath {
   if [ ! -f "$2" ]; then
     error "Missing $2 (install_name_add_rpath)"
@@ -40,15 +65,17 @@ function install_name_id {
   try install_name_tool -id $1 $2
 }
 
-source $DIR/config.conf
-source $DIR/../qgis_deps/config.conf
-if [ -d $ROOT_OUT_PATH/stage ]; then
-       info "Using qgis_deps: $ROOT_OUT_PATH/stage"
-else
-       error "Missing qgis_deps directory '$ROOT_OUT_PATH/stage' not found."
+# load configuration
+if (( $# < 1 )); then
+    echo "qgis_bundle: $0 <path/to>/config/<my>.conf ..."
+    exit 1
 fi
-
-source $ROOT_OUT_PATH/stage/qgis-deps.config
+CONFIG_FILE=$1
+if [ ! -f "$CONFIG_FILE" ]; then
+  error "invalid config file (1st argument) $CONFIG_FILE"
+fi
+shift
+source $CONFIG_FILE
 
 # FIND all modules - the order does not matter here
 MODULES=

@@ -71,7 +71,16 @@ DO_SET_X=0
 DEBUG=0
 
 # Load configuration
-source `dirname $0`/config.conf
+if (( $# < 1 )); then
+    echo "distribute: $0 <path/to>/config/<my>.conf ...."
+    exit 1
+fi
+CONFIG_FILE=$1
+if [ ! -f "$CONFIG_FILE" ]; then
+  error "invalid config file (1st argument) $CONFIG_FILE"
+fi
+shift
+source $CONFIG_FILE
 
 function check_config_conf_vars() {
     if [ "X$RELEASE_VERSION" == "X" ]; then
