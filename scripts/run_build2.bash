@@ -40,7 +40,7 @@ echo "Run"
 
 res=0
 
-if qgis-mac-packager.bash \
+if $DIR/../qgis-mac-packager.bash \
   $BUILD_DIR \
   $GIT \
   $RELEASE \
