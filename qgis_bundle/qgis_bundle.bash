@@ -1,39 +1,34 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-# Well, build tools are available only on MacOS
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "Bundling QGIS"
-else
-  echo "Unable to bundle QGIS binaries on $OSTYPE"
-  exit 1;
+####################
+# load configuration
+if (( $# < 1 )); then
+    echo "qgis_bundle: $0 <path/to>/config/<my>.conf ..."
+    exit 1
 fi
+CONFIG_FILE=$1
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo "invalid config file (1st argument) $CONFIG_FILE"
+  exit 1
+fi
+shift
+source $CONFIG_FILE
 
-# Internals
-CRED="\x1b[31;01m"
-CBLUE="\x1b[34;01m"
-CGRAY="\x1b[30;01m"
-CRESET="\x1b[39;49;00m"
+# source the ENV vars from the qgis_deps
+if [ ! -f "$QGIS_DEPS_STAGE_PATH/qgis-deps.config" ]; then
+  error "missing $QGIS_DEPS_STAGE_PATH/qgis-deps.config"
+fi
+source $QGIS_DEPS_STAGE_PATH/qgis-deps.config
 
-function try () {
-    "$@" || exit -1
-}
+export DEPS_PYTHON_SITE_PACKAGES_DIR=$STAGE_PATH/lib/python${VERSION_major_python}
+export DEPS_GRASS_ROOT_DIR=$DEPS_ROOT_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
+export DEPS_GRASS_LIB_DIR=$DEPS_GRASS_ROOT_DIR/lib
 
-function info() {
-  echo -e "$CBLUE"$@"$CRESET";
-}
-
-function error() {
-  MSG="$CRED"$@"$CRESET"
-  echo -e $MSG;
-  exit -1
-}
-
-function debug() {
-  echo -e "$CGRAY"$@"$CRESET";
-}
-
+####################
 
 function install_name_add_rpath {
   if [ ! -f "$2" ]; then
@@ -65,18 +60,7 @@ function install_name_id {
   try install_name_tool -id $1 $2
 }
 
-# load configuration
-if (( $# < 1 )); then
-    echo "qgis_bundle: $0 <path/to>/config/<my>.conf ..."
-    exit 1
-fi
-CONFIG_FILE=$1
-if [ ! -f "$CONFIG_FILE" ]; then
-  error "invalid config file (1st argument) $CONFIG_FILE"
-fi
-shift
-source $CONFIG_FILE
-
+#################################
 # FIND all modules - the order does not matter here
 MODULES=
 for dir in `dirname $0`/recipes/*/

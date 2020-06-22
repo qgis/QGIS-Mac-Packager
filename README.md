@@ -1,18 +1,18 @@
-[![Build Status](https://travis-ci.org/qgis/QGIS-Mac-Packager.svg?branch=master)](https://travis-ci.org/qgis/QGIS-Mac-Packager)
-
 [![PR Status](https://qgis.org/downloads/macos/qgis-macos-pr.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-pr.latest.log)
 
 [![LTR Status](https://qgis.org/downloads/macos/qgis-macos-ltr.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-ltr.latest.log)
 
 [![NIGHTLY Status](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.log)
 
+[![NIGHTLY2 (Proj6) Status](https://qgis.org/downloads/macos/qgis-macos-nightly2.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-nightly2.latest.log)
+
 # Latest Passed Builds
 
-| PR  | LTR   | Nightly  |
-|:---:|:-----:|:--------:|
-| [DMG](https://qgis.org/downloads/macos/qgis-macos-pr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-ltr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-nightly.dmg?raw=true)  |
-| [SHA256](https://qgis.org/downloads/macos/qgis-macos-pr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-ltr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-nightly.sha256sum?raw=true) |
-| [DEPS](https://qgis.org/downloads/macos/qgis-macos-pr.deps?raw=true) | [DEPS](https://qgis.org/downloads/macos/qgis-macos-ltr.deps?raw=true)| [DEPS](https://qgis.org/downloads/macos/qgis-macos-nightly.deps?raw=true) |
+| PR  | LTR   | Nightly  | Nightly2 (Proj6)  |
+|:---:|:-----:|:--------:|:--------:|
+| [DMG](https://qgis.org/downloads/macos/qgis-macos-pr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-ltr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-nightly.dmg?raw=true)  | [DMG](https://qgis.org/downloads/macos/qgis-macos-nightly2.dmg?raw=true)  |
+| [SHA256](https://qgis.org/downloads/macos/qgis-macos-pr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-ltr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-nightly.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-nightly2.sha256sum?raw=true) |
+| [DEPS](https://qgis.org/downloads/macos/qgis-macos-pr.deps?raw=true) | [DEPS](https://qgis.org/downloads/macos/qgis-macos-ltr.deps?raw=true)| [DEPS](https://qgis.org/downloads/macos/qgis-macos-nightly.deps?raw=true) | [DEPS](https://qgis.org/downloads/macos/qgis-macos-nightly2.deps?raw=true) |
 
 # QGIS dependencies for development
 

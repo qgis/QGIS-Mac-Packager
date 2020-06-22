@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -o pipefail
+set -eo pipefail
 
 PWD=`pwd`
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)

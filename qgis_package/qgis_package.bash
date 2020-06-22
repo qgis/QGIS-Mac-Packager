@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 
-# Well, build tools are available only on MacOS
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "Packaging QGIS for MacOS platform"
-else
-  echo "Unable to package QGIS on $OSTYPE"
-  exit 1;
-fi
+set -euo pipefail
 
 # load configuration
 if (( $# < 2 )); then
@@ -24,47 +18,43 @@ PACKAGE=$2
 
 QGIS_APP=$BUNDLE_DIR/QGIS.app
 if [ ! -d "$QGIS_APP" ]; then
-  echo "missing bundled app $QGIS_APP"
-  exit 1
+  error "missing bundled app $QGIS_APP"
 fi
 
 if [ -f "$PACKAGE" ]; then
-  echo "$PACKAGE exists, removing"
+  info "$PACKAGE exists, removing"
   rm -f $PACKAGE
 fi
 
 IDENTITY=`cat $SIGN_FILE`
 if [ ${#IDENTITY} -ne 40 ]; then
-  echo "SIGN FILE $SIGN_FILE invalid. key must have 40 chars" ;
-  exit 1
+  error "SIGN FILE $SIGN_FILE invalid. key must have 40 chars" ;
 fi
 
 if [ ! -f "$KEYCHAIN_FILE" ]; then
-  echo "keychain file $KEYCHAIN_FILE missing"
-  exit 1
+  error "keychain file $KEYCHAIN_FILE missing"
 fi
 
-echo "Print identities"
+info "Print identities"
 security find-identity -v -p codesigning
 
-echo "Signing the QGIS.app"
+info "Signing the QGIS.app"
 codesign -s $IDENTITY -v --force --keychain $KEYCHAIN_FILE $QGIS_APP
 codesign --deep-verify --verbose
 
-echo "Create dmg image"
+info "Create dmg image"
 /usr/local/bin/dmgbuild \
   -Dapp=$QGIS_APP \
   -s `dirname $0`/../resources/dmgsettings.py \
   "QGIS.app" \
   $PACKAGE
 
-echo "Signing the dmg"
+info "Signing the dmg"
 codesign -s $IDENTITY -v --force --keychain $KEYCHAIN_FILE $PACKAGE
 codesign --deep-verify --verbose
 
-echo "All done (qgis_package)"
-
-echo "Create checksum"
+info "Create checksum"
+sha256sum $PACKAGE > $PACKAGE.sha256sum
 
 FSIZE=`du -h $PACKAGE`
-echo "Dmg created with size $FSIZE"
+info "Dmg created with size $FSIZE"

@@ -1,36 +1,6 @@
 #!/usr/bin/env bash
 
-# Well, build tools are available only on MacOS
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "Building QGIS for MacOS platform"
-else
-  echo "Unable to build QGIS binaries on $OSTYPE"
-  exit 1;
-fi
-
-# Internals
-CRED="\x1b[31;01m"
-CBLUE="\x1b[34;01m"
-CGRAY="\x1b[30;01m"
-CRESET="\x1b[39;49;00m"
-
-function try () {
-    "$@" || exit 1
-}
-
-function info() {
-  echo -e "$CBLUE"$@"$CRESET";
-}
-
-function error() {
-  MSG="$CRED"$@"$CRESET"
-  echo -e $MSG;
-  exit 1
-}
-
-function debug() {
-  echo -e "$CGRAY"$@"$CRESET";
-}
+set -euo pipefail
 
 # load configuration
 if (( $# < 1 )); then
@@ -54,6 +24,7 @@ PATH=$ROOT_OUT_PATH/stage/bin:$PATH \
 cmake -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DCMAKE_PREFIX_PATH=$QT_BASE/clang_64 \
       -DQGIS_MACAPP_BUNDLE=-1 \
+      -DWITH_GEOREFERENCER=TRUE \
       -DWITH_3D=TRUE \
       -DWITH_BINDINGS=TRUE \
       -DENABLE_TESTS=FALSE \

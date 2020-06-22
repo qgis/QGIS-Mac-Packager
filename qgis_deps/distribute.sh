@@ -1,18 +1,6 @@
 #!/usr/bin/env bash
 
-# Well, build tools are available only on MacOS
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "Building QGIS dependencies for MacOS platform"
-else
-  echo "Unable to build MacOS binaries on $OSTYPE"
-  exit 1;
-fi
-
-# Internals
-CRED="\x1b[31;01m"
-CBLUE="\x1b[34;01m"
-CGRAY="\x1b[30;01m"
-CRESET="\x1b[39;49;00m"
+set -euo pipefail
 
 function pop_env() {
   info "Leaving build environment"
@@ -36,25 +24,6 @@ function pop_env() {
   export DYLD_LIBRARY_PATH=$OLD_DYLD_LIBRARY_PATH
   export PIP=$OLD_PIP
   export QSPEC=$OLD_QSPEC
-}
-
-function try () {
-    "$@" || exit -1
-}
-
-function info() {
-  echo -e "$CBLUE"$@"$CRESET";
-}
-
-function error() {
-  MSG="$CRED"$@"$CRESET"
-  pop_env
-  echo -e $MSG;
-  exit -1
-}
-
-function debug() {
-  echo -e "$CGRAY"$@"$CRESET";
 }
 
 #########################################################################################################
@@ -81,6 +50,14 @@ if [ ! -f "$CONFIG_FILE" ]; then
 fi
 shift
 source $CONFIG_FILE
+
+# override error function to use pop_env
+function error() {
+  MSG="$CRED"$@"$CRESET"
+  pop_env
+  echo -e $MSG;
+  exit 1
+}
 
 function check_config_conf_vars() {
     if [ "X$RELEASE_VERSION" == "X" ]; then

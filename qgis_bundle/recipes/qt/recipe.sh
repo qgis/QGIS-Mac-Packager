@@ -8,12 +8,14 @@ function check_qt() {
 function bundle_qt() {
   QT_ROOT_DIR=$QT_BASE/clang_64
 
+  # try rsync -av $QT_ROOT_DIR/lib/QtWebEngine.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  # try rsync -av $QT_ROOT_DIR/lib/QtWebEngineCore.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  # try rsync -av $QT_ROOT_DIR/lib/QtWebEngineWidgets.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+
   try rsync -av $QT_ROOT_DIR/lib/QtRemoteObjects.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/Qt3DInput.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
-  try rsync -av $QT_ROOT_DIR/lib/QtWebEngineCore.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtDesigner.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtNfc.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
-  try rsync -av $QT_ROOT_DIR/lib/QtWebEngineWidgets.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtQuickWidgets.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/Qt3DQuickScene2D.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/Qt3DRender.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
@@ -35,7 +37,6 @@ function bundle_qt() {
   try rsync -av $QT_ROOT_DIR/lib/QtWebChannel.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtMultimedia.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtOpenGL.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
-  try rsync -av $QT_ROOT_DIR/lib/QtWebEngine.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/Qt3DQuick.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtMacExtras.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtTest.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
