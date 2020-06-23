@@ -5,7 +5,19 @@ set -e
 PWD=`pwd`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-source `dirname $0`/config.conf
+####################
+# load configuration
+if (( $# < 1 )); then
+    echo "sign_deps: $0 <path/to>/config/<my>.conf ..."
+    exit 1
+fi
+CONFIG_FILE=$1
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo "invalid config file (1st argument) $CONFIG_FILE"
+  exit 1
+fi
+shift
+source $CONFIG_FILE
 
 QT_PACKAGE=$ROOT_OUT_PATH/qt-${VERSION_qt}.tar.gz
 QGIS_DEPS_PACKAGE=$ROOT_OUT_PATH/qgis-deps-${RELEASE_VERSION}.tar.gz

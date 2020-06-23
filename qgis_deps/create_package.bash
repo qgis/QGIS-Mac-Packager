@@ -14,7 +14,19 @@ function filesize() {
   du -h $1 | cut -f 1
 }
 
-source `dirname $0`/config.conf
+####################
+# load configuration
+if (( $# < 1 )); then
+    echo "create_package: $0 <path/to>/config/<my>.conf ..."
+    exit 1
+fi
+CONFIG_FILE=$1
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo "invalid config file (1st argument) $CONFIG_FILE"
+  exit 1
+fi
+shift
+source $CONFIG_FILE
 
 if [ ! -d $ROOT_OUT_PATH ]; then
   error "The root output directory '$ROOT_OUT_PATH' not found."

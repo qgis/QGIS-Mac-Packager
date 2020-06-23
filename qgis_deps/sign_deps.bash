@@ -2,19 +2,31 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-PATH_TO_SIGN=$1
-IDENTITY_FILE=$DIR/../../sign_identity.txt
-KEYCHAIN_FILE=$DIR/../../qgis.keychain-db
+####################
+# load configuration
+if (( $# < 1 )); then
+    echo "sign_deps: $0 <path/to>/config/<my>.conf ..."
+    exit 1
+fi
+CONFIG_FILE=$1
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo "invalid config file (1st argument) $CONFIG_FILE"
+  exit 1
+fi
+shift
+source $CONFIG_FILE
 
-if [ ! -f "$IDENTITY_FILE" ]; then
-   echo "Missing IDENTITY_FILE $IDENTITY_FILE"
-   exit 1
+PATH_TO_SIGN=$ROOT_OUT_PATH/stage/
+
+IDENTITY=`cat $SIGN_FILE`
+if [ ${#IDENTITY} -ne 40 ]; then
+  error "SIGN FILE $SIGN_FILE invalid. key must have 40 chars" ;
 fi
 
 if [ ! -f "$KEYCHAIN_FILE" ]; then
-   echo "Missing KEYCHAIN_FILE $KEYCHAIN_FILE"
-   exit 1
+  error "keychain file $KEYCHAIN_FILE missing"
 fi
+
 
 if [ "X$PATH_TO_SIGN" == "X" ]; then
    echo "you need to specify PATH_TO_SIGN"
