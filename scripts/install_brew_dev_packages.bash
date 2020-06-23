@@ -17,3 +17,5 @@ brew install astyle
 brew install help2man
 brew install autoconf
 brew install automake
+
+pip3 install dmgbuild

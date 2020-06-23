@@ -39,11 +39,11 @@ info "Print identities"
 security find-identity -v -p codesigning
 
 info "Signing the QGIS.app"
-codesign -s $IDENTITY -v --force --keychain $KEYCHAIN_FILE $QGIS_APP
-codesign --deep-verify --verbose
+codesign -s $IDENTITY -v --force --keychain $KEYCHAIN_FILE $QGIS_APP --deep
+codesign --deep-verify --verbose $QGIS_APP
 
 info "Create dmg image"
-/usr/local/bin/dmgbuild \
+dmgbuild \
   -Dapp=$QGIS_APP \
   -s `dirname $0`/../resources/dmgsettings.py \
   "QGIS.app" \

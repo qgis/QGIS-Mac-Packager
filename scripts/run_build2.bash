@@ -45,7 +45,7 @@ if $DIR/../qgis-mac-packager.bash \
   $GIT \
   $RELEASE \
   $PACKAGE \
-  $CONFIG_FILE
+  $CONFIG_FILE \
 2>&1 | tee -a $LOG; then
     echo "SUCCESS" | tee -a $LOG
     python3 $DIR/image_creator.py --text "$RELEASE-$GIT" --out $STATUS_PNG --success

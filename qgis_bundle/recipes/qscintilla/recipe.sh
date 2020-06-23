@@ -12,7 +12,7 @@ function bundle_qscintilla() {
 }
 
 function postbundle_qscintilla() {
-  install_name_delete_rpath /opt/Qt/5.14.1/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqscintilla2_qt5.15.0.0.dylib
+  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/${LINK_libqscintilla2_qt5}
 
   install_name_id @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_LIB_DIR/$LINK_libqscintilla2_qt5
 

@@ -12,7 +12,7 @@ function bundle_qtkeychain() {
 }
 
 function postbundle_qtkeychain() {
- install_name_delete_rpath /opt/Qt/5.14.1/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqt5keychain.0.10.0.dylib
+ install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_qtkeychain
 
  install_name_id @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_qtkeychain
  install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/MacOS/QGIS

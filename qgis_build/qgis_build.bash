@@ -68,3 +68,5 @@ done
 try cd $QGIS_BUILD_DIR
 try make -j ${CORES}
 try make install
+
+echo "build done"
