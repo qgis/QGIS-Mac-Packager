@@ -9,6 +9,7 @@ function check_geos() {
 
 function bundle_geos() {
     try cp -av $DEPS_LIB_DIR/libgeos_c.* $BUNDLE_LIB_DIR
+    try cp -av $DEPS_LIB_DIR/libgeos.* $BUNDLE_LIB_DIR
 }
 
 function postbundle_geos() {
@@ -56,7 +57,7 @@ function postbundle_geos() {
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
 
- install_name_change $DEPS_LIB_DIR/libgeos.3.8.1.dylib @rpath/libgeos.3.8.1.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgeos_c.1.13.3.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_libgeos @rpath/$LINK_libgeos $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libgeos_c
 
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
