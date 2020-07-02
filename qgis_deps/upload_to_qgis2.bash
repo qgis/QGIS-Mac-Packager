@@ -8,7 +8,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 ####################
 # load configuration
 if (( $# < 1 )); then
-    echo "sign_deps: $0 <path/to>/config/<my>.conf ..."
+    echo "upload_to_qgis2: $0 <path/to>/config/<my>.conf ..."
     exit 1
 fi
 CONFIG_FILE=$1

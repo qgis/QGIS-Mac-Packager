@@ -14,6 +14,7 @@ function bundle_geos() {
 
 function postbundle_geos() {
  install_name_id @rpath/$LINK_libgeos_c $BUNDLE_LIB_DIR/$LINK_libgeos_c
+ install_name_id @rpath/$LINK_libgeos $BUNDLE_LIB_DIR/$LINK_libgeos
 
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/QGIS
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
@@ -58,7 +59,6 @@ function postbundle_geos() {
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
 
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos @rpath/$LINK_libgeos $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libgeos_c
-
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal

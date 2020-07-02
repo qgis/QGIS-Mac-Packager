@@ -134,7 +134,7 @@ function check_binary_linker_links() {
   cd ${BUNDLE_DIR}
   OTOOL_L=$(otool -L $1)
 
-  ok=true
+  ok="true"
 
   #### LINKED LIBS
   if [ -z "$OTOOL_L" ]; then
@@ -143,25 +143,37 @@ function check_binary_linker_links() {
     if echo "${OTOOL_L}" | grep -q /usr/local/
     then
       echo "$1 contains /usr/local/ string <-- Picked some homebrew libraries!"
-      ok=false
+      ok="false"
     fi
 
     if echo "${OTOOL_L}"  | grep -q $QGIS_INSTALL_DIR
     then
       echo "$1 contains $QGIS_INSTALL_DIR string <-- forgot to change install_name for the linked library?"
-      ok=false
+      ok="false"
+    fi
+
+    if echo "${OTOOL_L}"  | grep -q $QGIS_BUILD_DIR
+    then
+      echo "$1 contains $QGIS_BUILD_DIR string <-- forgot to change install_name for the linked library?"
+      ok="false"
     fi
 
     if echo "${OTOOL_L}"  | grep -q $STAGE_PATH
     then
       echo "$1 contains $STAGE_PATH string <-- forgot to change install_name for the linked library?"
-      ok=false
+      ok="false"
+    fi
+
+    if echo "${OTOOL_L}"  | grep -q $QT_BASE
+    then
+      echo "$1 contains $QT_BASE string <-- forgot to change install_name for the linked library?"
+      ok="false"
     fi
 
     if echo ${OTOOL_L} | grep -q $BUNDLE_DIR
     then
       echo "$1 contains $BUNDLE_DIR string <-- forgot to change install_name for the linked library?"
-      ok=false
+      ok="false"
     fi
 
     targets=(
@@ -180,11 +192,11 @@ function check_binary_linker_links() {
         if echo "${OTOOL_L}" | grep -q /usr/lib/$i.dylib
         then
           echo "$1 contains /usr/lib/$i.dylib string -- we should be using our $i, not system!"
-          ok=false
+          ok="false"
         fi
     done
 
-    if [ "ok" = false ]; then
+    if [[ "$ok" == "false" ]]; then
       echo "${OTOOL_L}"
       error "error encountered for checking $1 (LINKS)"
     fi
@@ -196,28 +208,28 @@ function check_binary_linker_links() {
     if echo "${OTOOL_RPATH}" | grep -q /usr/local/
     then
       echo "$1 RPATH contains /usr/local/ string <-- forgot to delete/modify RPATH?"
-      ok=false
+      ok="false"
     fi
 
     if echo "${OTOOL_RPATH}"  | grep -q $QGIS_INSTALL_DIR
     then
       echo "$1 RPATH contains $QGIS_INSTALL_DIR string <-- forgot to delete/modify RPATH?"
-      ok=false
+      ok="false"
     fi
 
     if echo "${OTOOL_RPATH}"  | grep -q $ROOT_OUT_PATH
     then
       echo "$1 RPATH contains $ROOT_OUT_PATH string <-- forgot to delete/modify RPATH?"
-      ok=false
+      ok="false"
     fi
 
     if echo ${OTOOL_RPATH} | grep -q $BUNDLE_DIR
     then
       echo "$1 RPATH contains $BUNDLE_DIR string <-- forgot to delete/modify RPATH?"
-      ok=false
+      ok="false"
     fi
 
-    if [ "ok" = false ]; then
+    if [[ "$ok" == "false" ]]; then
       echo "${OTOOL_RPATH}"
       error "error encountered for checking $1 (RPATH)"
     fi
@@ -244,6 +256,7 @@ run_final_check() {
   for lib in $LIBS; do
     attachmenttype=$(file ${STAGE_PATH}/bin/$lib | cut -d\  -f2 )
     if [[ $attachmenttype = "Mach-O" ]]; then
+      echo "checking $lib"
       check_binary_linker_links $lib
     fi
   done
