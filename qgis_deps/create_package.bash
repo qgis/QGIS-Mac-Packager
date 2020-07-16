@@ -41,10 +41,6 @@ if [ -f $INSTALL_SCRIPT ]; then
   rm -rf $INSTALL_SCRIPT
   touch $INSTALL_SCRIPT
   chmod +x $INSTALL_SCRIPT
-  echo "#!/usr/bin/env bash" >> $INSTALL_SCRIPT
-  echo "set -e" >> $INSTALL_SCRIPT
-  echo "ROOT_PATH=\"\$( cd \"\$( dirname \"\${BASH_SOURCE[0]}\" )\" && pwd )\"" >> $INSTALL_SCRIPT
-  echo "echo \"Running qgis-deps installer\"" >> $INSTALL_SCRIPT
 fi
 
 ##############################################
@@ -60,6 +56,10 @@ else
   cd $PWD
 fi
 
+echo "#!/usr/bin/env bash" >> $INSTALL_SCRIPT
+echo "set -e" >> $INSTALL_SCRIPT
+echo "ROOT_PATH=\"\$( cd \"\$( dirname \"\${BASH_SOURCE[0]}\" )\" && pwd )\"" >> $INSTALL_SCRIPT
+echo "echo \"Running qgis-deps installer\"" >> $INSTALL_SCRIPT
 echo "echo \"----------------------\"" >> $INSTALL_SCRIPT
 echo "if [ -f \$ROOT_PATH/$QT_PACKAGE_FILE ] && [ ! -d $QT_INSTALL_DIR ]; then" >> $INSTALL_SCRIPT
 echo "  echo \"Installing QT ${VERSION_qt} to $QT_INSTALL_DIR\"" >> $INSTALL_SCRIPT
