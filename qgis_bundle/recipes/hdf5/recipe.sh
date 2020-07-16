@@ -71,7 +71,3 @@ function postbundle_hdf5() {
  install_name_change $DEPS_LIB_DIR/$LINK_libhdf5_hl @rpath/$LINK_libhdf5_hl $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/h5py/h5p.cpython-37m-darwin.so
  install_name_change $DEPS_LIB_DIR/$LINK_libhdf5_hl @rpath/$LINK_libhdf5_hl $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/netCDF4-$VERSION_python_netcdf4-py$VERSION_major_python-macosx-$MACOSX_DEPLOYMENT_TARGET-x86_64.egg/netCDF4/_netCDF4.cpython-${VERSION_major_python//./}m-darwin.so
 }
-
-function add_config_info_hdf5() {
-    :
-}

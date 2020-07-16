@@ -15,9 +15,4 @@ function postbundle_zstd() {
  install_name_change $DEPS_LIB_DIR/$LINK_zstd @rpath/$LINK_zstd $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_zstd @rpath/$LINK_zstd $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libtiff
  install_name_change $DEPS_LIB_DIR/$LINK_zstd @rpath/$LINK_zstd $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
-
-}
-
-function add_config_info_zstd() {
-    :
 }

@@ -58,10 +58,3 @@ function postbundle_spatialite() {
  install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
 }
 
-function add_config_info_spatialite() {
-    :
-}
-function patch_spatialite_linker_links() {
-  install_name_tool -id "@rpath/libspatialite.dylib" ${STAGE_PATH}/lib/libspatialite.dylib
-
-}

@@ -56,7 +56,3 @@ function postbundle_protobuf() {
  install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
 }
-
-function add_config_info_protobuf() {
-    :
-}

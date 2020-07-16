@@ -114,8 +114,3 @@ function postbundle_wxmac() {
  install_name_change $DEPS_LIB_DIR/libwx_osx_cocoau_qa-${VERSION_wxmac_major}.dylib @rpath/libwx_osx_cocoau_qa-${VERSION_wxmac_major}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/libio_shapes.dylib
  install_name_change $DEPS_LIB_DIR/libwx_osx_cocoau_qa-${VERSION_wxmac_major}.dylib @rpath/libwx_osx_cocoau_qa-${VERSION_wxmac_major}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/libio_virtual.dylib
 }
-
-function add_config_info_wxmac() {
-    :
-}
-

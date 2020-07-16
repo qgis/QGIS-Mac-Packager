@@ -21,7 +21,3 @@ function postbundle_exiv2() {
  install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
  install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
 }
-
-function add_config_info_exiv2() {
-    :
-}

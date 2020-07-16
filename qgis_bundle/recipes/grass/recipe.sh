@@ -337,7 +337,3 @@ function postbundle_grass() {
  # libgrass_lidar
  install_name_id  @rpath/libgrass_lidar.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_lidar.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 }
-
-function add_config_info_grass() {
-    :
-}

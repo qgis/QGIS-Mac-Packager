@@ -7,7 +7,10 @@ function check_qca() {
 }
 
 function bundle_qca() {
-    try rsync -av $DEPS_LIB_DIR/$LINK_qca.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Header
+  try rsync -av $DEPS_LIB_DIR/$LINK_qca.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Header
+
+  #### PLUGINS
+  try rsync -av $DEPS_ROOT_DIR/qt5/plugins/crypto $BUNDLE_PLUGINS_DIR/
 }
 
 function postbundle_qca() {
@@ -54,8 +57,9 @@ function postbundle_qca() {
  install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
  install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
-}
 
-function add_config_info_qca() {
-    :
+ install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_PLUGINS_DIR/crypto/libqca-cyrus-sasl.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_PLUGINS_DIR/crypto/libqca-logger.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_PLUGINS_DIR/crypto/libqca-ossl.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_PLUGINS_DIR/crypto/libqca-softstore.dylib
 }

@@ -87,10 +87,3 @@ function postbundle_zlib() {
 
 }
 
-function add_config_info_zlib() {
-    :
-}
-
-patch_zlib_linker_links () {
-  install_name_tool -id "@rpath/libz.${LINK_zlib_version}.dylib" ${STAGE_PATH}/lib/libz.${LINK_zlib_version}.dylib
-}

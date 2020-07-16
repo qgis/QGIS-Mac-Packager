@@ -65,15 +65,10 @@ function postbundle_proj() {
  install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
  install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
 
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_list.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_datadir.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_crs.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_geod.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_proj.cpython-37m-darwin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-2.6.0-py3.7-macosx-10.13.0-x86_64.egg/pyproj/_transformer.cpython-37m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-${VERSION_python_pyproj}-${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/pyproj/_list.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-${VERSION_python_pyproj}-${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/pyproj/_datadir.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-${VERSION_python_pyproj}-${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/pyproj/_crs.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-${VERSION_python_pyproj}-${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/pyproj/_geod.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-${VERSION_python_pyproj}-${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/pyproj/_proj.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-${VERSION_python_pyproj}-${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/pyproj/_transformer.cpython-${VERSION_major_python//./}m-darwin.so
 }
-
-function add_config_info_proj() {
-    :
-}
-

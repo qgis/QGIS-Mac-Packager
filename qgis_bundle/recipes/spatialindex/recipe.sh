@@ -57,7 +57,3 @@ function postbundle_spatialindex() {
  install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
 }
-
-function add_config_info_spatialindex() {
-    :
-}

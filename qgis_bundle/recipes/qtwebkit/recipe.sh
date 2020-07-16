@@ -12,8 +12,12 @@ function bundle_qtwebkit() {
 function postbundle_qtwebkit() {
  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKitWidgets.framework/Versions/5/QtWebKitWidgets
  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
+ install_name_delete_rpath $ROOT_OUT_PATH/build/qtwebkit/build-x86_64/lib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKitWidgets.framework/Versions/5/QtWebKitWidgets
+
+ install_name_add_rpath @executable_path/../Frameworks $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKitWidgets.framework/Versions/5/QtWebKitWidgets
+ install_name_add_rpath @loader_path/Frameworks $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKitWidgets.framework/Versions/5/QtWebKitWidgets
+ install_name_add_rpath @executable_path/../Frameworks $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
+ install_name_add_rpath @loader_path/Frameworks $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
 }
 
-function add_config_info_qtwebkit() {
-    :
-}
+/opt/QGIS/qgis-deps-0.5.0/build/qtwebkit/build-x86_64/lib

@@ -122,14 +122,6 @@ function run_source_modules() {
   done
 }
 
-function run_add_config_info() {
-  for module in ${MODULES[*]}; do
-    fn=$(echo add_config_info_$module)
-    debug "Call $fn"
-    $fn
-  done
-}
-
 function check_binary_linker_links() {
   cd ${BUNDLE_DIR}
   OTOOL_L=$(otool -L $1)
@@ -189,7 +181,7 @@ function check_binary_linker_links() {
 
     for i in ${targets[*]}
     do
-        if echo "${OTOOL_L}" | grep -q /usr/lib/$i.dylib
+        if echo "${OTOOL_L}" | grep -q "/usr/lib/$i*.dylib"
         then
           echo "$1 contains /usr/lib/$i.dylib string -- we should be using our $i, not system!"
           ok="false"
@@ -254,7 +246,7 @@ run_final_check() {
   # frameworks (Mach-O without binaries)
   LIBS=`find . -type f ! -name "*.*"`
   for lib in $LIBS; do
-    attachmenttype=$(file ${STAGE_PATH}/bin/$lib | cut -d\  -f2 )
+    attachmenttype=$(file $lib | cut -d\  -f2 )
     if [[ $attachmenttype = "Mach-O" ]]; then
       echo "checking $lib"
       check_binary_linker_links $lib
@@ -276,7 +268,6 @@ function run() {
   run_check
   run_bundle
   run_postbundle
-  run_add_config_info
   run_final_check
   info "All done !"
 }

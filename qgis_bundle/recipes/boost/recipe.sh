@@ -11,7 +11,3 @@ function bundle_boost() {
 function postbundle_boost() {
     :
 }
-
-function add_config_info_boost() {
-    :
-}

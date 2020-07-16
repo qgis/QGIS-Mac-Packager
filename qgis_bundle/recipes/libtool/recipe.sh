@@ -14,7 +14,3 @@ function postbundle_libtool() {
 
   install_name_change $DEPS_LIB_DIR/$LINK_libltdl @rpath/$LINK_libltdl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_unixodbc
 }
-
-function add_config_info_libtool() {
-    :
-}

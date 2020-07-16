@@ -142,9 +142,4 @@ function postbundle_saga() {
   install_name_id @rpath/libtable_calculus.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/libtable_calculus.dylib
   install_name_id @rpath/libtable_tools.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/libtable_tools.dylib
   install_name_id @rpath/libtin_tools.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/libtin_tools.dylib
-
-}
-
-function add_config_info_saga() {
-    :
 }

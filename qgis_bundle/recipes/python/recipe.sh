@@ -15,7 +15,3 @@ function postbundle_python() {
 
     install_name_change $DEPS_LIB_DIR/$LINK_python @rpath/$LINK_python $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
 }
-
-function add_config_info_python() {
-    :
-}

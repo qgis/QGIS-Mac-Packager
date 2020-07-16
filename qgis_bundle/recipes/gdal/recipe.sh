@@ -71,6 +71,3 @@ function postbundle_gdal() {
  install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/osgeo/_gdalconst.cpython-${VERSION_major_python//./}m-darwin.so
 }
 
-function add_config_info_gdal() {
-    :
-}

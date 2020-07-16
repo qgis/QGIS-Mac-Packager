@@ -12,8 +12,3 @@ function bundle_libgeotiff() {
 function postbundle_libgeotiff() {
     :
 }
-
-function add_config_info_libgeotiff() {
-    :
-}
-

@@ -16,7 +16,3 @@ function postbundle_webp() {
  install_name_change $DEPS_LIB_DIR/$LINK_libwebp @rpath/$LINK_libwebp $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libtiff
  install_name_change $DEPS_LIB_DIR/$LINK_libwebp @rpath/$LINK_libwebp $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
 }
-
-function add_config_info_webp() {
-    :
-}

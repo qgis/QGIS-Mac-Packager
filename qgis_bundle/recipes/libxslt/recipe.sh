@@ -12,7 +12,3 @@ function bundle_libxslt() {
 function postbundle_libxslt() {
     install_name_id @rpath/$LINK_libxslt $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libxslt
 }
-
-function add_config_info_libxslt() {
-    :
-}

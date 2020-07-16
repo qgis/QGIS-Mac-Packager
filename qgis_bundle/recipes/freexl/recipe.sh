@@ -15,7 +15,3 @@ function postbundle_freexl() {
   install_name_change $DEPS_LIB_DIR/$LINK_freexl @rpath/$LINK_freexl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
   install_name_change $DEPS_LIB_DIR/$LINK_freexl @rpath/$LINK_freexl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
 }
-
-function add_config_info_freexl() {
-    :
-}

@@ -11,7 +11,3 @@ function bundle_mysql() {
 function postbundle_mysql() {
     :
 }
-
-function add_config_info_mysql() {
-    :
-}

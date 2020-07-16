@@ -44,6 +44,7 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - signature: `codesign -d -vvvv <file>` 
 - accept by gatekeeper: `spctl -a -t exec -vv <path>.dmg`
 - signature: `codesign --verify --deep --strict --verbose=2`
+- library deps (similar to Windows' Dependency Walker): https://github.com/kwin/macdependency
 
 # Server Setup 
 

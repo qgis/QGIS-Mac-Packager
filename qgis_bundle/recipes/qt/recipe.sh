@@ -8,6 +8,8 @@ function check_qt() {
 function bundle_qt() {
   QT_ROOT_DIR=$QT_BASE/clang_64
 
+  #### FRAMEWORKS
+
   # try rsync -av $QT_ROOT_DIR/lib/QtWebEngine.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   # try rsync -av $QT_ROOT_DIR/lib/QtWebEngineCore.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   # try rsync -av $QT_ROOT_DIR/lib/QtWebEngineWidgets.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
@@ -58,12 +60,16 @@ function bundle_qt() {
 
   # try rsync -av $QT_ROOT_DIR/lib/QtNetworkAuth.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   # try rsync -av $QT_ROOT_DIR/lib/QtVirtualKeyboard.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+
+  #### PLUGINS
+  try rsync -av $QT_ROOT_DIR/plugins/* $BUNDLE_PLUGINS_DIR/
+
+  # https://bugreports.qt.io/browse/QTBUG-85369
+  try rm $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlpsql.dylib
+  try rm $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlodbc.dylib
 }
 
 function postbundle_qt() {
     :
 }
 
-function add_config_info_qt() {
-    :
-}

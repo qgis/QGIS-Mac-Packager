@@ -14,7 +14,3 @@ function postbundle_libffi() {
 
     install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ctypes.cpython-37m-darwin.so
 }
-
-function add_config_info_libffi() {
-    :
-}
