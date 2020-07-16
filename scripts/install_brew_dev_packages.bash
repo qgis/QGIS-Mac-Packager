@@ -18,5 +18,6 @@ brew install help2man
 brew install autoconf
 brew install automake
 brew install parallel
+brew install texinfo
 
 pip3 install dmgbuild

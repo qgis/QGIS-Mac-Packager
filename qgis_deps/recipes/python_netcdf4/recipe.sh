@@ -43,10 +43,8 @@ function shouldbuild_python_netcdf4() {
 function build_python_netcdf4() {
   try rsync -a $BUILD_python_netcdf4/ $BUILD_PATH/python_netcdf4/build-$ARCH/
   try cd $BUILD_PATH/python_netcdf4/build-$ARCH
-  ls -la $BUILD_python_netcdf4/
 
   push_env
-
   export HDF5_DIR=$STAGE_PATH
   export NETCDF4_DIR=$STAGE_PATH
   try $PYTHON setup.py build

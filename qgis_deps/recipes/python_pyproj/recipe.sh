@@ -37,7 +37,7 @@ function prebuild_python_pyproj() {
 
 function shouldbuild_python_pyproj() {
   # If lib is newer than the sourcecode skip build
-  if python_package_installed PyQt5.Qsci; then
+  if python_package_installed pyproj; then
     DO_BUILD=0
   fi
 }

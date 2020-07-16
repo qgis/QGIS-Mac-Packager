@@ -4,20 +4,19 @@ DESC_gdal="Geospatial Data Abstraction Library"
 
 # version of your package
 # keep in SYNC with python_gdal receipt
-VERSION_gdal=3.0.4
+VERSION_gdal=3.1.2
 
-LINK_gdal=libgdal.26.dylib
+LINK_libgdal_version=27
+LINK_gdal=libgdal.$LINK_libgdal_version.dylib
 
 # dependencies of this recipe
 DEPS_gdal=(geos proj libgeotiff libxml2 xerces xz zstd libtiff netcdf hdf5 postgres jpeg png sqlite)
-
-LINK_libgdal_version=26
 
 # url of the package
 URL_gdal=https://github.com/OSGeo/gdal/releases/download/v${VERSION_gdal}/gdal-${VERSION_gdal}.tar.gz
 
 # md5 of the package
-MD5_gdal=c6bbb5caca06e96bd97a32918e0aa9aa
+MD5_gdal=68349526344ee45accf2773a1a6e71f2
 
 # default build path
 BUILD_gdal=$BUILD_PATH/gdal/$(get_directory $URL_gdal)

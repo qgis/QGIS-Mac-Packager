@@ -3,7 +3,7 @@
 DESC_bison="Parser generator"
 
 # version of your package
-VERSION_bison=3.5.3
+VERSION_bison=3.5.4
 
 # dependencies of this recipe
 DEPS_bison=()
@@ -12,7 +12,7 @@ DEPS_bison=()
 URL_bison=https://ftp.gnu.org/gnu/bison/bison-${VERSION_bison}.tar.xz
 
 # md5 of the package
-MD5_bison=f556fdd6df5ebf0c61720928811d2986
+MD5_bison=eca85fc68de0aa77b26963b0a30d995a
 
 # default build path
 BUILD_bison=$BUILD_PATH/bison/$(get_directory $URL_bison)
@@ -47,7 +47,7 @@ function build_bison() {
   try rsync -a $BUILD_bison/ $BUILD_PATH/bison/build-$ARCH/
   try cd $BUILD_PATH/bison/build-$ARCH
   push_env
-
+  which makeinfo
   try ${CONFIGURE} --disable-dependency-tracking
 
   check_file_configuration config.status

@@ -40,7 +40,7 @@ run() {
 }
 
 if (( $# < 1 )); then
-    echo "usage: $0 bundle_contents_folder binary"
+    echo "usage: $0 binary"
     exit 1
 fi
 

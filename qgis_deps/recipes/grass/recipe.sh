@@ -5,7 +5,7 @@ DESC_grass="Geographic Resources Analysis Support System"
 # version of your package
 VERSION_grass_major=7
 VERSION_grass_minor=8
-VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.2
+VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.3
 
 
 # dependencies of this recipe
@@ -17,7 +17,7 @@ LINK_libgrass_version=26
 URL_grass=https://github.com/OSGeo/grass/archive/${VERSION_grass}.tar.gz
 
 # md5 of the package
-MD5_grass=276506d7df11a341ab03c64da6acaee2
+MD5_grass=2ca90dcddb0b5a21ac69b3faddc642ca
 
 # default build path
 BUILD_grass=$BUILD_PATH/grass/$(get_directory $URL_grass)

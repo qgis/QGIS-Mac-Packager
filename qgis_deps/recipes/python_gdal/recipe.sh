@@ -4,8 +4,8 @@ DESC_python_gdal="Proj binding for python"
 
 # version of your package
 # keep in SYNC with gdal receipt
-VERSION_python_gdal=${VERSION_gdal}
 source $RECIPES_PATH/gdal/recipe.sh
+VERSION_python_gdal=${VERSION_gdal}
 
 # dependencies of this recipe
 DEPS_python_gdal=(python python_pyproj gdal)
@@ -37,7 +37,7 @@ function prebuild_python_gdal() {
 
 function shouldbuild_python_gdal() {
   # If lib is newer than the sourcecode skip build
-  if python_package_installed osgeo; then
+  if python_package_installed gdal; then
     DO_BUILD=0
   fi
 }

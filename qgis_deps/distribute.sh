@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+# set -x
 
 function pop_env() {
   info "Leaving build environment"
@@ -27,7 +27,7 @@ function pop_env() {
 }
 
 #########################################################################################################
-info "Loading configuration"
+echo "Loading configuration"
 #########################################################################################################
 
 SED="sed -i.orig"
@@ -70,10 +70,6 @@ function check_config_conf_vars() {
 
     if [ "X$VERSION_qt" == "X" ]; then
       error "No VERSION_qt environment set, abort"
-    fi
-
-    if [ "X$VERSION_major_python" == "X" ]; then
-      error "No VERSION_major_python environment set, abort"
     fi
 
     if [ "X$QT_BASE" == "X" ]; then
@@ -196,6 +192,8 @@ function push_env() {
     add_homebrew_path pkg-config
     add_homebrew_path help2man
     add_homebrew_path git
+    add_homebrew_path wget
+    add_homebrew_path texinfo
 
     ###################
     # Configure/Make system
