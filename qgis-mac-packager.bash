@@ -2,20 +2,17 @@
 
 set -eo pipefail
 
-PWD=`pwd`
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+PWD=$(pwd)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-if (( $# < 5 )); then
-    echo "usage: $0 build_dir git_tag release_name package_name config_file"
+if (( $# < 2 )); then
+    echo "usage: $0 package_name config_file"
+    echo "example: ./$0 /path/to/qgis_nightly2_master_20200717_024956.dmg config/nightly2.conf"
     exit 1
 fi
 
-BUILD_DIR=$1
-GIT=$2
-RELEASE=$3
-PACKAGE=$4
-CONFIG_FILE=$5
+PACKAGE=$1
+CONFIG_FILE=$2
 
 echo "Checking config file $CONFIG_FILE"
 if [ ! -f "$CONFIG_FILE" ]; then
@@ -23,18 +20,6 @@ if [ ! -f "$CONFIG_FILE" ]; then
 fi
 shift
 source $CONFIG_FILE
-
-if [[ "$BUILD_DIR/build" != $QGIS_BUILD_DIR ]]; then
-  error "error $BUILD_DIR/build is not equal $QGIS_BUILD_DIR from $CONFIG_FILE"
-fi
-
-if [[ "$BUILD_DIR/install" != $QGIS_INSTALL_DIR ]]; then
-  error "error $BUILD_DIR/install is not equal $QGIS_INSTALL_DIR from $CONFIG_FILE"
-fi
-
-if [[ "$BUILD_DIR/QGIS" != $QGIS_SOURCE_DIR ]]; then
-  error "error $BUILD_DIR/QGIS is not equal $QGIS_SOURCE_DIR from $CONFIG_FILE"
-fi
 
 echo "Verifying the QGIS repo is cloned locally in $QGIS_SOURCE_DIR"
 if [ ! -f "$QGIS_SOURCE_DIR/INSTALL.md" ]; then
@@ -57,8 +42,8 @@ $DIR/qgis_build/qgis_build.bash "$CONFIG_FILE"
 echo "Bundle QGIS"
 $DIR/qgis_bundle/qgis_bundle.bash "$CONFIG_FILE"
 
-echo "Package QGIS"
-$DIR/qgis_package/qgis_package.bash "$CONFIG_FILE" "$BUILD_DIR/$PACKAGE"
+echo "Package QGIS to $PACKAGE"
+$DIR/qgis_package/qgis_package.bash "$CONFIG_FILE" "$PACKAGE"
 
 echo "All done (qgis-mac-packager.bash)"
 cd "$PWD"

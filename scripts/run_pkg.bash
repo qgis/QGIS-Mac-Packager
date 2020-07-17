@@ -107,10 +107,9 @@ BD=$DIR/../../builds/${PKG}
 echo "BUILDING ${PKG}"
 if [ $PKG = "nightly2" ]; then
   $DIR/run_build2.bash \
-    $BD \
     ${TAG} \
     ${PKG} \
-    "QGIS.app" "$@"
+    "$@"
 else
   $DIR/run_build.bash \
     $BD \
