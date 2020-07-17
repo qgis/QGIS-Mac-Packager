@@ -55,4 +55,5 @@ function postbundle_libtasn1() {
  install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
  install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
  install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
 }

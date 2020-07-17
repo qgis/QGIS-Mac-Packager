@@ -57,6 +57,7 @@ function bundle_qt() {
   try rsync -av $QT_ROOT_DIR/lib/QtSensors.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtTextToSpeech.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QT_ROOT_DIR/lib/QtQmlModels.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+  try rsync -av $QT_ROOT_DIR/lib/QtDesignerComponents.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
 
   # try rsync -av $QT_ROOT_DIR/lib/QtNetworkAuth.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   # try rsync -av $QT_ROOT_DIR/lib/QtVirtualKeyboard.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
@@ -67,9 +68,12 @@ function bundle_qt() {
   # https://bugreports.qt.io/browse/QTBUG-85369
   try rm $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlpsql.dylib
   try rm $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlodbc.dylib
+
+  #### Designer
+  try rsync -av $QT_ROOT_DIR/bin/Designer.app $BUNDLE_MACOS_DIR/
 }
 
 function postbundle_qt() {
-    :
+ install_name_add_rpath @executable_path/../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/Designer.app/Contents/MacOS/Designer
 }
 

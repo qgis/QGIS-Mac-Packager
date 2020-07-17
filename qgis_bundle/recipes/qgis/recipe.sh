@@ -11,21 +11,25 @@ function bundle_qgis() {
 
   try cp -av $QGIS_CONTENTS_DIR/Info.plist $BUNDLE_CONTENTS_DIR
   try cp -av $QGIS_CONTENTS_DIR/PkgInfo $BUNDLE_CONTENTS_DIR
-
   try cp -av $QGIS_CONTENTS_DIR/MacOS/QGIS $BUNDLE_MACOS_DIR
 
+  # LIBS
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgis_app.* $BUNDLE_LIB_DIR
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgispython.* $BUNDLE_LIB_DIR
 
-  try rsync -av $QGIS_CONTENTS_DIR/PlugIns/ $BUNDLE_PLUGINS_DIR/
+  #### RESOURCES
   try rsync -av $QGIS_CONTENTS_DIR/Resources/ $BUNDLE_RESOURCES_DIR/ --exclude __pycache__
 
+  #### FRAMEWORKS
   try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_analysis.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Header
   try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_core.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_gui.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_native.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_3d.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
+
+  #### PLUGINS
+  try rsync -av $QGIS_CONTENTS_DIR/PlugIns/ $BUNDLE_PLUGINS_DIR/
 }
 
 function postbundle_qgis() {
@@ -89,7 +93,8 @@ function postbundle_qgis() {
  install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
  install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
  install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
- 
+ install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
+
  ## GUI
  install_name_id @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
 
@@ -124,6 +129,7 @@ function postbundle_qgis() {
  install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
  install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
  install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
+ install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
 
  ## ANALYSIS
  install_name_id @rpath/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
@@ -178,6 +184,7 @@ function postbundle_qgis() {
  install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
  install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
  install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
+ install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
 
  # 3D
  install_name_id @rpath/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
@@ -194,4 +201,7 @@ function postbundle_qgis() {
  install_name_change $QGIS_BUILD_DIR/output/lib/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} @rpath/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
  install_name_change $QGIS_BUILD_DIR/output/lib/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} @rpath/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
  install_name_change $QGIS_BUILD_DIR/output/lib/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} @rpath/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
+
+ # CUSTOMWIDGETS
+ install_name_id @rpath/libqgis_customwidgets.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
 }
