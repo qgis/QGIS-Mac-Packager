@@ -60,6 +60,13 @@ function install_name_id {
   try install_name_tool -id $1 $2
 }
 
+function fix_exec_link {
+  FROMSTR=$1
+  TOSTR=$2
+  FILENAME=$3
+  try ${SED} "s;\#\!$FROMSTR;\#\!/usr/bin/perl -e\$_=\$ARGV\[0\]\;s/\[^\\/\]+\$/$TOSTR/\;exec(\$_,\@ARGV);g" "$FILENAME"
+  try ${SED} "s;exec $FROMSTR/bin/python3;exec \'\`dirname \$0\`/$TOSTR\'/\;exec(\$_,\@ARGV);g" "$FILENAME"
+}
 #################################
 # FIND all modules - the order does not matter here
 MODULES=
@@ -228,12 +235,61 @@ function check_binary_linker_links() {
   fi
 }
 
+function check_other_files_links() {
+  cd ${BUNDLE_DIR}
+  ok="true"
+  # all other files
+  echo "###########################################"
+  echo " grep /usr/local/"
+  echo "###########################################"
+  if grep -rni /usr/local/ .
+  then
+    grep -rni /usr/local/ .
+    echo "Some scripts reference absolute /usr/local/ dir"
+    ok="false"
+  fi
+
+  echo "###########################################"
+  echo " grep $QGIS_INSTALL_DIR"
+  echo "###########################################"
+  if grep -rni $QGIS_INSTALL_DIR .
+  then
+    grep -rni $QGIS_INSTALL_DIR .
+    echo "Some scripts reference absolute $QGIS_INSTALL_DIR dir"
+    ok="false"
+  fi
+
+  echo "###########################################"
+  echo " grep $ROOT_OUT_PATH"
+  echo "###########################################"
+  if grep -rni $ROOT_OUT_PATH .
+  then
+    grep -rni $ROOT_OUT_PATH .
+    echo "Some scripts reference absolute $ROOT_OUT_PATH dir"
+    ok="false"
+  fi
+
+  echo "###########################################"
+  echo " grep $BUNDLE_DIR"
+  echo "###########################################"
+  if grep -rni $BUNDLE_DIR .
+  then
+    grep -rni $BUNDLE_DIR .
+    echo "Some scripts reference absolute $BUNDLE_DIR dir"
+    ok="false"
+  fi
+
+  if [[ "$ok" == "false" ]]; then
+      error "error encountered for grep of all files"
+  fi
+}
+
 run_final_check() {
   info "Running final check in the ${BUNDLE_DIR}"
 
   # libs
   info "Check libraries"
-  cd ${BUNDLE_DIR}
+  cd "${BUNDLE_DIR}"
   LIBS1=`find . -type f -name "*.so"`
   LIBS2=`find . -type f -name "*.dylib"`
   LIBS="$LIBS1 $LIBS2"
@@ -254,12 +310,25 @@ run_final_check() {
   done
 
   info "Check other files"
-  # all other files
-  if grep -rni $BUNDLE_DIR .
-  then
-    grep -rni $STAGE_PATH $STAGE_PATH
-    error "Some scripts reference absolute BUNDLE_DIR dir $BUNDLE_DIR"
-  fi
+  check_other_files_links
+}
+
+run_clean_tmp_files() {
+  info "Clean tmp files"
+
+  cd "${BUNDLE_DIR}"
+
+  # files
+  for i in *.swp *.orig *.a *.pyc *.c *.cpp *.h *.hpp *.cmake *.prl
+  do
+    find . -type fl -name $i -exec rm -f {} +
+  done
+
+  # dirs
+  for i in include Headers __pycache__ man
+  do
+    find . -type dl -name "$i" -exec rm -rf {} +
+  done
 }
 
 function run() {
@@ -268,6 +337,7 @@ function run() {
   run_check
   run_bundle
   run_postbundle
+  run_clean_tmp_files
   run_final_check
   info "All done !"
 }

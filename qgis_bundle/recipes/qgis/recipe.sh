@@ -8,10 +8,12 @@ function check_qgis() {
 
 function bundle_qgis() {
   QGIS_CONTENTS_DIR=$QGIS_INSTALL_DIR/QGIS.app/Contents/
+  QGIS_RECIPE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
   try cp -av $QGIS_CONTENTS_DIR/Info.plist $BUNDLE_CONTENTS_DIR
   try cp -av $QGIS_CONTENTS_DIR/PkgInfo $BUNDLE_CONTENTS_DIR
   try cp -av $QGIS_CONTENTS_DIR/MacOS/QGIS $BUNDLE_MACOS_DIR
+  try cp -av $QGIS_RECIPE_DIR/../../../resources/pyqgis-startup.py $BUNDLE_RESOURCES_DIR/python/
 
   # LIBS
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgis_app.* $BUNDLE_LIB_DIR
@@ -35,6 +37,16 @@ function bundle_qgis() {
 function postbundle_qgis() {
  chmod +x $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
+ # Patch Info.plist
+ /usr/libexec/PlistBuddy -c "Add :LSMinimumSystemVersion string $MACOSX_DEPLOYMENT_TARGET" $BUNDLE_CONTENTS_DIR/Info.plist
+ /usr/libexec/PlistBuddy -c "Add :LSFileQuarantineEnabled bool false" $BUNDLE_CONTENTS_DIR/Info.plist
+ # PYQGIS_STARTUP should be relative to Contents/Resources/python
+ /usr/libexec/PlistBuddy -c "Add :LSEnvironment:PYQGIS_STARTUP string pyqgis-startup.py" $BUNDLE_CONTENTS_DIR/Info.plist
+ # PROJ_LIB see ../proj/recipe.sh
+ # GDAL_DATA and GDAL_DRIVER_PATH see ../gdal/recipe.sh
+ # PYTHONHOME see ../python/recipe.sh
+
+ # RPATHS
  install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_CONTENTS_DIR/MacOS/QGIS
  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
  install_name_delete_rpath $QGIS_INSTALL_DIR/QGIS.app/Contents/MacOS/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS

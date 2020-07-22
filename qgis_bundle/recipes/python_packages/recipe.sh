@@ -8,6 +8,8 @@ function check_python_packages() {
 
 function bundle_python_packages() {
    try rsync -av $DEPS_PYTHON_SITE_PACKAGES_DIR/ $BUNDLE_PYTHON_SITE_PACKAGES_DIR/ --exclude __pycache__
+
+   try ln -s "$BUNDLE_CONTENTS_DIR/Resources/python" "$BUNDLE_CONTENTS_DIR/MacOS/lib/python3.7"
 }
 
 function postbundle_python_packages() {

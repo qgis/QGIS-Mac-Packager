@@ -9,6 +9,16 @@ function check_gdal() {
 
 function bundle_gdal() {
   try cp -av $DEPS_LIB_DIR/libgdal*dylib $BUNDLE_LIB_DIR
+
+  # GDAL plugins
+  # https://github.com/qgis/QGIS/blob/518cc16e87aba6798658acf75c86f27a0f4d99b3/src/app/main.cpp#L1198
+  # should be in Contents/MacOS/lib/gdalplugins
+  # we do not have any gdalplugins yet
+  try mkdir $BUNDLE_CONTENTS_DIR/MacOS/lib/gdalplugins
+
+  # GDAL data
+  # https://github.com/qgis/QGIS/blob/518cc16e87aba6798658acf75c86f27a0f4d99b3/src/app/main.cpp#L1205
+  # should be Contents/Resources/gdal
   try rsync -av $DEPS_SHARE_DIR/gdal $BUNDLE_RESOURCES_DIR/
 }
 

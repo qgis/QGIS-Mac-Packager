@@ -47,11 +47,12 @@ nightly)
 	;;
 
 nightly2)
-	BRANCH=master
+  # TODO change back to master when https://github.com/qgis/QGIS/pull/37918 is merged
+	BRANCH=macos_deployment_fixes
 	;;
 
 *)
-	echo "usage: $0 {nightly|pr|ltr}"
+	echo "usage: $0 {nightly|nightly2|pr|ltr}"
 	exit 1
 	;;
 

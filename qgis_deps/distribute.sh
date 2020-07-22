@@ -30,7 +30,6 @@ function pop_env() {
 echo "Loading configuration"
 #########################################################################################################
 
-SED="sed -i.orig"
 XCODE_DEVELOPER="$(xcode-select -print-path)"
 CORES=$(sysctl -n hw.ncpu)
 export CORES=$CORES
