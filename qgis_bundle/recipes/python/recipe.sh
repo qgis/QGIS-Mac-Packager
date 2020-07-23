@@ -29,7 +29,7 @@ function postbundle_python() {
     install_name_add_rpath @executable_path/../lib $BUNDLE_BIN_DIR/python$VERSION_major_python
 
     # patch shell scripts
-    for i in pip3 pip3.7 2to3 idle3 pyvenv pydoc3 python3.7-config pyrcc5 pyuic5 pylupdate5
+    for i in pip pip3 pip3.7 2to3 2to3-3.7 idle3 idle3.7 pyvenv pyvenv-3.7 pydoc3 pydoc3.7 python3.7-config python3.7m-config pyrcc5 pyuic5 pylupdate5
     do
       fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
     done

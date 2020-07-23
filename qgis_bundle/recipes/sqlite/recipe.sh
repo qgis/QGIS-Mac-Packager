@@ -9,7 +9,7 @@ function check_sqlite() {
 
 function bundle_sqlite() {
     try cp -av $DEPS_LIB_DIR/$LINK_sqlite $BUNDLE_LIB_DIR/$LINK_sqlite
-    try ln -s $BUNDLE_LIB_DIR/$LINK_sqlite $BUNDLE_LIB_DIR/libsqlite3.dylib
+    mk_sym_link $BUNDLE_LIB_DIR $LINK_sqlite libsqlite3.dylib
 }
 
 function postbundle_sqlite() {

@@ -64,8 +64,19 @@ function fix_exec_link {
   FROMSTR=$1
   TOSTR=$2
   FILENAME=$3
-  try ${SED} "s;\#\!$FROMSTR;\#\!/usr/bin/perl -e\$_=\$ARGV\[0\]\;s/\[^\\/\]+\$/$TOSTR/\;exec(\$_,\@ARGV);g" "$FILENAME"
-  try ${SED} "s;exec $FROMSTR/bin/python3;exec \'\`dirname \$0\`/$TOSTR\'/\;exec(\$_,\@ARGV);g" "$FILENAME"
+  try ${SED} "s&\#\!$FROMSTR&\#\!/usr/bin/perl -e\$_=\$ARGV\[0\]\;s/\[^\\/\]+\$/$TOSTR/\;exec(\$_,\@ARGV)&g" "$FILENAME"
+  try ${SED} "s;exec $FROMSTR;exec \'\`dirname \$0\`/$TOSTR\';g" "$FILENAME"
+}
+
+function mk_sym_link {
+  DIR=$1
+  SRC=$2
+  DEST=$3
+
+  PWD=`pwd`
+  cd $DIR
+  try ln -s $SRC $DEST
+  cd $PWD
 }
 #################################
 # FIND all modules - the order does not matter here
@@ -321,12 +332,14 @@ run_clean_tmp_files() {
   # files
   for i in *.swp *.orig *.a *.pyc *.c *.cpp *.h *.hpp *.cmake *.prl
   do
+    info "Cleaning $i files"
     find . -type fl -name $i -exec rm -f {} +
   done
 
   # dirs
   for i in include Headers __pycache__ man
   do
+    info "Cleaning $i dirs"
     find . -type dl -name "$i" -exec rm -rf {} +
   done
 }
