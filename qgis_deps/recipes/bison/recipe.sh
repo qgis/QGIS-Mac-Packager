@@ -60,7 +60,7 @@ function build_bison() {
 
 # function called after all the compile have been done
 function postbuild_bison() {
-  verify_bin bison
+  verify_binary bin/bison
 }
 
 # function to append information to config file

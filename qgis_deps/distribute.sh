@@ -130,7 +130,6 @@ function python_package_installed() {
       # echo "$1 a"
       return 0
     fi
-    # echo "$1 b"
     pop_env
 
     return 1
@@ -193,6 +192,7 @@ function push_env() {
     add_homebrew_path git
     add_homebrew_path wget
     add_homebrew_path texinfo
+    add_homebrew_path gcc
 
     ###################
     # Configure/Make system
@@ -363,115 +363,10 @@ function verify_binary() {
   check_linked_rpath $BINARY
 }
 
-# TODO remove this function!
-function verify_lib() {
-  cd ${STAGE_PATH}/
-
-  if [ ! -f "lib/$1" ]; then
-    debug "Missing library: ${STAGE_PATH}/lib/$1"
-  fi
-
-  LIB_ARCHS=`lipo -archs lib/$1`
-  if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
-    error "Library lib/$1 was not successfully build for $ARCH, but ${LIB_ARCHS}"
-  fi
-
-  check_linked_rpath lib/$1
-}
-
-# TODO remove this function!
-function verify_bin() {
-  cd ${STAGE_PATH}/
-
-  if [ ! -f "bin/$1" ]; then
-       debug "Missing binary: ${STAGE_PATH}/bin/$1"
-  fi
-
-  LIB_ARCHS=`lipo -archs bin/$1`
-  if [[ $LIB_ARCHS != *"$ARCH"* ]]; then
-    error "Executable bin/$1 was not successfully build for $ARCH, but ${LIB_ARCHS}"
-  fi
-
-  check_linked_rpath bin/$1
-
-  # check that the binary has the rpath to the lib folder
-  # if otool -l bin/$1 |grep -q "@executable_path/../lib"
-  # then
-    : # OK!
-  # else
-  #  otool -l bin/$1
-  #  error "Executable bin/$1 does not contain rpath to lib folder $STAGE_PATH string <-- forgot to add to receipt: install_name_tool -add_rpath @executable_path/../lib bin/$1 ? "
-  #fi
-
-  # check that the binary has the rpath to the lib folder
-  #if otool -l bin/$1 |grep -q "$ROOT_OUT_PATH"
-  #then
-  #  otool -l bin/$1
-  #  error "Executable bin/$1 does contain rpath to lib folder $ROOT_OUT_PATH string <-- forgot to add to receipt: install_name_tool -delete_rpath @executable_path/../lib bin/$1 ? "
-  #fi
-
-  # check that the binary that links QT has the QT rpath
-  #if otool -L bin/$1 |grep -q "@rpath/Qt"
-  #then
-  #  if otool -l bin/$1 |grep -q "$QT_BASE/clang_64/lib"
-  #  then
-  #    : # OK!
-  #  else
-  #    otool -l bin/$1
-  #    error "Executable bin/$1 does contain rpath to QT folder $QT_BASE/clang_64/lib <-- forgot to add to receipt: install_name_tool -add_rpath \$QT_BASE/clang_64/lib bin/$1 ? "
-  #  fi
-  #fi
-}
-
 run_final_check() {
-  info "Running final check for all libraries in the ${STAGE_PATH}/lib"
+  info "Running final check"
 
-  # libs
-  cd ${STAGE_PATH}/lib
-  LIBS1=`find . -type f -name "*.so"`
-  LIBS2=`find . -type f -name "*.dylib"`
-  LIBS="$LIBS1 $LIBS2"
-  for lib in $LIBS; do
-    verify_lib $lib
-  done
 
-  # frameworks
-  cd ${STAGE_PATH}/lib
-  LIBS=`find . -type f ! -name "*.*"`
-  for lib in $LIBS; do
-    attachmenttype=$(file ${STAGE_PATH}/bin/$lib | cut -d\  -f2 )
-    if [[ $attachmenttype = "Mach-O" ]]; then
-      verify_lib $lib
-    fi
-  done
-
-  cd ${STAGE_PATH}/Frameworks
-  LIBS=`find . -type f ! -name "*.*"`
-  for lib in $LIBS; do
-    attachmenttype=$(file ${STAGE_PATH}/bin/$lib | cut -d\  -f2 )
-    if [[ $attachmenttype = "Mach-O" ]]; then
-      verify_lib $lib
-    fi
-  done
-
-  info "Running final check for all binaries in the ${STAGE_PATH}/bin"
-  # binaries
-  mkdir -p ${STAGE_PATH}/bin
-  cd ${STAGE_PATH}/bin
-  EXEC=`find . -type f -name "*" ! -name "sip" ! -name "pip*" ! -name "activate*" ! -name "easy_install*" ! -name "python*"`
-  for bin in $EXEC; do
-    attachmenttype=$(file ${STAGE_PATH}/bin/$bin | cut -d\  -f2 )
-    if [[ $attachmenttype = "Mach-O" ]]; then
-      verify_bin $bin
-    fi
-  done
-
-  # all other files
-  #if grep -rni $STAGE_PATH $STAGE_PATH --exclude-dir=__pycache__
-  #then
-  #  grep -rni $STAGE_PATH $STAGE_PATH --exclude-dir=__pycache__
-  #  error "Some scripts reference absolute STAGE_PATH dir $STAGE_PATH"
-  #fi
 }
 
 function usage() {
@@ -871,7 +766,7 @@ function run() {
   run_prebuild
   run_build
   run_postbuild
-  # run_final_check
+  run_final_check
   run_create_config_file
   info "All done !"
 }
@@ -881,9 +776,6 @@ function list_modules() {
   echo "Available modules: $modules"
   exit 0
 }
-
-# run_final_check
-# exit 0;
 
 # Do the build
 while getopts ":hBvlfxic:m:u:s:g" opt; do
@@ -914,7 +806,7 @@ while getopts ":hBvlfxic:m:u:s:g" opt; do
       ;;
     c)
       push_env
-      eval $OPTARG
+      bash -c "$OPTARG"
       pop_env
       exit 0
       ;;

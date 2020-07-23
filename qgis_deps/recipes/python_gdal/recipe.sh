@@ -8,7 +8,7 @@ source $RECIPES_PATH/gdal/recipe.sh
 VERSION_python_gdal=${VERSION_gdal}
 
 # dependencies of this recipe
-DEPS_python_gdal=(python python_pyproj gdal)
+DEPS_python_gdal=(python python_pyproj gdal python_packages_pre )
 
 # url of the package
 URL_python_gdal=${URL_gdal}

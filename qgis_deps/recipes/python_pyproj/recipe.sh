@@ -8,7 +8,7 @@ VERSION_python_pyproj=2.6.0
 
 # dependencies of this recipe
 # depends on PyQt5
-DEPS_python_pyproj=(python openssl libtiff sqlite proj python_packages)
+DEPS_python_pyproj=(python openssl libtiff sqlite proj python_packages_pre)
 
 # url of the package
 URL_python_pyproj=https://github.com/pyproj4/pyproj/archive/v${VERSION_python_pyproj}rel.tar.gz

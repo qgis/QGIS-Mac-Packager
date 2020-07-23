@@ -22,15 +22,7 @@ DEPS_qgis_deps=(
     postgres
     protobuf
     python
-    python_packages
-    python_sip
-    python_pyqt5
-    python_netcdf4
-    python_qscintilla
-    python_pyproj
-    python_owslib
-    python_gdal
-    python_h5py
+    python_packages_post
     qca
     qscintilla
     qtkeychain
@@ -42,7 +34,6 @@ DEPS_qgis_deps=(
     sqlite
     xz
 )
-# TODO grass!
 
 # url of the package
 URL_qgis_deps=
@@ -51,7 +42,7 @@ URL_qgis_deps=
 MD5_qgis_deps=
 
 # default build path
-BUILD_qgis_deps=$BUILD_PATH/qgis_deps/$(get_directory $URL_qgis_deps)
+BUILD_qgis_deps=$BUILD_PATH/qgis_deps/qgis_deps
 
 # default recipe path
 RECIPE_qgis_deps=$RECIPES_PATH/qgis_deps

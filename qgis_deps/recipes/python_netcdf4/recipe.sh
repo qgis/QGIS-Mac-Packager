@@ -7,7 +7,7 @@ DESC_python_netcdf4="Python binding of HDF5"
 VERSION_python_netcdf4=1.5.3
 
 # dependencies of this recipe
-DEPS_python_netcdf4=(python python_packages netcdf hdf5)
+DEPS_python_netcdf4=(python python_packages_pre netcdf hdf5)
 
 # url of the package
 URL_python_netcdf4=https://github.com/Unidata/netcdf4-python/archive/v${VERSION_python_netcdf4}rel.tar.gz

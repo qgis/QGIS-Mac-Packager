@@ -7,7 +7,7 @@ DESC_python_h5py="Python binding of HDF5"
 VERSION_python_h5py=2.10.0
 
 # dependencies of this recipe
-DEPS_python_h5py=(python python_packages hdf5)
+DEPS_python_h5py=(python hdf5 python_packages_pre)
 
 # url of the package
 URL_python_h5py=
@@ -54,7 +54,7 @@ function build_python_h5py() {
 
 # function called after all the compile have been done
 function postbuild_python_h5py() {
-   if ! python_package_installed owslib.wms; then
+   if ! python_package_installed h5py; then
       error "Missing python package h5py"
    fi
 }

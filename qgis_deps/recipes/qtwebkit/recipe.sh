@@ -67,8 +67,8 @@ function build_qtwebkit() {
 
 # function called after all the compile have been done
 function postbuild_qtwebkit() {
-  verify_lib qml/QtWebKit/experimental/libqmlwebkitexperimentalplugin.so
-  verify_lib qml/QtWebKit/libqmlwebkitplugin.so
+  verify_binary lib/qml/QtWebKit/experimental/libqmlwebkitexperimentalplugin.so
+  verify_binary lib/qml/QtWebKit/libqmlwebkitplugin.so
 }
 
 # function to append information to config file

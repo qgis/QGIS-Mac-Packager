@@ -1,31 +1,32 @@
 #!/bin/bash
 
-DESC_python_packages="Common packages for python"
+# Pa
+DESC_python_packages_pre="Common packages for python (pre)"
 
 # version of your package (set in config.conf)
-VERSION_python_packages=${VERSION_python}
+VERSION_python_packages_pre=${VERSION_python}
 
 # dependencies of this recipe
-DEPS_python_packages=(python python_sip python_pyqt5 little_cms2)
+DEPS_python_packages_pre=(python python_sip python_pyqt5 little_cms2)
 
 # url of the package
-URL_python_packages=
+URL_python_packages_pre=
 
 # md5 of the package
-MD5_python_packages=
+MD5_python_packages_pre=
 
 # default build path
-BUILD_python_packages=$BUILD_PATH/python_packages/v${VERSION_python_packages}
+BUILD_python_packages_pre=$BUILD_PATH/python_packages_pre/v${VERSION_python_packages_pre}
 
 # default recipe path
-RECIPE_python_packages=$RECIPES_PATH/python_packages
+RECIPE_python_packages_pre=$RECIPES_PATH/python_packages_pre
 
 # requirements
 # ORDER matters!
-REQUIREMENTS_python_packages=(
+REQUIREMENTS_python_packages_pre=(
     six==1.14.0
     python-dateutil==2.8.0
-    cython==0.29.16
+    cython==0.29.21
     decorator==4.4.2
     coverage==5.1
     nose2==0.9.2
@@ -49,10 +50,7 @@ REQUIREMENTS_python_packages=(
     oauthlib==3.1.0
     pbr==5.4.5
     ply==3.11
-    psycopg2==2.8.5
-    pyopenssl==19.1.0
     pygments==2.6.1
-    pyodbc==4.0.30
     pyparsing==2.4.7
     pypubsub==4.0.3
     pytz==2019.3
@@ -60,38 +58,26 @@ REQUIREMENTS_python_packages=(
     urllib3==1.24.3
     requests==2.23.0
     retrying==1.3.3
-    shapely==1.7.0
     simplejson==3.17.0
     termcolor==1.1.0
     tools==0.1.9
     traitlets==4.3.3
     xlrd==1.2.0
     xlwt==1.3.0
-    pysal==2.2.0
-    numpy==1.18.2
-    scipy==1.4.1
-    pandas==1.0.3
-    plotly==4.6.0
-    pillow==7.1.1
-    matplotlib==3.2.1
 )
 
-IMPORTS_python_packages=(
+IMPORTS_python_packages_pre=(
   six
-  numpy
   requests
   dateutil
   yaml
-  shapely
-  plotly
-  matplotlib
 )
 
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
-function prebuild_python_packages() {
-  try mkdir -p $BUILD_python_packages
-  cd $BUILD_python_packages
+function prebuild_python_packages_pre() {
+  try mkdir -p $BUILD_python_packages_pre
+  cd $BUILD_python_packages_pre
 
   # check marker
   if [ -f .patched ]; then
@@ -101,22 +87,22 @@ function prebuild_python_packages() {
   touch .patched
 }
 
-function shouldbuild_python_packages() {
+function shouldbuild_python_packages_pre() {
   if python_package_installed requests; then
     DO_BUILD=0
   fi
 }
 
 # function called to build the source code
-function build_python_packages() {
-  try mkdir -p $BUILD_PATH/proj/build-$ARCH
-  try cd $BUILD_PATH/proj/build-$ARCH
+function build_python_packages_pre() {
+  try mkdir -p $BUILD_PATH/python_packages_pre/build-$ARCH
+  try cd $BUILD_PATH/python_packages_pre/build-$ARCH
 
   push_env
 
-  for i in ${REQUIREMENTS_python_packages[*]}
+  for i in ${REQUIREMENTS_python_packages_pre[*]}
   do
-    info "Installing python_packages package $i"
+    info "Installing python_packages_pre package $i"
     # build_ext sometimes tries to dlopen the libraries
     # to determine the library version
     # this does not force --no-binary all strictly
@@ -127,21 +113,21 @@ function build_python_packages() {
 }
 
 # function called after all the compile have been done
-function postbuild_python_packages() {
- for i in ${IMPORTS_python_packages[*]}
+function postbuild_python_packages_pre() {
+ for i in ${IMPORTS_python_packages_pre[*]}
   do
     if ! python_package_installed $i ; then
-      error "Missing python package $i"
+      error "Missing python package $i (pre)"
     fi
   done
 }
 
 # function to append information to config file
-function add_config_info_python_packages() {
-  append_to_config_file "# python_packages-${VERSION_python_package}: ${DESC_python_package}"
-  for i in ${REQUIREMENTS_python_packages[*]}
+function add_config_info_python_packages_pre() {
+  append_to_config_file "# python_packages_pre-${VERSION_python_package}: ${DESC_python_package}"
+  for i in ${REQUIREMENTS_python_packages_pre[*]}
   do
     arr=(${i//==/ })
-    append_to_config_file "export VERSION_python_packages_${arr[0]//-/_}=${arr[1]}"
+    append_to_config_file "export VERSION_python_packages_pre_${arr[0]//-/_}=${arr[1]}"
   done
 }

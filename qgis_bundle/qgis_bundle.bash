@@ -68,16 +68,6 @@ function fix_exec_link {
   try ${SED} "s;exec $FROMSTR;exec \'\`dirname \$0\`/$TOSTR\';g" "$FILENAME"
 }
 
-function mk_sym_link {
-  DIR=$1
-  SRC=$2
-  DEST=$3
-
-  PWD=`pwd`
-  cd $DIR
-  try ln -s $SRC $DEST
-  cd $PWD
-}
 #################################
 # FIND all modules - the order does not matter here
 MODULES=
