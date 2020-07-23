@@ -28,7 +28,6 @@ REQUIREMENTS_python_packages_post=(
     pyopenssl==19.1.0
     pyodbc==4.0.30
     pysal==2.2.0
-    scipy==1.4.1
     pandas==1.0.3
     plotly==4.6.0
     matplotlib==3.2.1

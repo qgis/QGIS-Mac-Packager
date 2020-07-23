@@ -14,16 +14,16 @@ LINK_gcc_s=libgcc_s.1.dylib
 LINK_libquadmath=libquadmath.0.dylib
 
 # dependencies of this recipe
-DEPS_gcc=()
+DEPS_gcc=(zlib)
 
 # url of the package
-URL_gcc=
+URL_gcc=https://ftp.gnu.org/gnu/gcc/gcc-${VERSION_gcc}/gcc-${VERSION_gcc}.tar.xz
 
 # md5 of the package
-MD5_gcc=
+MD5_gcc=d00a144b771ddeb021b61aa205b7e345
 
 # default build path
-BUILD_gcc=$BUILD_PATH/gcc/gcc
+BUILD_gcc=$BUILD_PATH/gcc/$(get_directory $URL_gcc)
 
 # default recipe path
 RECIPE_gcc=$RECIPES_PATH/gcc
@@ -31,13 +31,14 @@ RECIPE_gcc=$RECIPES_PATH/gcc
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_gcc() {
-  mkdir -p $BUILD_gcc
   cd $BUILD_gcc
 
   # check marker
   if [ -f .patched ]; then
     return
   fi
+
+  # patch_configure_file configure
 
   touch .patched
 }
@@ -47,6 +48,32 @@ function shouldbuild_gcc() {
     DO_BUILD=0
   fi
 }
+
+# TODO compile ourselves!
+# function build_gcc() {
+#  try rsync -a $BUILD_gcc/ $BUILD_PATH/gcc/build-$ARCH/
+#  try cd $BUILD_PATH/gcc/build-$ARCH
+#  push_env
+#
+#  unset LD
+
+#  try ${CONFIGURE} \
+#    --enable-languages=fortran \
+#    --disable-multilib \
+#    --disable-nls \
+#    --with-system-zlib \
+#    --enable-checking=release \
+#    --program-suffix=-${VERSION_gcc_major} \
+#    --with-native-system-header-dir=/usr/include \
+#    --with-sysroot=`xcrun --show-sdk-path`
+
+#  check_file_configuration config.status
+
+#  try $MAKESMP "BOOT_LDFLAGS=-Wl,-headerpad_max_install_names"
+#  try $MAKESMP install
+
+#  pop_env
+#}
 
 # function called to build the source code
 function build_gcc() {
