@@ -64,6 +64,8 @@ REQUIREMENTS_python_packages_pre=(
     traitlets==4.3.3
     xlrd==1.2.0
     xlwt==1.3.0
+    joblib==0.16.0
+    threadpoolctl==2.1.0
 )
 
 IMPORTS_python_packages_pre=(

@@ -75,7 +75,7 @@ function postbuild_hdf5() {
   verify_binary lib/"libhdf5_cpp.dylib"
   verify_binary lib/"libhdf5_hl_cpp.dylib"
 
-  verify_bin "h5copy"
+  verify_binary bin/"h5copy"
 }
 
 # function to append information to config file

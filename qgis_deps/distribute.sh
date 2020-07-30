@@ -127,7 +127,6 @@ function python_package_installed() {
     push_env
     if $PYTHON -c import\ $python_import > /dev/null 2>&1
     then
-      # echo "$1 a"
       return 0
     fi
     pop_env
@@ -310,10 +309,10 @@ function get_directory() {
 
 function check_linked_rpath() {
   cd ${STAGE_PATH}
-  if otool -L $1 | grep -q /usr/local/lib
+  if otool -L $1 | grep -q /usr/local
   then
     otool -L $1
-    error "$1 contains /usr/local/lib string <-- CMake picked some homebrew libs!"
+    error "$1 contains /usr/local string <-- CMake picked some homebrew libs!"
   fi
 
   # the binaries cannot contain reference to build path since this path is not present when

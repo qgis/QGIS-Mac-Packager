@@ -64,7 +64,7 @@ function build_flex() {
 
 # function called after all the compile have been done
 function postbuild_flex() {
-  verify_lib "libfl.dylib"
+  verify_binary "lib/libfl.dylib"
 }
 
 # function to append information to config file

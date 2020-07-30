@@ -72,8 +72,8 @@ function build_saga() {
 
 # function called after all the compile have been done
 function postbuild_saga() {
-  verify_lib "libsaga_api.dylib"
-  verify_bin saga_cmd
+  verify_binary "lib/libsaga_api.dylib"
+  verify_binary bin/saga_cmd
 }
 
 # function to append information to config file

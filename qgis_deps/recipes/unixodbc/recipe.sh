@@ -49,10 +49,13 @@ function build_unixodbc() {
   try cd $BUILD_PATH/unixodbc/build-$ARCH
   push_env
 
+  # includedir must be specific, since posgresql has
+  # also similar include file names
   try ${CONFIGURE} \
     --disable-debug \
     --disable-dependency-tracking \
     --enable-gui=no \
+    --includedir=$STAGE_PATH/include/unixodbc \
     --sysconfdir=$STAGE_PATH/etc
 
   check_file_configuration config.status

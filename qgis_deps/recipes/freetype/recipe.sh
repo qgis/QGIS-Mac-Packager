@@ -1,0 +1,72 @@
+#!/bin/bash
+
+DESC_freetype="Library to extract data from Excel .xls files"
+
+# version of your package
+VERSION_freetype=2.10.0
+LINK_freetype=libfreetype.6.dylib
+
+# dependencies of this recipe
+DEPS_freetype=()
+
+# url of the package
+URL_freetype=https://download.savannah.gnu.org/releases/freetype/freetype-$VERSION_freetype.tar.gz
+
+# md5 of the package
+MD5_freetype=58d56c9ad775326d6c9c5417c462a527
+
+# default build path
+BUILD_freetype=$BUILD_PATH/freetype/$(get_directory $URL_freetype)
+
+# default recipe path
+RECIPE_freetype=$RECIPES_PATH/freetype
+
+# function called for preparing source code if needed
+# (you can apply patch etc here.)
+function prebuild_freetype() {
+  cd $BUILD_freetype
+
+  # check marker
+  if [ -f .patched ]; then
+    return
+  fi
+
+  patch_configure_file configure
+
+  touch .patched
+}
+
+function shouldbuild_freetype() {
+  # If lib is newer than the sourcecode skip build
+  if [ ${STAGE_PATH}/lib/$LINK_freetype -nt $BUILD_freetype/.patched ]; then
+    DO_BUILD=0
+  fi
+}
+
+# function called to build the source code
+function build_freetype() {
+  try rsync -a $BUILD_freetype/ $BUILD_PATH/freetype/build-$ARCH/
+  try cd $BUILD_PATH/freetype/build-$ARCH
+
+  push_env
+
+  try ${CONFIGURE} --disable-debug
+
+  check_file_configuration config.status
+  try $MAKESMP
+  try $MAKESMP install
+
+  pop_env
+}
+
+# function called after all the compile have been done
+function postbuild_freetype() {
+  verify_binary lib/$LINK_freetype
+}
+
+# function to append information to config file
+function add_config_info_freetype() {
+  append_to_config_file "# freetype-${VERSION_freetype}: ${DESC_freetype}"
+  append_to_config_file "export VERSION_freetype=${VERSION_freetype}"
+  append_to_config_file "export LINK_freetype=${LINK_freetype}"
+}

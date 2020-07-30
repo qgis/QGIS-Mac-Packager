@@ -61,7 +61,7 @@ function build_libgeotiff() {
 
 # function called after all the compile have been done
 function postbuild_libgeotiff() {
-  verify_lib "libgeotiff.a"
+  verify_binary "lib/libgeotiff.a"
 }
 
 # function to append information to config file

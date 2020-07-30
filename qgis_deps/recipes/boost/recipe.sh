@@ -80,7 +80,7 @@ function build_boost() {
 
 # function called after all the compile have been done
 function postbuild_boost() {
-  verify_lib libboost_python${VERSION_major_python//./}.dylib
+  verify_binary lib/libboost_python${VERSION_major_python//./}.dylib
 }
 
 # function to append information to config file

@@ -7,7 +7,7 @@ DESC_python_packages_post="Common packages for python (post)"
 VERSION_python_packages_post=${VERSION_python}
 
 # dependencies of this recipe
-DEPS_python_packages_post=(python python_packages_pre python_gdal python_pyproj python_h5py python_netcdf4 python_numpy python_owslib python_pyqt5 python_qscintilla python_sip python_pillow python_scipy python_shapely)
+DEPS_python_packages_post=(python python_packages_pre python_matplotlib python_llvmlite python_statsmodels python_gdal python_opencv python_scikit_learn python_pyproj python_h5py python_netcdf4 python_numpy python_owslib python_pyqt5 python_scikit_learn python_qscintilla python_sip python_pillow python_scipy python_shapely)
 
 # url of the package
 URL_python_packages_post=
@@ -27,10 +27,8 @@ REQUIREMENTS_python_packages_post=(
     psycopg2==2.8.5
     pyopenssl==19.1.0
     pyodbc==4.0.30
-    pysal==2.2.0
-    pandas==1.0.3
     plotly==4.6.0
-    matplotlib==3.2.1
+    pysal==2.2.0
 )
 
 IMPORTS_python_packages_post=(

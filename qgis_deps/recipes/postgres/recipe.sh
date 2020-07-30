@@ -3,7 +3,7 @@
 DESC_postgres="Postgres database"
 
 # version of your package
-VERSION_postgres=12.2
+VERSION_postgres=12.3
 
 LINK_libpq=libpq.5.dylib
 
@@ -14,7 +14,7 @@ DEPS_postgres=()
 URL_postgres=https://ftp.postgresql.org/pub/source/v${VERSION_postgres}/postgresql-${VERSION_postgres}.tar.bz2
 
 # md5 of the package
-MD5_postgres=a88ceea8ecf2741307f663e4539b58b7
+MD5_postgres=a30c023dd7088e44d73be71af2ef404a
 
 # default build path
 BUILD_postgres=$BUILD_PATH/postgres/$(get_directory $URL_postgres)
@@ -70,11 +70,11 @@ function build_postgres() {
 function postbuild_postgres() {
   verify_binary lib/$LINK_libpq
 
-  verify_lib libpgtypes.dylib
-  verify_lib libecpg.dylib
-  verify_lib libecpg_compat.dylib
+  verify_binary lib/libpgtypes.dylib
+  verify_binary lib/libecpg.dylib
+  verify_binary lib/libecpg_compat.dylib
 
-  verify_bin pg_rewind
+  verify_binary bin/pg_rewind
 }
 
 # function to append information to config file

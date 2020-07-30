@@ -51,7 +51,6 @@ function build_python_pillow() {
   try mv src/libImaging/Zip.h src/libImaging/Zip2.h
   try ${SED} "s;Zip.h;Zip2.h;g" src/libImaging/ZipDecode.c
   try ${SED} "s;Zip.h;Zip2.h;g" src/libImaging/ZipEncode.c
-  try ${SED} "s;Zip.h;Zip2.h;g" src/Pillow.egg-info/SOURCES.txt
   try ${SED} "s;Zip.h;Zip2.h;g" src/decode.c
   try ${SED} "s;Zip.h;Zip2.h;g" src/encode.c
 

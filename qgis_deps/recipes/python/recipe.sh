@@ -8,7 +8,7 @@ VERSION_python=${VERSION_major_python}.${VERSION_minor_python}
 LINK_python=libpython3.7m.dylib
 
 # dependencies of this recipe
-DEPS_python=( openssl xz libffi zlib libzip sqlite expat unixodbc )
+DEPS_python=( openssl xz libffi zlib libzip sqlite expat unixodbc bz2)
 
 # url of the package
 URL_python=https://www.python.org/ftp/python/${VERSION_python}/Python-${VERSION_python}.tar.xz
@@ -107,6 +107,10 @@ function install_python() {
   # dlopen some libraries (e.g. _ssl -> libcrypto.dylib)
   export DYLD_LIBRARY_PATH=$STAGE_PATH/lib
 
+  # add unixodbc includes too
+  export CFLAGS="$CFLAGS -I$STAGE_PATH/include/unixodbc"
+  export CXXFLAGS="${CFLAGS}"
+
   try ${CONFIGURE} \
       --enable-ipv6 \
       --datarootdir=$STAGE_PATH/share \
@@ -140,6 +144,10 @@ function build_python() {
 function postbuild_python() {
     verify_binary bin/python3
     verify_binary lib/$LINK_python
+
+    if ! python_package_installed bz2; then
+      error "Missing python bz2, probably libbz2 was not picked by compilation of python"
+    fi
 }
 
 # function to append information to config file

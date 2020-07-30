@@ -33,10 +33,7 @@ if [ ! -f "$KEYCHAIN_FILE" ]; then
 fi
 
 echo "Signing binaries in $PATH_TO_SIGN"
-LIBS1=$(find "$PATH_TO_SIGN" -type f -name "*.so")
-LIBS2=$(find "$PATH_TO_SIGN" -type f -name "*.dylib")
-BINS=$(find "$PATH_TO_SIGN" -type f ! -name "*.*")
-LIBS="$BINS $LIBS1 $LIBS2"
+LIBS=$(find "$PATH_TO_SIGN" -type f)
 
 echo "This make take few minutes..."
 for LIB in $LIBS; do

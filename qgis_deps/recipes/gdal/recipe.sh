@@ -6,6 +6,9 @@ DESC_gdal="Geospatial Data Abstraction Library"
 # keep in SYNC with python_gdal receipt
 VERSION_gdal=3.1.2
 
+source $RECIPES_PATH/netcdf/recipe.sh
+source $RECIPES_PATH/xerces/recipe.sh
+
 LINK_libgdal_version=27
 LINK_gdal=libgdal.$LINK_libgdal_version.dylib
 
@@ -78,6 +81,7 @@ function build_gdal() {
     --enable-driver-mvt \
     --with-pg=yes \
     --with-xerces=yes \
+    --with-pcre=no \
     --with-xerces-inc=$STAGE_PATH/include \
     --with-xerces-lib="-lxerces-c" \
     ${WITH_GDAL_DRIVERS} \
@@ -95,6 +99,12 @@ function build_gdal() {
 
   try $MAKESMP
   try $MAKESMP install
+
+  # not sure why gdal lib uses RPATH just for netcdf lib?
+  install_name_tool -change @rpath/$LINK_netcdf ${STAGE_PATH}/lib/$LINK_netcdf $LINK_gdal
+
+  # not sure why xerces lib is taken from build dir?
+  install_name_tool -change $BUILD_PATH/xerces/build-$ARCH/src/$LINK_libxerces_c ${STAGE_PATH}/lib/$LINK_libxerces_c $LINK_gdal
 
   pop_env
 }

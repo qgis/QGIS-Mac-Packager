@@ -64,8 +64,8 @@ function build_qwt() {
 
 # function called after all the compile have been done
 function postbuild_qwt() {
-  verify_lib "qt/plugins/designer/libqwt_designer_plugin.dylib"
-  verify_lib "qwt.framework/qwt"
+  verify_binary "lib/qt/plugins/designer/libqwt_designer_plugin.dylib"
+  verify_binary "lib/qwt.framework/qwt"
 }
 
 # function to append information to config file
