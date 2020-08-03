@@ -4,6 +4,7 @@ DESC_gettext="gettext"
 
 # version of your package
 VERSION_gettext=0.21
+LINK_libintl=libintl.8.dylib
 
 # dependencies of this recipe
 DEPS_gettext=()
@@ -61,11 +62,12 @@ function build_gettext() {
 
 # function called after all the compile have been done
 function postbuild_gettext() {
-  :
+  verify_binary lib/libintl.8.dylib
 }
 
 # function to append information to config file
 function add_config_info_gettext() {
   append_to_config_file "# gettext-${VERSION_gettext}: ${DESC_gettext}"
   append_to_config_file "export VERSION_gettext=${VERSION_gettext}"
+  append_to_config_file "export LINK_libintl=${LINK_libintl}"
 }

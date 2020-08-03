@@ -111,5 +111,28 @@ function postbundle_gdal() {
  install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/_ogr.cpython-${VERSION_major_python//./}m-darwin.so
  install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/_gnm.cpython-${VERSION_major_python//./}m-darwin.so
  install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/_gdalconst.cpython-${VERSION_major_python//./}m-darwin.so
+
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/fiona/ogrext.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/fiona/_env.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/fiona/_transform.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/fiona/_crs.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/fiona/schema.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/fiona/_geometry.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/fiona/_shim.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/fiona/_err.cpython-${VERSION_major_python//./}m-darwin.so
+
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_env.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_base.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_crs.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_env.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_err.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_example.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_features.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_fill.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_io.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_shim.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_transform.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/_warp.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio/shutil.cpython-${VERSION_major_python//./}m-darwin.so
 }
 

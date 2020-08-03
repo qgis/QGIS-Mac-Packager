@@ -52,6 +52,8 @@ function build_python_opencv() {
   try cd $BUILD_PATH/python_opencv/build-$ARCH
   push_env
 
+  # TODO libcocoa from /opt/lib
+
   export CMAKE_ARGS=""
   export CMAKE_ARGS="-DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64"
   export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
