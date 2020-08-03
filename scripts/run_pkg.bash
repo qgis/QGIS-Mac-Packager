@@ -47,8 +47,7 @@ nightly)
 	;;
 
 nightly2)
-  # TODO change back to master when https://github.com/qgis/QGIS/pull/37918 is merged
-	BRANCH=macos_deployment_fixes
+	BRANCH=master
 	;;
 
 *)
