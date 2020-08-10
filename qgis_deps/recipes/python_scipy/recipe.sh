@@ -48,11 +48,6 @@ function build_python_scipy() {
 
   DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
 
-  # TODO fix gcc
-  # try install_name_tool -change /usr/local/Cellar/gcc/${VERSION_gcc}/lib/gcc/${VERSION_gcc_major}/$LINK_libquadmath $STAGE_PATH/lib/$LINK_libquadmath ${STAGE_PATH}/lib/$LINK_libgfortran
-	# try install_name_tool -change /usr/local/lib/gcc/${VERSION_gcc_major}/$LINK_gcc_s $STAGE_PATH/lib/$LINK_gcc_s ${STAGE_PATH}/lib/$LINK_libgfortran
-  # try install_name_tool -change /usr/local/lib/gcc/${VERSION_gcc_major}/$LINK_gcc_s $STAGE_PATH/lib/$LINK_gcc_s ${STAGE_PATH}/lib/$LINK_libquadmath
-
   pop_env
 }
 
