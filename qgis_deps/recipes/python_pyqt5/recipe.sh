@@ -51,6 +51,10 @@ function prebuild_python_pyqt5() {
     return
   fi
 
+  # around line 2701
+  MOD_DIR=$STAGE_PATH/mkspecs/modules
+  try ${SED} "s;pro_lines = \['TEMPLATE = lib'\];pro_lines = \['TEMPLATE = lib'\]\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkit.pri)\")\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkitwidgets.pri)\");g" configure.py
+
   touch .patched
 }
 
@@ -58,6 +62,7 @@ function shouldbuild_python_pyqt5() {
   if python_package_installed PyQt5.QtCore; then
     DO_BUILD=0
   fi
+  DO_BUILD=1
 }
 
 # function called to build the source code
@@ -78,6 +83,8 @@ function build_python_pyqt5() {
     --disable=QtX11Extras \
     --disable=QtWinExtras \
     --disable=Enginio \
+    --enable=QtWebKit \
+    --enable=QtWebKitWidgets \
     --designer-plugindir=$STAGE_PATH/share/plugins \
     --qml-plugindir=$STAGE_PATH/share/plugins
 
@@ -92,7 +99,15 @@ function build_python_pyqt5() {
 
 function postbuild_python_pyqt5() {
    if ! python_package_installed PyQt5.QtCore; then
-      error "Missing python package PyQt5.QtCore.QtCore"
+      error "Missing python package PyQt5.QtCore"
+   fi
+
+   if ! python_package_installed PyQt5.QtWebKit; then
+      error "Missing python package PyQt5.QtWebKit"
+   fi
+
+   if ! python_package_installed PyQt5.QtWebKitWidgets; then
+      error "Missing python package PyQt5.QtWebKit"
    fi
 }
 
