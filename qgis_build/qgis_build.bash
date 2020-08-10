@@ -23,6 +23,8 @@ try mkdir -p "$QGIS_BUILD_DIR"
 try mkdir -p "$QGIS_INSTALL_DIR"
 
 # run cmake
+cd $QGIS_BUILD_DIR
+
 PATH=$ROOT_OUT_PATH/stage/bin:$PATH \
 cmake -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DCMAKE_PREFIX_PATH=$QT_BASE/clang_64 \
