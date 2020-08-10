@@ -53,8 +53,8 @@ function build_spatialindex() {
   try $CMAKE $BUILD_spatialindex .
   check_file_configuration CMakeCache.txt
 
-  try $MAKESMP
-  try $MAKE install
+  try $NINJA
+  try $NINJA install
 
   try install_name_tool -delete_rpath $BUILD_PATH/spatialindex/build-$ARCH/bin ${STAGE_PATH}/lib/$LINK_spatialindex_c
 

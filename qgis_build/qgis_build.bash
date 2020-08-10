@@ -30,6 +30,7 @@ cmake -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DWITH_CUSTOM_WIDGETS=ON \
       -DQT_PLUGINS_DIR:PATH=$QGIS_INSTALL_DIR/plugins \
       -DENABLE_TESTS=FALSE \
+      -GNinja \
       -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
       -DCMAKE_INSTALL_PREFIX:PATH=$QGIS_INSTALL_DIR \
       "$QGIS_SOURCE_DIR" > cmake.configure 2>&1
@@ -57,6 +58,11 @@ targets=(
     libpq
     libxml2
     libsqlite3
+    libexpat
+    libiconv
+    liblzma
+    libarchive
+    libbz2
 )
 for i in ${targets[*]}
 do
@@ -68,7 +74,7 @@ done
 
 # make
 try cd $QGIS_BUILD_DIR
-try make -j ${CORES}
-try make install
+try ninja
+try ninja install
 
 echo "build done"

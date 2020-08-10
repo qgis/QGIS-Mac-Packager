@@ -50,8 +50,8 @@ function build_xerces() {
   try $CMAKE $BUILD_xerces .
   check_file_configuration CMakeCache.txt
 
-  try $MAKESMP
-  try $MAKESMP install
+  try $NINJA
+  try $NINJA install
 
   try install_name_tool -change $BUILD_PATH/xerces/build-$ARCH/src/$LINK_libxerces_c $STAGE_PATH/lib/$LINK_libxerces_c $STAGE_PATH/bin/CreateDOMDocument
 

@@ -8,7 +8,7 @@ VERSION_xz=5.2.4
 LINK_liblzma=liblzma.5.dylib
 
 # dependencies of this recipe
-DEPS_xz=()
+DEPS_xz=(gettext)
 
 # url of the package
 URL_xz=https://downloads.sourceforge.net/project/lzmautils/xz-${VERSION_xz}.tar.gz

@@ -6,7 +6,7 @@ DESC_bison="Parser generator"
 VERSION_bison=3.5.4
 
 # dependencies of this recipe
-DEPS_bison=()
+DEPS_bison=(gettext)
 
 # url of the package
 URL_bison=https://ftp.gnu.org/gnu/bison/bison-${VERSION_bison}.tar.xz

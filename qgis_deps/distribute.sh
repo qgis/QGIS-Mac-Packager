@@ -12,6 +12,7 @@ function pop_env() {
   export CC=$OLD_CC
   export CXX=$OLD_CXX
   export MAKESMP=$OLD_MAKESMP
+  export NINJA=$OLD_NINJA
   export MAKE=$OLD_MAKE
   export LD=$OLD_LD
   export CMAKE=$OLD_CMAKE
@@ -119,6 +120,13 @@ function check_file_configuration() {
     cat $1 | grep /usr/local/lib
     error "File $1 contains /usr/local/lib string <-- CMake picked some homebrew libs!"
   fi
+
+  if grep -q /usr/local/opt/*/lib $1
+  then
+    info "Found: "
+    cat $1 | grep /usr/local/opt/*/lib
+    error "File $1 contains /usr/local/*/lib string <-- CMake picked some homebrew libs!"
+  fi
 }
 
 function python_package_installed() {
@@ -175,12 +183,14 @@ function push_env() {
     export OLD_QSPEC=$QSPEC
     export OLD_OBJCXX=${OBJCXX}
     export OLD_OBJC=${OBJC}
+    export OLD_NINJA=$NINJA
 
     ###################
     # Path
     export PATH="/sbin/:/bin/:/usr/bin"
 
     add_homebrew_path cmake
+    add_homebrew_path ninja
     add_homebrew_path coreutils
     add_homebrew_path ccache
     add_homebrew_path autoconf
@@ -191,7 +201,6 @@ function push_env() {
     add_homebrew_path git
     add_homebrew_path wget
     add_homebrew_path texinfo
-    add_homebrew_path gcc
 
     ###################
     # Configure/Make system
@@ -209,7 +218,7 @@ function push_env() {
     export CXX="/usr/bin/clang++"
     export OBJCXX=${CXX}
     export OBJC=${CC}
-
+    export NINJA="/usr/local/bin/ninja"
     export LD="/usr/bin/ld"
 
     ###################
@@ -228,10 +237,9 @@ function push_env() {
     export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=FALSE"
-    # export CMAKE="${CMAKE} -DCMAKE_INSTALL_RPATH=@executable_path/../lib"
     export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=OFF"
     export CMAKE="${CMAKE} -DENABLE_TESTS=OFF"
-    # export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=ON"
+    export CMAKE="${CMAKE} -GNinja -DCMAKE_MAKE_PROGRAM=$NINJA"
     # MACOSX_DEPLOYMENT_TARGET in environment should set minimum version
 
     ###################
@@ -294,6 +302,7 @@ pop_env
 function get_directory() {
   case $1 in
     *.tar.gz) directory=$(basename $1 .tar.gz) ;;
+    *.tar.lz) directory=$(basename $1 .tar.lz) ;;
     *.tgz)    directory=$(basename $1 .tgz) ;;
     *.tar.bz2)  directory=$(basename $1 .tar.bz2) ;;
     *.tbz2)   directory=$(basename $1 .tbz2) ;;
@@ -330,6 +339,7 @@ function check_linked_rpath() {
     libpq
     libxml2
     libsqlite3
+    libexpat
     libexpat
     libiconv
     liblzma
@@ -608,7 +618,7 @@ function download_file() {
     pfilename=$PACKAGES_PATH/$module/$filename
     info "Extract $pfilename"
     case $pfilename in
-      *.tar.gz|*.tar.xz|*.tgz )
+      *.tar.gz|*.tar.xz|*.tgz|*.tar.lz )
         try tar xzf $pfilename
         root_directory=$(basename $(try tar tzf $pfilename|head -n1))
         if [ "X$root_directory" != "X$directory" ]; then

@@ -53,8 +53,8 @@ function build_libgeotiff() {
   try $CMAKE $BUILD_libgeotiff .
   check_file_configuration CMakeCache.txt
 
-  try $MAKESMP
-  try $MAKE install
+  try $NINJA
+  try $NINJA install
 
   pop_env
 }

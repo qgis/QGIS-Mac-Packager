@@ -53,8 +53,8 @@ function build_libomp() {
     $BUILD_libomp .
   check_file_configuration CMakeCache.txt
 
-  try $MAKESMP
-  try $MAKE install
+  try $NINJA
+  try $NINJA install
 
   install_name_tool -id ${STAGE_PATH}/lib/${LINK_libomp} ${STAGE_PATH}/lib/${LINK_libomp}
 

@@ -3,24 +3,21 @@
 DESC_gcc="gcc"
 
 # we need this to compile FORTRAN
-# this is taken from homebrew for now
-# so we do not need to build it.
-# fix openblas in case we build it
-VERSION_gcc_major=9
-VERSION_gcc=${VERSION_gcc_major}.3.0
+VERSION_gcc_major=10
+VERSION_gcc=${VERSION_gcc_major}.2.0
 
 LINK_libgfortran=libgfortran.5.dylib
 LINK_gcc_s=libgcc_s.1.dylib
 LINK_libquadmath=libquadmath.0.dylib
 
 # dependencies of this recipe
-DEPS_gcc=(zlib)
+DEPS_gcc=(zlib gmp mpfr libmpc)
 
 # url of the package
 URL_gcc=https://ftp.gnu.org/gnu/gcc/gcc-${VERSION_gcc}/gcc-${VERSION_gcc}.tar.xz
 
 # md5 of the package
-MD5_gcc=d00a144b771ddeb021b61aa205b7e345
+MD5_gcc=e9fd9b1789155ad09bcf3ae747596b50
 
 # default build path
 BUILD_gcc=$BUILD_PATH/gcc/$(get_directory $URL_gcc)
@@ -49,49 +46,39 @@ function shouldbuild_gcc() {
   fi
 }
 
-# TODO compile ourselves!
-# function build_gcc() {
-#  try rsync -a $BUILD_gcc/ $BUILD_PATH/gcc/build-$ARCH/
-#  try cd $BUILD_PATH/gcc/build-$ARCH
-#  push_env
-#
-#  unset LD
-
-#  try ${CONFIGURE} \
-#    --enable-languages=fortran \
-#    --disable-multilib \
-#    --disable-nls \
-#    --with-system-zlib \
-#    --enable-checking=release \
-#    --program-suffix=-${VERSION_gcc_major} \
-#    --with-native-system-header-dir=/usr/include \
-#    --with-sysroot=`xcrun --show-sdk-path`
-
-#  check_file_configuration config.status
-
-#  try $MAKESMP "BOOT_LDFLAGS=-Wl,-headerpad_max_install_names"
-#  try $MAKESMP install
-
-#  pop_env
-#}
-
-# function called to build the source code
 function build_gcc() {
-  try cp /usr/local/opt/gcc/lib/gcc/${VERSION_gcc_major}/$LINK_libgfortran ${STAGE_PATH}/lib/
-  try cp /usr/local/opt/gcc/lib/gcc/${VERSION_gcc_major}/$LINK_libquadmath ${STAGE_PATH}/lib/
-  try cp /usr/local/opt/gcc/lib/gcc/${VERSION_gcc_major}/$LINK_gcc_s ${STAGE_PATH}/lib/
+ try rsync -a $BUILD_gcc/ $BUILD_PATH/gcc/build-$ARCH/
+ try cd $BUILD_PATH/gcc/build-$ARCH
+ push_env
 
-  try chmod +w ${STAGE_PATH}/lib/$LINK_libgfortran
-  try chmod +w ${STAGE_PATH}/lib/$LINK_libquadmath
-  try chmod +w ${STAGE_PATH}/lib/$LINK_gcc_s
+ unset LD
 
-  try install_name_tool -id ${STAGE_PATH}/lib/$LINK_libgfortran ${STAGE_PATH}/lib/$LINK_libgfortran
-  try install_name_tool -id $STAGE_PATH/lib/$LINK_libquadmath $STAGE_PATH/lib/$LINK_libquadmath
-  try install_name_tool -id $STAGE_PATH/lib/$LINK_gcc_s $STAGE_PATH/lib/$LINK_gcc_s
+ try ${CONFIGURE} \
+   --enable-languages=fortran,c,c++,objc,obj-c++ \
+   --disable-multilib \
+   --disable-nls \
+   --with-system-zlib \
+   --enable-checking=release \
+   --program-suffix=-${VERSION_gcc_major} \
+   --with-native-system-header-dir=/usr/include \
+   --with-sysroot=`xcrun --show-sdk-path` \
+   --with-gmp=$STAGE_PATH \
+   --with-mpfr=$STAGE_PATH \
+   --with-mpc=$STAGE_PATH
 
-  try install_name_tool -change /usr/local/Cellar/gcc/${VERSION_gcc}/lib/gcc/${VERSION_gcc_major}/$LINK_libquadmath $STAGE_PATH/lib/$LINK_libquadmath ${STAGE_PATH}/lib/$LINK_libgfortran
-	try install_name_tool -change /usr/local/lib/gcc/${VERSION_gcc_major}/$LINK_gcc_s $STAGE_PATH/lib/$LINK_gcc_s ${STAGE_PATH}/lib/$LINK_libgfortran
-  try install_name_tool -change /usr/local/lib/gcc/${VERSION_gcc_major}/$LINK_gcc_s $STAGE_PATH/lib/$LINK_gcc_s ${STAGE_PATH}/lib/$LINK_libquadmath
+  check_file_configuration config.status
+
+  try $MAKESMP "BOOT_LDFLAGS=-Wl,-headerpad_max_install_names"
+  try $MAKESMP install
+
+  cd $STAGE_PATH/bin
+  ln -s gfortran-$VERSION_gcc_major gfortran
+  ln -s gcc-$VERSION_gcc_major gcc
+  ln -s gcc-ar-$VERSION_gcc_major gcc-ar
+  ln -s gcc-nm-$VERSION_gcc_major gcc-nm
+  ln -s gcc-ranlib-$VERSION_gcc_major gcc-ranlib
+
+  pop_env
 }
 
 # function called after all the compile have been done

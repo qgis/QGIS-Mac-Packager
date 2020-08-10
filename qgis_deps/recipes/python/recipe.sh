@@ -8,7 +8,7 @@ VERSION_python=${VERSION_major_python}.${VERSION_minor_python}
 LINK_python=libpython3.7m.dylib
 
 # dependencies of this recipe
-DEPS_python=( openssl xz libffi zlib libzip sqlite expat unixodbc bz2)
+DEPS_python=( openssl xz libffi zlib libzip sqlite expat unixodbc bz2 gettext )
 
 # url of the package
 URL_python=https://www.python.org/ftp/python/${VERSION_python}/Python-${VERSION_python}.tar.xz

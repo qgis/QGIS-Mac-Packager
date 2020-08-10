@@ -52,8 +52,8 @@ function build_proj() {
   try $CMAKE $BUILD_proj .
   check_file_configuration CMakeCache.txt
 
-  try $MAKESMP
-  try $MAKE install
+  try $NINJA
+  try $NINJA install
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libproj $STAGE_PATH/lib/$LINK_libproj
   try install_name_tool -change $BUILD_PATH/proj/build-$ARCH/lib/$LINK_libproj $STAGE_PATH/lib/$LINK_libproj $STAGE_PATH/bin/proj

@@ -56,8 +56,8 @@ function build_qtkeychain() {
 
   check_file_configuration CMakeCache.txt
 
-  try $MAKESMP
-  try $MAKESMP install
+  try $NINJA
+  try $NINJA install
 
   pop_env
 }

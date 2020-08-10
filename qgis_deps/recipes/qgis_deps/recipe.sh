@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DESC_qgis_deps="QGIS dependancies package"
+DESC_qgis_deps="QGIS dependencies package"
 
 # version of your package
 VERSION_qgis_deps=${RELEASE_VERSION}

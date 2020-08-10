@@ -57,23 +57,11 @@ function build_openblas() {
   try $MAKESMP FC=gfortran libs netlib shared
   try $MAKE install PREFIX=$STAGE_PATH
 
-  try install_name_tool -change /usr/local/Cellar/gcc/${VERSION_gcc}/lib/gcc/${VERSION_gcc_major}/$LINK_libquadmath $STAGE_PATH/lib/$LINK_libquadmath ${STAGE_PATH}/lib/$LINK_libopenblas_haswellp
-  try install_name_tool -change /usr/local/opt/gcc/lib/gcc/${VERSION_gcc_major}/$LINK_libquadmath $STAGE_PATH/lib/$LINK_libquadmath ${STAGE_PATH}/lib/$LINK_libopenblas_haswellp
-	try install_name_tool -change /usr/local/opt/gcc/lib/gcc/${VERSION_gcc_major}/$LINK_libgfortran $STAGE_PATH/lib/$LINK_libgfortran ${STAGE_PATH}/lib/$LINK_libopenblas_haswellp
-	try install_name_tool -change /usr/local/lib/gcc/${VERSION_gcc_major}/$LINK_libgfortran $STAGE_PATH/lib/$LINK_libgfortran ${STAGE_PATH}/lib/$LINK_libopenblas_haswellp
-  try install_name_tool -change /usr/local/lib/gcc/${VERSION_gcc_major}/$LINK_gcc_s $STAGE_PATH/lib/$LINK_gcc_s ${STAGE_PATH}/lib/$LINK_libopenblas_haswellp
-
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_openblas() {
-  try install_name_tool -change /usr/local/Cellar/gcc/${VERSION_gcc}/lib/gcc/${VERSION_gcc_major}/$LINK_libquadmath $STAGE_PATH/lib/$LINK_libquadmath ${STAGE_PATH}/lib/$LINK_libopenblas_haswellp
-  try install_name_tool -change /usr/local/opt/gcc/lib/gcc/${VERSION_gcc_major}/$LINK_libquadmath $STAGE_PATH/lib/$LINK_libquadmath ${STAGE_PATH}/lib/$LINK_libopenblas_haswellp
-	try install_name_tool -change /usr/local/opt/gcc/lib/gcc/${VERSION_gcc_major}/$LINK_libgfortran $STAGE_PATH/lib/$LINK_libgfortran ${STAGE_PATH}/lib/$LINK_libopenblas_haswellp
-	try install_name_tool -change /usr/local/lib/gcc/${VERSION_gcc_major}/$LINK_libgfortran $STAGE_PATH/lib/$LINK_libgfortran ${STAGE_PATH}/lib/$LINK_libopenblas_haswellp
-  try install_name_tool -change /usr/local/lib/gcc/${VERSION_gcc_major}/$LINK_gcc_s $STAGE_PATH/lib/$LINK_gcc_s ${STAGE_PATH}/lib/$LINK_libopenblas_haswellp
-
   verify_binary lib/$LINK_libopenblas
   verify_binary lib/$LINK_libopenblas_haswellp
 }

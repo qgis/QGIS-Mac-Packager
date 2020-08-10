@@ -50,8 +50,8 @@ function build_exiv2() {
   try ${CMAKE} $BUILD_exiv2
   check_file_configuration CMakeCache.txt
 
-  try $MAKESMP
-  try $MAKESMP install
+  try $NINJA
+  try $NINJA install
 
   pop_env
 }
