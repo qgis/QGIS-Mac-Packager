@@ -63,9 +63,9 @@ function postbundle_gcc() {
           stats/statlib.cpython-${VERSION_major_python//./}m-darwin.so \
           stats/mvn.cpython-${VERSION_major_python//./}m-darwin.so
   do
-    install_name_change /usr/local/opt/gcc/lib/gcc/${VERSION_gcc_major}/$LINK_libquadmath @rpath/$LINK_libquadmath $SCIPY_EGG_DIR/scipy/$i
-    install_name_change /usr/local/opt/gcc/lib/gcc/${VERSION_gcc_major}/$LINK_libgfortran @rpath/$LINK_libgfortran $SCIPY_EGG_DIR/scipy/$i
-    install_name_change /usr/local/lib/gcc/${VERSION_gcc_major}/$LINK_gcc_s @rpath/$LINK_gcc_s $SCIPY_EGG_DIR/scipy/$i
+    install_name_change $DEPS_LIB_DIR/$LINK_libquadmath @rpath/$LINK_libquadmath $SCIPY_EGG_DIR/scipy/$i
+    install_name_change $DEPS_LIB_DIR/$LINK_libgfortran @rpath/$LINK_libgfortran $SCIPY_EGG_DIR/scipy/$i
+    install_name_change $DEPS_LIB_DIR/$LINK_gcc_s @rpath/$LINK_gcc_s $SCIPY_EGG_DIR/scipy/$i
   done
 
 
