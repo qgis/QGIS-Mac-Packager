@@ -23,6 +23,8 @@ function pop_env() {
   export SYSROOT=$OLD_SYSROOT
   export PYTHON=$OLD_PYTHON
   export DYLD_LIBRARY_PATH=$OLD_DYLD_LIBRARY_PATH
+  export DYLD_FALLBACK_LIBRARY_PATH=OLD_DYLD_FALLBACK_LIBRARY_PATH
+  export LD_LIBRARY_PATH=$OLD_LD_LIBRARY_PATH
   export PIP=$OLD_PIP
   export QSPEC=$OLD_QSPEC
 }
@@ -133,10 +135,15 @@ function python_package_installed() {
     python_import=$1
 
     push_env
+
+    # see https://github.com/Toblerity/rtree/issues/56
+    export DYLD_FALLBACK_LIBRARY_PATH=/usr/lib:$STAGE_PATH/lib
+
     if $PYTHON -c import\ $python_import > /dev/null 2>&1
     then
       return 0
     fi
+
     pop_env
 
     return 1
@@ -179,6 +186,8 @@ function push_env() {
     export OLD_SYSROOT=$SYSROOT
     export OLD_PYTHON=$PYTHON
     export OLD_DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH
+    export OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+    export OLD_DYLD_FALLBACK_LIBRARY_PATH=DYLD_FALLBACK_LIBRARY_PATH
     export OLD_PIP=$PIP
     export OLD_QSPEC=$QSPEC
     export OLD_OBJCXX=${OBJCXX}
@@ -253,7 +262,7 @@ function push_env() {
     export PYTHON="$STAGE_PATH/bin/python3"
     export PIP="$STAGE_PATH/bin/pip3"
 
-    export PIP_NO_BINARY="$PIP install --no-binary all"
+    export PIP_NO_BINARY="$PIP install --no-dependencies --no-binary all"
     export PIP_NO_BINARY="$PIP_NO_BINARY --global-option=build_ext"
     export PIP_NO_BINARY="$PIP_NO_BINARY --global-option=--include-dirs=$STAGE_PATH/include"
     export PIP_NO_BINARY="$PIP_NO_BINARY --global-option=--library-dirs=$STAGE_PATH/lib"

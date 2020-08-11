@@ -1,13 +1,14 @@
 #!/bin/bash
 
 DESC_python_opencv="python opencv-contrib-python"
+# source $RECIPES_PATH/python_numpy/recipe.sh
 
 # version of your package
 GIT_TAG_python_opencv=36
 VERSION_python_opencv=4.3.0.${GIT_TAG_python_opencv}
 
 # dependencies of this recipe
-DEPS_python_opencv=(python python_packages_pre python_numpy python_scipy openblas protobuf)
+DEPS_python_opencv=(python python_packages python_numpy python_scipy openblas protobuf)
 
 # url of the package
 URL_python_opencv=
@@ -53,6 +54,9 @@ function build_python_opencv() {
   push_env
 
   # TODO libcocoa from /opt/lib
+  # NUMPY_EGG_DIR=$STAGE_PATH/lib/python/site-packages/numpy-${VERSION_python_numpy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+  # export CFLAGS="$CFLAGS -I$NUMPY_EGG_DIR/numpy/core/include"
+  # export CXXFLAGS="$CXXFLAGS -I$NUMPY_EGG_DIR/numpy/core/include"
 
   export CMAKE_ARGS=""
   export CMAKE_ARGS="-DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64"

@@ -6,7 +6,7 @@ DESC_python_pandas="python pandas"
 VERSION_python_pandas=1.1.0
 
 # dependencies of this recipe
-DEPS_python_pandas=(python python_packages_pre python_numpy)
+DEPS_python_pandas=(python python_packages python_numpy)
 
 # url of the package
 URL_python_pandas=https://github.com/pandas-dev/pandas/archive/v${VERSION_python_pandas}.tar.gz

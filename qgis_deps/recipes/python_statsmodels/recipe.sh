@@ -6,7 +6,7 @@ DESC_python_statsmodels="python statsmodels"
 VERSION_python_statsmodels=0.11.1
 
 # dependencies of this recipe
-DEPS_python_statsmodels=(python python_packages_pre python_numpy python_scipy python_patsy python_pandas)
+DEPS_python_statsmodels=(python python_packages python_numpy python_scipy python_patsy python_pandas)
 
 # url of the package
 URL_python_statsmodels=https://github.com/statsmodels/statsmodels/archive/v${VERSION_python_statsmodels}.tar.gz

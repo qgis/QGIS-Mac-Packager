@@ -6,7 +6,7 @@ DESC_python_pyqt5="PyQt5 package for python"
 VERSION_python_pyqt5=5.14.1
 
 # dependencies of this recipe
-DEPS_python_pyqt5=(python python_sip qtwebkit)
+DEPS_python_pyqt5=(python python_sip qtwebkit qscintilla)
 
 # url of the package
 URL_python_pyqt5=https://files.pythonhosted.org/packages/3a/fb/eb51731f2dc7c22d8e1a63ba88fb702727b324c6352183a32f27f73b8116/PyQt5-${VERSION_python_pyqt5}.tar.gz
@@ -51,9 +51,11 @@ function prebuild_python_pyqt5() {
     return
   fi
 
-  # around line 2701
+  # this is needed
+  # so the autodetection of modules to build
+  # finds out webkit modules
   MOD_DIR=$STAGE_PATH/mkspecs/modules
-  try ${SED} "s;pro_lines = \['TEMPLATE = lib'\];pro_lines = \['TEMPLATE = lib'\]\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkit.pri)\")\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkitwidgets.pri)\");g" configure.py
+  try ${SED} "s;pro_lines.extend(target_config.qmake_variables);pro_lines.extend(target_config.qmake_variables)\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkit.pri)\")\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkitwidgets.pri)\");g" configure.py
 
   touch .patched
 }
@@ -62,7 +64,6 @@ function shouldbuild_python_pyqt5() {
   if python_package_installed PyQt5.QtCore; then
     DO_BUILD=0
   fi
-  DO_BUILD=1
 }
 
 # function called to build the source code
@@ -83,10 +84,9 @@ function build_python_pyqt5() {
     --disable=QtX11Extras \
     --disable=QtWinExtras \
     --disable=Enginio \
-    --enable=QtWebKit \
-    --enable=QtWebKitWidgets \
     --designer-plugindir=$STAGE_PATH/share/plugins \
-    --qml-plugindir=$STAGE_PATH/share/plugins
+    --qml-plugindir=$STAGE_PATH/share/plugins \
+    --verbose
 
   try $MAKESMP
   try $MAKE install
@@ -107,7 +107,7 @@ function postbuild_python_pyqt5() {
    fi
 
    if ! python_package_installed PyQt5.QtWebKitWidgets; then
-      error "Missing python package PyQt5.QtWebKit"
+      error "Missing python package PyQt5.QtWebKitWidgets"
    fi
 }
 

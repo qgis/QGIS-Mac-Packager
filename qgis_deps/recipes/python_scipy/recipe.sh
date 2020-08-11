@@ -6,7 +6,7 @@ DESC_python_scipy="python scipy"
 VERSION_python_scipy=1.5.1
 
 # dependencies of this recipe
-DEPS_python_scipy=(python python_packages_pre python_numpy python_pillow openblas)
+DEPS_python_scipy=(python python_packages python_numpy python_pillow openblas)
 
 # url of the package
 URL_python_scipy=https://github.com/scipy/scipy/archive/v${VERSION_python_scipy}.tar.gz

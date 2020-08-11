@@ -6,7 +6,7 @@ DESC_python_pillow="python pillow"
 VERSION_python_pillow=7.2.0
 
 # dependencies of this recipe
-DEPS_python_pillow=(python python_packages_pre zlib jpeg libtiff webp little_cms2 python_numpy)
+DEPS_python_pillow=(python python_packages zlib jpeg libtiff webp little_cms2 python_numpy)
 
 # url of the package
 URL_python_pillow=https://github.com/python-pillow/Pillow/archive/${VERSION_python_pillow}.tar.gz

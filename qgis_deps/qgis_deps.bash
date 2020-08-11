@@ -9,4 +9,4 @@ fi
 
 CONFIG_FILE=$1
 
-`dirname $0`/distribute.sh $CONFIG_FILE -mqgis_deps
+time `dirname $0`/distribute.sh $CONFIG_FILE -mqgis_deps

@@ -6,7 +6,7 @@ DESC_python_shapely="Manipulation and analysis of geometric objects in the Carte
 VERSION_python_shapely=1.7.0
 
 # dependencies of this recipe
-DEPS_python_shapely=(python geos python_packages_pre)
+DEPS_python_shapely=(python geos python_packages)
 
 # url of the package
 URL_python_shapely=

@@ -57,6 +57,7 @@ function build_spatialindex() {
   try $NINJA install
 
   try install_name_tool -delete_rpath $BUILD_PATH/spatialindex/build-$ARCH/bin ${STAGE_PATH}/lib/$LINK_spatialindex_c
+  try install_name_tool -change @rpath/$LINK_spatialindex ${STAGE_PATH}/lib/$LINK_spatialindex ${STAGE_PATH}/lib/$LINK_spatialindex_c
 
   pop_env
 }
@@ -64,6 +65,7 @@ function build_spatialindex() {
 # function called after all the compile have been done
 function postbuild_spatialindex() {
   verify_binary lib/$LINK_spatialindex
+  verify_binary lib/$LINK_spatialindex_c
 }
 
 # function to append information to config file

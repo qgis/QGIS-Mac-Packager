@@ -8,7 +8,7 @@ VERSION_llvm=9.0.1
 VERSION_python_llvmlite=0.33.0
 
 # dependencies of this recipe
-DEPS_python_llvmlite=(python python_packages_pre python_numpy python_pillow openblas)
+DEPS_python_llvmlite=(python python_packages python_numpy python_pillow openblas)
 
 # url of the package
 URL_python_llvmlite=https://github.com/numba/llvmlite/archive/v${VERSION_python_llvmlite}.tar.gz

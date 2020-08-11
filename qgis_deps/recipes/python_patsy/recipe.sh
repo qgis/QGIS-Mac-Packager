@@ -6,7 +6,7 @@ DESC_python_patsy="python patsy"
 VERSION_python_patsy=0.5.1
 
 # dependencies of this recipe
-DEPS_python_patsy=(python python_packages_pre python_numpy)
+DEPS_python_patsy=(python python_packages python_numpy)
 
 # url of the package
 URL_python_patsy=https://github.com/pydata/patsy/archive/v${VERSION_python_patsy}.tar.gz

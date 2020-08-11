@@ -6,7 +6,7 @@ DESC_python_matplotlib="python matplotlib"
 VERSION_python_matplotlib=3.3.0
 
 # dependencies of this recipe
-DEPS_python_matplotlib=(python python_packages_pre python_numpy python_pillow fontconfig freetype)
+DEPS_python_matplotlib=(python python_packages python_numpy python_pillow fontconfig freetype)
 
 # url of the package
 URL_python_matplotlib=https://github.com/matplotlib/matplotlib/archive/v$VERSION_python_matplotlib.tar.gz

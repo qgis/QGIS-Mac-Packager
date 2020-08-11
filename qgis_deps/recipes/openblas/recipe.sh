@@ -57,6 +57,10 @@ function build_openblas() {
   try $MAKESMP FC=gfortran libs netlib shared
   try $MAKE install PREFIX=$STAGE_PATH
 
+  try install_name_tool -change @rpath/$LINK_libquadmath $DEPS_LIB_DIR/$LINK_libquadmath $DEPS_LIB_DIR/$LINK_libopenblas_haswellp
+  try install_name_tool -change @rpath/$LINK_libgfortran $DEPS_LIB_DIR/$LINK_libgfortran $DEPS_LIB_DIR/$LINK_libopenblas_haswellp
+  try install_name_tool -change @rpath/$LINK_gcc_s $DEPS_LIB_DIR/$LINK_gcc_s $DEPS_LIB_DIR/$LINK_libopenblas_haswellp
+
   pop_env
 }
 

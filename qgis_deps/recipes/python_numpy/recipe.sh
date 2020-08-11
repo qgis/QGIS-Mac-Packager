@@ -7,7 +7,7 @@ DESC_python_numpy="python numpy"
 VERSION_python_numpy=1.19.1
 
 # dependencies of this recipe
-DEPS_python_numpy=(python python_packages_pre openblas)
+DEPS_python_numpy=(python python_packages openblas)
 
 # url of the package
 URL_python_numpy=https://github.com/numpy/numpy/archive/v${VERSION_python_numpy}.tar.gz

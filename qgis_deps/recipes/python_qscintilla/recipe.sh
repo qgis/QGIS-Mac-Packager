@@ -8,7 +8,7 @@ VERSION_python_qscintilla=2.11.4
 
 # dependencies of this recipe
 # depends on PyQt5
-DEPS_python_qscintilla=(python qscintilla python_sip python_pyqt5 python_packages_pre)
+DEPS_python_qscintilla=(python qscintilla python_sip python_pyqt5 python_packages)
 
 # url of the package
 URL_python_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${VERSION_python_qscintilla}/QScintilla-${VERSION_python_qscintilla}.tar.gz

@@ -6,7 +6,7 @@ DESC_python_scikit_learn="python scikit-learn"
 VERSION_python_scikit_learn=0.23.1
 
 # dependencies of this recipe
-DEPS_python_scikit_learn=(python python_packages_pre python_numpy python_scipy libomp)
+DEPS_python_scikit_learn=(python python_packages python_numpy python_scipy libomp)
 
 # url of the package
 URL_python_scikit_learn=https://github.com/scikit-learn/scikit-learn/archive/${VERSION_python_scikit_learn}.tar.gz
