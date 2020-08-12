@@ -54,850 +54,106 @@ function postbundle_qgis() {
  install_name_add_rpath @executable_path/../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/QGIS
  install_name_add_rpath @executable_path/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
- # Exiv2
- install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
-
- # Expat
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- ## GDAL
-  install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
-
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
-
- # GEOS
-  install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
-
- ## GRASS
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
-  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
-
-  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
-
-  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
-
-  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
-
-  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
-
-  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
-
-  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
-
- ## GSL
-  install_name_change $DEPS_LIB_DIR/$LINK_libgsl @rpath/$LINK_libgsl $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_libgslcblas @rpath/$LINK_libgslcblas $BUNDLE_CONTENTS_DIR/MacOS/QGIS
-
- install_name_change $DEPS_LIB_DIR/$LINK_libgsl @rpath/$LINK_libgsl $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libgslcblas @rpath/$LINK_libgslcblas $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
-
- install_name_change $DEPS_LIB_DIR/$LINK_libgsl @rpath/$LINK_libgsl $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_libgslcblas @rpath/$LINK_libgslcblas $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
-
- ## HDF5
- install_name_change $DEPS_LIB_DIR/$LINK_libhdf5 @rpath/$LINK_libhdf5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_netcdf @rpath/$LINK_netcdf $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
-
- # Libxml2
- install_name_change $DEPS_LIB_DIR/$LINK_libxml2 @rpath/$LINK_libxml2 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
-
- # libzip
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_libzip @rpath/$LINK_libzip $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
-
- # postgres
-  install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.${QGIS_VERSION}.0.dylib
-
- # PROJ
-  install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
-
- ## PROTOBUF
-  install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_protobuf_lite @rpath/$LINK_protobuf_lite $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- # QCA
-  install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- # QSCINTILLA
-   install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/MacOS/QGIS
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/PyQt5/Qsci.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- ## QT Keychain
-  install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_qtkeychain @rpath/$LINK_qtkeychain $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- ## spatialindex
-  install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_spatialindex @rpath/$LINK_spatialindex $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- ## spatialite
-  install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
-
- ## SQLITE
-  install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
-
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
-
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
-
- # zlib
-  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
-
- ## libtasn1
-  install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_libtasn1 @rpath/$LINK_libtasn1 $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- ## PYTHON
  install_name_id @rpath/libqgispython.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_python @rpath/$LINK_python $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
-
- ## APP
  install_name_id @rpath/libqgis_app.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $QGIS_BUILD_DIR/output/lib/libqgis_app.$QGIS_VERSION.0.dylib @rpath/libqgis_app.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $QGIS_BUILD_DIR/output/lib/libqgis_app.$QGIS_VERSION.0.dylib @rpath/libqgis_app.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
-
- ## CORE
- install_name_id @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
-
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core @rpath/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- ## GUI
- install_name_id @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
-
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui @rpath/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- ## ANALYSIS
- install_name_id @rpath/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
-
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis @rpath/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis @rpath/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis @rpath/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis @rpath/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis @rpath/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
-
- ## NATIVE
- install_name_id @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/Frameworks/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native
-
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libidentcertauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libtopolplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpxprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libesritokenauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresrasterprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwcsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmdalprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdelimitedtextprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libspatialiteprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeonodeprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwfsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/liboauth2authmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libbasicauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgisfeatureserverprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkipathsauthmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libwmsprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libofflineeditingplugin.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpkcs12authmethod.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libmssqlprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libarcgismapserverprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libpostgresprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtuallayerprovider.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_core.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_gui.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native @rpath/qgis_native.framework/Versions/$QGIS_VERSION/qgis_native $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
-
- # 3D
- install_name_id @rpath/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d $BUNDLE_CONTENTS_DIR/Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d
-
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d @rpath/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_3d.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d @rpath/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d @rpath/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d @rpath/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d $BUNDLE_CONTENTS_DIR/MacOS/QGIS
-
- # GRASS
- install_name_id @rpath/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
-
- install_name_change $QGIS_BUILD_DIR/output/lib/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} @rpath/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $QGIS_BUILD_DIR/output/lib/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} @rpath/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} @rpath/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $QGIS_BUILD_DIR/output/lib/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} @rpath/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
-
- # CUSTOMWIDGETS
  install_name_id @rpath/libqgis_customwidgets.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
+
+ for i in \
+    MacOS/QGIS \
+    Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core \
+    Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d \
+    Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis \
+    Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui \
+    Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} \
+    PlugIns/qgis/libgeometrycheckerplugin.so \
+    PlugIns/qgis/libdb2provider.so \
+    PlugIns/qgis/libidentcertauthmethod.so \
+    PlugIns/qgis/libtopolplugin.so \
+    PlugIns/qgis/libgpxprovider.so \
+    PlugIns/qgis/libesritokenauthmethod.so \
+    PlugIns/qgis/libpostgresrasterprovider.so \
+    PlugIns/qgis/libwcsprovider.so \
+    PlugIns/qgis/libmdalprovider.so \
+    PlugIns/qgis/libdelimitedtextprovider.so \
+    PlugIns/qgis/libgpsimporterplugin.so \
+    PlugIns/qgis/libspatialiteprovider.so \
+    PlugIns/qgis/libgeonodeprovider.so \
+    PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so \
+    PlugIns/qgis/libwfsprovider.so \
+    PlugIns/qgis/liboauth2authmethod.so \
+    PlugIns/qgis/libbasicauthmethod.so \
+    PlugIns/qgis/libarcgisfeatureserverprovider.so \
+    PlugIns/qgis/libowsprovider.so \
+    PlugIns/qgis/libpkipathsauthmethod.so \
+    PlugIns/qgis/libwmsprovider.so \
+    PlugIns/qgis/libofflineeditingplugin.so \
+    PlugIns/qgis/libpkcs12authmethod.so \
+    PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so \
+    PlugIns/qgis/libmssqlprovider.so \
+    PlugIns/qgis/libarcgismapserverprovider.so \
+    PlugIns/qgis/libpostgresprovider.so \
+    PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so \
+    PlugIns/qgis/libvirtuallayerprovider.so \
+    Resources/python/qgis/_core.so \
+    Resources/python/qgis/_3d.so \
+    Resources/python/qgis/_analysis.so \
+    Resources/python/qgis/_gui.so \
+    MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib \
+    MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib \
+    PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
+ do
+    for j in \
+      $LINK_exiv2 \
+      $LINK_expat \
+      $LINK_gdal \
+      $LINK_libgeos_c \
+      $LINK_libgsl \
+      $LINK_libgslcblas \
+      $LINK_libzip \
+      $LINK_libproj \
+      $LINK_protobuf_lite \
+      $LINK_libpq \
+      $LINK_libqscintilla2_qt5 \
+      $LINK_qtkeychain \
+      $LINK_spatialindex \
+      $LINK_spatialite \
+      $LINK_sqlite \
+      $LINK_zlib \
+      $LINK_libtasn1 \
+      $LINK_python \
+      $LINK_libhdf5 \
+      $LINK_libxml2 \
+      $LINK_netcdf
+    do
+      install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/$i
+    done
+
+    for j in \
+      libgrass_gis \
+      libgrass_vector \
+      libgrass_raster \
+      libgrass_imagery \
+      libgrass_dbmibase \
+      libgrass_dbmiclient \
+      libgrass_gproj
+    do
+      install_name_change $DEPS_GRASS_LIB_DIR/$j.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/$j.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/$i
+    done
+
+    install_name_change $QGIS_BUILD_DIR/output/lib/libqgis_app.$QGIS_VERSION.0.dylib @rpath/libqgis_app.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/$i
+    install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/$i
+
+    for j in \
+      qgis_core \
+      qgis_gui \
+      qgis_native \
+      qgis_3d \
+      qgisgrass${VERSION_grass_major} \
+      libgrass_dbmiclient \
+      libgrass_gproj
+    do
+      install_name_id @rpath/$j.framework/Versions/$QGIS_VERSION/$j $BUNDLE_CONTENTS_DIR/Frameworks/$j.framework/Versions/$QGIS_VERSION/$j
+      install_name_change $QGIS_BUILD_DIR/output/lib/$j.framework/Versions/$QGIS_VERSION/$j @rpath/$j.framework/Versions/$QGIS_VERSION/$j $BUNDLE_CONTENTS_DIR/$i
+    done
+ done
 }

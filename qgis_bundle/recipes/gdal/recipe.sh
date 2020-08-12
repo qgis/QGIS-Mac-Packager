@@ -10,7 +10,31 @@ function check_gdal() {
 function bundle_gdal() {
   try cp -av $DEPS_LIB_DIR/libgdal*dylib $BUNDLE_LIB_DIR
 
-  # TODO GDAL binaries!!
+  # GDAL binaries
+  for i in \
+    gdal-config \
+    gdal_contour \
+    gdal_grid \
+    gdal_rasterize \
+    gdal_translate \
+    gdal_viewshed \
+    gdaladdo \
+    gdalbuildvrt \
+    gdaldem \
+    gdalenhance \
+    gdalinfo \
+    gdallocationinfo \
+    gdalmanage \
+    gdalmdiminfo \
+    gdalmdimtranslate \
+    gdalserver \
+    gdalsrsinfo \
+    gdaltindex \
+    gdaltransform \
+    gdalwarp
+  do
+    try cp -av $DEPS_BIN_DIR/$i $BUNDLE_BIN_DIR/$i
+  done
 
   # GDAL plugins
   # https://github.com/qgis/QGIS/blob/518cc16e87aba6798658acf75c86f27a0f4d99b3/src/app/main.cpp#L1198
