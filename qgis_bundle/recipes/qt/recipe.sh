@@ -75,10 +75,5 @@ function bundle_qt() {
 
 function postbundle_qt() {
  install_name_add_rpath @executable_path/../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/Designer.app/Contents/MacOS/Designer
-
- # TODO this looks suspicios, why to have it twice?
- # TODO why MACOS_TARGET 10.9 and not 10.13??
- install_name_id @rpath/libqcocoa.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/opencv_contrib_python-${VERSION_python_opencv}-py${VERSION_major_python}-macosx-10.9-x86_64.egg/cv2/qt/plugins/platforms/libqcocoa.dylib
- install_name_change /usr/local/opt/qt/plugins/platforms/libqcocoa.dylib @rpath/libqcocoa.dylib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/opencv_contrib_python-${VERSION_python_opencv}-py${VERSION_major_python}-macosx-10.9-x86_64.egg/cv2/qt/plugins/platforms/libqcocoa.dylib
-}
+ }
 

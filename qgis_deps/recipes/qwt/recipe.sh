@@ -3,7 +3,8 @@
 DESC_qwt="Qt Widgets for Technical Applications"
 
 # version of your package
-VERSION_qwt=6.1.4
+VERSION_qwt_major=6
+VERSION_qwt=$VERSION_qwt_major.1.4
 
 # dependencies of this recipe
 DEPS_qwt=()
@@ -72,4 +73,5 @@ function postbuild_qwt() {
 function add_config_info_qwt() {
   append_to_config_file "# qwt-${VERSION_qwt}: ${DESC_qwt}"
   append_to_config_file "export VERSION_qwt=${VERSION_qwt}"
+  append_to_config_file "export VERSION_qwt_major=${VERSION_qwt_major}"
 }

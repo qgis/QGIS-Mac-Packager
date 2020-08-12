@@ -1,0 +1,50 @@
+#!/bin/bash
+
+function check_python_gdal() {
+  env_var_exists VERSION_python_gdal
+}
+
+function bundle_python_gdal() {
+  :
+}
+
+function postbundle_python_gdal() {
+  GDAL_EGG_DIR=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
+
+  for i in epsg_tr.py \
+            esri2wkt.py \
+            gcps2vec.py \
+            gcps2wld.py \
+            gdal2tiles.py \
+            gdal2xyz.py \
+            gdal_auth.py \
+            gdal_calc.py \
+            gdal_edit.py \
+            gdal_fillnodata.py \
+            gdal_merge.py \
+            gdal_pansharpen.py \
+            gdal_polygonize.py \
+            gdal_proximity.py \
+            gdal_retile.py \
+            gdal_sieve.py \
+            gdalchksum.py \
+            gdalcompare.py \
+            gdalident.py \
+            gdalimport.py \
+            gdalmove.py \
+            mkgraticule.py \
+            ogrmerge.py \
+            pct2rgb.py \
+            rgb2pct.py
+  do
+    fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $GDAL_EGG_DIR/EGG-INFO/scripts/$i
+  done
+
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/_osr.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/_gdal_array.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/_gdal.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/_ogr.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/_gnm.cpython-${VERSION_major_python//./}m-darwin.so
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/_gdalconst.cpython-${VERSION_major_python//./}m-darwin.so
+}
+

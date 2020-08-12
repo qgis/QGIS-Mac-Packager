@@ -14,10 +14,6 @@ function bundle_exiv2() {
 function postbundle_exiv2() {
     install_name_id @rpath/$LINK_exiv2 $BUNDLE_LIB_DIR/$LINK_exiv2
 
-     install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis
- install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgeometrycheckerplugin.so
- install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
- install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/Resources/python/qgis/_analysis.so
- install_name_change $DEPS_LIB_DIR/$LINK_exiv2 @rpath/$LINK_exiv2 $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
+    install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_LIB_DIR/$LINK_exiv2
+    install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_LIB_DIR/$LINK_exiv2
 }

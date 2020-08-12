@@ -13,10 +13,8 @@ function postbundle_grass() {
  # libgrass_gis
  install_name_id  @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
+
+
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_rtree.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_manage.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_dbstubs.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
@@ -59,10 +57,7 @@ function postbundle_grass() {
  # libgrass_vector
  install_name_id  @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
+
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_manage.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_interpfl.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
@@ -75,10 +70,7 @@ function postbundle_grass() {
  # libgrass_raster
  install_name_id  @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
+
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_display.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_cluster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
@@ -96,10 +88,7 @@ function postbundle_grass() {
  # libgrass_imagery
  install_name_id  @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
+
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_cluster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_imagery.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_iortho.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
@@ -107,10 +96,7 @@ function postbundle_grass() {
  # libgrass_dbmibase
  install_name_id  @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
+
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_dbstubs.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_dbmibase.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
@@ -126,10 +112,7 @@ function postbundle_grass() {
  # libgrass_dbmiclient
  install_name_id  @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
+
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_interpfl.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_dbmiclient.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_lrs.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
@@ -142,10 +125,7 @@ function postbundle_grass() {
  # libgrass_gproj
  install_name_id  @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major}
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so
+
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
@@ -268,7 +248,7 @@ function postbundle_grass() {
  install_name_id  @rpath/libgrass_g3d.7.8.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_g3d.7.8.dylib
 
  install_name_change $DEPS_GRASS_LIB_DIR/libgrass_g3d.7.8.dylib @rpath/libgrass_g3d.7.8.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gpde.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
- install_name_change $DEPS_GRASS_LIB_DIR/libgrass_g3d.7.8.dylib @rpath/libgrass_g3d.7.8.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_g3d.7.8.dylib
+ install_name_change $DEPS_GRASS_LIB_DIR/libgrass_g3d.7.8.dylib @rpath/libgrass_g3d.7.8.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_g3d.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 
  # libgrass_interpdata
  install_name_id  @rpath/libgrass_interpdata.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_interpdata.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
@@ -336,4 +316,16 @@ function postbundle_grass() {
 
  # libgrass_lidar
  install_name_id  @rpath/libgrass_lidar.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_lidar.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
+
+  install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_vector.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gproj.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
+
+ install_name_change $DEPS_LIB_DIR/$LINK_libpng @rpath/$LINK_libpng $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_pngdriver.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
+
+  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_pngdriver.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
+
+ install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
+ install_name_change $DEPS_LIB_DIR/$LINK_zstd @rpath/$LINK_zstd $BUNDLE_CONTENTS_DIR/MacOS/lib/libgrass_gis.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 }

@@ -12,5 +12,5 @@ function bundle_unixodbc() {
 function postbundle_unixodbc() {
   install_name_id  @rpath/$LINK_unixodbc $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_unixodbc
 
-  install_name_change $DEPS_LIB_DIR/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyodbc.cpython-${VERSION_major_python//./}m-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_libltdl @rpath/$LINK_libltdl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_unixodbc
 }

@@ -9,5 +9,5 @@ function bundle_qwt() {
 }
 
 function postbundle_qwt() {
-  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/Frameworks/qwt.framework/Versions/6/qwt
+  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/Frameworks/qwt.framework/Versions/$VERSION_qwt_major/qwt
 }

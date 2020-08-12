@@ -11,9 +11,6 @@ function bundle_freetype() {
 function postbundle_freetype() {
   install_name_id @rpath/$LINK_freetype $BUNDLE_LIB_DIR/$LINK_freetype
 
-  MATPLOTLIB_EGG_DIR=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/matplotlib-${VERSION_python_matplotlib}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
-
-  install_name_change $DEPS_LIB_DIR/$LINK_freetype @rpath/$LINK_freetype $MATPLOTLIB_EGG_DIR/matplotlib/backends/_backend_agg.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_freetype @rpath/$LINK_freetype $MATPLOTLIB_EGG_DIR/matplotlib/ft2font.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_freetype @rpath/$LINK_freetype $BUNDLE_LIB_DIR/$LINK_fontconfig
+  install_name_change $DEPS_LIB_DIR/$LINK_bz2 @rpath/$LINK_bz2 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_freetype
+  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_freetype
 }
