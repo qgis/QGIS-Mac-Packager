@@ -10,16 +10,8 @@ function bundle_expat() {
 }
 
 function postbundle_expat() {
- install_name_id  @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_expat
+  install_name_id  @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_expat
 
-
-
-
- install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_expat
-
-
-
-
-
+  install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_expat
 }
 

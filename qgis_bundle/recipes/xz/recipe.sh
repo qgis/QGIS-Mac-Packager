@@ -10,5 +10,5 @@ function bundle_xz() {
 }
 
 function postbundle_xz() {
-    install_name_id @rpath/$LINK_liblzma $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_liblzma
+  install_name_id @rpath/$LINK_liblzma $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_liblzma
 }

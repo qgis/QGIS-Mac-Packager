@@ -14,13 +14,21 @@ function bundle_qca() {
 }
 
 function postbundle_qca() {
- install_name_id @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Frameworks/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca
+  install_name_id @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Frameworks/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca
 
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_PLUGINS_DIR/crypto/libqca-cyrus-sasl.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_PLUGINS_DIR/crypto/libqca-logger.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_PLUGINS_DIR/crypto/libqca-ossl.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_PLUGINS_DIR/crypto/libqca-softstore.dylib
+  for i in \
+    libqca-cyrus-sasl \
+    libqca-logger \
+    libqca-ossl \
+    libqca-softstore
+  do
+    install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_PLUGINS_DIR/crypto/$i.dylib
+  done
 
-  install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/PlugIns/crypto/libqca-ossl.dylib
- install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/PlugIns/crypto/libqca-ossl.dylib
+  for i in \
+    $LINK_libssl \
+    $LINK_libcrypto
+  do
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_CONTENTS_DIR/PlugIns/crypto/libqca-ossl.dylib
+  done
 }

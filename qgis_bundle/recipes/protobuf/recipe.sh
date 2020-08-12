@@ -8,11 +8,11 @@ function check_protobuf() {
 }
 
 function bundle_protobuf() {
-    try cp -av $DEPS_LIB_DIR/libprotobuf-lite.*dylib $BUNDLE_LIB_DIR
+  try cp -av $DEPS_LIB_DIR/libprotobuf-lite.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_protobuf() {
- install_name_id @rpath/$LINK_protobuf_lite $BUNDLE_LIB_DIR/$LINK_protobuf_lite
+  install_name_id @rpath/$LINK_protobuf_lite $BUNDLE_LIB_DIR/$LINK_protobuf_lite
 
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_protobuf_lite
+  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_protobuf_lite
 }

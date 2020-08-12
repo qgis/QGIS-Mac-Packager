@@ -15,7 +15,7 @@ function bundle_proj() {
 }
 
 function postbundle_proj() {
- install_name_id  @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libproj
+  install_name_id  @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libproj
 
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libproj
+  install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libproj
 }

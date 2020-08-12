@@ -11,5 +11,5 @@ function bundle_postgres() {
 }
 
 function postbundle_postgres() {
- install_name_id @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libpq
+  install_name_id @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libpq
 }

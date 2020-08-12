@@ -11,6 +11,10 @@ function bundle_freetype() {
 function postbundle_freetype() {
   install_name_id @rpath/$LINK_freetype $BUNDLE_LIB_DIR/$LINK_freetype
 
-  install_name_change $DEPS_LIB_DIR/$LINK_bz2 @rpath/$LINK_bz2 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_freetype
-  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_freetype
+  for i in \
+    $LINK_bz2 \
+    $LINK_zlib
+  do
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_freetype
+  done
 }

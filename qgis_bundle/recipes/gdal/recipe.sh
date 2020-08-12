@@ -25,24 +25,28 @@ function bundle_gdal() {
 }
 
 function postbundle_gdal() {
- install_name_id @rpath/$LINK_gdal $BUNDLE_LIB_DIR/$LINK_gdal
+  install_name_id @rpath/$LINK_gdal $BUNDLE_LIB_DIR/$LINK_gdal
 
- install_name_change $DEPS_LIB_DIR/$LINK_freexl @rpath/$LINK_freexl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_libhdf5 @rpath/$LINK_libhdf5 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_netcdf @rpath/$LINK_netcdf $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_jpeg @rpath/$LINK_jpeg $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_libtiff @rpath/$LINK_libtiff $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_libxml2 @rpath/$LINK_libxml2 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_libpng @rpath/$LINK_libpng $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_spatialite @rpath/$LINK_spatialite $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_libwebp @rpath/$LINK_libwebp $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_libxerces_c @rpath/$LINK_libxerces_c $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
- install_name_change $DEPS_LIB_DIR/$LINK_zstd @rpath/$LINK_zstd $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_gdal
+  for i in \
+    $LINK_freexl \
+    $LINK_libgeos_c \
+    $LINK_libhdf5 \
+    $LINK_netcdf \
+    $LINK_jpeg \
+    $LINK_libtiff \
+    $LINK_libxml2 \
+    $LINK_libcrypto \
+    $LINK_libpng \
+    $LINK_libpq \
+    $LINK_libproj \
+    $LINK_spatialite \
+    $LINK_sqlite \
+    $LINK_libwebp \
+    $LINK_libxerces_c \
+    $LINK_zlib \
+    $LINK_zstd
+  do
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_gdal
+  done
 }
 

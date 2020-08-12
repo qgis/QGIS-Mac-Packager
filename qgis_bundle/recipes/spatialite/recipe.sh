@@ -12,13 +12,17 @@ function bundle_spatialite() {
 }
 
 function postbundle_spatialite() {
- install_name_id @rpath/$LINK_spatialite $BUNDLE_LIB_DIR/$LINK_spatialite
+  install_name_id @rpath/$LINK_spatialite $BUNDLE_LIB_DIR/$LINK_spatialite
 
- install_name_change $DEPS_LIB_DIR/$LINK_freexl @rpath/$LINK_freexl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
- install_name_change $DEPS_LIB_DIR/$LINK_libgeos_c @rpath/$LINK_libgeos_c $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
- install_name_change $DEPS_LIB_DIR/$LINK_libxml2 @rpath/$LINK_libxml2 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
- install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
- install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
+  for i in \
+    $LINK_freexl \
+    $LINK_libgeos_c \
+    $LINK_libxml2 \
+    $LINK_libproj \
+    $LINK_sqlite \
+    $LINK_zlib
+  do
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
+  done
 }
 

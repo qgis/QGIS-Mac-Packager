@@ -9,9 +9,13 @@ function bundle_netcdf() {
 }
 
 function postbundle_netcdf() {
- install_name_id @rpath/$LINK_netcdf $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_netcdf
+  install_name_id @rpath/$LINK_netcdf $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_netcdf
 
- install_name_change $DEPS_LIB_DIR/$LINK_libhdf5 @rpath/$LINK_libhdf5 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_netcdf
- install_name_change $DEPS_LIB_DIR/$LINK_libhdf5_hl @rpath/$LINK_libhdf5_hl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_netcdf
- install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_LIB_DIR/$LINK_netcdf
- }
+  for i in \
+    $LINK_libhdf5 \
+    $LINK_libhdf5_hl \
+    $LINK_zlib
+  do
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_netcdf
+  done
+}
