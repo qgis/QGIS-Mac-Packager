@@ -53,11 +53,6 @@ function build_python_opencv() {
   try cd $BUILD_PATH/python_opencv/build-$ARCH
   push_env
 
-  # TODO libcocoa from /opt/lib
-  # NUMPY_EGG_DIR=$STAGE_PATH/lib/python/site-packages/numpy-${VERSION_python_numpy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
-  # export CFLAGS="$CFLAGS -I$NUMPY_EGG_DIR/numpy/core/include"
-  # export CXXFLAGS="$CXXFLAGS -I$NUMPY_EGG_DIR/numpy/core/include"
-
   export CMAKE_ARGS=""
   export CMAKE_ARGS="-DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64"
   export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
@@ -70,6 +65,8 @@ function build_python_opencv() {
   export CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_JPEG=FALSE"
   export CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_PNG=FALSE"
   export CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_WEBP=FALSE"
+  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET"
+  export CMAKE_ARGS="${CMAKE_ARGS} -GNinja -DCMAKE_MAKE_PROGRAM=$NINJA"
 
   export ENABLE_CONTRIB=1
   try $PYTHON setup.py install
