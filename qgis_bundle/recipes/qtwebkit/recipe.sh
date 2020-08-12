@@ -21,7 +21,15 @@ function postbundle_qtwebkit() {
   install_name_add_rpath @executable_path/../Frameworks $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
   install_name_add_rpath @loader_path/Frameworks $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
 
-  install_name_change $DEPS_LIB_DIR/$LINK_jpeg @rpath/$LINK_jpeg $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
-  install_name_change $DEPS_LIB_DIR/$LINK_libpng @rpath/$LINK_libpng $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
-  install_name_change $DEPS_LIB_DIR/$LINK_libwebp @rpath/$LINK_libwebp $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
+  for i in \
+    $LINK_jpeg \
+    $LINK_libpng \
+    $LINK_libwebp \
+    $LINK_zlib \
+    $LINK_libxml2 \
+    $LINK_libxslt \
+    $LINK_sqlite
+  do
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
+  done
 }

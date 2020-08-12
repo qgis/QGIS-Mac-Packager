@@ -195,11 +195,6 @@ function check_binary_linker_links() {
           ok="false"
         fi
     done
-
-    if [[ "$ok" == "false" ]]; then
-      echo "${OTOOL_L}"
-      error "error encountered for checking $1 (LINKS)"
-    fi
   fi
 
   ######## RPATH
@@ -228,11 +223,12 @@ function check_binary_linker_links() {
       echo "$1 RPATH contains $BUNDLE_DIR string <-- forgot to delete/modify RPATH?"
       ok="false"
     fi
+  fi
 
-    if [[ "$ok" == "false" ]]; then
+  if [[ "$ok" == "false" ]]; then
+      echo "${OTOOL_L}"
       echo "${OTOOL_RPATH}"
-      error "error encountered for checking $1 (RPATH)"
-    fi
+      error "error encountered by checking $1"
   fi
 }
 

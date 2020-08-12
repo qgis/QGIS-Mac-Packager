@@ -5,6 +5,7 @@ DESC_protobuf="Protocol buffers (Google's data interchange format)"
 # version of your package
 VERSION_protobuf=3.11.4
 LINK_protobuf_lite=libprotobuf-lite.22.dylib
+LINK_protobuf=libprotobuf.22.dylib
 
 # dependencies of this recipe
 DEPS_protobuf=(zlib)
@@ -67,6 +68,7 @@ function build_protobuf() {
 function postbuild_protobuf() {
   verify_binary lib/libprotobuf.dylib
   verify_binary lib/$LINK_protobuf_lite
+  verify_binary lib/$LINK_protobuf
   verify_binary lib/libprotoc.dylib
   verify_binary bin/protoc
 }
@@ -75,5 +77,6 @@ function postbuild_protobuf() {
 function add_config_info_protobuf() {
   append_to_config_file "# protobuf-${VERSION_protobuf}: ${DESC_protobuf}"
   append_to_config_file "export VERSION_protobuf=${VERSION_protobuf}"
+  append_to_config_file "export LINK_protobuf=${LINK_protobuf}"
   append_to_config_file "export LINK_protobuf_lite=${LINK_protobuf_lite}"
 }

@@ -18,6 +18,7 @@ function postbundle_grass() {
    libgrass_rowio \
    libgrass_gproj \
    libgrass_htmldriver \
+   libgrass_btree \
    libgrass_btree2 \
    libgrass_display \
    libgrass_gmath \
@@ -28,6 +29,7 @@ function postbundle_grass() {
    libgrass_calc \
    libgrass_stats \
    libgrass_rli \
+   libgrass_interpdata \
    libgrass_interpfl \
    libgrass_pngdriver \
    libgrass_dspf \
@@ -39,6 +41,7 @@ function postbundle_grass() {
    libgrass_driver \
    libgrass_g3d \
    libgrass_segment \
+   libgrass_dgl \
    libgrass_gis \
    libgrass_vedit \
    libgrass_temporal \
@@ -48,7 +51,15 @@ function postbundle_grass() {
    libgrass_psdriver \
    libgrass_dbmidriver \
    libgrass_neta \
-   libgrass_raster
+   libgrass_raster \
+   libgrass_shape \
+   libgrass_bitmap \
+   libgrass_linkm \
+   libgrass_cdhc \
+   libgrass_sqlp \
+   libgrass_datetime \
+   libgrass_ccmath \
+   libgrass_qtree
   do
     install_name_id \
       @rpath/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib \
@@ -59,7 +70,8 @@ function postbundle_grass() {
       $LINK_libgeos_c \
       $LINK_libpng \
       $LINK_zlib \
-      $LINK_zstd
+      $LINK_zstd \
+      $LINK_libproj
     do
       install_name_change \
         $DEPS_LIB_DIR/$j \
@@ -67,7 +79,7 @@ function postbundle_grass() {
         $BUNDLE_LIB_DIR/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
     done
 
-    for i in \
+    for j in \
      libgrass_rtree \
      libgrass_manage \
      libgrass_dbstubs \
@@ -75,6 +87,7 @@ function postbundle_grass() {
      libgrass_rowio \
      libgrass_gproj \
      libgrass_htmldriver \
+     libgrass_btree \
      libgrass_btree2 \
      libgrass_display \
      libgrass_gmath \
@@ -85,6 +98,7 @@ function postbundle_grass() {
      libgrass_calc \
      libgrass_stats \
      libgrass_rli \
+     libgrass_interpdata \
      libgrass_interpfl \
      libgrass_pngdriver \
      libgrass_dspf \
@@ -96,6 +110,7 @@ function postbundle_grass() {
      libgrass_driver \
      libgrass_g3d \
      libgrass_segment \
+     libgrass_dgl \
      libgrass_gis \
      libgrass_vedit \
      libgrass_temporal \
@@ -105,7 +120,15 @@ function postbundle_grass() {
      libgrass_psdriver \
      libgrass_dbmidriver \
      libgrass_neta \
-     libgrass_raster
+     libgrass_raster \
+     libgrass_shape \
+     libgrass_bitmap \
+     libgrass_linkm \
+     libgrass_cdhc \
+     libgrass_sqlp \
+     libgrass_datetime \
+     libgrass_ccmath \
+     libgrass_qtree
     do
       install_name_change $DEPS_GRASS_LIB_DIR/$j.${VERSION_grass_major}.${VERSION_grass_minor}.dylib \
                           @rpath/$j.${VERSION_grass_major}.${VERSION_grass_minor}.dylib \

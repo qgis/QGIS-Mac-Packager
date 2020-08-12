@@ -12,7 +12,6 @@ function bundle_gdal() {
 
   # GDAL binaries
   for i in \
-    gdal-config \
     gdal_contour \
     gdal_grid \
     gdal_rasterize \
@@ -52,25 +51,51 @@ function postbundle_gdal() {
   install_name_id @rpath/$LINK_gdal $BUNDLE_LIB_DIR/$LINK_gdal
 
   for i in \
-    $LINK_freexl \
-    $LINK_libgeos_c \
-    $LINK_libhdf5 \
-    $LINK_netcdf \
-    $LINK_jpeg \
-    $LINK_libtiff \
-    $LINK_libxml2 \
-    $LINK_libcrypto \
-    $LINK_libpng \
-    $LINK_libpq \
-    $LINK_libproj \
-    $LINK_spatialite \
-    $LINK_sqlite \
-    $LINK_libwebp \
-    $LINK_libxerces_c \
-    $LINK_zlib \
-    $LINK_zstd
+    bin/gdal_contour \
+    bin/gdal_grid \
+    bin/gdal_rasterize \
+    bin/gdal_translate \
+    bin/gdal_viewshed \
+    bin/gdaladdo \
+    bin/gdalbuildvrt \
+    bin/gdaldem \
+    bin/gdalenhance \
+    bin/gdalinfo \
+    bin/gdallocationinfo \
+    bin/gdalmanage \
+    bin/gdalmdiminfo \
+    bin/gdalmdimtranslate \
+    bin/gdalserver \
+    bin/gdalsrsinfo \
+    bin/gdaltindex \
+    bin/gdaltransform \
+    bin/gdalwarp \
+    lib/$LINK_gdal
   do
-    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_gdal
+      for j in \
+        $LINK_freexl \
+        $LINK_libgeos_c \
+        $LINK_libhdf5 \
+        $LINK_netcdf \
+        $LINK_jpeg \
+        $LINK_libtiff \
+        $LINK_libxml2 \
+        $LINK_libcrypto \
+        $LINK_libpng \
+        $LINK_libpq \
+        $LINK_libproj \
+        $LINK_spatialite \
+        $LINK_sqlite \
+        $LINK_libwebp \
+        $LINK_libxerces_c \
+        $LINK_zlib \
+        $LINK_zstd \
+        $LINK_gdal
+      do
+        install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/MacOS/$i
+      done
   done
+
+
 }
 

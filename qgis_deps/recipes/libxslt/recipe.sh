@@ -5,6 +5,7 @@ DESC_libxslt="C XSLT library for GNOME"
 # version of your package
 VERSION_libxslt=1.1.34
 LINK_libxslt=libxslt.1.dylib
+LINK_libexslt=libexslt.0.dylib
 
 # dependencies of this recipe
 DEPS_libxslt=(libxml2)
@@ -73,4 +74,5 @@ function add_config_info_libxslt() {
   append_to_config_file "# libxslt-${VERSION_libxslt}: ${DESC_libxslt}"
   append_to_config_file "export VERSION_libxslt=${VERSION_libxslt}"
   append_to_config_file "export LINK_libxslt=${LINK_libxslt}"
+  append_to_config_file "export LINK_libexslt=${LINK_libexslt}"
 }

@@ -33,22 +33,13 @@ function postbundle_python() {
       pip \
       pip3 \
       pip${VERSION_major_python} \
-      2to3 \
-      2to3-${VERSION_major_python} \
-      idle3 \
-      idle${VERSION_major_python} \
-      pyvenv \
-      pyvenv-${VERSION_major_python} \
-      pydoc3 \
-      pydoc${VERSION_major_python} \
       python${VERSION_major_python}-config \
-      python${VERSION_major_python}m-config \
-      pyrcc5 \
-      pyuic5 \
-      pylupdate5
+      python${VERSION_major_python}m-config
     do
       fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
     done
+
+    install_name_change $DEPS_LIB_DIR/$LINK_libintl @rpath/$LINK_libintl $BUNDLE_CONTENTS_DIR/MacOS/lib/libpython${VERSION_major_python}m.dylib
 
     install_name_change $DEPS_LIB_DIR/$LINK_bz2 @rpath/$LINK_bz2 $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_bz2.cpython-${VERSION_major_python//./}m-darwin.so
     install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/pyexpat.cpython-${VERSION_major_python//./}m-darwin.so

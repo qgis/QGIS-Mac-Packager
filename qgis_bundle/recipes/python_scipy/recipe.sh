@@ -10,6 +10,7 @@ function bundle_python_scipy() {
 
 function postbundle_python_scipy() {
  SCIPY_EGG_DIR=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/scipy-${VERSION_python_scipy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+
  for i in \
    odr/__odrpack \
    linalg/_decomp_update \
@@ -81,7 +82,7 @@ function postbundle_python_scipy() {
    sparse/linalg/dsolve/_superlu \
    spatial/qhull
   do
-    install_name_change $DEPS_LIB_DIR/$LINK_libopenblas_haswellp @rpath/$LINK_libopenblas_haswellp $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_libopenblas @rpath/$LINK_libopenblas $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}m-darwin.so
   done
 }
 

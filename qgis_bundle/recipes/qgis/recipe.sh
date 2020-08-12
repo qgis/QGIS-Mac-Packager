@@ -148,9 +148,8 @@ function postbundle_qgis() {
       qgis_gui \
       qgis_native \
       qgis_3d \
-      qgisgrass${VERSION_grass_major} \
-      libgrass_dbmiclient \
-      libgrass_gproj
+      qgis_analysis \
+      qgisgrass${VERSION_grass_major}
     do
       install_name_id @rpath/$j.framework/Versions/$QGIS_VERSION/$j $BUNDLE_CONTENTS_DIR/Frameworks/$j.framework/Versions/$QGIS_VERSION/$j
       install_name_change $QGIS_BUILD_DIR/output/lib/$j.framework/Versions/$QGIS_VERSION/$j @rpath/$j.framework/Versions/$QGIS_VERSION/$j $BUNDLE_CONTENTS_DIR/$i

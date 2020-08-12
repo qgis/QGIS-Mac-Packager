@@ -9,13 +9,13 @@ function bundle_python_matplotlib() {
 }
 
 function postbundle_python_matplotlib() {
-  MATPLOTLIB_EGG_DIR=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/matplotlib-${VERSION_python_matplotlib}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
+  MATPLOTLIB_EGG_DIR=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/matplotlib-${VERSION_python_matplotlib}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
 
   for i in \
-    _backend_agg \
+    backends/_backend_agg \
     ft2font
   do
-    install_name_change $DEPS_LIB_DIR/$LINK_freetype @rpath/$LINK_freetype $MATPLOTLIB_EGG_DIR/matplotlib/backends/$i.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_freetype @rpath/$LINK_freetype $MATPLOTLIB_EGG_DIR/matplotlib/$i.cpython-${VERSION_major_python//./}m-darwin.so
   done
 }
 

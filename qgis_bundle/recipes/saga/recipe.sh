@@ -94,7 +94,7 @@ function postbundle_saga() {
     lib/saga/libpointcloud_tools.dylib \
     lib/saga/libio_shapes.dylib \
     lib/saga/libio_virtual.dylib \
-    lib/libsaga_api-$VERSION_saga.dylib.dylib \
+    lib/libsaga_api-$VERSION_saga.dylib \
     bin/saga_cmd
   do
     install_name_change $DEPS_LIB_DIR/libwx_baseu-${VERSION_wxmac_major}.dylib @rpath/libwx_baseu-${VERSION_wxmac_major}.dylib $BUNDLE_CONTENTS_DIR/MacOS/$i

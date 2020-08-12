@@ -5,7 +5,7 @@ function check_fontconfig() {
 }
 
 function bundle_fontconfig() {
-  try cp -av $DEPS_LIB_DIR/libfontconfig.* $BUNDLE_LIB_DIR
+  try cp -av $DEPS_LIB_DIR/libfontconfig.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_fontconfig() {

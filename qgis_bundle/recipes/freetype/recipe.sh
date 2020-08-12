@@ -5,7 +5,7 @@ function check_freetype() {
 }
 
 function bundle_freetype() {
-  try cp -av $DEPS_LIB_DIR/libfreetype.* $BUNDLE_LIB_DIR
+  try cp -av $DEPS_LIB_DIR/libfreetype.*dylib $BUNDLE_LIB_DIR
 }
 
 function postbundle_freetype() {

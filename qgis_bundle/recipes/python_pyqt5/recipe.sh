@@ -9,14 +9,14 @@ function bundle_python_pyqt5() {
 }
 
 function postbundle_python_pyqt5() {
-  install_name_delete_rpath /opt/QGIS/qgis-deps-${RELEASE_VERSION}/stage/lib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/PyQt5/Qsci.so
-
   for i in \
     QtPrintSupport \
     QtPositioning \
     QtXml \
     QtHelp \
     QtQuickWidgets \
+    QtWebKitWidgets \
+    QtWebKit \
     QtMultimediaWidgets \
     QtNfc \
     QtQuick \
@@ -49,6 +49,15 @@ function postbundle_python_pyqt5() {
     pyrcc
   do
     install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/PyQt5/$i.so
+    install_name_delete_rpath /opt/QGIS/qgis-deps-${RELEASE_VERSION}/stage/lib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/PyQt5/$i.so
+
+    # for some reason "some" have it twice
+    install_name_tool -delete_rpath /opt/QGIS/qgis-deps-${RELEASE_VERSION}/stage/lib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/PyQt5/$i.so >/dev/null 2>&1
   done
+
+  install_name_delete_rpath /opt/QGIS/qgis-deps-${RELEASE_VERSION}/stage/lib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/PyQt5/Qt.so
+  install_name_delete_rpath /opt/QGIS/qgis-deps-${RELEASE_VERSION}/stage/lib $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/PyQt5/Qt.so
+
+  install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/PyQt5/Qsci.so
 }
 
