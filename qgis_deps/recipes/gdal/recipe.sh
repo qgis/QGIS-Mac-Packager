@@ -29,6 +29,10 @@ DEPS_gdal=(
   png
   sqlite
   poppler
+  expat
+  freexl
+  libkml
+  pcre
 )
 
 # url of the package
@@ -82,7 +86,10 @@ function build_gdal() {
      netcdf \
      png \
      spatialite \
-     sqlite3
+     sqlite3 \
+     freexl \
+     libkml \
+     expat
   do
     WITH_GDAL_DRIVERS="$WITH_GDAL_DRIVERS --with-$i=$STAGE_PATH"
   done
@@ -92,8 +99,8 @@ function build_gdal() {
            dds gta gif ogdi fme sosi mongocxx \
            mongocxxv3 hdf4 kea jasper fgdb \
            kakadu mrsid jp2mrsid mrsid_lidar \
-           msg oci mysql ingres libkml odbc \
-           dods-root rasterlite2 expat
+           msg oci mysql ingres odbc \
+           dods-root rasterlite2
   do
     WITHOUT_GDAL_DRIVERS="$WITHOUT_GDAL_DRIVERS --without-$i"
   done
@@ -104,28 +111,27 @@ function build_gdal() {
     --enable-driver-mbtiles \
     --enable-driver-gml \
     --enable-driver-mvt \
-    --with-pcraster=yes \
-    --enable-driver-pdf \
-    --with-openjpeg=yes \
-    --with-gif=yes \
-    --with-pg=yes \
-    --with-xerces=yes \
-    --with-poppler=yes \
-    --with-pcre=no \
+    --enable-driver-xlsx \
+    --with-liblzma=$STAGE_PATH \
+    --with-zstd=$STAGE_PATH \
+    --with-libtiff=$STAGE_PATH \
+    --with-geotiff=$STAGE_PATH \
+    --with-jpeg=$STAGE_PATH \
+    --with-hdf5=$STAGE_PATH \
+    --with-netcdf=$STAGE_PATH \
+    --with-png=$STAGE_PATH \
+    --with-spatialite=$STAGE_PATH \
+    --with-sqlite3=$STAGE_PATH \
+    --with-freexl=$STAGE_PATH \
+    --with-libkml=$STAGE_PATH \
+    --with-xerces=$STAGE_PATH \
     --with-xerces-inc=$STAGE_PATH/include \
     --with-xerces-lib="-lxerces-c" \
-    ${WITH_GDAL_DRIVERS} \
-    ${WITHOUT_GDAL_DRIVERS}
+    --with-expat=$STAGE_PATH \
+    --with-expat-inc=$STAGE_PATH/include \
+    --with-expat-lib="-lexpat"
 
   check_file_configuration config.status
-
-  # missing HAVE_XERCES define needed for ogr_xerces.cpp
-  if grep -q HAVE_XERCES "port/cpl_config.h"; then
-    echo "cpl_config.h already patched with HAVE_XERCES"
-  else
-    echo "Patching cpl_config.h with HAVE_XERCES"
-    echo "#define HAVE_XERCES 1" >> port/cpl_config.h
-  fi
 
   try $MAKESMP
   try $MAKESMP install
@@ -137,6 +143,7 @@ function build_gdal() {
 function postbuild_gdal() {
   verify_binary lib/$LINK_gdal
   verify_binary bin/gdalmanage
+  verify_binary bin/gdalinfo
 }
 
 # function to append information to config file

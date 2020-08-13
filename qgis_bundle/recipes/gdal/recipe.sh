@@ -90,6 +90,16 @@ function postbundle_gdal() {
         $LINK_libxerces_c \
         $LINK_zlib \
         $LINK_zstd \
+        $LINK_libkmlbase \
+        $LINK_libkmlconvenience \
+        $LINK_libkmldom \
+        $LINK_libkmlengine \
+        $LINK_libkmlregionator \
+        $LINK_libkmlxsd \
+        $LINK_libminizip \
+        $LINK_expat \
+        $LINK_liburiparser \
+        $LINK_pcre \
         $LINK_gdal
       do
         install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/MacOS/$i

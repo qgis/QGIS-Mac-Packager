@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+PWD=`pwd`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 ####################
@@ -32,11 +33,28 @@ if [ ! -f "$KEYCHAIN_FILE" ]; then
   error "keychain file $KEYCHAIN_FILE missing"
 fi
 
+echo "Cleaning tmp files"
+for i in *.swp *.orig *.pyc
+do
+  info "Cleaning $i files"
+  find "$PATH_TO_SIGN" -type fl -name $i -exec rm -f {} +
+done
+for i in __pycache__
+do
+  info "Cleaning $i dirs"
+  find "$PATH_TO_SIGN" -type dl -name "$i" -exec rm -rf {} +
+done
+
 echo "Signing binaries in $PATH_TO_SIGN"
-LIBS=$(find "$PATH_TO_SIGN" -type f ! -name "*.py*" ! -name "*.xml*" ! -name "*.c*" ! -name "*.make*" ! -name "*.h*" -not -path "*/share/*" -not -path "*/include/*" -not -path "*/etc/*" -not -path "*/man/*"   -not -path "*/doc/*" -not -path "*/pkgconfig/*" ! -name "*txt" ! -name "*dat" -not -path "*/test*" ! -name "*png" ! -name "*jpg*" ! -name "*.dat" -not -path "*-info/*")
+FRAMEWORKS=$(find "$PATH_TO_SIGN" -type f ! -name "*.*" -path "*framework/*" -not -path "*/Headers/*")
+BINS=$(find "$PATH_TO_SIGN/bin/" -type f ! -name "*.py*")
+DYLIBS=$(find "$PATH_TO_SIGN" -type f -name "*.dylib")
+SO=$(find "$PATH_TO_SIGN" -type f -name "*.so")
+TO_SIGN="$FRAMEWORKS $BINS $DYLIBS $SO"
 
 echo "This make take few minutes..."
-for LIB in $LIBS; do
+for LIB in $TO_SIGN; do
+  echo $LIB
   sem -j+0 "codesign --force -s $IDENTITY --keychain $KEYCHAIN_FILE $LIB"
 done
 sem --wait
