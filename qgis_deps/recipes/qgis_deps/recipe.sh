@@ -13,6 +13,7 @@ DEPS_qgis_deps=(
     flex
     gdal
     grass
+    poppler
     gsl
     hdf5
     libtasn1

@@ -4,6 +4,7 @@ DESC_little_cms2="Color management engine supporting ICC profiles"
 
 # version of your package
 VERSION_little_cms2=2.9
+LINK_little_cms2=liblcms2.2.dylib
 
 # dependencies of this recipe
 DEPS_little_cms2=(jpeg libtiff)
@@ -59,12 +60,12 @@ function build_little_cms2() {
 
 # function called after all the compile have been done
 function postbuild_little_cms2() {
-  # verify_binary lib/$LINK_little_cms2
-  :
+  verify_binary lib/$LINK_little_cms2
 }
 
 # function to append information to config file
 function add_config_info_little_cms2() {
   append_to_config_file "# little_cms2-${VERSION_little_cms2}: ${DESC_little_cms2}"
   append_to_config_file "export VERSION_little_cms2=${VERSION_little_cms2}"
+  append_to_config_file "export LINK_little_cms2=$LINK_little_cms2"
 }

@@ -33,7 +33,7 @@ if [ ! -f "$KEYCHAIN_FILE" ]; then
 fi
 
 echo "Signing binaries in $PATH_TO_SIGN"
-LIBS=$(find "$PATH_TO_SIGN" -type f)
+LIBS=$(find "$PATH_TO_SIGN" -type f ! -name "*.py*" ! -name "*.xml*" ! -name "*.c*" ! -name "*.make*" ! -name "*.h*" -not -path "*/share/*" -not -path "*/include/*" -not -path "*/etc/*" -not -path "*/man/*"   -not -path "*/doc/*" -not -path "*/pkgconfig/*" ! -name "*txt" ! -name "*dat" -not -path "*/test*" ! -name "*png" ! -name "*jpg*" ! -name "*.dat" -not -path "*-info/*")
 
 echo "This make take few minutes..."
 for LIB in $LIBS; do

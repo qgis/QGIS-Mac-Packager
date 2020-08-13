@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DESC_freetype="Library to extract data from Excel .xls files"
+DESC_freetype="Software library to render fonts"
 
 # version of your package
 VERSION_freetype=2.10.0

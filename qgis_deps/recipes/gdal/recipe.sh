@@ -13,7 +13,23 @@ LINK_libgdal_version=27
 LINK_gdal=libgdal.$LINK_libgdal_version.dylib
 
 # dependencies of this recipe
-DEPS_gdal=(geos proj libgeotiff libxml2 xerces xz zstd libtiff netcdf hdf5 postgres jpeg png sqlite)
+DEPS_gdal=(
+  geos
+  proj
+  libgeotiff
+  libxml2
+  xerces
+  xz
+  zstd
+  libtiff
+  netcdf
+  hdf5
+  postgres
+  jpeg
+  png
+  sqlite
+  poppler
+)
 
 # url of the package
 URL_gdal=https://github.com/OSGeo/gdal/releases/download/v${VERSION_gdal}/gdal-${VERSION_gdal}.tar.gz
@@ -56,8 +72,17 @@ function build_gdal() {
   push_env
 
   WITH_GDAL_DRIVERS=
-  for i in liblzma zstd libtiff geotiff jpeg hdf5 \
-           netcdf png spatialite sqlite3
+  for i in \
+     liblzma \
+     zstd \
+     libtiff \
+     geotiff \
+     jpeg \
+     hdf5 \
+     netcdf \
+     png \
+     spatialite \
+     sqlite3
   do
     WITH_GDAL_DRIVERS="$WITH_GDAL_DRIVERS --with-$i=$STAGE_PATH"
   done
@@ -65,10 +90,10 @@ function build_gdal() {
   WITHOUT_GDAL_DRIVERS=
   for i in ecw grass libgrass cfitsio pcraster \
            dds gta gif ogdi fme sosi mongocxx \
-           mongocxxv3 hdf4 kea jasper openjpeg fgdb \
+           mongocxxv3 hdf4 kea jasper fgdb \
            kakadu mrsid jp2mrsid mrsid_lidar \
-           msg oci mysql ingres expat libkml odbc \
-           dods-root rasterlite2
+           msg oci mysql ingres libkml odbc \
+           dods-root rasterlite2 expat
   do
     WITHOUT_GDAL_DRIVERS="$WITHOUT_GDAL_DRIVERS --without-$i"
   done
@@ -79,8 +104,13 @@ function build_gdal() {
     --enable-driver-mbtiles \
     --enable-driver-gml \
     --enable-driver-mvt \
+    --with-pcraster=yes \
+    --enable-driver-pdf \
+    --with-openjpeg=yes \
+    --with-gif=yes \
     --with-pg=yes \
     --with-xerces=yes \
+    --with-poppler=yes \
     --with-pcre=no \
     --with-xerces-inc=$STAGE_PATH/include \
     --with-xerces-lib="-lxerces-c" \
@@ -99,12 +129,6 @@ function build_gdal() {
 
   try $MAKESMP
   try $MAKESMP install
-
-  # not sure why gdal lib uses RPATH just for netcdf lib?
-  install_name_tool -change @rpath/$LINK_netcdf ${STAGE_PATH}/lib/$LINK_netcdf $LINK_gdal
-
-  # not sure why xerces lib is taken from build dir?
-  install_name_tool -change $BUILD_PATH/xerces/build-$ARCH/src/$LINK_libxerces_c ${STAGE_PATH}/lib/$LINK_libxerces_c $LINK_gdal
 
   pop_env
 }
