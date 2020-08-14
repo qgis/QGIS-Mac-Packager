@@ -50,11 +50,22 @@ FRAMEWORKS=$(find "$PATH_TO_SIGN" -type f ! -name "*.*" -path "*framework/*" -no
 BINS=$(find "$PATH_TO_SIGN/bin/" -type f ! -name "*.py*")
 DYLIBS=$(find "$PATH_TO_SIGN" -type f -name "*.dylib")
 SO=$(find "$PATH_TO_SIGN" -type f -name "*.so")
-TO_SIGN="$FRAMEWORKS $BINS $DYLIBS $SO"
 
-echo "This make take few minutes..."
+TO_SIGN=
+total=0
+for BINARY in $FRAMEWORKS $BINS $DYLIBS $SO; do
+  attachmenttype=$(file $BINARY | cut -d\  -f2 )
+  if [[ $attachmenttype = "Mach-O" ]]; then
+    TO_SIGN="$TO_SIGN $BINARY"
+    ((total=total+1))
+  fi
+done
+
+echo "This make take few minutes..., signing $total binaries"
+i=0
 for LIB in $TO_SIGN; do
-  echo $LIB
+  ((i=i+1))
+  echo "($i/$total) signing => $LIB"
   sem -j+0 "codesign --force -s $IDENTITY --keychain $KEYCHAIN_FILE $LIB"
 done
 sem --wait

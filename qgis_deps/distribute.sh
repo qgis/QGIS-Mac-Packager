@@ -383,8 +383,6 @@ function verify_binary() {
 
 run_final_check() {
   info "Running final check"
-
-
 }
 
 function usage() {

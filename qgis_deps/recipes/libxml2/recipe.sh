@@ -60,7 +60,7 @@ function build_libxml2() {
   try $MAKESMP install
 
   if [ ! -e $STAGE_PATH/include/libxml ]; then
-    mk_sym_link $STAGE_PATH/include libxml ./libxml2/libxml
+    mk_sym_link $STAGE_PATH/include ./libxml2/libxml libxml
   fi
 
   pop_env

@@ -59,8 +59,6 @@ function build_libkml() {
   push_env
 
   try ${CMAKE} \
-   -DMINIZIP_INCLUDE_DIR=$STAGE_PATH/include \
-   -DMINIZIP_LIBRARY=$STAGE_PATH/lib/libminizip.dylib \
    $BUILD_libkml
   check_file_configuration CMakeCache.txt
 

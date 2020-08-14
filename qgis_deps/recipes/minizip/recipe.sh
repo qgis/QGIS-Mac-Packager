@@ -3,22 +3,22 @@
 DESC_minizip="zip manipulation library written in C"
 
 # version of your package
-source $RECIPES_PATH/zstd/recipe.sh
-VERSION_minizip=2.10.0
+source $RECIPES_PATH/libkml/recipe.sh
+source $RECIPES_PATH/zlib/recipe.sh
+VERSION_minizip=1.1
 
 LINK_libminizip=libminizip.dylib
 
 # dependencies of this recipe
 DEPS_minizip=(
  zlib
- bz2
 )
 
 # url of the package
-URL_minizip=https://github.com/nmoinvaz/minizip/archive/$VERSION_minizip.tar.gz
+URL_minizip=http://sourceforge.net/projects/libkml-files/files/${VERSION_libkml}/minizip.tar.gz
 
 # md5 of the package
-MD5_minizip=1119861437da046626dc5eb0ee8a2b1f
+MD5_minizip=d5f74eff74e03e497ea60b2c43623416
 
 # default build path
 BUILD_minizip=$BUILD_PATH/minizip/$(get_directory $URL_minizip)
@@ -52,14 +52,17 @@ function build_minizip() {
   try cd $BUILD_PATH/minizip/build-$ARCH
   push_env
 
-  try ${CMAKE} -DBUILD_SHARED_LIBS=ON $BUILD_minizip
+  try ${CMAKE} \
+    -DZLIB_INCLUDE_DIR=$STAGE_PATH/include \
+    -DZLIB_LIBRARY=$STAGE_PATH/lib/$LINK_zlib \
+    $BUILD_minizip
+
   check_file_configuration CMakeCache.txt
 
   try $NINJA
   try $NINJA install
 
-  install_name_tool -id $STAGE_PATH/lib/libminizip.dylib $STAGE_PATH/lib/libminizip.dylib
-  install_name_tool -change $LINK_zstd $STAGE_PATH/lib/$LINK_zstd $STAGE_PATH/lib/libminizip.dylib
+  install_name_tool -id $STAGE_PATH/lib/$LINK_libminizip $STAGE_PATH/lib/$LINK_libminizip
 
   pop_env
 }
