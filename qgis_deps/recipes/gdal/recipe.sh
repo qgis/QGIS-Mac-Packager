@@ -75,36 +75,6 @@ function build_gdal() {
   try cd $BUILD_PATH/gdal/build-$ARCH
   push_env
 
-  WITH_GDAL_DRIVERS=
-  for i in \
-     liblzma \
-     zstd \
-     libtiff \
-     geotiff \
-     jpeg \
-     hdf5 \
-     netcdf \
-     png \
-     spatialite \
-     sqlite3 \
-     freexl \
-     libkml \
-     expat
-  do
-    WITH_GDAL_DRIVERS="$WITH_GDAL_DRIVERS --with-$i=$STAGE_PATH"
-  done
-
-  WITHOUT_GDAL_DRIVERS=
-  for i in ecw grass libgrass cfitsio pcraster \
-           dds gta gif ogdi fme sosi mongocxx \
-           mongocxxv3 hdf4 kea jasper fgdb \
-           kakadu mrsid jp2mrsid mrsid_lidar \
-           msg oci mysql ingres odbc \
-           dods-root rasterlite2
-  do
-    WITHOUT_GDAL_DRIVERS="$WITHOUT_GDAL_DRIVERS --without-$i"
-  done
-
   try ${CONFIGURE} \
     --disable-debug \
     --enable-driver-gpkg \
@@ -129,7 +99,8 @@ function build_gdal() {
     --with-xerces-lib="-lxerces-c" \
     --with-expat=$STAGE_PATH \
     --with-expat-inc=$STAGE_PATH/include \
-    --with-expat-lib="-lexpat"
+    --with-expat-lib="-lexpat" \
+    --with-poppler=$STAGE_PATH
 
   check_file_configuration config.status
 

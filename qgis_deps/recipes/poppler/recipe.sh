@@ -49,13 +49,6 @@ function prebuild_poppler() {
 }
 
 function shouldbuild_poppler() {
-    install_name_tool -id $STAGE_PATH/lib/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler
-  install_name_tool -id $STAGE_PATH/lib/$LINK_poppler_cpp $STAGE_PATH/lib/$LINK_poppler_cpp
-  install_name_tool -id $STAGE_PATH/lib/$LINK_poppler_qt5 $STAGE_PATH/lib/$LINK_poppler_qt5
-
-  install_name_tool -change $BUILD_PATH/poppler/build-$ARCH/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler_cpp
-  install_name_tool -change $BUILD_PATH/poppler/build-$ARCH/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler_qt5
-
   # If lib is newer than the sourcecode skip build
   if [ ${STAGE_PATH}/lib/${LINK_poppler} -nt $BUILD_poppler/.patched ]; then
     DO_BUILD=0
@@ -67,6 +60,8 @@ function build_poppler() {
   try mkdir -p $BUILD_PATH/poppler/build-$ARCH
   try cd $BUILD_PATH/poppler/build-$ARCH
   push_env
+
+  # ENABLE_UNSTABLE_API_ABI_HEADERS=ON is equivalent to enable-xpdf-headers
 
   try ${CMAKE} \
     -DBUILD_GTK_TESTS=OFF \

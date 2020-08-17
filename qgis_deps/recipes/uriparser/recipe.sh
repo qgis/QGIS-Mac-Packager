@@ -55,10 +55,10 @@ function build_uriparser() {
 
   check_file_configuration CMakeCache.txt
 
-  install_name_tool -id $STAGE_PATH/lib/$LINK_liburiparser $STAGE_PATH/lib/$LINK_liburiparser
-
   try $NINJA
   try $NINJA install
+
+  install_name_tool -id $STAGE_PATH/lib/$LINK_liburiparser $STAGE_PATH/lib/$LINK_liburiparser
 
   pop_env
 }

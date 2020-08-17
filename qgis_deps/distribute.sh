@@ -27,6 +27,7 @@ function pop_env() {
   export LD_LIBRARY_PATH=$OLD_LD_LIBRARY_PATH
   export PIP=$OLD_PIP
   export QSPEC=$OLD_QSPEC
+  export PKG_CONFIG_PATH=$OLD_PKG_CONFIG_PATH
 }
 
 #########################################################################################################
@@ -193,6 +194,7 @@ function push_env() {
     export OLD_OBJCXX=${OBJCXX}
     export OLD_OBJC=${OBJC}
     export OLD_NINJA=$NINJA
+    export OLD_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
 
     ###################
     # Path
@@ -229,6 +231,7 @@ function push_env() {
     export OBJC=${CC}
     export NINJA="/usr/local/bin/ninja"
     export LD="/usr/bin/ld"
+    export PKG_CONFIG_PATH=$STAGE_PATH/lib/pkgconfig
 
     ###################
     # CMake

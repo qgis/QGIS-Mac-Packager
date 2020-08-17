@@ -3,7 +3,7 @@
 DESC_libzip="C library for reading, creating, and modifying zip archives"
 
 # version of your package
-VERSION_libzip=1.6.1
+VERSION_libzip=1.7.3
 
 LINK_libzip=libzip.5.dylib
 
@@ -11,10 +11,10 @@ LINK_libzip=libzip.5.dylib
 DEPS_libzip=( zlib xz openssl )
 
 # url of the package
-URL_libzip=https://libzip.org/download/libzip-${VERSION_libzip}.tar.xz
+URL_libzip=https://github.com/nih-at/libzip/archive/v${VERSION_libzip}.tar.gz
 
 # md5 of the package
-MD5_libzip=f9a228619aab2446addc9c9e0e2de149
+MD5_libzip=866fc2fbfc86615fd6cfca9b0a52accf
 
 # default build path
 BUILD_libzip=$BUILD_PATH/libzip/$(get_directory $URL_libzip)

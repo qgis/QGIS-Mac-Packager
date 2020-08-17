@@ -53,6 +53,7 @@ function build_xerces() {
   try $NINJA
   try $NINJA install
 
+  install_name_tool -id $STAGE_PATH/lib/$LINK_libxerces_c $STAGE_PATH/lib/$LINK_libxerces_c
   try install_name_tool -change $BUILD_PATH/xerces/build-$ARCH/src/$LINK_libxerces_c $STAGE_PATH/lib/$LINK_libxerces_c $STAGE_PATH/bin/CreateDOMDocument
 
   pop_env
