@@ -73,6 +73,10 @@ function build_grass() {
 
   # No DEBUG symbols!
   export PATH="$STAGE_PATH/grass${VERSION_grass_major}${VERSION_grass_minor}/bin:$PATH"
+
+  # headerpad_max_install_names is to be able to modify/add rpaths to binaries in bundle step
+  unset LDFLAGS
+  export LDFLAGS="-Wl,-headerpad_max_install_names"
   export CFLAGS="-O2"
   export CXXFLAGS="${CFLAGS}"
   export GRASS_PYTHON=$STAGE_PATH/bin/python3
@@ -80,7 +84,6 @@ function build_grass() {
   # when building with LIB=...
   # lib/gpde fails with undefined symbols to _G_calloc and others
   # see https://github.com/OSGeo/grass/issues/457#issuecomment-607272665
-  unset LDFLAGS
   unset LIB
   unset INCLUDE
   unset LIB_DIR

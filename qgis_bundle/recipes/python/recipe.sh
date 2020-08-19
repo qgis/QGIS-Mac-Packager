@@ -52,18 +52,23 @@ function fix_binaries_python_check() {
 }
 
 function fix_paths_python() {
-    # patch shell scripts
-    for i in \
+  # patch shell scripts
+  for i in \
       pip \
       pip3 \
       pip${VERSION_major_python} \
       python${VERSION_major_python}-config \
       python${VERSION_major_python}m-config
-    do
-      fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
-    done
+  do
+    fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
+  done
+
+  fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/python-config.py
+  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/Makefile
+  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/Setup
 }
 
 function fix_paths_python_check() {
   verify_file_paths $BUNDLE_BIN_DIR/pip3
+  verify_file_paths $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/python-config.py
 }

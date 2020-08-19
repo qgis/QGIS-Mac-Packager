@@ -68,6 +68,14 @@ function fix_exec_link {
   try ${SED} "s;exec $FROMSTR;exec \'\`dirname \$0\`/$TOSTR\';g" "$FILENAME"
 }
 
+function clean_path {
+  FNAME=$1
+
+  try ${SED} "s;$ROOT_OUT_PATH;/MISSING/DEPS/;g" $FNAME
+  try ${SED} "s;/opt/;/MISSING/OPT/;g" $FNAME
+  try ${SED} "s;/usr/local/;/MISSING/LOCAL/;g" $FNAME
+}
+
 #################################
 # FIND all modules - the order does not matter here
 MODULES=
@@ -246,39 +254,24 @@ function check_binary_linker_links() {
 
 function check_file_path() {
   ok="true"
-  echo "###########################################"
-  echo " grep /usr/local/"
-  echo "###########################################"
   if grep -rni /usr/local/ $1
   then
     grep -rni /usr/local/ $1
     echo "$1 reference absolute /usr/local/ dir"
     ok="false"
   fi
-
-  echo "###########################################"
-  echo " grep $QGIS_INSTALL_DIR"
-  echo "###########################################"
   if grep -rni $QGIS_INSTALL_DIR $1
   then
     grep -rni $QGIS_INSTALL_DIR $1
     echo "$1 reference absolute $QGIS_INSTALL_DIR dir"
     ok="false"
   fi
-
-  echo "###########################################"
-  echo " grep $ROOT_OUT_PATH"
-  echo "###########################################"
   if grep -rni $ROOT_OUT_PATH $1
   then
     grep -rni $ROOT_OUT_PATH $1
     echo "$1 reference absolute $ROOT_OUT_PATH dir"
     ok="false"
   fi
-
-  echo "###########################################"
-  echo " grep $BUNDLE_DIR"
-  echo "###########################################"
   if grep -rni $BUNDLE_DIR $1
   then
     grep -rni $BUNDLE_DIR $1
@@ -294,13 +287,14 @@ function check_file_path() {
 function check_other_files_links() {
   cd ${BUNDLE_DIR}
   ok="true"
+  EXCLUDE="--exclude *.dylib --exclude *.so"
   # all other files
   echo "###########################################"
   echo " grep /usr/local/"
   echo "###########################################"
-  if grep -rni /usr/local/ .
+  if grep -rni /usr/local/ . $EXCLUDE
   then
-    grep -rni /usr/local/ .
+    grep -rni /usr/local/ . $EXCLUDE
     echo "Some scripts reference absolute /usr/local/ dir"
     ok="false"
   fi
@@ -308,9 +302,9 @@ function check_other_files_links() {
   echo "###########################################"
   echo " grep $QGIS_INSTALL_DIR"
   echo "###########################################"
-  if grep -rni $QGIS_INSTALL_DIR .
+  if grep -rni $QGIS_INSTALL_DIR . $EXCLUDE
   then
-    grep -rni $QGIS_INSTALL_DIR .
+    grep -rni $QGIS_INSTALL_DIR . $EXCLUDE
     echo "Some scripts reference absolute $QGIS_INSTALL_DIR dir"
     ok="false"
   fi
@@ -318,9 +312,9 @@ function check_other_files_links() {
   echo "###########################################"
   echo " grep $ROOT_OUT_PATH"
   echo "###########################################"
-  if grep -rni $ROOT_OUT_PATH .
+  if grep -rni $ROOT_OUT_PATH . $EXCLUDE
   then
-    grep -rni $ROOT_OUT_PATH .
+    grep -rni $ROOT_OUT_PATH . $EXCLUDE
     echo "Some scripts reference absolute $ROOT_OUT_PATH dir"
     ok="false"
   fi
@@ -328,9 +322,9 @@ function check_other_files_links() {
   echo "###########################################"
   echo " grep $BUNDLE_DIR"
   echo "###########################################"
-  if grep -rni $BUNDLE_DIR .
+  if grep -rni $BUNDLE_DIR . $EXCLUDE
   then
-    grep -rni $BUNDLE_DIR .
+    grep -rni $BUNDLE_DIR . $EXCLUDE
     echo "Some scripts reference absolute $BUNDLE_DIR dir"
     ok="false"
   fi
@@ -411,6 +405,10 @@ run_clean_tmp_files() {
 }
 
 function run() {
+  export -f install_name_change
+  export -f error
+  export -f try
+
   run_prepare_bundle_dir
   run_source_modules
   run_check

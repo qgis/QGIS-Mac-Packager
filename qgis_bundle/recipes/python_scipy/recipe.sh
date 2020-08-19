@@ -93,9 +93,15 @@ function fix_binaries_python_scipy_check() {
 }
 
 function fix_paths_python_scipy() {
-  :
+  SCIPY_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/scipy-${VERSION_python_scipy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+
+  clean_path $SCIPY_EGG_DIR/EGG-INFO/SOURCES.txt
+  clean_path $SCIPY_EGG_DIR/scipy/__config__.py
 }
 
 function fix_paths_python_scipy_check() {
-  :
+  SCIPY_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/scipy-${VERSION_python_scipy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+
+  verify_file_paths $SCIPY_EGG_DIR/EGG-INFO/SOURCES.txt
+  verify_file_paths $SCIPY_EGG_DIR/scipy/__config__.py
 }

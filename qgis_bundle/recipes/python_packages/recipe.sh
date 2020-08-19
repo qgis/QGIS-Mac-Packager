@@ -12,7 +12,7 @@ function bundle_python_packages() {
      $BUNDLE_PYTHON_PACKAGES_DIR/ \
      --exclude __pycache__
 
-  mk_sym_link $BUNDLE_CONTENTS_DIR/MacOS/lib ../../Resources/python python$VERSION_major_python
+  mk_sym_link $BUNDLE_LIB_DIR ../../Resources/python python$VERSION_major_python
 }
 
 function fix_binaries_python_packages() {
@@ -57,12 +57,18 @@ function fix_paths_python_packages() {
       pyrcc5 \
       pyuic5 \
       pylupdate5 \
-      pipenv-resolver
+      pipenv-resolver \
+      pipenv
   do
     fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
   done
+
+  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/_sysconfigdata_m_darwin_darwin.py
+  clean_path $BUNDLE_PYTHON_SITE_PACKAGES_DIR/sipconfig.py
 }
 
 function fix_paths_python_packages_check() {
   verify_file_paths $BUNDLE_BIN_DIR/pyrcc5
+  verify_file_paths $BUNDLE_PYTHON_PACKAGES_DIR/_sysconfigdata_m_darwin_darwin.py
+  verify_file_paths $BUNDLE_PYTHON_SITE_PACKAGES_DIR/sipconfig.py
 }
