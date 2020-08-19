@@ -16,11 +16,12 @@ function bundle_grass() {
      --exclude demolocation \
      --exclude __pycache__
 
-  try cp -av $RECIPES_PATH/grass/grass.bash $BUNDLE_BIN_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
-  try cp -av $DEPS_BIN_DIR/grass${VERSION_grass_major}${VERSION_grass_minor} $BUNDLE_BIN_DIR/_grass${VERSION_grass_major}${VERSION_grass_minor}
+  try cp -av $RECIPES_PATH/grass/grass.bash $GRASS_BUNDLE_DIR/grass
+  try cp -av $DEPS_BIN_DIR/grass${VERSION_grass_major}${VERSION_grass_minor} $GRASS_BUNDLE_DIR/_grass
 
-  chmod +x $BUNDLE_BIN_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
-  chmod +x $BUNDLE_BIN_DIR/_grass${VERSION_grass_major}${VERSION_grass_minor}
+  # see python/plugins/processing/algs/grass7/Grass7Utils.py
+  # the grass directory must be in Contents/MacOS directory
+  mk_sym_link $BUNDLE_MACOS_DIR ../Resources/grass${VERSION_grass_major}${VERSION_grass_minor} grass${VERSION_grass_major}${VERSION_grass_minor}
 }
 
 function fix_rpaths_grass() {
@@ -212,9 +213,8 @@ function fix_binaries_grass_check() {
 
 function fix_paths_grass() {
   GRASS_BUNDLE_DIR=$BUNDLE_RESOURCES_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
-  try ${SED} "s;REPLACEVERSION;${VERSION_grass_major}${VERSION_grass_minor};g" $BUNDLE_BIN_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
 
-  clean_path $BUNDLE_BIN_DIR/_grass${VERSION_grass_major}${VERSION_grass_minor}
+  clean_path $GRASS_BUNDLE_DIR/_grass
 
   GENERATED_FILES=$(find $GRASS_BUNDLE_DIR/etc/python/grass/lib/*.py)
   for i in $GENERATED_FILES
@@ -227,7 +227,7 @@ function fix_paths_grass() {
 function fix_paths_grass_check() {
   GRASS_BUNDLE_DIR=$BUNDLE_RESOURCES_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
 
-  verify_file_paths $BUNDLE_BIN_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
-  verify_file_paths $BUNDLE_BIN_DIR/_grass${VERSION_grass_major}${VERSION_grass_minor}
+  verify_file_paths $GRASS_BUNDLE_DIR/grass
+  verify_file_paths $GRASS_BUNDLE_DIR/_grass
   verify_file_paths $GRASS_BUNDLE_DIR/scripts/d.shade
 }

@@ -1,10 +1,11 @@
 #!/bin/bash
-BINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-GRASSDIR=$BINDIR/../../Resources/grassREPLACEVERSION
-PROJDIR=$BINDIR/../../Resources/proj
+GRASSDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+GRASSDIR=$(perl -MCwd -e 'print Cwd::abs_path shift' $GRASSDIR)
+BINDIR=$GRASSDIR/../../MacOS/bin
+PROJDIR=$GRASSDIR/../proj
 
-export PATH=$BINDIR:$GRASSDIR:$PATH
+export PATH=$GRASSDIR/bin:$BINDIR:$PATH
 export GISBASE=$GRASSDIR
 export GRASS_PROJSHARE=$PROJDIR
 
-$BINDIR/_grassREPLACEVERSION "$@"
+$GRASSDIR/_grass "$@"
