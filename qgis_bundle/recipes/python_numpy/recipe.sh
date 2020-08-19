@@ -8,8 +8,8 @@ function bundle_python_numpy() {
   :
 }
 
-function postbundle_python_numpy() {
-  NUMPY_EGG_DIR=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/numpy-${VERSION_python_numpy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+function fix_binaries_python_numpy() {
+  NUMPY_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/numpy-${VERSION_python_numpy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
 
   for i in \
     core/_multiarray_umath \
@@ -21,3 +21,16 @@ function postbundle_python_numpy() {
   done
 }
 
+function fix_binaries_python_numpy_check() {
+  NUMPY_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/numpy-${VERSION_python_numpy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+
+  verify_binary $NUMPY_EGG_DIR/numpy/core/_multiarray_umath.cpython-${VERSION_major_python//./}m-darwin.so
+}
+
+function fix_paths_python_numpy() {
+  :
+}
+
+function fix_paths_python_numpy_check() {
+  :
+}

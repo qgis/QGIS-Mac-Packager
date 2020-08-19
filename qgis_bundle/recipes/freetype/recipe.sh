@@ -8,7 +8,7 @@ function bundle_freetype() {
   try cp -av $DEPS_LIB_DIR/libfreetype.*dylib $BUNDLE_LIB_DIR
 }
 
-function postbundle_freetype() {
+function fix_binaries_freetype() {
   install_name_id @rpath/$LINK_freetype $BUNDLE_LIB_DIR/$LINK_freetype
 
   for i in \
@@ -17,4 +17,16 @@ function postbundle_freetype() {
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_freetype
   done
+}
+
+function fix_binaries_freetype_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_freetype
+}
+
+function fix_paths_freetype() {
+  :
+}
+
+function fix_paths_freetype_check() {
+  :
 }

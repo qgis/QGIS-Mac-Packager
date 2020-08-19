@@ -8,8 +8,8 @@ function bundle_python_pyproj() {
   :
 }
 
-function postbundle_python_pyproj() {
-  PYPROJ_EGG=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyproj-${VERSION_python_pyproj}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+function fix_binaries_python_pyproj() {
+  PYPROJ_EGG=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/pyproj-${VERSION_python_pyproj}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
 
   for i in \
     _list \
@@ -23,3 +23,16 @@ function postbundle_python_pyproj() {
   done
 }
 
+function fix_binaries_python_pyproj_check() {
+  PYPROJ_EGG=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/pyproj-${VERSION_python_pyproj}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+
+  verify_binary $PYPROJ_EGG/pyproj/_proj.cpython-${VERSION_major_python//./}m-darwin.so
+}
+
+function fix_paths_python_pyproj() {
+  :
+}
+
+function fix_paths_python_pyproj_check() {
+  :
+}

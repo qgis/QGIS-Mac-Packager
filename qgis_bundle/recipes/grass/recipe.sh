@@ -9,7 +9,7 @@ function bundle_grass() {
 	try cp -av $DEPS_GRASS_LIB_DIR/libgrass_*dylib $BUNDLE_LIB_DIR
 }
 
-function postbundle_grass() {
+function fix_binaries_grass() {
  for i in \
    libgrass_rtree \
    libgrass_manage \
@@ -135,4 +135,16 @@ function postbundle_grass() {
                           $BUNDLE_LIB_DIR/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
     done
   done
+}
+
+function fix_binaries_grass_check() {
+  verify_binary $BUNDLE_LIB_DIR/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
+}
+
+function fix_paths_grass() {
+  :
+}
+
+function fix_paths_grass_check() {
+  :
 }

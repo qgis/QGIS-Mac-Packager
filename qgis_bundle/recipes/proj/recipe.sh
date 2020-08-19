@@ -14,8 +14,20 @@ function bundle_proj() {
   try rsync -av $DEPS_SHARE_DIR/proj $BUNDLE_RESOURCES_DIR/
 }
 
-function postbundle_proj() {
-  install_name_id  @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libproj
+function fix_binaries_proj() {
+  install_name_id @rpath/$LINK_libproj $BUNDLE_LIB_DIR/$LINK_libproj
 
-  install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libproj
+  install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_LIB_DIR/$LINK_libproj
+}
+
+function fix_binaries_proj_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_libproj
+}
+
+function fix_paths_proj() {
+  :
+}
+
+function fix_paths_proj_check() {
+  :
 }

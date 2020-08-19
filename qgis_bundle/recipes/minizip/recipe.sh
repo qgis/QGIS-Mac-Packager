@@ -9,7 +9,7 @@ function bundle_minizip() {
   try cp -av $DEPS_LIB_DIR/libminizip.*dylib $BUNDLE_LIB_DIR/
 }
 
-function postbundle_minizip() {
+function fix_binaries_minizip() {
   install_name_id  @rpath/$LINK_minizip $BUNDLE_LIB_DIR/$LINK_libminizip
 
   for i in \
@@ -19,4 +19,16 @@ function postbundle_minizip() {
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_libminizip
   done
+}
+
+function fix_binaries_minizip_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_libminizip
+}
+
+function fix_paths_minizip() {
+  :
+}
+
+function fix_paths_minizip_check() {
+  :
 }

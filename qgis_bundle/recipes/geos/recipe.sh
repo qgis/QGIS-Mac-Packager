@@ -12,9 +12,22 @@ function bundle_geos() {
   try cp -av $DEPS_LIB_DIR/libgeos.* $BUNDLE_LIB_DIR
 }
 
-function postbundle_geos() {
+function fix_binaries_geos() {
   install_name_id @rpath/$LINK_libgeos_c $BUNDLE_LIB_DIR/$LINK_libgeos_c
   install_name_id @rpath/$LINK_libgeos $BUNDLE_LIB_DIR/$LINK_libgeos
 
   install_name_change $DEPS_LIB_DIR/$LINK_libgeos @rpath/$LINK_libgeos $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libgeos_c
+}
+
+function fix_binaries_geos_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_libgeos
+  verify_binary $BUNDLE_LIB_DIR/$LINK_libgeos_c
+}
+
+function fix_paths_geos() {
+  :
+}
+
+function fix_paths_geos_check() {
+  :
 }

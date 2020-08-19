@@ -7,14 +7,45 @@ function check_python_packages() {
 }
 
 function bundle_python_packages() {
-   try rsync -av $DEPS_PYTHON_SITE_PACKAGES_DIR/ $BUNDLE_PYTHON_SITE_PACKAGES_DIR/ --exclude __pycache__
+  try rsync -av \
+     $DEPS_PYTHON_PACKAGES_DIR/ \
+     $BUNDLE_PYTHON_PACKAGES_DIR/ \
+     --exclude __pycache__
 
-   mk_sym_link $BUNDLE_CONTENTS_DIR/MacOS/lib ../../Resources/python python$VERSION_major_python
+  mk_sym_link $BUNDLE_CONTENTS_DIR/MacOS/lib ../../Resources/python python$VERSION_major_python
 }
 
-function postbundle_python_packages() {
-      # patch shell scripts
-     for i in \
+function fix_binaries_python_packages() {
+  install_name_change $DEPS_LIB_DIR/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_PYTHON_SITE_PACKAGES_DIR/pyodbc.cpython-${VERSION_major_python//./}m-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_PYTHON_SITE_PACKAGES_DIR/cryptography/hazmat/bindings/_openssl.abi3.so
+  install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_PYTHON_SITE_PACKAGES_DIR/cryptography/hazmat/bindings/_openssl.abi3.so
+  install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_cffi_backend.cpython-${VERSION_major_python//./}m-darwin.so
+
+  install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}m-darwin.so
+
+  for i in \
+    $LINK_libxml2 \
+    $LINK_zlib \
+    $LINK_libxslt \
+    $LINK_libexslt
+  do
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/objectify.cpython-${VERSION_major_python//./}m-darwin.so
+  done
+}
+
+function fix_binaries_python_packages_check() {
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/pyodbc.cpython-${VERSION_major_python//./}m-darwin.so
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/cryptography/hazmat/bindings/_openssl.abi3.so
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/cryptography/hazmat/bindings/_openssl.abi3.so
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_cffi_backend.cpython-${VERSION_major_python//./}m-darwin.so
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}m-darwin.so
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/objectify.cpython-${VERSION_major_python//./}m-darwin.so
+}
+
+function fix_paths_python_packages() {
+  # patch shell scripts
+  for i in \
       2to3 \
       2to3-${VERSION_major_python} \
       idle3 \
@@ -27,25 +58,11 @@ function postbundle_python_packages() {
       pyuic5 \
       pylupdate5 \
       pipenv-resolver
-    do
-      fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
-    done
-
-    install_name_change $DEPS_LIB_DIR/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/pyodbc.cpython-${VERSION_major_python//./}m-darwin.so
-    install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/cryptography/hazmat/bindings/_openssl.abi3.so
-    install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/cryptography/hazmat/bindings/_openssl.abi3.so
-    install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/_cffi_backend.cpython-${VERSION_major_python//./}m-darwin.so
-
-    install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/lxml/etree.cpython-${VERSION_major_python//./}m-darwin.so
-
-    for i in \
-      $LINK_libxml2 \
-      $LINK_zlib \
-      $LINK_libxslt \
-      $LINK_libexslt
-    do
-      install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/lxml/etree.cpython-${VERSION_major_python//./}m-darwin.so
-      install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/lxml/objectify.cpython-${VERSION_major_python//./}m-darwin.so
-    done
+  do
+    fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
+  done
 }
 
+function fix_paths_python_packages_check() {
+  verify_file_paths $BUNDLE_BIN_DIR/pyrcc5
+}

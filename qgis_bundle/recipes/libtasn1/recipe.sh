@@ -9,6 +9,18 @@ function bundle_libtasn1() {
   try cp -av $DEPS_LIB_DIR/libtasn1*dylib $BUNDLE_LIB_DIR
 }
 
-function postbundle_libtasn1() {
+function fix_binaries_libtasn1() {
  install_name_id @rpath/$LINK_libtasn1 $BUNDLE_LIB_DIR/$LINK_libtasn1
+}
+
+function fix_binaries_libtasn1_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_libtasn1
+}
+
+function fix_paths_libtasn1() {
+  :
+}
+
+function fix_paths_libtasn1_check() {
+  :
 }

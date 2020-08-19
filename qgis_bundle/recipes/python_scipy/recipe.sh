@@ -8,8 +8,8 @@ function bundle_python_scipy() {
   :
 }
 
-function postbundle_python_scipy() {
- SCIPY_EGG_DIR=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/scipy-${VERSION_python_scipy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+function fix_binaries_python_scipy() {
+ SCIPY_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/scipy-${VERSION_python_scipy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
 
  for i in \
    odr/__odrpack \
@@ -86,3 +86,16 @@ function postbundle_python_scipy() {
   done
 }
 
+function fix_binaries_python_scipy_check() {
+  SCIPY_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/scipy-${VERSION_python_scipy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+
+  verify_binary $SCIPY_EGG_DIR/scipy/odr/__odrpack.cpython-${VERSION_major_python//./}m-darwin.so
+}
+
+function fix_paths_python_scipy() {
+  :
+}
+
+function fix_paths_python_scipy_check() {
+  :
+}

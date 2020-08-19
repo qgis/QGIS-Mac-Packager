@@ -11,8 +11,20 @@ function bundle_protobuf() {
   try cp -av $DEPS_LIB_DIR/libprotobuf-lite.*dylib $BUNDLE_LIB_DIR
 }
 
-function postbundle_protobuf() {
+function fix_binaries_protobuf() {
   install_name_id @rpath/$LINK_protobuf_lite $BUNDLE_LIB_DIR/$LINK_protobuf_lite
 
   install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_protobuf_lite
+}
+
+function fix_binaries_protobuf_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_protobuf_lite
+}
+
+function fix_paths_protobuf() {
+  :
+}
+
+function fix_paths_protobuf_check() {
+  :
 }

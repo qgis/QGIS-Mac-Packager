@@ -14,9 +14,9 @@ function bundle_saga() {
   try cp -av $DEPS_BIN_DIR/saga_cmd $BUNDLE_BIN_DIR/
 }
 
-function postbundle_saga() {
+function fix_binaries_saga() {
   install_name_change $DEPS_LIB_DIR/libsaga_api-$VERSION_saga.dylib @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_CONTENTS_DIR/MacOS/bin/saga_cmd
-  install_name_id @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libsaga_api-$VERSION_saga.dylib
+  install_name_id @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_LIB_DIR/libsaga_api-$VERSION_saga.dylib
 
   for i in \
     libimagery_segmentation \
@@ -82,13 +82,13 @@ function postbundle_saga() {
     libgrid_gridding   \
     libshapes_points
   do
-    install_name_id @rpath/saga/$i.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/$i.dylib
-    install_name_change $DEPS_LIB_DIR/libsaga_api-$VERSION_saga.dylib @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/$i.dylib
+    install_name_id @rpath/saga/$i.dylib $BUNDLE_LIB_DIR/saga/$i.dylib
+    install_name_change $DEPS_LIB_DIR/libsaga_api-$VERSION_saga.dylib @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_LIB_DIR/saga/$i.dylib
   done
 
-  install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/libio_gdal.dylib
-  install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/libdb_pgsql.dylib
-  install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_CONTENTS_DIR/MacOS/lib/saga/libpj_proj4.dylib
+  install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $BUNDLE_LIB_DIR/saga/libio_gdal.dylib
+  install_name_change $DEPS_LIB_DIR/$LINK_libpq @rpath/$LINK_libpq $BUNDLE_LIB_DIR/saga/libdb_pgsql.dylib
+  install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_LIB_DIR/saga/libpj_proj4.dylib
 
   for i in \
     lib/saga/libpointcloud_tools.dylib \
@@ -113,4 +113,16 @@ function postbundle_saga() {
     install_name_change $DEPS_LIB_DIR/libwx_osx_cocoau_xrc-${VERSION_wxmac_major}.dylib @rpath/libwx_osx_cocoau_xrc-${VERSION_wxmac_major}.dylib $BUNDLE_CONTENTS_DIR/MacOS/$i
     install_name_change $DEPS_LIB_DIR/libwx_osx_cocoau_qa-${VERSION_wxmac_major}.dylib @rpath/libwx_osx_cocoau_qa-${VERSION_wxmac_major}.dylib $BUNDLE_CONTENTS_DIR/MacOS/$i
   done
+}
+
+function fix_binaries_saga_check() {
+  verify_binary $BUNDLE_LIB_DIR/saga/libio_gdal.dylib
+}
+
+function fix_paths_saga() {
+  :
+}
+
+function fix_paths_saga_check() {
+  :
 }

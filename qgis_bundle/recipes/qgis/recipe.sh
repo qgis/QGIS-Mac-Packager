@@ -34,17 +34,8 @@ function bundle_qgis() {
   try rsync -av $QGIS_CONTENTS_DIR/PlugIns/ $BUNDLE_PLUGINS_DIR/
 }
 
-function postbundle_qgis() {
+function fix_binaries_qgis() {
  chmod +x $BUNDLE_CONTENTS_DIR/MacOS/QGIS
-
- # Patch Info.plist
- /usr/libexec/PlistBuddy -c "Add :LSMinimumSystemVersion string $MACOSX_DEPLOYMENT_TARGET" $BUNDLE_CONTENTS_DIR/Info.plist
- /usr/libexec/PlistBuddy -c "Add :LSFileQuarantineEnabled bool false" $BUNDLE_CONTENTS_DIR/Info.plist
- # PYQGIS_STARTUP should be relative to Contents/Resources/python
- /usr/libexec/PlistBuddy -c "Add :LSEnvironment:PYQGIS_STARTUP string pyqgis-startup.py" $BUNDLE_CONTENTS_DIR/Info.plist
- # PROJ_LIB see ../proj/recipe.sh
- # GDAL_DATA and GDAL_DRIVER_PATH see ../gdal/recipe.sh
- # PYTHONHOME see ../python/recipe.sh
 
  # RPATHS
  install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_CONTENTS_DIR/MacOS/QGIS
@@ -155,4 +146,25 @@ function postbundle_qgis() {
       install_name_change $QGIS_BUILD_DIR/output/lib/$j.framework/Versions/$QGIS_VERSION/$j @rpath/$j.framework/Versions/$QGIS_VERSION/$j $BUNDLE_CONTENTS_DIR/$i
     done
  done
+}
+
+function fix_binaries_qgis_check() {
+  verify_binary $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+  verify_binary $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
+  verify_binary $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
+}
+
+function fix_paths_qgis() {
+ # Patch Info.plist
+ /usr/libexec/PlistBuddy -c "Add :LSMinimumSystemVersion string $MACOSX_DEPLOYMENT_TARGET" $BUNDLE_CONTENTS_DIR/Info.plist
+ /usr/libexec/PlistBuddy -c "Add :LSFileQuarantineEnabled bool false" $BUNDLE_CONTENTS_DIR/Info.plist
+ # PYQGIS_STARTUP should be relative to Contents/Resources/python
+ /usr/libexec/PlistBuddy -c "Add :LSEnvironment:PYQGIS_STARTUP string pyqgis-startup.py" $BUNDLE_CONTENTS_DIR/Info.plist
+ # PROJ_LIB see ../proj/recipe.sh
+ # GDAL_DATA and GDAL_DRIVER_PATH see ../gdal/recipe.sh
+ # PYTHONHOME see ../python/recipe.sh
+}
+
+function fix_paths_qgis_check() {
+  :
 }

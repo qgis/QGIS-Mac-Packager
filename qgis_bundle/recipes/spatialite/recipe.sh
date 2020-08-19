@@ -11,7 +11,7 @@ function bundle_spatialite() {
   try cp -av $DEPS_LIB_DIR/libspatialite.*dylib $BUNDLE_LIB_DIR
 }
 
-function postbundle_spatialite() {
+function fix_binaries_spatialite() {
   install_name_id @rpath/$LINK_spatialite $BUNDLE_LIB_DIR/$LINK_spatialite
 
   for i in \
@@ -22,7 +22,18 @@ function postbundle_spatialite() {
     $LINK_sqlite \
     $LINK_zlib
   do
-    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_spatialite
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_spatialite
   done
 }
 
+function fix_binaries_spatialite_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_spatialite
+}
+
+function fix_paths_spatialite() {
+  :
+}
+
+function fix_paths_spatialite_check() {
+  :
+}

@@ -740,16 +740,11 @@ function run_build() {
     else
       debug "Skipped $fn"
     fi
-  done
-}
 
-function run_postbuild() {
-  info "Run postbuild"
-  cd $BUILD_PATH
-  for module in $MODULES; do
-    fn=$(echo postbuild_$module)
-    debug "Call $fn"
-    $fn
+    # postbuild
+    fn2=$(echo postbuild_$module)
+    debug "Call $fn2"
+    $fn2
   done
 }
 
@@ -784,7 +779,6 @@ function run() {
   run_get_packages
   run_prebuild
   run_build
-  run_postbuild
   run_final_check
   run_create_config_file
   info "All done !"

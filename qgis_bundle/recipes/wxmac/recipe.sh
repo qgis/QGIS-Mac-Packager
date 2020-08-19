@@ -6,11 +6,10 @@ function check_wxmac() {
 }
 
 function bundle_wxmac() {
-   try cp -av $DEPS_LIB_DIR/libwx_*dylib $BUNDLE_LIB_DIR
-
+  try cp -av $DEPS_LIB_DIR/libwx_*dylib $BUNDLE_LIB_DIR
 }
 
-function postbundle_wxmac() {
+function fix_binaries_wxmac() {
   for i in \
     libwx_baseu_xml \
     libwx_baseu_net \
@@ -28,7 +27,7 @@ function postbundle_wxmac() {
     libwx_osx_cocoau_richtext \
     libwx_osx_cocoau_media
   do
-    install_name_id @rpath/$i-${LINK_wxmac_version}.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/$i-${LINK_wxmac_version}.dylib
+    install_name_id @rpath/$i-${LINK_wxmac_version}.dylib $BUNDLE_LIB_DIR/$i-${LINK_wxmac_version}.dylib
 
     for j in \
       $LINK_zlib \
@@ -52,7 +51,19 @@ function postbundle_wxmac() {
       libwx_osx_cocoau_richtext-${LINK_wxmac_version}.dylib \
       libwx_osx_cocoau_media-${LINK_wxmac_version}.dylib
     do
-      install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/MacOS/lib/$i-${LINK_wxmac_version}.dylib
+      install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_LIB_DIR/$i-${LINK_wxmac_version}.dylib
     done
   done
+}
+
+function fix_binaries_wxmac_check() {
+  verify_binary $BUNDLE_LIB_DIR/libwx_baseu-${LINK_wxmac_version}.dylib
+}
+
+function fix_paths_wxmac() {
+  :
+}
+
+function fix_paths_wxmac_check() {
+  :
 }

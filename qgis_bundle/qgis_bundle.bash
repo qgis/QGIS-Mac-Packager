@@ -24,7 +24,7 @@ if [ ! -f "$QGIS_DEPS_STAGE_PATH/qgis-deps.config" ]; then
 fi
 source $QGIS_DEPS_STAGE_PATH/qgis-deps.config
 
-export DEPS_PYTHON_SITE_PACKAGES_DIR=$STAGE_PATH/lib/python${VERSION_major_python}
+export DEPS_PYTHON_PACKAGES_DIR=$STAGE_PATH/lib/python${VERSION_major_python}
 export DEPS_GRASS_ROOT_DIR=$DEPS_ROOT_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
 export DEPS_GRASS_LIB_DIR=$DEPS_GRASS_ROOT_DIR/lib
 
@@ -118,9 +118,21 @@ function run_bundle() {
 
 function run_postbundle() {
   for module in ${MODULES[*]}; do
-    fn=$(echo postbundle_$module)
-    debug "Call $fn"
-    $fn
+    fn1=$(echo fix_binaries_$module)
+    debug "Call $fn1"
+    $fn1
+
+    fn2=$(echo fix_binaries_${module}_check)
+    debug "Call $fn2"
+    $fn2
+
+    fn3=$(echo fix_paths_$module)
+    debug "Call $fn3"
+    $fn3
+
+    fn4=$(echo fix_paths_${module}_check)
+    debug "Call $fn4"
+    $fn4
   done
 }
 
@@ -232,6 +244,53 @@ function check_binary_linker_links() {
   fi
 }
 
+function check_file_path() {
+  ok="true"
+  echo "###########################################"
+  echo " grep /usr/local/"
+  echo "###########################################"
+  if grep -rni /usr/local/ $1
+  then
+    grep -rni /usr/local/ $1
+    echo "$1 reference absolute /usr/local/ dir"
+    ok="false"
+  fi
+
+  echo "###########################################"
+  echo " grep $QGIS_INSTALL_DIR"
+  echo "###########################################"
+  if grep -rni $QGIS_INSTALL_DIR $1
+  then
+    grep -rni $QGIS_INSTALL_DIR $1
+    echo "$1 reference absolute $QGIS_INSTALL_DIR dir"
+    ok="false"
+  fi
+
+  echo "###########################################"
+  echo " grep $ROOT_OUT_PATH"
+  echo "###########################################"
+  if grep -rni $ROOT_OUT_PATH $1
+  then
+    grep -rni $ROOT_OUT_PATH $1
+    echo "$1 reference absolute $ROOT_OUT_PATH dir"
+    ok="false"
+  fi
+
+  echo "###########################################"
+  echo " grep $BUNDLE_DIR"
+  echo "###########################################"
+  if grep -rni $BUNDLE_DIR $1
+  then
+    grep -rni $BUNDLE_DIR $1
+    echo "$1 reference absolute $BUNDLE_DIR dir"
+    ok="false"
+  fi
+
+  if [[ "$ok" == "false" ]]; then
+      error "error encountered for grep of $1"
+  fi
+}
+
 function check_other_files_links() {
   cd ${BUNDLE_DIR}
   ok="true"
@@ -279,6 +338,27 @@ function check_other_files_links() {
   if [[ "$ok" == "false" ]]; then
       error "error encountered for grep of all files"
   fi
+}
+
+function verify_binary() {
+  BINARY=$1
+
+  if [ ! -f "$BINARY" ]; then
+    error "Missing binary: ${BINARY}... Maybe you updated the library version in the receipt?"
+  fi
+
+  BIN=$(realpath --relative-to=$BUNDLE_DIR $BINARY)
+  check_binary_linker_links $BIN
+}
+
+function verify_file_paths() {
+  FNAME=$1
+
+  if [ ! -f "$FNAME" ]; then
+    error "Missing file: ${FNAME}"
+  fi
+
+  check_file_path $FNAME
 }
 
 run_final_check() {

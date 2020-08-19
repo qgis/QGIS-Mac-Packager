@@ -9,7 +9,7 @@ function bundle_libkml() {
   try cp -av $DEPS_LIB_DIR/libkml*dylib $BUNDLE_LIB_DIR
 }
 
-function postbundle_libkml() {
+function fix_binaries_libkml() {
   for i in \
     $LINK_libkmlbase \
     $LINK_libkmlconvenience \
@@ -34,4 +34,16 @@ function postbundle_libkml() {
       install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_LIB_DIR/$i
     done
   done
+}
+
+function fix_binaries_libkml_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_libkmlbase
+}
+
+function fix_paths_libkml() {
+  :
+}
+
+function fix_paths_libkml_check() {
+  :
 }

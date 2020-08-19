@@ -30,7 +30,11 @@ function bundle_gdal() {
     gdalsrsinfo \
     gdaltindex \
     gdaltransform \
-    gdalwarp
+    gdalwarp \
+    ogr2ogr \
+    ogrinfo \
+    ogrlineref \
+    ogrtindex
   do
     try cp -av $DEPS_BIN_DIR/$i $BUNDLE_BIN_DIR/$i
   done
@@ -47,7 +51,7 @@ function bundle_gdal() {
   try rsync -av $DEPS_SHARE_DIR/gdal $BUNDLE_RESOURCES_DIR/
 }
 
-function postbundle_gdal() {
+function fix_binaries_gdal() {
   install_name_id @rpath/$LINK_gdal $BUNDLE_LIB_DIR/$LINK_gdal
 
   for i in \
@@ -70,6 +74,10 @@ function postbundle_gdal() {
     bin/gdaltindex \
     bin/gdaltransform \
     bin/gdalwarp \
+    bin/ogr2ogr \
+    bin/ogrinfo \
+    bin/ogrlineref \
+    bin/ogrtindex \
     lib/$LINK_gdal
   do
       for j in \
@@ -100,12 +108,24 @@ function postbundle_gdal() {
         $LINK_expat \
         $LINK_liburiparser \
         $LINK_pcre \
+        $LINK_poppler \
+        $LINK_openjpeg \
         $LINK_gdal
       do
         install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/MacOS/$i
       done
   done
-
-
 }
 
+function fix_binaries_gdal_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_gdal
+  verify_binary $BUNDLE_BIN_DIR/gdalinfo
+}
+
+function fix_paths_gdal() {
+  :
+}
+
+function fix_paths_gdal_check() {
+  :
+}

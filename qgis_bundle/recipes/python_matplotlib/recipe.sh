@@ -8,8 +8,8 @@ function bundle_python_matplotlib() {
   :
 }
 
-function postbundle_python_matplotlib() {
-  MATPLOTLIB_EGG_DIR=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/matplotlib-${VERSION_python_matplotlib}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+function fix_binaries_python_matplotlib() {
+  MATPLOTLIB_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/matplotlib-${VERSION_python_matplotlib}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
 
   for i in \
     backends/_backend_agg \
@@ -19,3 +19,16 @@ function postbundle_python_matplotlib() {
   done
 }
 
+function fix_binaries_python_matplotlib_check() {
+  MATPLOTLIB_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/matplotlib-${VERSION_python_matplotlib}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+
+  verify_binary $MATPLOTLIB_EGG_DIR/matplotlib/ft2font.cpython-${VERSION_major_python//./}m-darwin.so
+}
+
+function fix_paths_python_matplotlib() {
+  :
+}
+
+function fix_paths_python_matplotlib_check() {
+  :
+}

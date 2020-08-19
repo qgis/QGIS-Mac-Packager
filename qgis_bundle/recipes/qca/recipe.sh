@@ -13,7 +13,7 @@ function bundle_qca() {
   try rsync -av $DEPS_ROOT_DIR/qt5/plugins/crypto $BUNDLE_PLUGINS_DIR/
 }
 
-function postbundle_qca() {
+function fix_binaries_qca() {
   install_name_id @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/Frameworks/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca
 
   for i in \
@@ -31,4 +31,16 @@ function postbundle_qca() {
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_CONTENTS_DIR/PlugIns/crypto/libqca-ossl.dylib
   done
+}
+
+function fix_binaries_qca_check() {
+  verify_binary $BUNDLE_CONTENTS_DIR/PlugIns/crypto/libqca-ossl.dylib
+}
+
+function fix_paths_qca() {
+  :
+}
+
+function fix_paths_qca_check() {
+  :
 }

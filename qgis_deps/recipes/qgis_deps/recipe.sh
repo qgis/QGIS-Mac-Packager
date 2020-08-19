@@ -28,6 +28,7 @@ DEPS_qgis_deps=(
     python_llvmlite
     python_statsmodels
     python_gdal
+    python_fiona
     python_opencv
     python_scikit_learn
     python_pyproj

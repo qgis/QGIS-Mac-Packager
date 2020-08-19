@@ -30,14 +30,36 @@ function bundle_python_gdal() {
     mkgraticule.py \
     ogrmerge.py \
     pct2rgb.py \
-    rgb2pct.py
+    rgb2pct.py \
+    ogrmerge.py
   do
     try cp -av $DEPS_BIN_DIR/$i $BUNDLE_BIN_DIR/$i
   done
 }
 
-function postbundle_python_gdal() {
-  GDAL_EGG_DIR=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
+function fix_binaries_python_gdal() {
+  GDAL_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
+
+  for i in \
+    _osr \
+    _gdal_array \
+    _gdal \
+    _ogr \
+    _gnm \
+    _gdalconst
+  do
+    install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/$i.cpython-${VERSION_major_python//./}m-darwin.so
+  done
+}
+
+function fix_binaries_python_gdal_check() {
+  GDAL_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
+
+  verify_binary $GDAL_EGG_DIR/osgeo/_gdal.cpython-${VERSION_major_python//./}m-darwin.so
+}
+
+function fix_paths_python_gdal() {
+  GDAL_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
 
   for i in \
     epsg_tr.py \
@@ -69,16 +91,11 @@ function postbundle_python_gdal() {
     fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $GDAL_EGG_DIR/EGG-INFO/scripts/$i
     fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
   done
+}
 
-  for i in \
-    _osr \
-    _gdal_array \
-    _gdal \
-    _ogr \
-    _gnm \
-    _gdalconst
-  do
-    install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/$i.cpython-${VERSION_major_python//./}m-darwin.so
-  done
+function fix_paths_python_gdal_check() {
+  GDAL_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
+  verify_file_paths $BUNDLE_BIN_DIR/$i
+  verify_file_paths $GDAL_EGG_DIR/EGG-INFO/scripts/$i
 }
 

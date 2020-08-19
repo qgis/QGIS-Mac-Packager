@@ -5,9 +5,21 @@ function check_boost() {
 }
 
 function bundle_boost() {
-    :
+  :
 }
 
-function postbundle_boost() {
-    :
+function fix_binaries_boost() {
+  :
+}
+
+function fix_binaries_boost_check() {
+  :
+}
+
+function fix_paths_boost() {
+  :
+}
+
+function fix_paths_boost_check() {
+  :
 }

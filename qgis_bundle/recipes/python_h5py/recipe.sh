@@ -8,7 +8,7 @@ function bundle_python_h5py() {
   :
 }
 
-function postbundle_python_h5py() {
+function fix_binaries_python_h5py() {
   for i in \
     defs \
     _proxy \
@@ -34,8 +34,20 @@ function postbundle_python_h5py() {
     h5pl \
     h5p
   do
-    install_name_change $DEPS_LIB_DIR/$LINK_libhdf5 @rpath/$LINK_libhdf5 $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/h5py/$i.cpython-${VERSION_major_python//./}m-darwin.so
-    install_name_change $DEPS_LIB_DIR/$LINK_libhdf5_hl @rpath/$LINK_libhdf5_hl $BUNDLE_CONTENTS_DIR/Resources/python/site-packages/h5py/$i.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_libhdf5 @rpath/$LINK_libhdf5 $BUNDLE_PYTHON_SITE_PACKAGES_DIR/h5py/$i.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_libhdf5_hl @rpath/$LINK_libhdf5_hl $BUNDLE_PYTHON_SITE_PACKAGES_DIR/h5py/$i.cpython-${VERSION_major_python//./}m-darwin.so
   done
 }
 
+
+function fix_binaries_python_h5py_check() {
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/h5py/h5fd.cpython-${VERSION_major_python//./}m-darwin.so
+}
+
+function fix_paths_python_h5py() {
+  :
+}
+
+function fix_paths_python_h5py_check() {
+  :
+}

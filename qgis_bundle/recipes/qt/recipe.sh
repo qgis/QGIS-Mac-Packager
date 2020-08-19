@@ -69,7 +69,18 @@ function bundle_qt() {
   try rsync -av $QT_ROOT_DIR/bin/Designer.app $BUNDLE_MACOS_DIR/
 }
 
-function postbundle_qt() {
+function fix_binaries_qt() {
   install_name_add_rpath @executable_path/../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/Designer.app/Contents/MacOS/Designer
 }
 
+function fix_binaries_qt_check() {
+  verify_binary $BUNDLE_CONTENTS_DIR/MacOS/Designer.app/Contents/MacOS/Designer
+}
+
+function fix_paths_qt() {
+  :
+}
+
+function fix_paths_qt_check() {
+  :
+}

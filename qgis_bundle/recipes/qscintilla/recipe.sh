@@ -11,8 +11,20 @@ function bundle_qscintilla() {
   try cp -av $DEPS_LIB_DIR/libqscintilla2_qt5*dylib $BUNDLE_LIB_DIR/
 }
 
-function postbundle_qscintilla() {
-  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/${LINK_libqscintilla2_qt5}
+function fix_binaries_qscintilla() {
+  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_LIB_DIR/${LINK_libqscintilla2_qt5}
 
   install_name_id @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_LIB_DIR/$LINK_libqscintilla2_qt5
+}
+
+function fix_binaries_qscintilla_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_libqscintilla2_qt5
+}
+
+function fix_paths_qscintilla() {
+  :
+}
+
+function fix_paths_qscintilla_check() {
+  :
 }

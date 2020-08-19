@@ -8,8 +8,8 @@ function bundle_python_fiona() {
   :
 }
 
-function postbundle_python_fiona() {
-  FIONA_EGG=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/fiona-${VERSION_python_fiona}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+function fix_binaries_python_fiona() {
+  FIONA_EGG=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/Fiona-${VERSION_python_fiona}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
 
   for i in \
     ogrext \
@@ -19,9 +19,21 @@ function postbundle_python_fiona() {
     schema \
     _geometry \
     _shim \
-    _err
-  do
+    _err; do
     install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $FIONA_EGG/fiona/$i.cpython-${VERSION_major_python//./}m-darwin.so
   done
 }
 
+function fix_binaries_python_fiona_check() {
+  FIONA_EGG=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/Fiona-${VERSION_python_fiona}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+
+  verify_binary $FIONA_EGG/fiona/_crs.cpython-${VERSION_major_python//./}m-darwin.so
+}
+
+function fix_paths_python_fiona() {
+  :
+}
+
+function fix_paths_python_fiona_check() {
+  :
+}

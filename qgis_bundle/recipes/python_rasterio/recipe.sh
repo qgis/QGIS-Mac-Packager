@@ -8,8 +8,8 @@ function bundle_python_rasterio() {
   :
 }
 
-function postbundle_python_rasterio() {
-  RASTERIO_EGG_DIR=$BUNDLE_CONTENTS_DIR/Resources/python/site-packages/rasterio-${VERSION_python_rasterio}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+function fix_binaries_python_rasterio() {
+  RASTERIO_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/rasterio-${VERSION_python_rasterio}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
 
   for i in \
     _env \
@@ -30,3 +30,16 @@ function postbundle_python_rasterio() {
   done
 }
 
+function fix_binaries_python_rasterio_check() {
+  RASTERIO_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/rasterio-${VERSION_python_rasterio}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
+
+  verify_binary $RASTERIO_EGG_DIR/rasterio/_base.cpython-${VERSION_major_python//./}m-darwin.so
+}
+
+function fix_paths_python_rasterio() {
+  :
+}
+
+function fix_paths_python_rasterio_check() {
+  :
+}

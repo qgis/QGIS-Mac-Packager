@@ -9,7 +9,7 @@ function bundle_qtwebkit() {
   try rsync -av $DEPS_LIB_DIR/QtWebKit.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
 }
 
-function postbundle_qtwebkit() {
+function fix_binaries_qtwebkit() {
   install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKitWidgets.framework/Versions/5/QtWebKitWidgets
   install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
 
@@ -32,4 +32,16 @@ function postbundle_qtwebkit() {
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
   done
+}
+
+function fix_binaries_qtwebkit_check() {
+  verify_binary $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
+}
+
+function fix_paths_qtwebkit() {
+  :
+}
+
+function fix_paths_qtwebkit_check() {
+  :
 }

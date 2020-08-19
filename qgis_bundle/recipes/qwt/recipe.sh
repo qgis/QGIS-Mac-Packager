@@ -8,6 +8,18 @@ function bundle_qwt() {
   try rsync -av $DEPS_LIB_DIR/qwt.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
 }
 
-function postbundle_qwt() {
-  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/Frameworks/qwt.framework/Versions/$VERSION_qwt_major/qwt
+function fix_binaries_qwt() {
+  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_FRAMEWORKS_DIR/qwt.framework/Versions/$VERSION_qwt_major/qwt
+}
+
+function fix_binaries_qwt_check() {
+  verify_binary $BUNDLE_FRAMEWORKS_DIR/qwt.framework/Versions/$VERSION_qwt_major/qwt
+}
+
+function fix_paths_qwt() {
+  :
+}
+
+function fix_paths_qwt_check() {
+  :
 }

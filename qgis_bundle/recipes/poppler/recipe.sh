@@ -11,7 +11,7 @@ function bundle_poppler() {
   try cp -av $DEPS_LIB_DIR/libpoppler*dylib $BUNDLE_LIB_DIR/
 }
 
-function postbundle_poppler() {
+function fix_binaries_poppler() {
   install_name_id @rpath/$LINK_poppler $BUNDLE_LIB_DIR/$LINK_poppler
   install_name_id @rpath/$LINK_poppler_cpp $BUNDLE_LIB_DIR/$LINK_poppler_cpp
   install_name_id @rpath/$LINK_poppler_qt5 $BUNDLE_LIB_DIR/$LINK_poppler_qt5
@@ -35,4 +35,18 @@ function postbundle_poppler() {
       install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_LIB_DIR/$i
     done
   done
+}
+
+function fix_binaries_poppler_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_poppler
+  verify_binary $BUNDLE_LIB_DIR/$LINK_poppler_cpp
+  verify_binary $BUNDLE_LIB_DIR/$LINK_poppler_qt5
+}
+
+function fix_paths_poppler() {
+  :
+}
+
+function fix_paths_poppler_check() {
+  :
 }

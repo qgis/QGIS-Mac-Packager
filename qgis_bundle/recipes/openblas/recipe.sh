@@ -9,7 +9,7 @@ function bundle_openblas() {
   try cp -av $DEPS_LIB_DIR/libopenblas*dylib $BUNDLE_LIB_DIR
 }
 
-function postbundle_openblas() {
+function fix_binaries_openblas() {
   install_name_id  @rpath/$LINK_libopenblas $BUNDLE_LIB_DIR/$LINK_libopenblas
   install_name_id  @rpath/$LINK_libopenblas_haswellp $BUNDLE_LIB_DIR/$LINK_libopenblas_haswellp
 
@@ -21,4 +21,17 @@ function postbundle_openblas() {
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_libopenblas_haswellp
   done
+}
+
+function fix_binaries_openblas_check() {
+  verify_binary $BUNDLE_LIB_DIR/$LINK_libopenblas
+  verify_binary $BUNDLE_LIB_DIR/$LINK_libopenblas_haswellp
+}
+
+function fix_paths_openblas() {
+  :
+}
+
+function fix_paths_openblas_check() {
+  :
 }
