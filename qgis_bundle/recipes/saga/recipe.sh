@@ -17,6 +17,7 @@ function bundle_saga() {
 function fix_binaries_saga() {
   install_name_change $DEPS_LIB_DIR/libsaga_api-$VERSION_saga.dylib @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_CONTENTS_DIR/MacOS/bin/saga_cmd
   install_name_id @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_LIB_DIR/libsaga_api-$VERSION_saga.dylib
+  install_name_add_rpath @executable_path/../lib $BUNDLE_BIN_DIR/saga_cmd
 
   for i in \
     libimagery_segmentation \
