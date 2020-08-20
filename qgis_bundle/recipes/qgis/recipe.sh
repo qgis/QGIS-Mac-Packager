@@ -32,7 +32,9 @@ function bundle_qgis() {
 
   #### PLUGINS
   try rsync -av $QGIS_CONTENTS_DIR/PlugIns/ $BUNDLE_PLUGINS_DIR/
-  try cp -av $QGIS_INSTALL_DIR/plugins/designer/libqgis_customwidgets* $BUNDLE_PLUGINS_DIR/designer/
+
+  mkdir -p $BUNDLE_PLUGINS_DIR/designer
+  try cp -av $QGIS_INSTALL_DIR/plugins/designer/libqgis_customwidgets.* $BUNDLE_PLUGINS_DIR/designer
 }
 
 function fix_binaries_qgis() {
