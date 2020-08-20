@@ -1,0 +1,8 @@
+#!/bin/bash
+
+BINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# workaround for https://github.com/qgis/QGIS-Mac-Packager/issues/3
+export DYLD_INSERT_LIBRARIES=$BINDIR/../lib/libsqlite3.dylib
+
+$BINDIR/../Designer.app/Contents/MacOS/Designer

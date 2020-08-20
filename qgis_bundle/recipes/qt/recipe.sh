@@ -67,6 +67,7 @@ function bundle_qt() {
 
   #### Designer
   try rsync -av $QT_ROOT_DIR/bin/Designer.app $BUNDLE_MACOS_DIR/
+  try cp -av $RECIPES_PATH/qt/designer $BUNDLE_BIN_DIR/
 }
 
 function fix_binaries_qt() {
