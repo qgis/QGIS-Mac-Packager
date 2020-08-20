@@ -32,6 +32,7 @@ function bundle_qgis() {
 
   #### PLUGINS
   try rsync -av $QGIS_CONTENTS_DIR/PlugIns/ $BUNDLE_PLUGINS_DIR/
+  try rsync -av $QGIS_INSTALL_DIR/plugins/ $BUNDLE_PLUGINS_DIR/
 }
 
 function fix_binaries_qgis() {
