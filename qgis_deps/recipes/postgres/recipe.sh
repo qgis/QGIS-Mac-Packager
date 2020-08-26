@@ -8,7 +8,7 @@ VERSION_postgres=12.3
 LINK_libpq=libpq.5.dylib
 
 # dependencies of this recipe
-DEPS_postgres=()
+DEPS_postgres=(openssl)
 
 # url of the package
 URL_postgres=https://ftp.postgresql.org/pub/source/v${VERSION_postgres}/postgresql-${VERSION_postgres}.tar.bz2
@@ -52,7 +52,9 @@ function build_postgres() {
 
   try ${CONFIGURE} \
     --disable-debug \
-    --enable-rpath
+    --enable-rpath \
+    --with-openssl \
+    --enable-static=no
 
   check_file_configuration config.status
   try $MAKESMP
