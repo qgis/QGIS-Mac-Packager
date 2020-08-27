@@ -47,14 +47,16 @@ function build_python_fiona() {
   try cd $BUILD_PATH/python_fiona/build-$ARCH
   push_env
 
+  export GDAL_CONFIG=$STAGE_PATH/bin/gdal-config
   DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
+  unset GDAL_CONFIG
 
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_python_fiona() {
-   if ! python_package_installed fiona; then
+   if ! python_package_installed_verbose fiona; then
       error "Missing python package fiona"
    fi
 }

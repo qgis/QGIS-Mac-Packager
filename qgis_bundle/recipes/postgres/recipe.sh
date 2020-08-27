@@ -10,7 +10,14 @@ function bundle_postgres() {
 }
 
 function fix_binaries_postgres() {
-  install_name_id @rpath/$LINK_libpq $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libpq
+  install_name_id @rpath/$LINK_libpq $BUNDLE_LIB_DIR/$LINK_libpq
+
+  for i in \
+    $LINK_libssl \
+    $LINK_libcrypto
+  do
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_libpq
+  done
 }
 
 function fix_binaries_postgres_check() {

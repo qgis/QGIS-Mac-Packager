@@ -53,7 +53,7 @@ function build_python_psycopg2() {
 
 # function called after all the compile have been done
 function postbuild_python_psycopg2() {
-   if ! python_package_installed psycopg2; then
+   if ! python_package_installed_verbose psycopg2; then
       error "Missing python package psycopg2"
    fi
 }

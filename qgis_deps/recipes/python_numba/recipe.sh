@@ -53,7 +53,7 @@ function build_python_numba() {
 
 # function called after all the compile have been done
 function postbuild_python_numba() {
-   if ! python_package_installed numba; then
+   if ! python_package_installed_verbose numba; then
       error "Missing python package numba"
    fi
 }

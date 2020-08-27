@@ -53,7 +53,7 @@ function build_python_pandas() {
 
 # function called after all the compile have been done
 function postbuild_python_pandas() {
-   if ! python_package_installed pandas; then
+   if ! python_package_installed_verbose pandas; then
       error "Missing python package pandas"
    fi
 }

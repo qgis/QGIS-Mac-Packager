@@ -53,7 +53,7 @@ function build_python_scikit_learn() {
 
 # function called after all the compile have been done
 function postbuild_python_scikit_learn() {
-   if ! python_package_installed sklearn; then
+   if ! python_package_installed_verbose sklearn; then
       error "Missing python package sklearn"
    fi
 }

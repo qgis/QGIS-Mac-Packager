@@ -98,15 +98,15 @@ function build_python_pyqt5() {
 }
 
 function postbuild_python_pyqt5() {
-   if ! python_package_installed PyQt5.QtCore; then
+   if ! python_package_installed_verbose PyQt5.QtCore; then
       error "Missing python package PyQt5.QtCore"
    fi
 
-   if ! python_package_installed PyQt5.QtWebKit; then
+   if ! python_package_installed_verbose PyQt5.QtWebKit; then
       error "Missing python package PyQt5.QtWebKit"
    fi
 
-   if ! python_package_installed PyQt5.QtWebKitWidgets; then
+   if ! python_package_installed_verbose PyQt5.QtWebKitWidgets; then
       error "Missing python package PyQt5.QtWebKitWidgets"
    fi
 }

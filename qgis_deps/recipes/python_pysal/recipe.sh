@@ -69,7 +69,7 @@ function build_python_pysal() {
 
 # function called after all the compile have been done
 function postbuild_python_pysal() {
-   if ! python_package_installed fiona,pysal; then
+   if ! python_package_installed_verbose fiona,pysal; then
       error "Missing python package pysal"
    fi
 }

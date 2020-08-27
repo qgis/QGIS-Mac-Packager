@@ -35,7 +35,6 @@ function prebuild_python_rtree() {
 }
 
 function shouldbuild_python_rtree() {
-  # If lib is newer than the sourcecode skip build
   if python_package_installed rtree; then
     DO_BUILD=0
   fi
@@ -54,9 +53,9 @@ function build_python_rtree() {
 
 # function called after all the compile have been done
 function postbuild_python_rtree() {
-   if ! python_package_installed rtree; then
+  if ! python_package_installed_verbose rtree; then
       error "Missing python package rtree"
-   fi
+  fi
 }
 
 # function to append information to config file

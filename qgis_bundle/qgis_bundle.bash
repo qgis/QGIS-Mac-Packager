@@ -91,8 +91,10 @@ CP=cp
 
 function env_var_exists() {
   VAR=$1
-  if [ "X$VAR" == "X" ]; then
-     error "Missing config variable $VAR"
+  VAL=$(eval echo \$$VAR)
+  echo "$VAR: $VAL"
+  if [ "X$VAL" == "X" ]; then
+     error "Missing config variable $VAR ... forgot to run full qgis_deps script?"
   fi
 }
 

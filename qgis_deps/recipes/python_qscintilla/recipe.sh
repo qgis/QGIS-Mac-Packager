@@ -84,7 +84,7 @@ function build_python_qscintilla() {
 
 # function called after all the compile have been done
 function postbuild_python_qscintilla() {
-   if ! python_package_installed PyQt5.Qsci; then
+   if ! python_package_installed_verbose PyQt5.Qsci; then
       error "Missing python package qsci"
    fi
 }

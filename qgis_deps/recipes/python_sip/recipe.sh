@@ -11,13 +11,13 @@ VERSION_python_sip=4.19.21
 DEPS_python_sip=(python qtwebkit qscintilla qtwebkit)
 
 # url of the package
-URL_python_sip=https://www.riverbankcomputing.com/static/Downloads/sip/${VERSION_python_sip}/sip-${VERSION_python_sip}.tar.gz
+URL_python_sip=https://www.riverbankcomputing.com/hg/sip/archive/a2a4d8ba9178.tar.bz2
 
 # md5 of the package
-MD5_python_sip=dad2afc3d8dfc0d681f3cb87eb2e55aa
+MD5_python_sip=b1e4b667fcc957e0e1700d0dd389804b
 
 # default build path
-BUILD_python_sip=$BUILD_PATH/python_sip/$(get_directory $URL_python_sip)
+BUILD_python_sip=$BUILD_PATH/python_sip/sip-$(get_directory $URL_python_sip)
 
 # default recipe path
 RECIPE_python_sip=$RECIPES_PATH/python_sip
@@ -49,6 +49,8 @@ function build_python_sip() {
 
   push_env
 
+  try $PYTHON build.py prepare
+
   try $PYTHON ./configure.py \
     --sipdir=$STAGE_PATH/share/sip \
     --bindir=$STAGE_PATH/bin \
@@ -70,7 +72,7 @@ function build_python_sip() {
 
 function postbuild_python_sip() {
    # if ! python_package_installed sip ${VERSION_python_sip} sipconfig; then
-   if ! python_package_installed sipconfig; then
+   if ! python_package_installed_verbose sipconfig; then
       error "Missing python package sip"
    fi
 }

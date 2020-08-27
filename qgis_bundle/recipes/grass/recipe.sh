@@ -2,6 +2,8 @@
 
 function check_grass() {
   env_var_exists VERSION_grass
+  env_var_exists VERSION_grass_major
+  env_var_exists VERSION_grass_minor
   env_var_exists DEPS_GRASS_LIB_DIR
 }
 

@@ -53,7 +53,7 @@ function build_python_owslib() {
 
 # function called after all the compile have been done
 function postbuild_python_owslib() {
-   if ! python_package_installed owslib.wms; then
+   if ! python_package_installed_verbose owslib.wms; then
       error "Missing python package owslib.wms"
    fi
 }

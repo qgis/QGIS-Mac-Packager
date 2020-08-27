@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function check_libgeotiff() {
-  env_var_exists VERSION_libgeodiff
+  env_var_exists VERSION_libgeotiff
 }
 
 function bundle_libgeotiff() {

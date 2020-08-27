@@ -53,7 +53,7 @@ function build_python_shapely() {
 
 # function called after all the compile have been done
 function postbuild_python_shapely() {
-   if ! python_package_installed shapely; then
+   if ! python_package_installed_verbose shapely; then
       error "Missing python package shapely"
    fi
 }

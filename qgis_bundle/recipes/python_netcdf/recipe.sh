@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function check_python_netcdf() {
-  env_var_exists VERSION_python_netcdf
+  env_var_exists VERSION_python_netcdf4
 }
 
 function bundle_python_netcdf() {

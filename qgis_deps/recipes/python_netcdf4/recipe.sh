@@ -58,7 +58,7 @@ function build_python_netcdf4() {
 
 # function called after all the compile have been done
 function postbuild_python_netcdf4() {
-   if ! python_package_installed netCDF4; then
+   if ! python_package_installed_verbose netCDF4; then
       error "Missing python package netCDF4"
    fi
 }

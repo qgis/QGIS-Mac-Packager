@@ -65,9 +65,9 @@ function build_python_geopandas() {
 
 # function called after all the compile have been done
 function postbuild_python_geopandas() {
-   if ! python_package_installed "fiona,geopandas"; then
-      error "Missing python package geopandas"
-   fi
+  if ! python_package_installed_verbose "fiona,geopandas"; then
+    error "Missing python package geopandas"
+  fi
 }
 
 # function to append information to config file

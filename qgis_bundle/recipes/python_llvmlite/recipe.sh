@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function check_python_llvmlite() {
-  env_var_exists VERSION_python_$llvmlite
+  env_var_exists VERSION_python_llvmlite
 }
 
 function bundle_python_llvmlite() {

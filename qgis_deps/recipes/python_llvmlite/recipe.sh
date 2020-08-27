@@ -113,7 +113,7 @@ function build_python_llvmlite() {
 
 # function called after all the compile have been done
 function postbuild_python_llvmlite() {
-   if ! python_package_installed llvmlite; then
+   if ! python_package_installed_verbose llvmlite; then
       error "Missing python package llvmlite"
    fi
 }

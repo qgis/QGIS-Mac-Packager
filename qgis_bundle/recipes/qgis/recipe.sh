@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function check_qgis() {
-  env_var_exists VERSION_qgis
+  env_var_exists QGIS_VERSION
   env_var_exists QGIS_INSTALL_DIR
   env_var_exists VERSION_grass_major
 }

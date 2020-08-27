@@ -53,7 +53,7 @@ function build_python_statsmodels() {
 
 # function called after all the compile have been done
 function postbuild_python_statsmodels() {
-   if ! python_package_installed statsmodels; then
+   if ! python_package_installed_verbose statsmodels; then
       error "Missing python package statsmodels"
    fi
 }

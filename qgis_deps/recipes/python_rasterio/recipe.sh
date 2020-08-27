@@ -58,7 +58,7 @@ function build_python_rasterio() {
 
 # function called after all the compile have been done
 function postbuild_python_rasterio() {
-   if ! python_package_installed rasterio; then
+   if ! python_package_installed_verbose rasterio; then
       error "Missing python package rasterio"
    fi
 }

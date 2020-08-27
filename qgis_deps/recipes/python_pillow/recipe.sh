@@ -61,7 +61,7 @@ function build_python_pillow() {
 
 # function called after all the compile have been done
 function postbuild_python_pillow() {
-   if ! python_package_installed PIL; then
+   if ! python_package_installed_verbose PIL; then
       error "Missing python package PIL"
    fi
 }

@@ -53,7 +53,7 @@ function build_python_scipy() {
 
 # function called after all the compile have been done
 function postbuild_python_scipy() {
-   if ! python_package_installed scipy; then
+   if ! python_package_installed_verbose scipy; then
       error "Missing python package scipy"
    fi
 }

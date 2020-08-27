@@ -54,7 +54,7 @@ function build_python_numpy() {
 
 # function called after all the compile have been done
 function postbuild_python_numpy() {
-   if ! python_package_installed numpy; then
+   if ! python_package_installed_verbose numpy; then
       error "Missing python package numpy"
    fi
 }

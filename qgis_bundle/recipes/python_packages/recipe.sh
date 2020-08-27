@@ -1,9 +1,8 @@
 #!/bin/bash
 
 function check_python_packages() {
-  env_var_exists VERSION_python_packages
-  env_var_exists DEPS_PYTHON_SITE_PACKAGES_DIR
-  env_var_exists BUNDLE_PYTHON_SITE_PACKAGES_DIR
+  env_var_exists DEPS_PYTHON_PACKAGES_DIR
+  env_var_exists BUNDLE_PYTHON_PACKAGES_DIR
 }
 
 function bundle_python_packages() {
@@ -11,6 +10,10 @@ function bundle_python_packages() {
      $DEPS_PYTHON_PACKAGES_DIR/ \
      $BUNDLE_PYTHON_PACKAGES_DIR/ \
      --exclude __pycache__
+
+  cd $BUNDLE_PYTHON_SITE_PACKAGES_DIR
+  try rm -rf *.dist-info
+  try rm -rf *.egg.info
 
   mk_sym_link $BUNDLE_LIB_DIR ../../Resources/python python$VERSION_major_python
 }

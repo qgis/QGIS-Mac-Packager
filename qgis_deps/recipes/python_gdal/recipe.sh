@@ -58,7 +58,7 @@ function build_python_gdal() {
 
 # function called after all the compile have been done
 function postbuild_python_gdal() {
-   if ! python_package_installed gdal; then
+   if ! python_package_installed_verbose gdal; then
       error "Missing python package gdal"
    fi
 }

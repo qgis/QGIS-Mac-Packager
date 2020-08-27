@@ -167,8 +167,8 @@ function build_python_packages() {
 function postbuild_python_packages() {
  for i in ${IMPORTS_python_packages[*]}
   do
-    if ! python_package_installed $i ; then
-      error "Missing python package $i (pre)"
+    if ! python_package_installed_verbose $i ; then
+      error "Missing python package $i"
     fi
   done
 }

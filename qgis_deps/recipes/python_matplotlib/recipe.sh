@@ -60,7 +60,7 @@ function build_python_matplotlib() {
 
 # function called after all the compile have been done
 function postbuild_python_matplotlib() {
-   if ! python_package_installed matplotlib; then
+   if ! python_package_installed_verbose matplotlib; then
       error "Missing python package matplotlib"
    fi
 }

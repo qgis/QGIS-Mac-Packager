@@ -78,7 +78,7 @@ function build_python_opencv() {
 
 # function called after all the compile have been done
 function postbuild_python_opencv() {
-   if ! python_package_installed cv2; then
+   if ! python_package_installed_verbose cv2; then
       error "Missing python package opencv-contrib-python"
    fi
 }

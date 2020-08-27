@@ -59,7 +59,7 @@ function build_python_pyproj() {
 
 # function called after all the compile have been done
 function postbuild_python_pyproj() {
-   if ! python_package_installed pyproj; then
+   if ! python_package_installed_verbose pyproj; then
       error "Missing python package pyproj"
    fi
 }

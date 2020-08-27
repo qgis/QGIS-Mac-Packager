@@ -53,7 +53,7 @@ function build_python_patsy() {
 
 # function called after all the compile have been done
 function postbuild_python_patsy() {
-   if ! python_package_installed patsy; then
+   if ! python_package_installed_verbose patsy; then
       error "Missing python package patsy"
    fi
 }
