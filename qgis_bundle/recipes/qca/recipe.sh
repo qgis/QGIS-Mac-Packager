@@ -8,6 +8,7 @@ function check_qca() {
 
 function bundle_qca() {
   try rsync -av $DEPS_LIB_DIR/$LINK_qca.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Header
+  try rm -f $BUNDLE_FRAMEWORKS_DIR/$LINK_qca.framework/Headers
 
   #### PLUGINS
   try rsync -av $DEPS_ROOT_DIR/qt5/plugins/crypto $BUNDLE_PLUGINS_DIR/
