@@ -64,7 +64,8 @@ function fix_exec_link {
   FROMSTR=$1
   TOSTR=$2
   FILENAME=$3
-  try ${SED} "s&\#\!$FROMSTR&\#\!/usr/bin/perl -e\$_=\$ARGV\[0\]\;s/\[^\\/\]+\$/$TOSTR/\;exec(\$_,\@ARGV)&g" "$FILENAME"
+  # https://stackoverflow.com/a/62268465/2838364
+  try ${SED} "s&\#\!$FROMSTR&\#\!/usr/bin/perl -e\$_=\$ARGV\[0\]\;s/\[^\\\/\]+\$/$TOSTR/\;exec(\$_,\@ARGV)&g" "$FILENAME"
   try ${SED} "s;exec $FROMSTR;exec \'\`dirname \$0\`/$TOSTR\';g" "$FILENAME"
 }
 
