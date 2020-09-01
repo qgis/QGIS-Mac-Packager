@@ -140,23 +140,9 @@ function python_package_installed() {
 
   push_env
 
-  # https://github.com/qgis/QGIS-Mac-Packager/issues/81
-  # required for shapely to load geos_c
-  export CONDA_PREFIX=$STAGE_PATH
-  # shapely: OSError: Could not find lib c or load any of its variants []
-  export DYLD_FALLBACK_LIBRARY_PATH=/usr/lib:$STAGE_PATH/lib
-
-  # see https://github.com/Toblerity/rtree/issues/56
-  # see https://github.com/qgis/QGIS-Mac-Packager/issues/80
-  # required for rtree
-  export SPATIALINDEX_C_LIBRARY=$STAGE_PATH/lib/libspatialindex_c.dylib
-
   if $PYTHON -c import\ $python_import > /dev/null 2>&1
   then
     pop_env
-    unset SPATIALINDEX_C_LIBRARY
-    unset CONDA_PREFIX
-
     return 0
   fi
 
@@ -164,8 +150,6 @@ function python_package_installed() {
     $PYTHON -c import\ $python_import
   fi
 
-  unset SPATIALINDEX_C_LIBRARY
-  unset CONDA_PREFIX
   pop_env
   return 1
 }
