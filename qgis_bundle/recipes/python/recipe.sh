@@ -41,10 +41,13 @@ function fix_binaries_python() {
   install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-${VERSION_major_python//./}m-darwin.so
   install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_hashlib.cpython-${VERSION_major_python//./}m-darwin.so
   install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_sqlite3.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_liblzma @rpath/$LINK_liblzma $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_lzma.cpython-37m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/zlib.cpython-37m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/binascii.cpython-37m-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_liblzma @rpath/$LINK_liblzma $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_lzma.cpython-${VERSION_major_python//./}m-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/zlib.cpython-${VERSION_major_python//./}m-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/binascii.cpython-${VERSION_major_python//./}m-darwin.so
   install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ctypes.cpython-${VERSION_major_python//./}m-darwin.so
+
+  # this one contains path to cert.pem
+  clean_binary $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-${VERSION_major_python//./}m-darwin.so
 }
 
 function fix_binaries_python_check() {

@@ -23,6 +23,11 @@ function bundle_python_packages() {
   cd $BUNDLE_PYTHON_SITE_PACKAGES_DIR
   try rm -r *.dist-info
   try rm -r *.egg-info
+
+  # issue #32
+  # _ssl is already taken in lib-dynload
+  try mv $BUNDLE_PYTHON_PACKAGES_DIR/ssl.py $BUNDLE_PYTHON_PACKAGES_DIR/_ssl2.py
+  try cp -av $RECIPES_PATH/python_packages/ssl.py $BUNDLE_PYTHON_PACKAGES_DIR/ssl.py
 }
 
 function fix_binaries_python_packages() {

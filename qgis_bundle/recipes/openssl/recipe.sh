@@ -10,12 +10,15 @@ function bundle_openssl() {
   try cp -av $DEPS_LIB_DIR/libssl.*dylib $BUNDLE_LIB_DIR
   try cp -av $DEPS_LIB_DIR/libcrypto.*dylib $BUNDLE_LIB_DIR
 
-  # TODO issue 32
+  # https://github.com/qgis/QGIS-Mac-Packager/issues/32
+  try mkdir -p $BUNDLE_RESOURCES_DIR/certs
+  try cp -av $DEPS_ROOT_DIR/certs/* $BUNDLE_RESOURCES_DIR/certs/
+  mk_sym_link $BUNDLE_RESOURCES_DIR/certs rootcerts.pem certs.pem
 }
 
 function fix_binaries_openssl() {
-  install_name_id  @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libssl
-  install_name_id  @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libcrypto
+  install_name_id  @rpath/$LINK_libssl $BUNDLE_LIB_DIR/$LINK_libssl
+  install_name_id  @rpath/$LINK_libcrypto $BUNDLE_LIB_DIR/$LINK_libcrypto
 }
 
 function fix_binaries_openssl_check() {
