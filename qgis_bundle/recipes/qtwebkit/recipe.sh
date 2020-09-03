@@ -32,6 +32,8 @@ function fix_binaries_qtwebkit() {
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
   done
+
+  clean_binary $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/Current/QtWebKit
 }
 
 function fix_binaries_qtwebkit_check() {

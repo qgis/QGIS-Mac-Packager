@@ -13,7 +13,7 @@ function bundle_qgis() {
   try cp -av $QGIS_CONTENTS_DIR/Info.plist $BUNDLE_CONTENTS_DIR
   try cp -av $QGIS_CONTENTS_DIR/PkgInfo $BUNDLE_CONTENTS_DIR
   try cp -av $QGIS_CONTENTS_DIR/MacOS/QGIS $BUNDLE_MACOS_DIR
-  try cp -av $QGIS_RECIPE_DIR/../../../resources/pyqgis-startup.py $BUNDLE_RESOURCES_DIR/python/
+  try cp -av $QGIS_RECIPE_DIR/pyqgis-startup.py $BUNDLE_RESOURCES_DIR/python/
 
   # LIBS
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgis_app.* $BUNDLE_LIB_DIR
@@ -21,6 +21,7 @@ function bundle_qgis() {
 
   #### RESOURCES
   try rsync -av $QGIS_CONTENTS_DIR/Resources/ $BUNDLE_RESOURCES_DIR/ --exclude __pycache__
+  try cp -av $QGIS_RECIPE_DIR/find_mod_spatialite.py $BUNDLE_RESOURCES_DIR/python/qgis/
 
   #### FRAMEWORKS
   try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_analysis.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Header
@@ -153,6 +154,14 @@ function fix_binaries_qgis() {
       install_name_change $QGIS_BUILD_DIR/output/lib/$j.framework/Versions/$QGIS_VERSION/$j @rpath/$j.framework/Versions/$QGIS_VERSION/$j $BUNDLE_CONTENTS_DIR/$i
     done
  done
+
+ for j in \
+    $BUNDLE_CONTENTS_DIR/MacOS/QGIS \
+    $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core \
+    $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass7.framework/Versions/$QGIS_VERSION/qgisgrass7
+ do
+   clean_binary $j
+ done
 }
 
 function fix_binaries_qgis_check() {
@@ -162,6 +171,7 @@ function fix_binaries_qgis_check() {
 }
 
 function fix_paths_qgis() {
+ ###################
  # Patch Info.plist
  /usr/libexec/PlistBuddy -c "Add :LSMinimumSystemVersion string $MACOSX_DEPLOYMENT_TARGET" $BUNDLE_CONTENTS_DIR/Info.plist
  /usr/libexec/PlistBuddy -c "Add :LSFileQuarantineEnabled bool false" $BUNDLE_CONTENTS_DIR/Info.plist
@@ -170,6 +180,11 @@ function fix_paths_qgis() {
  # PROJ_LIB see ../proj/recipe.sh
  # GDAL_DATA and GDAL_DRIVER_PATH see ../gdal/recipe.sh
  # PYTHONHOME see ../python/recipe.sh
+
+ #####################
+ # utils.py
+ try ${SED} "s@import sqlite3@import sqlite3;from .find_mod_spatialite import mod_spatialite_path@g" $BUNDLE_RESOURCES_DIR/python/qgis/utils.py
+ try ${SED} "s@\"mod_spatialite\"@mod_spatialite_path()@g" $BUNDLE_RESOURCES_DIR/python/qgis/utils.py
 }
 
 function fix_paths_qgis_check() {

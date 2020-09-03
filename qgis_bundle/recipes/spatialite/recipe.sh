@@ -9,6 +9,7 @@ function check_spatialite() {
 
 function bundle_spatialite() {
   try cp -av $DEPS_LIB_DIR/libspatialite.*dylib $BUNDLE_LIB_DIR
+  try cp -av $DEPS_LIB_DIR/mod_spatialite.*so $BUNDLE_LIB_DIR
 }
 
 function fix_binaries_spatialite() {
@@ -23,11 +24,13 @@ function fix_binaries_spatialite() {
     $LINK_zlib
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_spatialite
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/mod_spatialite.so
   done
 }
 
 function fix_binaries_spatialite_check() {
   verify_binary $BUNDLE_LIB_DIR/$LINK_spatialite
+  verify_binary $BUNDLE_LIB_DIR/mod_spatialite.so
 }
 
 function fix_paths_spatialite() {

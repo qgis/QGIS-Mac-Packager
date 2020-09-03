@@ -11,11 +11,18 @@ function bundle_python_packages() {
      $BUNDLE_PYTHON_PACKAGES_DIR/ \
      --exclude __pycache__
 
-  cd $BUNDLE_PYTHON_SITE_PACKAGES_DIR
-  try rm -rf *.dist-info
-  try rm -rf *.egg.info
-
   mk_sym_link $BUNDLE_LIB_DIR ../../Resources/python python$VERSION_major_python
+
+  # we do not need to ship python tests
+  try rm -rf $BUNDLE_PYTHON_PACKAGES_DIR/test
+
+  # we do not need to ship cmake, it is development tool
+  try rm -r $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}m-darwin/python.o
+  try rm $BUNDLE_PYTHON_PACKAGES_DIR/site-packages/setuptools.pth
+
+  cd $BUNDLE_PYTHON_SITE_PACKAGES_DIR
+  try rm -r *.dist-info
+  try rm -r *.egg-info
 }
 
 function fix_binaries_python_packages() {

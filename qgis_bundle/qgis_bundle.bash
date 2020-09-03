@@ -2,7 +2,7 @@
 
 set -o pipefail
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+QGIS_BUNDLE_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 ####################
 # load configuration
@@ -75,6 +75,14 @@ function clean_path {
   try ${SED} "s;$ROOT_OUT_PATH;/MISSING/DEPS/;g" $FNAME
   try ${SED} "s;/opt/;/MISSING/OPT/;g" $FNAME
   try ${SED} "s;/usr/local/;/MISSING/LOCAL/;g" $FNAME
+}
+
+function clean_binary {
+  try python3 $QGIS_BUNDLE_SCRIPT_DIR/replace_string_in_file.py \
+    --file $1 \
+    --install_path $QGIS_INSTALL_DIR \
+    --bundle_path $BUNDLE_DIR \
+    --stage_path $ROOT_OUT_PATH
 }
 
 #################################
@@ -290,7 +298,8 @@ function check_file_path() {
 function check_other_files_links() {
   cd ${BUNDLE_DIR}
   ok="true"
-  EXCLUDE="--exclude *.dylib --exclude *.so"
+  # -I --> ignore binary files
+  EXCLUDE="-I --exclude *.html --exclude *.html --exclude *.html"
   # all other files
   echo "###########################################"
   echo " grep /usr/local/"
@@ -299,7 +308,7 @@ function check_other_files_links() {
   then
     grep -rni /usr/local/ . $EXCLUDE
     echo "Some scripts reference absolute /usr/local/ dir"
-    ok="false"
+    # treat these as a warnings only, do not error when something refers to it
   fi
 
   echo "###########################################"
@@ -375,7 +384,8 @@ run_final_check() {
   info "Check binaries"
   # frameworks (Mach-O without binaries)
   LIBS=`find . -type f ! -name "*.*"`
-  for lib in $LIBS; do
+  BIN1=`find $BUNDLE_MACOS_DIR/grass${VERSION_grass_major}${VERSION_grass_minor} -type f`
+  for lib in $LIBS $BIN1; do
     attachmenttype=$(file $lib | cut -d\  -f2 )
     if [[ $attachmenttype = "Mach-O" ]]; then
       echo "checking $lib"

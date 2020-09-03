@@ -23,6 +23,9 @@ function fix_paths_python_shapely() {
 
   # remove reference to /usr/local/lib/libgeos_c.dylib
   clean_path $BUNDLE_PYTHON_SITE_PACKAGES_DIR/shapely/_geos.py
+
+  # _buildcfg is only used in setup.py
+  try rm $BUNDLE_PYTHON_SITE_PACKAGES_DIR/shapely/_buildcfg.py
 }
 
 function fix_paths_python_shapely_check() {

@@ -28,6 +28,8 @@ function fix_binaries_python() {
 
   install_name_add_rpath @executable_path/lib $BUNDLE_BIN_DIR/python$VERSION_major_python
   install_name_add_rpath @executable_path/../lib $BUNDLE_BIN_DIR/python$VERSION_major_python
+  install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_BIN_DIR/python$VERSION_major_python
+  install_name_add_rpath @executable_path/../Frameworks $BUNDLE_BIN_DIR/python$VERSION_major_python
 
   install_name_change $DEPS_LIB_DIR/$LINK_libintl @rpath/$LINK_libintl $BUNDLE_LIB_DIR/libpython${VERSION_major_python}m.dylib
 

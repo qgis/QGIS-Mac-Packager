@@ -36,7 +36,8 @@ function fix_rpaths_grass() {
       $LINK_zlib \
       $LINK_zstd \
       $LINK_libproj \
-      $LINK_sqlite
+      $LINK_sqlite \
+      $LINK_netcdf
   do
       install_name_change \
         $DEPS_LIB_DIR/$j \
@@ -194,7 +195,8 @@ function fix_binaries_grass() {
     r.watershed/ram \
     lock \
     lister/cell \
-    lister/vector
+    lister/vector \
+    i.find
   do
     install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/etc/$i
     sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/etc/$i"
@@ -202,6 +204,16 @@ function fix_binaries_grass() {
 
   ### DONE
   sem --wait
+
+  ### now clean leftovers
+  clean_binary $GRASS_BUNDLE_DIR/bin/g.mkfontcap
+  clean_binary $GRASS_BUNDLE_DIR/bin/r.terraflow matches
+  clean_binary $GRASS_BUNDLE_DIR/bin/r.viewshed matches
+  clean_binary $GRASS_BUNDLE_DIR/bin/g.version matches
+
+  # not sure what to do with these?
+  try ${SED} "s;$DEPS_GRASS_ROOT_DIR;..;g" $GRASS_BUNDLE_DIR/etc/fontcap
+
 }
 
 function fix_binaries_grass_check() {
@@ -211,6 +223,7 @@ function fix_binaries_grass_check() {
   verify_binary $GRASS_BUNDLE_DIR/bin/d.barscale
   verify_binary $GRASS_BUNDLE_DIR/tools/g.echo
   verify_binary $GRASS_BUNDLE_DIR/driver/db/ogr
+  verify_binary $GRASS_BUNDLE_DIR/bin/r3.out.netcdf
 }
 
 function fix_paths_grass() {
