@@ -112,7 +112,9 @@ function fix_binaries_gdal() {
         $LINK_openjpeg \
         $LINK_gdal
       do
-        install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/MacOS/$i
+         install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/MacOS/$i
+         install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/$i
+         install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/$i
       done
   done
 }

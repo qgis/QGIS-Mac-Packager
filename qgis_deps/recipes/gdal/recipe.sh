@@ -47,6 +47,14 @@ BUILD_gdal=$BUILD_PATH/gdal/$(get_directory $URL_gdal)
 # default recipe path
 RECIPE_gdal=$RECIPES_PATH/gdal
 
+# 3rd Party
+GDAL_PLUGINS_DIR=${STAGE_PATH}/lib/gdalplugins
+ECW_SDK="$RECIPES_PATH/../../../external/ERDASEcwJpeg2000SDK5.4.0/Desktop_Read-Only/"
+LINK_gdal_ecw=gdal_ECW_JP2ECW.dylib
+MRSID_SDK="$RECIPES_PATH/../../../external/MrSID_DSDK-9.5.1.4427-darwin14.universal.clang60"
+LINK_gdal_mrsid_lidar=gdal_MG4Lidar.dylib
+LINK_gdal_mrsid_raster=gdal_MrSID.dylib
+
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_gdal() {
@@ -69,13 +77,88 @@ function shouldbuild_gdal() {
   fi
 }
 
+function build_ecw() {
+  try cd $BUILD_PATH/gdal/build-$ARCH
+
+  if [[ "$WITH_ECW" == "true" ]]; then
+    info "building GDAL ECW driver to $GDAL_PLUGINS_DIR"
+
+    if [ ! -d "$ECW_SDK" ]; then
+      echo "Missing ECW SDK in $ECW_SDK"
+      exit 1
+    fi
+
+    SRC=$(find frmts/ecw -name *.cpp)
+
+    try $CXX -std=c++11 \
+      -Iport -Igcore -Ifrmts -Iogr -DFRMT_ecw -DECWSDK_VERSION=53 -Ifrmts/ecw -DDO_NOT_USE_DEBUG_BOOL \
+      -I$ECW_SDK/include -I$ECW_SDK/include/NCSEcw/API \
+      -I$ECW_SDK/include/NCSEcw/ECW -I$ECW_SDK/include/NCSEcw/JP2 \
+      ${SRC} \
+      -dynamiclib \
+      -install_name $GDAL_PLUGINS_DIR/${LINK_gdal_ecw} \
+      -current_version ${LINK_libgdal_version} \
+      -compatibility_version ${LINK_libgdal_version}.0 \
+      -o $GDAL_PLUGINS_DIR/${LINK_gdal_ecw} \
+      -undefined dynamic_lookup \
+      -L$ECW_SDK/lib -lNCSEcw
+  fi
+}
+
+function build_mrsid() {
+  try cd $BUILD_PATH/gdal/build-$ARCH
+
+  if [[ "$WITH_MRSID" == "true" ]]; then
+    if [ ! -d "$MRSID_SDK" ]; then
+      echo "Missing MRSID SDK in $MRSID_SDK"
+      exit 1
+    fi
+
+    # LIDAR
+    info "building GDAL MrSID Lidar driver to $GDAL_PLUGINS_DIR"
+    SRC=$(find frmts/mrsid_lidar -name *.c*)
+    try $CXX -std=c++11 \
+       -Iport -Igcore -Ifrmts -Iogr -Ifrmts/mrsid_lidar \
+      -I$MRSID_SDK/Lidar_DSDK/include \
+      ${SRC} \
+      -dynamiclib \
+      -install_name $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_lidar} \
+      -current_version ${LINK_libgdal_version} \
+      -compatibility_version ${LINK_libgdal_version}.0 \
+      -o $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_lidar} \
+      -undefined dynamic_lookup \
+      -L$MRSID_SDK/Lidar_DSDK/lib -llti_lidar_dsdk
+
+    # RASTER
+    info "building GDAL MRSID driver to $GDAL_PLUGINS_DIR"
+    SRC=$(find frmts/mrsid -name *.c*)
+    try $CXX -std=c++11 \
+      -DMRSID_J2K=1 \
+      -Iport -Igcore -Ifrmts -Iogr -Ifrmts/mrsid -Ifrmts/gtiff/libgeotiff \
+      -I$MRSID_SDK/Raster_DSDK/include \
+      ${SRC} \
+      -dynamiclib \
+      -install_name $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_raster} \
+      -current_version ${LINK_libgdal_version} \
+      -compatibility_version ${LINK_libgdal_version}.0 \
+      -o $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_raster} \
+      -undefined dynamic_lookup \
+      -L$MRSID_SDK/Raster_DSDK/lib -lltidsdk
+
+  fi
+}
+
 # function called to build the source code
 function build_gdal() {
   try rsync -a $BUILD_gdal/ $BUILD_PATH/gdal/build-$ARCH/
   try cd $BUILD_PATH/gdal/build-$ARCH
   push_env
 
+  try mkdir -p $GDAL_PLUGINS_DIR
+
   try ${CONFIGURE} \
+    --with-ecw=no \
+    --with-mrsid=no \
     --disable-debug \
     --enable-driver-gpkg \
     --enable-driver-mbtiles \
@@ -107,6 +190,9 @@ function build_gdal() {
   try $MAKESMP
   try $MAKESMP install
 
+  build_ecw
+  build_mrsid
+
   pop_env
 }
 
@@ -115,11 +201,26 @@ function postbuild_gdal() {
   verify_binary lib/$LINK_gdal
   verify_binary bin/gdalmanage
   verify_binary bin/gdalinfo
+
+  if [[ "$WITH_ECW" == "true" ]]; then
+    verify_binary $GDAL_PLUGINS_DIR/${LINK_gdal_ecw}
+  fi
+
+  if [[ "$MRSID_SDK" == "true" ]]; then
+    verify_binary $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_lidar}
+    verify_binary $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_raster}
+  fi
 }
 
 # function to append information to config file
 function add_config_info_gdal() {
-  append_to_config_file "# gdal-${VERSION_gdal}: ${DESC_gdal}"
+  append_to_config_file "# gdal with ECW driver"
+  if [[ "$WITH_ECW" == "true" ]]; then
+    append_to_config_file "# gdal-${VERSION_gdal}: ${DESC_gdal}"
+  fi
+  if [[ "$MRSID_SDK" == "true" ]]; then
+    append_to_config_file "# gdal with MRSID driver"
+  fi
   append_to_config_file "export VERSION_gdal=${VERSION_gdal}"
   append_to_config_file "export LINK_gdal=${LINK_gdal}"
 }
