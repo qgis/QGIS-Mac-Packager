@@ -19,3 +19,7 @@ else:
     raise Exception("Unable to load certs.pem required by ssl from " + DIR1 + " nor " + DIR2)
 
 from _ssl2 import *
+
+# private functions are not imported by default
+# but this one is used in some QGIS plugins
+from _ssl2 import _create_unverified_context

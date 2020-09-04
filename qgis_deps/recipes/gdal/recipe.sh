@@ -49,9 +49,12 @@ RECIPE_gdal=$RECIPES_PATH/gdal
 
 # 3rd Party
 GDAL_PLUGINS_DIR=${STAGE_PATH}/lib/gdalplugins
-ECW_SDK="$RECIPES_PATH/../../../external/ERDASEcwJpeg2000SDK5.4.0/Desktop_Read-Only/"
+ECW_SDK_VER="ERDASEcwJpeg2000SDK5.4.0"
+ECW_SDK="$RECIPES_PATH/../../../external/$ECW_SDK_VER/Desktop_Read-Only/"
 LINK_gdal_ecw=gdal_ECW_JP2ECW.dylib
-MRSID_SDK="$RECIPES_PATH/../../../external/MrSID_DSDK-9.5.1.4427-darwin14.universal.clang60"
+
+MRSID_SDK_VER="MrSID_DSDK-9.5.1.4427-darwin14.universal.clang60"
+MRSID_SDK="$RECIPES_PATH/../../../external/$MRSID_SDK_VER"
 LINK_gdal_mrsid_lidar=gdal_MG4Lidar.dylib
 LINK_gdal_mrsid_raster=gdal_MrSID.dylib
 
@@ -214,13 +217,19 @@ function postbuild_gdal() {
 
 # function to append information to config file
 function add_config_info_gdal() {
-  append_to_config_file "# gdal with ECW driver"
+  append_to_config_file "# gdal-${VERSION_gdal}: ${DESC_gdal}"
   if [[ "$WITH_ECW" == "true" ]]; then
-    append_to_config_file "# gdal-${VERSION_gdal}: ${DESC_gdal}"
+    append_to_config_file "# gdal with ECW driver (SDK not bundled in deps)"
+    append_to_config_file "export LINK_gdal_ecw=${LINK_gdal_ecw}"
+    append_to_config_file "export ECW_SDK_VER=${ECW_SDK_VER}"
   fi
-  if [[ "$MRSID_SDK" == "true" ]]; then
-    append_to_config_file "# gdal with MRSID driver"
+  if [[ "$WITH_MRSID" == "true" ]]; then
+    append_to_config_file "# gdal with MRSID driver (SDK not bundled in deps)"
+    append_to_config_file "export LINK_gdal_mrsid_raster=${LINK_gdal_mrsid_raster}"
+    append_to_config_file "export LINK_gdal_mrsid_lidar=${LINK_gdal_mrsid_lidar}"
+    append_to_config_file "export MRSID_SDK_VER=${MRSID_SDK_VER}"
   fi
+
   append_to_config_file "export VERSION_gdal=${VERSION_gdal}"
   append_to_config_file "export LINK_gdal=${LINK_gdal}"
 }

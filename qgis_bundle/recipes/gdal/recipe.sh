@@ -1,5 +1,10 @@
 #!/bin/bash
 
+BUNDLE_GDAL_PLUGINS_DIR=$BUNDLE_LIB_DIR/gdalplugins
+LINK_MRSID_SDK_lti_lidar_dsdk=liblti_lidar_dsdk.1.dylib
+LINK_MRSID_SDK_libtbb=libtbb.dylib
+LINK_MRSID_SDK_libltidsdk=libltidsdk.9.dylib
+
 function check_gdal() {
   env_var_exists VERSION_gdal
   env_var_exists LINK_gdal
@@ -42,8 +47,27 @@ function bundle_gdal() {
   # GDAL plugins
   # https://github.com/qgis/QGIS/blob/518cc16e87aba6798658acf75c86f27a0f4d99b3/src/app/main.cpp#L1198
   # should be in Contents/MacOS/lib/gdalplugins
-  # we do not have any gdalplugins yet
-  try mkdir $BUNDLE_CONTENTS_DIR/MacOS/lib/gdalplugins
+  try mkdir $BUNDLE_GDAL_PLUGINS_DIR
+  # folder for some 3rdparty SDKs and libs
+  try mkdir $BUNDLE_GDAL_PLUGINS_DIR/3rdparty
+
+  if [[ "$WITH_ECW" == "true" ]]; then
+    try cp -av $DEPS_LIB_DIR/gdalplugins/$LINK_gdal_ecw $BUNDLE_GDAL_PLUGINS_DIR/
+  fi
+
+  if [[ "$WITH_MRSID" == "true" ]]; then
+    try cp -av $DEPS_LIB_DIR/gdalplugins/$LINK_gdal_mrsid_raster $BUNDLE_GDAL_PLUGINS_DIR/
+    try cp -av $DEPS_LIB_DIR/gdalplugins/$LINK_gdal_mrsid_lidar $BUNDLE_GDAL_PLUGINS_DIR/
+
+    MRSID_SDK="$QGIS_BUNDLE_SCRIPT_DIR/../../external/$MRSID_SDK_VER"
+    if [ ! -d "$MRSID_SDK" ]; then
+      echo "Missing MRSID SDK in $MRSID_SDK"
+      exit 1
+    fi
+    try cp -av $MRSID_SDK/Lidar_DSDK/lib/$LINK_MRSID_SDK_lti_lidar_dsdk $BUNDLE_GDAL_PLUGINS_DIR/3rdparty/
+    try cp -av $MRSID_SDK/Lidar_DSDK/lib/$LINK_MRSID_SDK_libtbb $BUNDLE_GDAL_PLUGINS_DIR/3rdparty/
+    try cp -av $MRSID_SDK/Raster_DSDK/lib/$LINK_MRSID_SDK_libltidsdk $BUNDLE_GDAL_PLUGINS_DIR/3rdparty/
+  fi
 
   # GDAL data
   # https://github.com/qgis/QGIS/blob/518cc16e87aba6798658acf75c86f27a0f4d99b3/src/app/main.cpp#L1205
@@ -113,15 +137,74 @@ function fix_binaries_gdal() {
         $LINK_gdal
       do
          install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/MacOS/$i
-         install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/$i
-         install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/$i
       done
   done
+
+  # bin/gdal_viewshed \
+  for i in \
+    bin/gdal_contour \
+    bin/gdal_grid \
+    bin/gdal_rasterize \
+    bin/gdal_translate \
+    bin/gdaladdo \
+    bin/gdalbuildvrt \
+    bin/gdaldem \
+    bin/gdalenhance \
+    bin/gdalinfo \
+    bin/gdallocationinfo \
+    bin/gdalmanage \
+    bin/gdalmdiminfo \
+    bin/gdalmdimtranslate \
+    bin/gdalserver \
+    bin/gdalsrsinfo \
+    bin/gdaltindex \
+    bin/gdaltransform \
+    bin/gdalwarp \
+    bin/ogr2ogr \
+    bin/ogrinfo \
+    bin/ogrlineref \
+    bin/ogrtindex
+  do
+     install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/$i
+     install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/$i
+  done
+
+  if [[ "$WITH_ECW" == "true" ]]; then
+    install_name_id @rpath/gdalplugins/$LINK_gdal_ecw $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_ecw
+    install_name_change $DEPS_LIB_DIR/gdalplugins/$LINK_gdal_ecw @rpath/gdalplugins/$LINK_gdal_ecw $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_ecw
+  fi
+
+  if [[ "$WITH_MRSID" == "true" ]]; then
+    install_name_id @rpath/gdalplugins/$LINK_gdal_mrsid_lidar $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_mrsid_lidar
+    install_name_change $DEPS_LIB_DIR/gdalplugins/$LINK_gdal_mrsid_raster @rpath/gdalplugins/$LINK_gdal_mrsid_lidar $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_mrsid_raster
+    install_name_id @rpath/gdalplugins/3rdparty/$LINK_MRSID_SDK_lti_lidar_dsdk $BUNDLE_GDAL_PLUGINS_DIR/3rdparty/$LINK_MRSID_SDK_lti_lidar_dsdk
+    install_name_id @rpath/gdalplugins/3rdparty/$LINK_MRSID_SDK_libtbb $BUNDLE_GDAL_PLUGINS_DIR/3rdparty/$LINK_MRSID_SDK_libtbb
+    install_name_change @rpath/$LINK_MRSID_SDK_lti_lidar_dsdk @rpath/gdalplugins/3rdparty/$LINK_MRSID_SDK_lti_lidar_dsdk $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_mrsid_lidar
+    install_name_change @rpath/$LINK_MRSID_SDK_libtbb @rpath/gdalplugins/3rdparty/$LINK_MRSID_SDK_libtbb $BUNDLE_GDAL_PLUGINS_DIR/3rdparty/$LINK_MRSID_SDK_lti_lidar_dsdk
+
+    install_name_id @rpath/gdalplugins/$LINK_gdal_mrsid_raster $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_mrsid_raster
+    install_name_change $DEPS_LIB_DIR/gdalplugins/$LINK_gdal_mrsid_raster @rpath/gdalplugins/$LINK_gdal_mrsid_raster $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_mrsid_raster
+    install_name_id @rpath/gdalplugins/3rdparty/$LINK_MRSID_SDK_libltidsdk $BUNDLE_GDAL_PLUGINS_DIR/3rdparty/$LINK_MRSID_SDK_libltidsdk
+    install_name_change @rpath/$LINK_MRSID_SDK_libltidsdk @rpath/gdalplugins/3rdparty/$LINK_MRSID_SDK_libltidsdk $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_mrsid_raster
+    install_name_change @rpath/$LINK_MRSID_SDK_libtbb @rpath/gdalplugins/3rdparty/$LINK_MRSID_SDK_libtbb $BUNDLE_GDAL_PLUGINS_DIR/3rdparty/$LINK_MRSID_SDK_libltidsdk
+  fi
 }
 
 function fix_binaries_gdal_check() {
   verify_binary $BUNDLE_LIB_DIR/$LINK_gdal
   verify_binary $BUNDLE_BIN_DIR/gdalinfo
+
+  if [[ "$WITH_ECW" == "true" ]]; then
+    verify_binary $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_ecw
+  fi
+
+  if [[ "$WITH_MRSID" == "true" ]]; then
+    verify_binary $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_mrsid_raster
+    verify_binary $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_mrsid_lidar
+    verify_binary $BUNDLE_GDAL_PLUGINS_DIR/3rdparty/$LINK_MRSID_SDK_libtbb
+    verify_binary $BUNDLE_GDAL_PLUGINS_DIR/3rdparty/$LINK_MRSID_SDK_lti_lidar_dsdk
+    verify_binary $BUNDLE_GDAL_PLUGINS_DIR/3rdparty/$LINK_MRSID_SDK_libltidsdk
+  fi
 }
 
 function fix_paths_gdal() {
