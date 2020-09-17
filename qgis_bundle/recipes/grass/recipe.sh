@@ -164,26 +164,43 @@ function fix_binaries_grass() {
       @rpath/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib \
       $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
 
+    install_name_add_rpath \
+      @loader_path/../lib \
+      $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib # from QGIS.app/Contents/MacOS/grass78
+
+    install_name_add_rpath \
+      @loader_path/../../../MacOS/lib \
+      $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib # from QGIS.app/Contents/Resources/
+
     sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib"
   done
+
 
   ######
   # BINS
   BINS=$(find $GRASS_BUNDLE_DIR/bin -type f)
   for i in $BINS; do
-    install_name_add_rpath @executable_path/../lib $i
+    install_name_add_rpath @executable_path/../lib $i # from QGIS.app/Contents/MacOS/grass78
+    install_name_add_rpath @executable_path/../../../MacOS/lib $i # from QGIS.app/Contents/Resources/
     sem -j+0 "fix_rpaths_grass $i"
   done
 
   ######
   # TOOLS
-  fix_rpaths_grass $GRASS_BUNDLE_DIR/tools/g.echo
-  install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/tools/g.echo
+  for i in \
+    g.echo
+  do
+    install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/tools/$i # from QGIS.app/Contents/MacOS/grass78
+    install_name_add_rpath @executable_path/../../../MacOS/lib $GRASS_BUNDLE_DIR/tools/$i # from QGIS.app/Contents/Resources/
+    sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/tools/$i"
+  done
 
   ######
   # DRIVERS
   DRIVERS=$(find $GRASS_BUNDLE_DIR/driver/db -type f)
   for i in $DRIVERS; do
+    install_name_add_rpath @loader_path/../../lib $i # from QGIS.app/Contents/MacOS/grass78
+    install_name_add_rpath @loader_path/../../../../MacOS/lib $i # from QGIS.app/Contents/Resources/
     sem -j+0 "fix_rpaths_grass $i"
   done
 
@@ -198,7 +215,8 @@ function fix_binaries_grass() {
     lister/vector \
     i.find
   do
-    install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/etc/$i
+    install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS.app/Contents/MacOS/grass78
+    install_name_add_rpath @executable_path/../../../MacOS/lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS.app/Contents/Resources/
     sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/etc/$i"
   done
 
@@ -213,7 +231,6 @@ function fix_binaries_grass() {
 
   # not sure what to do with these?
   try ${SED} "s;$DEPS_GRASS_ROOT_DIR;..;g" $GRASS_BUNDLE_DIR/etc/fontcap
-
 }
 
 function fix_binaries_grass_check() {
