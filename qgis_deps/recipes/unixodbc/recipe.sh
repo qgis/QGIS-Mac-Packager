@@ -3,7 +3,7 @@
 DESC_unixodbc="ODBC 3 connectivity for UNIX"
 
 # version of your package
-VERSION_unixodbc=2.3.7
+VERSION_unixodbc=2.3.9
 LINK_unixodbc=libodbc.2.dylib
 
 # dependencies of this recipe
@@ -13,7 +13,7 @@ DEPS_unixodbc=(libtool)
 URL_unixodbc=http://www.unixodbc.org/unixODBC-${VERSION_unixodbc}.tar.gz
 
 # md5 of the package
-MD5_unixodbc=274a711b0c77394e052db6493840c6f9
+MD5_unixodbc=06f76e034bb41df5233554abe961a16f
 
 # default build path
 BUILD_unixodbc=$BUILD_PATH/unixodbc/$(get_directory $URL_unixodbc)
@@ -38,7 +38,7 @@ function prebuild_unixodbc() {
 
 function shouldbuild_unixodbc() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_unixodbc -nt $BUILD_unixodbc/.patched ]; then
+  if [ ${STAGE_PATH}/unixodbc/lib/$LINK_unixodbc -nt $BUILD_unixodbc/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -51,12 +51,12 @@ function build_unixodbc() {
 
   # includedir must be specific, since posgresql has
   # also similar include file names
-  try ${CONFIGURE} \
+  try ./configure \
+    --prefix=$STAGE_PATH/unixodbc \
+    --sysconfdir=$STAGE_PATH/unixodbc/etc \
     --disable-debug \
     --disable-dependency-tracking \
-    --enable-gui=no \
-    --includedir=$STAGE_PATH/include/unixodbc \
-    --sysconfdir=$STAGE_PATH/etc
+    --enable-gui=no
 
   check_file_configuration config.status
   try $MAKESMP
@@ -67,7 +67,8 @@ function build_unixodbc() {
 
 # function called after all the compile have been done
 function postbuild_unixodbc() {
-  verify_binary bin/odbcinst
+  verify_binary unixodbc/bin/odbcinst
+  verify_binary unixodbc/lib/${LINK_unixodbc}
 }
 
 # function to append information to config file

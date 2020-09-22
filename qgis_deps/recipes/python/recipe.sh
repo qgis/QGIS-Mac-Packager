@@ -107,8 +107,9 @@ function install_python() {
   # dlopen some libraries (e.g. _ssl -> libcrypto.dylib)
   export DYLD_LIBRARY_PATH=$STAGE_PATH/lib
 
-  # add unixodbc includes too
-  export CFLAGS="$CFLAGS -I$STAGE_PATH/include/unixodbc"
+  # add unixodbc
+  export CFLAGS="$CFLAGS -I$STAGE_PATH/unixodbc/include"
+  export LDFLAGS="$LDFLAGS -L$STAGE_PATH/unixodbc/lib"
   export CXXFLAGS="${CFLAGS}"
 
   try ${CONFIGURE} \

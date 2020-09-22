@@ -27,6 +27,7 @@ DEPS_qgis_deps=(
     python_packages
     python_matplotlib
     python_llvmlite
+    python_pymssql
     python_statsmodels
     python_gdal
     python_fiona

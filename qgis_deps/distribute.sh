@@ -393,6 +393,23 @@ function verify_binary() {
   check_linked_rpath $BINARY
 }
 
+function test_binary_output() {
+  BINARY=$1
+  OUTPUT=$2
+  cd ${STAGE_PATH}/
+
+  BINOUT=`$BINARY`
+  if [[ $BINOUT == *"$OUTPUT"* ]]; then
+    # OK found expected string in binary output
+    :
+  else
+    echo "-raw-output-of-$BINARY--"
+    echo $BINOUT
+    echo "------"
+    error "Output of $BINARY does not contain $OUTPUT"
+  fi
+}
+
 run_final_check() {
   info "Running final check"
 }

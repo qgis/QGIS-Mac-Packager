@@ -47,17 +47,18 @@ function bundle_gdal() {
   # GDAL plugins
   # https://github.com/qgis/QGIS/blob/518cc16e87aba6798658acf75c86f27a0f4d99b3/src/app/main.cpp#L1198
   # should be in Contents/MacOS/lib/gdalplugins
+  DEPS_GDAL_NOFOSS_PLUGINS_DIR=$DEPS_LIB_DIR/../3rdParty/gdalplugins
   try mkdir $BUNDLE_GDAL_PLUGINS_DIR
   # folder for some 3rdparty SDKs and libs
   try mkdir $BUNDLE_GDAL_PLUGINS_DIR/3rdparty
 
   if [[ "$WITH_ECW" == "true" ]]; then
-    try cp -av $DEPS_LIB_DIR/gdalplugins/$LINK_gdal_ecw $BUNDLE_GDAL_PLUGINS_DIR/
+    try cp -av $DEPS_GDAL_NOFOSS_PLUGINS_DIR/$LINK_gdal_ecw $BUNDLE_GDAL_PLUGINS_DIR/
   fi
 
   if [[ "$WITH_MRSID" == "true" ]]; then
-    try cp -av $DEPS_LIB_DIR/gdalplugins/$LINK_gdal_mrsid_raster $BUNDLE_GDAL_PLUGINS_DIR/
-    try cp -av $DEPS_LIB_DIR/gdalplugins/$LINK_gdal_mrsid_lidar $BUNDLE_GDAL_PLUGINS_DIR/
+    try cp -av $DEPS_GDAL_NOFOSS_PLUGINS_DIR/$LINK_gdal_mrsid_raster $BUNDLE_GDAL_PLUGINS_DIR/
+    try cp -av $DEPS_GDAL_NOFOSS_PLUGINS_DIR/$LINK_gdal_mrsid_lidar $BUNDLE_GDAL_PLUGINS_DIR/
 
     MRSID_SDK="$QGIS_BUNDLE_SCRIPT_DIR/../../external/$MRSID_SDK_VER"
     if [ ! -d "$MRSID_SDK" ]; then

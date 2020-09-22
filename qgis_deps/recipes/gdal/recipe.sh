@@ -33,6 +33,7 @@ DEPS_gdal=(
   freexl
   libkml
   pcre
+  unixodbc
 )
 
 # url of the package
@@ -47,8 +48,15 @@ BUILD_gdal=$BUILD_PATH/gdal/$(get_directory $URL_gdal)
 # default recipe path
 RECIPE_gdal=$RECIPES_PATH/gdal
 
-# 3rd Party
+# This directory is automatically picked by GDAL on load to search for drivers
 GDAL_PLUGINS_DIR=${STAGE_PATH}/lib/gdalplugins
+
+# 3rd Party
+# This directory is NOT automatically picked by GDAL. Compile driver
+# that required some external 3rdParty licensed SDK/library, so
+# normally you are not able to load them from qgis-deps
+GDAL_NOFOSS_PLUGINS_DIR=${STAGE_PATH}/3rdParty/gdalplugins
+
 ECW_SDK_VER="ERDASEcwJpeg2000SDK5.4.0"
 ECW_SDK="$RECIPES_PATH/../../../external/$ECW_SDK_VER/Desktop_Read-Only/"
 LINK_gdal_ecw=gdal_ECW_JP2ECW.dylib
@@ -78,13 +86,14 @@ function shouldbuild_gdal() {
   if [ ${STAGE_PATH}/lib/$LINK_gdal -nt $BUILD_gdal/.patched ]; then
     DO_BUILD=0
   fi
+  # DO_BUILD=1
 }
 
 function build_ecw() {
   try cd $BUILD_PATH/gdal/build-$ARCH
 
   if [[ "$WITH_ECW" == "true" ]]; then
-    info "building GDAL ECW driver to $GDAL_PLUGINS_DIR"
+    info "building GDAL ECW driver to $GDAL_NOFOSS_PLUGINS_DIR"
 
     if [ ! -d "$ECW_SDK" ]; then
       echo "Missing ECW SDK in $ECW_SDK"
@@ -99,10 +108,10 @@ function build_ecw() {
       -I$ECW_SDK/include/NCSEcw/ECW -I$ECW_SDK/include/NCSEcw/JP2 \
       ${SRC} \
       -dynamiclib \
-      -install_name $GDAL_PLUGINS_DIR/${LINK_gdal_ecw} \
+      -install_name $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_ecw} \
       -current_version ${LINK_libgdal_version} \
       -compatibility_version ${LINK_libgdal_version}.0 \
-      -o $GDAL_PLUGINS_DIR/${LINK_gdal_ecw} \
+      -o $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_ecw} \
       -undefined dynamic_lookup \
       -L$ECW_SDK/lib -lNCSEcw
   fi
@@ -118,22 +127,22 @@ function build_mrsid() {
     fi
 
     # LIDAR
-    info "building GDAL MrSID Lidar driver to $GDAL_PLUGINS_DIR"
+    info "building GDAL MrSID Lidar driver to $GDAL_NOFOSS_PLUGINS_DIR"
     SRC=$(find frmts/mrsid_lidar -name *.c*)
     try $CXX -std=c++11 \
        -Iport -Igcore -Ifrmts -Iogr -Ifrmts/mrsid_lidar \
       -I$MRSID_SDK/Lidar_DSDK/include \
       ${SRC} \
       -dynamiclib \
-      -install_name $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_lidar} \
+      -install_name $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_mrsid_lidar} \
       -current_version ${LINK_libgdal_version} \
       -compatibility_version ${LINK_libgdal_version}.0 \
-      -o $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_lidar} \
+      -o $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_mrsid_lidar} \
       -undefined dynamic_lookup \
       -L$MRSID_SDK/Lidar_DSDK/lib -llti_lidar_dsdk
 
     # RASTER
-    info "building GDAL MRSID driver to $GDAL_PLUGINS_DIR"
+    info "building GDAL MRSID driver to $GDAL_NOFOSS_PLUGINS_DIR"
     SRC=$(find frmts/mrsid -name *.c*)
     try $CXX -std=c++11 \
       -DMRSID_J2K=1 \
@@ -141,13 +150,12 @@ function build_mrsid() {
       -I$MRSID_SDK/Raster_DSDK/include \
       ${SRC} \
       -dynamiclib \
-      -install_name $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_raster} \
+      -install_name $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_mrsid_raster} \
       -current_version ${LINK_libgdal_version} \
       -compatibility_version ${LINK_libgdal_version}.0 \
-      -o $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_raster} \
+      -o $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_mrsid_raster} \
       -undefined dynamic_lookup \
       -L$MRSID_SDK/Raster_DSDK/lib -lltidsdk
-
   fi
 }
 
@@ -157,7 +165,13 @@ function build_gdal() {
   try cd $BUILD_PATH/gdal/build-$ARCH
   push_env
 
+  try mkdir -p $GDAL_NOFOSS_PLUGINS_DIR
   try mkdir -p $GDAL_PLUGINS_DIR
+
+  # add unixodbc
+  export CFLAGS="$CFLAGS -I$STAGE_PATH/unixodbc/include"
+  export LDFLAGS="$LDFLAGS -L$STAGE_PATH/unixodbc/lib"
+  export CXXFLAGS="${CFLAGS}"
 
   try ${CONFIGURE} \
     --with-ecw=no \
@@ -168,6 +182,8 @@ function build_gdal() {
     --enable-driver-gml \
     --enable-driver-mvt \
     --enable-driver-xlsx \
+    --enable-driver-mssqlspatial \
+    --with-odbc=yes \
     --with-liblzma=$STAGE_PATH \
     --with-zstd=$STAGE_PATH \
     --with-libtiff=$STAGE_PATH \
@@ -206,13 +222,16 @@ function postbuild_gdal() {
   verify_binary bin/gdalinfo
 
   if [[ "$WITH_ECW" == "true" ]]; then
-    verify_binary $GDAL_PLUGINS_DIR/${LINK_gdal_ecw}
+    verify_binary $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_ecw}
   fi
 
   if [[ "$MRSID_SDK" == "true" ]]; then
-    verify_binary $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_lidar}
-    verify_binary $GDAL_PLUGINS_DIR/${LINK_gdal_mrsid_raster}
+    verify_binary $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_mrsid_lidar}
+    verify_binary $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_mrsid_raster}
   fi
+
+  test_binary_output "./bin/ogrinfo --formats" OSM
+  test_binary_output "./bin/ogrinfo --formats" MSSQLSpatial
 }
 
 # function to append information to config file
