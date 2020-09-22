@@ -44,6 +44,7 @@ cmake -DQGIS_MAC_DEPS_DIR=<qgis-deps>/stage \
 3. Run `make`
 
 Alternatively you can 
+
 2. Open QT Creator and load CMakeLists of QGIS
 3. Setup Kit in Qt Creator with QT from /opt/QT (as in prerequisities)
 4. Set/Add in Projects>Build Settings>Cmake similarly to `configure_qgis_build.bash`
