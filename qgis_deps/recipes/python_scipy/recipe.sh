@@ -46,6 +46,9 @@ function build_python_scipy() {
   try cd $BUILD_PATH/python_scipy/build-$ARCH
   push_env
 
+  # scipy/sparse/linalg/dsolve/SuperLU/SRC/clacon2.c:175:5: error: implicit declaration of function 'ccopy_' is invalid in C99
+  export CFLAGS="$CFLAGS -Wno-implicit-function-declaration"
+
   DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
 
   pop_env
@@ -53,9 +56,9 @@ function build_python_scipy() {
 
 # function called after all the compile have been done
 function postbuild_python_scipy() {
-   if ! python_package_installed_verbose scipy; then
-      error "Missing python package scipy"
-   fi
+  if ! python_package_installed_verbose scipy; then
+    error "Missing python package scipy"
+  fi
 }
 
 # function to append information to config file

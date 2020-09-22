@@ -5,6 +5,7 @@ DESC_unixodbc="ODBC 3 connectivity for UNIX"
 # version of your package
 VERSION_unixodbc=2.3.9
 LINK_unixodbc=libodbc.2.dylib
+LINK_unixodbcinst=libodbcinst.2.dylib
 
 # dependencies of this recipe
 DEPS_unixodbc=(libtool)
@@ -69,6 +70,7 @@ function build_unixodbc() {
 function postbuild_unixodbc() {
   verify_binary unixodbc/bin/odbcinst
   verify_binary unixodbc/lib/${LINK_unixodbc}
+  verify_binary unixodbc/lib/$LINK_unixodbcinst
 }
 
 # function to append information to config file
@@ -76,4 +78,5 @@ function add_config_info_unixodbc() {
   append_to_config_file "# unixodbc-${VERSION_unixodbc}: ${DESC_unixodbc}"
   append_to_config_file "export VERSION_unixodbc=${VERSION_unixodbc}"
   append_to_config_file "export LINK_unixodbc=${LINK_unixodbc}"
+  append_to_config_file "export LINK_unixodbcinst=$LINK_unixodbcinst"
 }

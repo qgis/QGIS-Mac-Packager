@@ -250,6 +250,7 @@ function push_env() {
 
     CMAKE="cmake"
     if [ $DEBUG -eq 1 ]; then
+      echo "!!!!!BUILDING DEBUG LIBRARIES!!!!!"
       CMAKE="${CMAKE} -DCMAKE_BUILD_TYPE=Debug"
     else
       CMAKE="${CMAKE} -DCMAKE_BUILD_TYPE=Release"

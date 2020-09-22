@@ -135,10 +135,14 @@ function fix_binaries_gdal() {
         $LINK_pcre \
         $LINK_poppler \
         $LINK_openjpeg \
+        $LINK_libltdl \
         $LINK_gdal
       do
          install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/MacOS/$i
       done
+
+      install_name_change $QGIS_DEPS_STAGE_PATH/unixodbc/lib/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_CONTENTS_DIR/MacOS/$i
+      install_name_change $QGIS_DEPS_STAGE_PATH/unixodbc/lib/$LINK_unixodbcinst @rpath/$LINK_unixodbcinst $BUNDLE_CONTENTS_DIR/MacOS/$i
   done
 
   # bin/gdal_viewshed \

@@ -7,6 +7,7 @@ source $RECIPES_PATH/gcc/recipe.sh
 VERSION_openblas=0.3.10
 
 LINK_libopenblas=libopenblas.0.dylib
+LINK_libopenblasp=libopenblasp-r0.3.10.dylib
 
 # dependencies of this recipe
 DEPS_openblas=(sqlite libxml2 openssl gcc)
@@ -72,6 +73,7 @@ function build_openblas() {
 # function called after all the compile have been done
 function postbuild_openblas() {
   verify_binary lib/$LINK_libopenblas
+  verify_binary lib/$LINK_libopenblasp
 }
 
 # function to append information to config file
@@ -79,4 +81,5 @@ function add_config_info_openblas() {
   append_to_config_file "# openblas-${VERSION_openblas}: ${DESC_openblas}"
   append_to_config_file "export VERSION_openblas=${VERSION_openblas}"
   append_to_config_file "export LINK_libopenblas=${LINK_libopenblas}"
+  append_to_config_file "export LINK_libopenblasp=${LINK_libopenblasp}"
 }

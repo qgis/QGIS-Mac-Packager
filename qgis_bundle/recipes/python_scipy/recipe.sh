@@ -83,6 +83,7 @@ function fix_binaries_python_scipy() {
    spatial/qhull
   do
     install_name_change $DEPS_LIB_DIR/$LINK_libopenblas @rpath/$LINK_libopenblas $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_libopenblasp @rpath/$LINK_libopenblasp $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}m-darwin.so
   done
 }
 

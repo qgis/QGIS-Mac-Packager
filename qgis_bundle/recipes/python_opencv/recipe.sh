@@ -19,6 +19,7 @@ function fix_binaries_python_opencv() {
     $LINK_protobuf \
     $LINK_zlib \
     $LINK_libopenblas \
+    $LINK_libopenblasp \
     $LINK_libhdf5 \
     $LINK_openjpeg
   do
