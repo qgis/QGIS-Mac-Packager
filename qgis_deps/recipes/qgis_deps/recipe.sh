@@ -12,6 +12,7 @@ DEPS_qgis_deps=(
     exiv2
     flex
     gdal
+    fastcgi
     grass
     poppler
     gsl

@@ -25,6 +25,8 @@ try mkdir -p "$QGIS_INSTALL_DIR"
 # run cmake
 cd $QGIS_BUILD_DIR
 
+# SERVER_SKIP_ECW == ECW in server apps requires a special license
+
 PATH=$ROOT_OUT_PATH/stage/bin:$PATH \
 cmake -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DCMAKE_PREFIX_PATH=$QT_BASE/clang_64 \
@@ -32,6 +34,8 @@ cmake -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DWITH_GEOREFERENCER=TRUE \
       -DWITH_3D=TRUE \
       -DWITH_BINDINGS=TRUE \
+      -DSERVER_SKIP_ECW=TRUE \
+      -DWITH_SERVER=FALSE \
       -DWITH_CUSTOM_WIDGETS=ON \
       -DQT_PLUGINS_DIR:PATH=$QGIS_INSTALL_DIR/plugins \
       -DENABLE_TESTS=FALSE \
