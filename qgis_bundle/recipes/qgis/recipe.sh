@@ -27,6 +27,12 @@ function bundle_qgis() {
   try rsync -av $QGIS_CONTENTS_DIR/Resources/ $BUNDLE_RESOURCES_DIR/ --exclude __pycache__
   try cp -av $QGIS_RECIPE_DIR/find_mod_spatialite.py $BUNDLE_RESOURCES_DIR/python/qgis/
 
+  # GRASS Console module, in the GRASS Tools panel: src/plugins/grass/qtermwidget/tools.cpp
+  #   - in get_kb_layout_dir() should be Resources/kb-layouts/
+  mk_sym_link $BUNDLE_RESOURCES_DIR ./grass/qtermwidget/kb-layouts kb-layouts
+  #   - get_color_schemes_dir() should be Resources/color-schemes/
+  mk_sym_link $BUNDLE_RESOURCES_DIR ./grass/qtermwidget/color-schemes color-schemes
+
   #### FRAMEWORKS
   try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_analysis.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Header
   try rm -f $BUNDLE_FRAMEWORKS_DIR/qgis_analysis.framework/Headers
