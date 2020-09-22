@@ -11,7 +11,6 @@ function bundle_openblas() {
 
 function fix_binaries_openblas() {
   install_name_id  @rpath/$LINK_libopenblas $BUNDLE_LIB_DIR/$LINK_libopenblas
-  install_name_id  @rpath/$LINK_libopenblas_haswellp $BUNDLE_LIB_DIR/$LINK_libopenblas_haswellp
 
   for i in \
     $LINK_libopenblas \
@@ -19,13 +18,12 @@ function fix_binaries_openblas() {
     $LINK_libgfortran \
     $LINK_gcc_s
   do
-    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_libopenblas_haswellp
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_libopenblas
   done
 }
 
 function fix_binaries_openblas_check() {
   verify_binary $BUNDLE_LIB_DIR/$LINK_libopenblas
-  verify_binary $BUNDLE_LIB_DIR/$LINK_libopenblas_haswellp
 }
 
 function fix_paths_openblas() {

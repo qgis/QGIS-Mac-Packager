@@ -7,7 +7,6 @@ source $RECIPES_PATH/gcc/recipe.sh
 VERSION_openblas=0.3.10
 
 LINK_libopenblas=libopenblas.0.dylib
-LINK_libopenblas_haswellp=libopenblas_haswellp-r$VERSION_openblas.dylib
 
 # dependencies of this recipe
 DEPS_openblas=(sqlite libxml2 openssl gcc)
@@ -51,15 +50,21 @@ function build_openblas() {
   push_env
 
   export CFLAGS="$CFLAGS -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+  # lapacke_sggsvd_work.c:48:9: error: implicit declaration of function 'sggsvd_' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
+  export CFLAGS="$CFLAGS -Wno-implicit-function-declaration"
   export CXXFLAGS="$CFLAGS"
 
-  # Contains FORTRAN LAPAC sources
+  # Contains FORTRAN LAPACK sources
+  export DYNAMIC_ARCH=1
+  export USE_OPENMP=0 # ? this is 1 in homebrew..?..
+  export NO_AVX512=1
+
   try $MAKESMP FC=gfortran libs netlib shared
   try $MAKE install PREFIX=$STAGE_PATH
 
-  try install_name_tool -change @rpath/$LINK_libquadmath $DEPS_LIB_DIR/$LINK_libquadmath $DEPS_LIB_DIR/$LINK_libopenblas_haswellp
-  try install_name_tool -change @rpath/$LINK_libgfortran $DEPS_LIB_DIR/$LINK_libgfortran $DEPS_LIB_DIR/$LINK_libopenblas_haswellp
-  try install_name_tool -change @rpath/$LINK_gcc_s $DEPS_LIB_DIR/$LINK_gcc_s $DEPS_LIB_DIR/$LINK_libopenblas_haswellp
+  unset DYNAMIC_ARCH
+  unset USE_OPENMP
+  unset NO_AVX512
 
   pop_env
 }
@@ -67,7 +72,6 @@ function build_openblas() {
 # function called after all the compile have been done
 function postbuild_openblas() {
   verify_binary lib/$LINK_libopenblas
-  verify_binary lib/$LINK_libopenblas_haswellp
 }
 
 # function to append information to config file
@@ -75,5 +79,4 @@ function add_config_info_openblas() {
   append_to_config_file "# openblas-${VERSION_openblas}: ${DESC_openblas}"
   append_to_config_file "export VERSION_openblas=${VERSION_openblas}"
   append_to_config_file "export LINK_libopenblas=${LINK_libopenblas}"
-  append_to_config_file "export LINK_libopenblas_haswellp=${LINK_libopenblas_haswellp}"
 }
