@@ -15,9 +15,13 @@ function bundle_qgis() {
   try cp -av $QGIS_CONTENTS_DIR/MacOS/QGIS $BUNDLE_MACOS_DIR
   try cp -av $QGIS_RECIPE_DIR/pyqgis-startup.py $BUNDLE_RESOURCES_DIR/python/
 
+  # SERVER
+  try cp -av $QGIS_CONTENTS_DIR/MacOS/fcgi-bin $BUNDLE_MACOS_DIR/fcgi-bin
+
   # LIBS
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgis_app.* $BUNDLE_LIB_DIR
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgispython.* $BUNDLE_LIB_DIR
+  try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgis_server.* $BUNDLE_LIB_DIR
 
   #### RESOURCES
   try rsync -av $QGIS_CONTENTS_DIR/Resources/ $BUNDLE_RESOURCES_DIR/ --exclude __pycache__
@@ -55,6 +59,10 @@ function fix_binaries_qgis() {
  install_name_add_rpath @executable_path/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
  install_name_add_rpath @executable_path/../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
+ install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/qgis_mapserv.fcgi
+ install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/qgis_mapserv.fcgi
+ install_name_add_rpath @executable_path/../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/qgis_mapserv.fcgi
+
  install_name_add_rpath @executable_path/../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
  install_name_add_rpath @executable_path/../../../lib $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
  install_name_add_rpath @executable_path/../../../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
@@ -62,11 +70,13 @@ function fix_binaries_qgis() {
  install_name_add_rpath @loader_path/../../MacOS/lib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
 
  install_name_id @rpath/libqgispython.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
+ install_name_id @rpath/libqgis_server.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_server.$QGIS_VERSION.0.dylib
  install_name_id @rpath/libqgis_app.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
  install_name_id @rpath/libqgis_customwidgets.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
 
  for i in \
     MacOS/QGIS \
+    MacOS/fcgi-bin/qgis_mapserv.fcgi \
     MacOS/qgis_process.app/Contents/MacOS/qgis_process \
     Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core \
     Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d \
@@ -104,10 +114,12 @@ function fix_binaries_qgis() {
     PlugIns/qgis/libvirtuallayerprovider.so \
     Resources/python/qgis/_core.so \
     Resources/python/qgis/_3d.so \
+    Resources/python/qgis/_server.so \
     Resources/python/qgis/_analysis.so \
     Resources/python/qgis/_gui.so \
     MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib \
     MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib \
+    MacOS/lib/libqgis_server.$QGIS_VERSION.0.dylib \
     PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
  do
     for j in \
@@ -131,7 +143,8 @@ function fix_binaries_qgis() {
       $LINK_python \
       $LINK_libhdf5 \
       $LINK_libxml2 \
-      $LINK_netcdf
+      $LINK_netcdf \
+      $LINK_fastcgi
     do
       install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/$i
     done
@@ -151,6 +164,7 @@ function fix_binaries_qgis() {
     install_name_change $QGIS_BUILD_DIR/output/lib/libqgis_app.$QGIS_VERSION.0.dylib @rpath/libqgis_app.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/$i
     install_name_change $QGIS_BUILD_DIR/output/lib/libqgispython.$QGIS_VERSION.0.dylib @rpath/libqgispython.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/$i
     install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/$i
+    install_name_change $QGIS_BUILD_DIR/output/lib/libqgis_server.$QGIS_VERSION.0.dylib @rpath/libqgis_server.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/$i
 
     for j in \
       qgis_core \
