@@ -7,7 +7,6 @@ VERSION_grass_major=7
 VERSION_grass_minor=8
 VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.3
 
-
 # dependencies of this recipe
 DEPS_grass=(python boost bison flex libtiff png  sqlite geos zlib wxmac zstd zlib xz netcdf proj gdal libgeotiff python_pyqt5 mysql postgres openssl )
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+GRASS_BUNDLE_DIR=$BUNDLE_RESOURCES_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
+
 function check_grass() {
   env_var_exists VERSION_grass
   env_var_exists VERSION_grass_major
@@ -8,8 +10,6 @@ function check_grass() {
 }
 
 function bundle_grass() {
-  GRASS_BUNDLE_DIR=$BUNDLE_RESOURCES_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
-
 	try rsync -av \
      $DEPS_GRASS_ROOT_DIR/ \
      $GRASS_BUNDLE_DIR/ \
@@ -21,9 +21,13 @@ function bundle_grass() {
   try cp -av $RECIPES_PATH/grass/grass.bash $GRASS_BUNDLE_DIR/grass
   try cp -av $DEPS_BIN_DIR/grass${VERSION_grass_major}${VERSION_grass_minor} $GRASS_BUNDLE_DIR/_grass
 
-  # see python/plugins/processing/algs/grass7/Grass7Utils.py
-  # the grass directory must be in Contents/MacOS directory
+  # GRASS detection is on 3 places in QGIS:
+  # 1. Processing: python/plugins/processing/algs/grass7/Grass7Utils.py in grassPath()
   mk_sym_link $BUNDLE_MACOS_DIR ../Resources/grass${VERSION_grass_major}${VERSION_grass_minor} grass${VERSION_grass_major}${VERSION_grass_minor}
+  # 2. Grass7 Plugin: src/providers/grass/qgsgrass.cpp:2691:QString in gisbase()
+  mk_sym_link $BUNDLE_MACOS_DIR ../Resources/grass${VERSION_grass_major}${VERSION_grass_minor} grass
+  # 3. GRASS Console module, in the GRASS Tools panel: src/plugins/grass/qtermwidget/tools.cpp
+  # see QGIS recipe for handling those, since those are installed with QGIS Resources
 }
 
 function fix_rpaths_grass() {
@@ -104,7 +108,6 @@ function fix_rpaths_grass() {
 }
 
 function fix_binaries_grass() {
- GRASS_BUNDLE_DIR=$BUNDLE_RESOURCES_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
  export -f fix_rpaths_grass
 
  ######
@@ -234,8 +237,6 @@ function fix_binaries_grass() {
 }
 
 function fix_binaries_grass_check() {
-  GRASS_BUNDLE_DIR=$BUNDLE_RESOURCES_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
-
   verify_binary $GRASS_BUNDLE_DIR/lib/libgrass_raster.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
   verify_binary $GRASS_BUNDLE_DIR/bin/d.barscale
   verify_binary $GRASS_BUNDLE_DIR/tools/g.echo
@@ -244,8 +245,6 @@ function fix_binaries_grass_check() {
 }
 
 function fix_paths_grass() {
-  GRASS_BUNDLE_DIR=$BUNDLE_RESOURCES_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
-
   clean_path $GRASS_BUNDLE_DIR/_grass
 
   GENERATED_FILES=$(find $GRASS_BUNDLE_DIR/etc/python/grass/lib/*.py)
@@ -253,12 +252,9 @@ function fix_paths_grass() {
   do
     clean_path $i
   done
-
 }
 
 function fix_paths_grass_check() {
-  GRASS_BUNDLE_DIR=$BUNDLE_RESOURCES_DIR/grass${VERSION_grass_major}${VERSION_grass_minor}
-
   verify_file_paths $GRASS_BUNDLE_DIR/grass
   verify_file_paths $GRASS_BUNDLE_DIR/_grass
   verify_file_paths $GRASS_BUNDLE_DIR/scripts/d.shade
