@@ -21,8 +21,9 @@ function bundle_python_packages() {
   try rm $BUNDLE_PYTHON_PACKAGES_DIR/site-packages/setuptools.pth
 
   cd $BUNDLE_PYTHON_SITE_PACKAGES_DIR
-  try rm -r *.dist-info
-  try rm -r *.egg-info
+
+  # see QGIS-Mac-Packager#87, *-info is sometimes required,
+  # so we shouldn't delete it!
 
   # issue #32
   # _ssl is already taken in lib-dynload
@@ -31,7 +32,7 @@ function bundle_python_packages() {
 }
 
 function fix_binaries_python_packages() {
-  install_name_change $DEPS_LIB_DIR/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_PYTHON_SITE_PACKAGES_DIR/pyodbc.cpython-${VERSION_major_python//./}m-darwin.so
+  install_name_change $QGIS_DEPS_STAGE_PATH/unixodbc/lib/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_PYTHON_SITE_PACKAGES_DIR/pyodbc.cpython-${VERSION_major_python//./}m-darwin.so
   install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_PYTHON_SITE_PACKAGES_DIR/cryptography/hazmat/bindings/_openssl.abi3.so
   install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_PYTHON_SITE_PACKAGES_DIR/cryptography/hazmat/bindings/_openssl.abi3.so
   install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_cffi_backend.cpython-${VERSION_major_python//./}m-darwin.so
