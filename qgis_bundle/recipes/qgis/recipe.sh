@@ -34,12 +34,14 @@ function bundle_qgis() {
   try rsync -av $QGIS_CONTENTS_DIR/Resources/ $BUNDLE_RESOURCES_DIR/ --exclude __pycache__
   try cp -av $QGIS_RECIPE_DIR/find_mod_spatialite.py $BUNDLE_RESOURCES_DIR/python/qgis/
 
-  # GRASS
+  #### GRASS
   # Console module, in the GRASS Tools panel: src/plugins/grass/qtermwidget/tools.cpp
   #   - in get_kb_layout_dir() should be Resources/kb-layouts/
   mk_sym_link $BUNDLE_RESOURCES_DIR ./grass/qtermwidget/kb-layouts kb-layouts
   #   - get_color_schemes_dir() should be Resources/color-schemes/
   mk_sym_link $BUNDLE_RESOURCES_DIR ./grass/qtermwidget/color-schemes color-schemes
+  # extra modules
+  try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/qgis/grass $BUNDLE_LIB_DIR/qgis/
 
   #### FRAMEWORKS
   try rsync -av $QGIS_CONTENTS_DIR/Frameworks/qgis_analysis.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Header
@@ -92,6 +94,11 @@ function fix_binaries_qgis() {
  install_name_id @rpath/libqgis_app.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
  install_name_id @rpath/libqgis_customwidgets.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
 
+ install_name_add_rpath @executable_path/../../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
+ install_name_add_rpath @executable_path/../../../../lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
+ install_name_add_rpath @executable_path/../../../../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
+
+ # LIBS
  for i in \
     MacOS/QGIS \
     MacOS/bin/_qgis_mapserver \
@@ -146,7 +153,11 @@ function fix_binaries_qgis() {
     MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib \
     MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib \
     MacOS/lib/libqgis_server.$QGIS_VERSION.0.dylib \
-    PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
+    PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib \
+    MacOS/lib/qgis/grass/modules/qgis.d.rast7 \
+    MacOS/lib/qgis/grass/modules/qgis.g.info7 \
+    MacOS/lib/qgis/grass/modules/qgis.r.in7 \
+    MacOS/lib/qgis/grass/modules/qgis.v.in7
  do
     for j in \
       $LINK_exiv2 \
@@ -182,7 +193,8 @@ function fix_binaries_qgis() {
       libgrass_imagery \
       libgrass_dbmibase \
       libgrass_dbmiclient \
-      libgrass_gproj
+      libgrass_gproj \
+      libgrass_datetime
     do
       install_name_change $DEPS_GRASS_LIB_DIR/$j.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/$j.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/$i
     done
