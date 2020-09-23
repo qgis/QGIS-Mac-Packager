@@ -19,9 +19,10 @@ function bundle_qgis() {
 
   # SERVER
   try cp -av $QGIS_CONTENTS_DIR/MacOS/fcgi-bin $BUNDLE_MACOS_DIR/fcgi-bin
+  try mv  $BUNDLE_MACOS_DIR/fcgi-bin/qgis_mapserv.fcgi $BUNDLE_MACOS_DIR/fcgi-bin/_qgis_mapserv.fcgi
   try cp -av $QGIS_RECIPE_DIR/qgis_mapserv.fcgi $BUNDLE_MACOS_DIR/fcgi-bin/
-  try cp -av $QGIS_CONTENTS_DIR/MacOS/bin/qgis_mapserver $BUNDLE_BIN_DIR/
-  try cp -av $QGIS_RECIPE_DIR/qgis_mapserver $BUNDLE_BIN_DIR/
+  try cp -av $QGIS_CONTENTS_DIR/MacOS/bin/qgis_mapserver $BUNDLE_BIN_DIR/_qgis_mapserver
+  try cp -av $QGIS_RECIPE_DIR/qgis_mapserver $BUNDLE_BIN_DIR/qgis_mapserver
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/qgis/server $BUNDLE_LIB_DIR/qgis/
 
   # LIBS
@@ -76,9 +77,9 @@ function fix_binaries_qgis() {
  install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/_qgis_mapserv.fcgi
  install_name_add_rpath @executable_path/../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/_qgis_mapserv.fcgi
 
- install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/bin/qgis_mapserver
- install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/bin/qgis_mapserver
- install_name_add_rpath @executable_path/../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/bin/qgis_mapserver
+ install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/bin/_qgis_mapserver
+ install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/bin/_qgis_mapserver
+ install_name_add_rpath @executable_path/../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/bin/_qgis_mapserver
 
  install_name_add_rpath @executable_path/../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
  install_name_add_rpath @executable_path/../../../lib $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
