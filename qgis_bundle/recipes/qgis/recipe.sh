@@ -10,6 +10,8 @@ function bundle_qgis() {
   QGIS_CONTENTS_DIR=$QGIS_INSTALL_DIR/QGIS.app/Contents/
   QGIS_RECIPE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
+  mkdir -p $BUNDLE_LIB_DIR/qgis
+
   try cp -av $QGIS_CONTENTS_DIR/Info.plist $BUNDLE_CONTENTS_DIR
   try cp -av $QGIS_CONTENTS_DIR/PkgInfo $BUNDLE_CONTENTS_DIR
   try cp -av $QGIS_CONTENTS_DIR/MacOS/QGIS $BUNDLE_MACOS_DIR
@@ -17,6 +19,10 @@ function bundle_qgis() {
 
   # SERVER
   try cp -av $QGIS_CONTENTS_DIR/MacOS/fcgi-bin $BUNDLE_MACOS_DIR/fcgi-bin
+  try cp -av $QGIS_RECIPE_DIR/qgis_mapserv.fcgi $BUNDLE_MACOS_DIR/fcgi-bin/
+  try cp -av $QGIS_CONTENTS_DIR/MacOS/bin/qgis_mapserver $BUNDLE_BIN_DIR/
+  try cp -av $QGIS_RECIPE_DIR/qgis_mapserver $BUNDLE_BIN_DIR/
+  try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/qgis/server $BUNDLE_LIB_DIR/qgis/
 
   # LIBS
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgis_app.* $BUNDLE_LIB_DIR
@@ -27,7 +33,8 @@ function bundle_qgis() {
   try rsync -av $QGIS_CONTENTS_DIR/Resources/ $BUNDLE_RESOURCES_DIR/ --exclude __pycache__
   try cp -av $QGIS_RECIPE_DIR/find_mod_spatialite.py $BUNDLE_RESOURCES_DIR/python/qgis/
 
-  # GRASS Console module, in the GRASS Tools panel: src/plugins/grass/qtermwidget/tools.cpp
+  # GRASS
+  # Console module, in the GRASS Tools panel: src/plugins/grass/qtermwidget/tools.cpp
   #   - in get_kb_layout_dir() should be Resources/kb-layouts/
   mk_sym_link $BUNDLE_RESOURCES_DIR ./grass/qtermwidget/kb-layouts kb-layouts
   #   - get_color_schemes_dir() should be Resources/color-schemes/
@@ -65,9 +72,13 @@ function fix_binaries_qgis() {
  install_name_add_rpath @executable_path/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
  install_name_add_rpath @executable_path/../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
- install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/qgis_mapserv.fcgi
- install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/qgis_mapserv.fcgi
- install_name_add_rpath @executable_path/../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/qgis_mapserv.fcgi
+ install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/_qgis_mapserv.fcgi
+ install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/_qgis_mapserv.fcgi
+ install_name_add_rpath @executable_path/../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/_qgis_mapserv.fcgi
+
+ install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/bin/qgis_mapserver
+ install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/bin/qgis_mapserver
+ install_name_add_rpath @executable_path/../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/bin/qgis_mapserver
 
  install_name_add_rpath @executable_path/../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
  install_name_add_rpath @executable_path/../../../lib $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
@@ -82,7 +93,15 @@ function fix_binaries_qgis() {
 
  for i in \
     MacOS/QGIS \
-    MacOS/fcgi-bin/qgis_mapserv.fcgi \
+    MacOS/bin/_qgis_mapserver \
+    MacOS/fcgi-bin/_qgis_mapserv.fcgi \
+    MacOS/lib/qgis/server/libdummy.so \
+    MacOS/lib/qgis/server/liblandingpage.so \
+    MacOS/lib/qgis/server/libwcs.so \
+    MacOS/lib/qgis/server/libwfs.so \
+    MacOS/lib/qgis/server/libwfs3.so \
+    MacOS/lib/qgis/server/libwms.so \
+    MacOS/lib/qgis/server/libwmts.so  \
     MacOS/qgis_process.app/Contents/MacOS/qgis_process \
     Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core \
     Frameworks/qgis_3d.framework/Versions/$QGIS_VERSION/qgis_3d \
