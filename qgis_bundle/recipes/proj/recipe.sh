@@ -10,7 +10,8 @@ function check_proj() {
 function bundle_proj() {
   try cp -av $DEPS_LIB_DIR/libproj*dylib $BUNDLE_LIB_DIR
 
-  # see src/app/main.cpp for PROJ_LIB setup for bundle
+  # see src/app/main.cpp for env setup for bundle
+  # see src/app/qgsapplication/cpp in QgsApplication::init for PROJ setup paths
   try rsync -av $DEPS_SHARE_DIR/proj $BUNDLE_RESOURCES_DIR/
 
   # https://github.com/qgis/QGIS-Mac-Packager/issues/47
