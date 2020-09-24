@@ -47,7 +47,7 @@ nightly)
 	;;
 
 nightly2)
-	BRANCH=proj_path
+	BRANCH=master
 	;;
 
 *)
