@@ -7,7 +7,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 if (( $# < 2 )); then
     echo "usage: $0 git_tag release_name [no-upload]"
-    echo "example: ./$0 master nightly2 no-upload"
+    echo "example: ./$0 master nightly no-upload"
     exit 1
 fi
 

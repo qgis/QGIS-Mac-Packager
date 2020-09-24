@@ -7,7 +7,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 if (( $# < 2 )); then
     echo "usage: $0 package_name config_file"
-    echo "example: ./$0 /path/to/qgis_nightly2_master_20200717_024956.dmg config/nightly2.conf"
+    echo "example: ./$0 /path/to/qgis_nightly_master_20200717_024956.dmg config/nightly.conf"
     exit 1
 fi
 

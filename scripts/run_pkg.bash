@@ -46,12 +46,8 @@ nightly)
 	BRANCH=master
 	;;
 
-nightly2)
-	BRANCH=master
-	;;
-
 *)
-	echo "usage: $0 {nightly|nightly2|pr|ltr}"
+	echo "usage: $0 {nightly|pr|ltr}"
 	exit 1
 	;;
 
@@ -72,10 +68,6 @@ if [ $PKG = "nightly" ]; then
 		rm -rvf i18n doc/TRANSLATORS
 		git checkout
 	fi
-elif [ $PKG = "nightly2" ]; then
-  TAG=master
-	git reset --hard
-	# TODO tx https://github.com/qgis/QGIS/issues/37034
 else
 	TAG=final-${MAJOR}_${MINOR}_${PATCH}
 
@@ -105,17 +97,19 @@ QGISAPP="QGIS${MAJOR}.${MINOR}.app"
 BD=$DIR/../../builds/${PKG}
 
 echo "BUILDING ${PKG}"
-if [ $PKG = "nightly2" ]; then
-  $DIR/run_build2.bash \
-    ${TAG} \
-    ${PKG} \
-    "$@"
-else
+if [ $PKG = "ltr" ]; then
+  # homebrew&GDAL2 based packages
   $DIR/run_build.bash \
     $BD \
     ${TAG} \
     ${PKG} \
     ${QGISAPP} "$@"
+else
+  # qgis-deps&GDAL3 based packages
+  $DIR/run_build2.bash \
+    ${TAG} \
+    ${PKG} \
+    "$@"
 fi
 
 if [ "$PKG" = "nightly" ]; then

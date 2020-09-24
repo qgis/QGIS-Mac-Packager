@@ -4,21 +4,13 @@
 
 [![NIGHTLY Status](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-nightly.latest.log)
 
-[![NIGHTLY2 (Proj6) Status](https://qgis.org/downloads/macos/qgis-macos-nightly2.latest.png?raw=true)](https://qgis.org/downloads/macos/qgis-macos-nightly2.latest.log)
-
 # Latest Passed Builds
 
-| PR  | LTR   | Nightly  | Nightly2 (Proj6)  |
+| PR | LTR | Nightly |
 |:---:|:-----:|:--------:|:--------:|
-| [DMG](https://qgis.org/downloads/macos/qgis-macos-pr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-ltr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-nightly.dmg?raw=true)  | [DMG](https://qgis.org/downloads/macos/qgis-macos-nightly2.dmg?raw=true)  |
-| [SHA256](https://qgis.org/downloads/macos/qgis-macos-pr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-ltr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-nightly.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-nightly2.sha256sum?raw=true) |
-| [DEPS](https://qgis.org/downloads/macos/qgis-macos-pr.deps?raw=true) | [DEPS](https://qgis.org/downloads/macos/qgis-macos-ltr.deps?raw=true)| [DEPS](https://qgis.org/downloads/macos/qgis-macos-nightly.deps?raw=true) | [DEPS](https://qgis.org/downloads/macos/qgis-macos-nightly2.deps?raw=true) |
-
-# QGIS dependencies for development
-
-Experimental!
-- See [qgis_deps/README.md](qgis_deps/README.md)
-- Download [binaries](https://qgis.org/downloads/macos/deps/)
+| [DMG](https://qgis.org/downloads/macos/qgis-macos-pr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-ltr.dmg?raw=true) | [DMG](https://qgis.org/downloads/macos/qgis-macos-nightly.dmg?raw=true)  |
+| [SHA256](https://qgis.org/downloads/macos/qgis-macos-pr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-ltr.sha256sum?raw=true) | [SHA256](https://qgis.org/downloads/macos/qgis-macos-nightly.sha256sum?raw=true) |
+| [DEPS](https://qgis.org/downloads/macos/qgis-macos-pr.deps?raw=true) | [DEPS](https://qgis.org/downloads/macos/qgis-macos-ltr.deps?raw=true)| [DEPS](https://qgis.org/downloads/macos/qgis-macos-nightly.deps?raw=true) |
 
 # QGIS Mac Packager
 
@@ -26,17 +18,17 @@ Set of scripts to create MacOS standalone QGIS package (dmg)
 
 To know when we release, see [QGIS release schedule](https://www.qgis.org/en/site/getinvolved/development/roadmap.html#release-schedule)
 
+# NOTE: QGIS LTR builds!
+
+QGIS 3.10 LTR is still build with GDAL2 and homebrew-deps. Documentation can be found in [here](qmp/qmp.md)
+
 # How to report issues 
 
 - Add link to the installed package
 - Add crash report if QGIS crashed
 - State MacOS version (e.g. 10.14.1)
-- Run `open /Applications/QGISxy.app` from Terminal and add the output
+- Run `open /Applications/QGIS.app` from Terminal and add the output
 - Append any messages from QGIS message log or python warnings log if present
-
-# Development
-
-- run `./scripts/check_all.bash` to fix travis-ci checks
 
 # Debugging Tips
 - [gatekeeper](https://stackoverflow.com/a/29221163/2838364): `codesign --verbose --deep-verify /Applications/QGIS.app/` 
@@ -48,7 +40,7 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 
 # Server Setup 
 
-- Get Mojave server
+- Get Mojave server (Catalina?)
 - Get Apple Development Program for your Apple ID
 - Login to the server (have static IP)
 - Change default password to some secure one
@@ -57,9 +49,9 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - Sign out from the apple developer page and app store
 - Open XCode and accept license
 - install homebrew and QGIS deps by running `install_brew.bash`
-- Download MrSID SDK [referenced in](https://github.com/OSGeo/homebrew-osgeo4mac/blob/master/Formula/osgeo-mrsid-sdk.rb) and place it in the folder `$HOME/Library/Caches/Homebrew`
-- Download erdas-ecw-jp2 [referenced in](https://github.com/OSGeo/homebrew-osgeo4mac/blob/master/Formula/osgeo-ecwjp2-sdk.rb). Open dmg, open pkg and install to default location (Desktop Read-Only Free type)
-- install homebrew packages by `install_brew_packages.bash`
+- Download MrSID SDK [referenced in](https://github.com/OSGeo/homebrew-osgeo4mac/blob/master/Formula/osgeo-mrsid-sdk.rb) and place it in the folder `$HOME/Library/Caches/Homebrew`. Make a symbolic link in `../external/MrSID_DSDK-<ver>-darwin14.universal.clang60`
+- Download erdas-ecw-jp2 [referenced in](https://github.com/OSGeo/homebrew-osgeo4mac/blob/master/Formula/osgeo-ecwjp2-sdk.rb). Open dmg, open pkg and install to default location (Desktop Read-Only Free type). Make a symbolic link in `../external/ERDASEcwJpeg2000SDK<ver>`
+- install homebrew packages by `install_brew_dev_packages.bash`
 - get proj datumgrids by running `scripts/fetch_proj-datumgrid.bash`
 - Update `~/.bash_profile` from `scrips/bash_profile`
 - now clone this repository
@@ -84,6 +76,8 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
   run_cronjob.bash
   QGIS-Mac-Packager/
   proj-datumgrid/
+  external/MrSid.. --> link to SDK
+  external/MrSid.. --> link to SDK
   builds/
   logs/
   ssh/
