@@ -50,6 +50,7 @@ DEPS_qgis_deps=(
     python_pandas
     qca
     qscintilla
+    qtextra
     qtkeychain
     qtwebkit
     qwt

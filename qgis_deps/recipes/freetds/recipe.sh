@@ -43,6 +43,7 @@ function shouldbuild_freetds() {
   if [ ${STAGE_PATH}/lib/$LINK_ct -nt $BUILD_freetds/.patched ]; then
     DO_BUILD=0
   fi
+  DO_BUILD=1
 }
 
 # function called to build the source code
@@ -69,6 +70,14 @@ function build_freetds() {
   try $MAKE
   try $MAKE install
 
+  # add freetds to unixodbc file
+  UNIXODB_INI=$STAGE_PATH/unixodbc/etc/odbcinst.ini
+  if ! grep -q FreeTDS "$UNIXODB_INI"; then
+    echo "Patching $UNIXODB_INI with FreeTDS driver"
+    echo "[FreeTDS]" >> $UNIXODB_INI
+    echo "Description = FreeTDS Driver" >> $UNIXODB_INI
+    echo "Driver = $STAGE_PATH/lib/libtdsodbc.so" >> $UNIXODB_INI
+  fi
   pop_env
 }
 

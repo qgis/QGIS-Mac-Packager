@@ -31,8 +31,11 @@ function fix_binaries_freetds() {
 
     install_name_change $QGIS_DEPS_STAGE_PATH/unixodbc/lib/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_LIB_DIR/$i
     install_name_change $QGIS_DEPS_STAGE_PATH/unixodbc/lib/$LINK_unixodbcinst @rpath/$LINK_unixodbcinst $BUNDLE_LIB_DIR/$i
-
   done
+
+  # now the driver
+  install_name_add_rpath @loader_path $BUNDLE_LIB_DIR/$LINK_tdsodbc
+  install_name_add_rpath @loader_path/../Frameworks $BUNDLE_LIB_DIR/$LINK_tdsodbc
 }
 
 function fix_binaries_freetds_check() {

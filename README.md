@@ -37,6 +37,9 @@ QGIS 3.10 LTR is still build with GDAL2 and homebrew-deps. Documentation can be 
 - accept by gatekeeper: `spctl -a -t exec -vv <path>.dmg`
 - signature: `codesign --verify --deep --strict --verbose=2`
 - library deps (similar to Windows' Dependency Walker): https://github.com/kwin/macdependency
+- to debug Qt Plugins (e.g. SQL), use : `QT_DEBUG_PLUGINS=1 open /Application/QGIS.app`
+- if QGIS crashes on start, try with clean profile `mv ~/Library/Application\ Support/QGIS/QGIS3/profiles ~/Library/Application\ Support/QGIS/QGIS3/profiles_bk`
+- if QGIS crashes after load, try use clean profile from the QGIS Menu 
 
 # Server Setup 
 

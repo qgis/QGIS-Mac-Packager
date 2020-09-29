@@ -367,13 +367,14 @@ function check_linked_rpath() {
     liblzma
     libarchive
     libbz2
+    libiodbc
   )
   for i in ${targets[*]}
   do
       if otool -L $1 | grep -q /usr/lib/$i.dylib
       then
         otool -L $1
-        info "$1 contains /usr/lib/$i.dylib string -- we should be using our $i, not system!"
+        info "$1 contains /usr/lib/$i.dylib string"
       fi
   done
 }
