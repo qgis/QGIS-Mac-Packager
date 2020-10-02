@@ -12,8 +12,8 @@ function bundle_openssl() {
 
   # https://github.com/qgis/QGIS-Mac-Packager/issues/32
   try mkdir -p $BUNDLE_RESOURCES_DIR/certs
-  try cp -av $DEPS_ROOT_DIR/certs/* $BUNDLE_RESOURCES_DIR/certs/
-  mk_sym_link $BUNDLE_RESOURCES_DIR/certs rootcerts.pem certs.pem
+  try cp -av $DEPS_ROOT_DIR/certs/rootcerts.pem $BUNDLE_RESOURCES_DIR/certs/
+  # see python_packages/recipe.sh for default root cersts
 }
 
 function fix_binaries_openssl() {

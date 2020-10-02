@@ -25,6 +25,14 @@ function bundle_python_packages() {
   # see QGIS-Mac-Packager#87, *-info is sometimes required,
   # so we shouldn't delete it!
 
+  ###############
+  # CERTIFICATES
+  # see https://github.com/qgis/QGIS/issues/37107
+  # use certifi root certificates rather than openssl
+  try mkdir -p $BUNDLE_RESOURCES_DIR/certs
+  mk_sym_link $BUNDLE_RESOURCES_DIR/certs ../python/site-packages/certifi/cacert.pem certifi.pem
+  mk_sym_link $BUNDLE_RESOURCES_DIR/certs certifi.pem certs.pem
+
   # issue #32
   # _ssl is already taken in lib-dynload
   try mv $BUNDLE_PYTHON_PACKAGES_DIR/ssl.py $BUNDLE_PYTHON_PACKAGES_DIR/_ssl2.py
