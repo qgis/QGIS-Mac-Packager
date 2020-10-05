@@ -68,6 +68,7 @@ B) Package contains also these non-open source projects with licenses at the end
 
 [1] ERDAS ECW/JP2 Desktop Read-Only Redistributable SDK License
 [2] LizardTech Computer Software License Agreement for MrSID Decode SDKs
+[3] Oracle Instant DB Client: https://www.oracle.com/database/technologies/instant-client.html
 
 -----------------------------------------------------------------------------------------------------
 

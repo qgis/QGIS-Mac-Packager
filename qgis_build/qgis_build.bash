@@ -2,13 +2,16 @@
 
 set -euo pipefail
 
+QGIS_BUILD_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 # load configuration
 if (( $# < 1 )); then
     error "qgis_build: $0 <path/to>/config/<my>.conf ..."
 fi
 CONFIG_FILE=$1
 if [ ! -f "$CONFIG_FILE" ]; then
-  error "invalid config file (1st argument) $CONFIG_FILE"
+  echo "invalid config file (1st argument) $CONFIG_FILE"
+  exit 1
 fi
 shift
 source $CONFIG_FILE
@@ -25,10 +28,24 @@ try mkdir -p "$QGIS_INSTALL_DIR"
 # run cmake
 cd $QGIS_BUILD_DIR
 
-# SERVER_SKIP_ECW == ECW in server apps requires a special license
+if [[ "$WITH_ORACLE" == "true" ]]; then
+  ORACLE_SDK="$QGIS_BUILD_SCRIPT_DIR/../../external/oracle/sdk"
+  if [ ! -d "$ORACLE_SDK" ]; then
+    error "missing oracle SDK $ORACLE_SDK"
+  fi
+  ORACLE_CLIENT="$QGIS_BUILD_SCRIPT_DIR/../../external/oracle/instantclient"
+  if [ ! -d "$ORACLE_CLIENT" ]; then
+    error "invalid oracle basic-light client $ORACLE_CLIENT"
+  fi
+  ORACLE_CMAKE="-DWITH_ORACLE=TRUE -DOCI_INCLUDEDIR=$ORACLE_SDK/include -DORACLE_LIBDIR=$ORACLE_CLIENT"
+else
+  ORACLE_CMAKE="-DWITH_ORACLE=FALSE"
+fi
 
+# SERVER_SKIP_ECW == ECW in server apps requires a special license
 PATH=$ROOT_OUT_PATH/stage/bin:$PATH \
 cmake -DCMAKE_BUILD_TYPE=Release \
+      $ORACLE_CMAKE \
       -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DCMAKE_PREFIX_PATH=$QT_BASE/clang_64 \
       -DQGIS_MACAPP_BUNDLE=-1 \

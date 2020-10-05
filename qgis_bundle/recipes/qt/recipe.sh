@@ -63,11 +63,10 @@ function bundle_qt() {
   done
 
   #### PLUGINS
-  try rsync -av $QT_ROOT_DIR/plugins/* $BUNDLE_PLUGINS_DIR/
-
   # we build sqldrivers ourselves, see qgis_deps/recipes/qtextra/recipe.sh
   # https://bugreports.qt.io/browse/QTBUG-85369
-  try rm $BUNDLE_PLUGINS_DIR/sqldrivers/*
+  try rsync -av $QT_ROOT_DIR/plugins/* $BUNDLE_PLUGINS_DIR/ --exclude "sqldrivers"
+  try mkdir -p $BUNDLE_PLUGINS_DIR/sqldrivers
   try cp -av $QT_ROOT_DIR/plugins/sqldrivers/libqsqlite.dylib $BUNDLE_PLUGINS_DIR/sqldrivers/
   try cp -av ${STAGE_PATH}/qt5/plugins/sqldrivers/* $BUNDLE_PLUGINS_DIR/sqldrivers/
 

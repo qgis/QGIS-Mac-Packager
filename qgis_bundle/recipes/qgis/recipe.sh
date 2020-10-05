@@ -62,6 +62,19 @@ function bundle_qgis() {
 
   mkdir -p $BUNDLE_PLUGINS_DIR/designer
   try cp -av $QGIS_INSTALL_DIR/plugins/designer/libqgis_customwidgets.* $BUNDLE_PLUGINS_DIR/designer
+
+  if [[ "$WITH_ORACLE" == "true" ]]; then
+    mkdir -p $BUNDLE_PLUGINS_DIR/sqldrivers
+    try cp -av $QGIS_INSTALL_DIR/plugins/sqldrivers/libqsqlocispatial.dylib $BUNDLE_PLUGINS_DIR/sqldrivers/
+    ORACLE_CLIENT="$QGIS_RECIPE_DIR/../../../../external/oracle/instantclient"
+    if [ ! -d "$ORACLE_CLIENT" ]; then
+      error "invalid oracle basic-light client $ORACLE_CLIENT"
+    fi
+    try cp -av $ORACLE_CLIENT/libclntsh.* $BUNDLE_LIB_DIR/
+    try cp -av $ORACLE_CLIENT/libnnz18.* $BUNDLE_LIB_DIR/
+    try cp -av $ORACLE_CLIENT/libons.* $BUNDLE_LIB_DIR/
+    try cp -av $ORACLE_CLIENT/libclntshcore.dylib.* $BUNDLE_LIB_DIR/
+  fi
 }
 
 function fix_binaries_qgis() {
@@ -99,6 +112,10 @@ function fix_binaries_qgis() {
  install_name_add_rpath @executable_path/../../../../lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
  install_name_add_rpath @executable_path/../../../../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
 
+ if [[ "$WITH_ORACLE" == "true" ]]; then
+  ORACLE_PROVIDER=PlugIns/qgis/liboracleprovider.so
+ fi
+
  # LIBS
  for i in \
     MacOS/QGIS \
@@ -117,6 +134,7 @@ function fix_binaries_qgis() {
     Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis \
     Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui \
     Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} \
+    $ORACLE_PROVIDER \
     PlugIns/qgis/libgeometrycheckerplugin.so \
     PlugIns/qgis/libdb2provider.so \
     PlugIns/qgis/libidentcertauthmethod.so \
@@ -225,12 +243,25 @@ function fix_binaries_qgis() {
  do
    clean_binary $j
  done
+
+ ## ORACLE
+  if [[ "$WITH_ORACLE" == "true" ]]; then
+    install_name_id @rpath/PlugIns/sqldrivers/libqsqlocispatial.dylib $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlocispatial.dylib
+    install_name_add_rpath @loader_path/../../Frameworks $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlocispatial.dylib
+    install_name_add_rpath @loader_path/../../MacOS/lib $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlocispatial.dylib
+  fi
 }
 
 function fix_binaries_qgis_check() {
   verify_binary $BUNDLE_CONTENTS_DIR/MacOS/QGIS
   verify_binary $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
   verify_binary $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
+
+  ## ORACLE
+  if [[ "$WITH_ORACLE" == "true" ]]; then
+    verify_binary $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlocispatial.dylib
+    verify_binary $BUNDLE_LIB_DIR/libclntsh.dylib
+  fi
 }
 
 function fix_paths_qgis() {
