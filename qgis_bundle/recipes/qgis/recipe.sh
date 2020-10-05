@@ -55,6 +55,7 @@ function bundle_qgis() {
 
   #### QGIS PROCESS
   try cp -av $QGIS_CONTENTS_DIR/MacOS/bin/qgis_process.app $BUNDLE_MACOS_DIR
+  try cp -av $QGIS_RECIPE_DIR/qgis_process $BUNDLE_MACOS_DIR/bin/qgis_process
 
   #### PLUGINS
   try rsync -av $QGIS_CONTENTS_DIR/PlugIns/ $BUNDLE_PLUGINS_DIR/
