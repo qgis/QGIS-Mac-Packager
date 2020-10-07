@@ -27,7 +27,7 @@ RECIPE_qtextra=$RECIPES_PATH/qtextra
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_qtextra() {
-  cd $BUILD_qtextra/Qt4Qt5
+  cd $BUILD_qtextra
 
   # check marker
   if [ -f .patched ]; then
