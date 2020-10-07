@@ -34,6 +34,7 @@ DEPS_gdal=(
   libkml
   pcre
   unixodbc
+  spatialite
 )
 
 # url of the package
@@ -86,7 +87,6 @@ function shouldbuild_gdal() {
   if [ ${STAGE_PATH}/lib/$LINK_gdal -nt $BUILD_gdal/.patched ]; then
     DO_BUILD=0
   fi
-  # DO_BUILD=1
 }
 
 function build_ecw() {
