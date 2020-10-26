@@ -3,6 +3,7 @@
 DESC_bison="Parser generator"
 
 # version of your package
+# 3.7.x is problem when compiling qtwebkit -> generated headers have suffix .hpp and not .h
 VERSION_bison=3.5.4
 
 # dependencies of this recipe
@@ -38,7 +39,7 @@ function prebuild_bison() {
 function shouldbuild_bison() {
   # If lib is newer than the sourcecode skip build
   if [ ${STAGE_PATH}/bin/bison -nt $BUILD_bison/.patched ]; then
-    DO_BUILD=0
+    DO_BUILD=1
   fi
 }
 
