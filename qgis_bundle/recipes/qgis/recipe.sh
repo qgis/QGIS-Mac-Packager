@@ -186,6 +186,7 @@ function fix_binaries_qgis() {
       $LINK_libgsl \
       $LINK_libgslcblas \
       $LINK_libzip \
+      $LINK_libzstd \
       $LINK_libproj \
       $LINK_protobuf_lite \
       $LINK_libpq \
