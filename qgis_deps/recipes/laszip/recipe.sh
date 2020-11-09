@@ -38,7 +38,7 @@ function prebuild_laszip() {
 
 function shouldbuild_laszip() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_liblaszip_c} -nt $BUILD_laszip/.patched ]; then
+  if [ ${STAGE_PATH}/lib/${LINK_liblaszip} -nt $BUILD_laszip/.patched ]; then
     DO_BUILD=0
   fi
 }

@@ -42,6 +42,12 @@ else
   ORACLE_CMAKE="-DWITH_ORACLE=FALSE"
 fi
 
+if [[ "$WITH_PDAL" == "true" ]]; then
+  PDAL_CMAKE="-DWITH_EPT=TRUE -DWITH_PDAL=TRUE"
+else
+  PDAL_CMAKE="-DWITH_EPT=FALSE -DWITH_PDAL=TRUE"
+fi
+
 # SERVER_SKIP_ECW == ECW in server apps requires a special license
 PATH=$ROOT_OUT_PATH/stage/bin:$PATH \
 cmake -DCMAKE_BUILD_TYPE=Release \
@@ -51,6 +57,7 @@ cmake -DCMAKE_BUILD_TYPE=Release \
       -DQGIS_MACAPP_BUNDLE=-1 \
       -DWITH_GEOREFERENCER=TRUE \
       -DWITH_3D=TRUE \
+      $PDAL_CMAKE \
       -DWITH_BINDINGS=TRUE \
       -DSERVER_SKIP_ECW=TRUE \
       -DWITH_SERVER=TRUE \
