@@ -117,6 +117,10 @@ function fix_binaries_qgis() {
  fi
 
  # LIBS
+ if [[ "$WITH_PDAL" == "true" ]]; then
+      PDALPROVIDER=PlugIns/qgis/libpdalprovider.so
+ fi
+
  for i in \
     MacOS/QGIS \
     MacOS/bin/_qgis_mapserver \
@@ -135,6 +139,7 @@ function fix_binaries_qgis() {
     Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui \
     Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} \
     $ORACLE_PROVIDER \
+    $PDALPROVIDER \
     PlugIns/qgis/libgeometrycheckerplugin.so \
     PlugIns/qgis/libdb2provider.so \
     PlugIns/qgis/libidentcertauthmethod.so \
@@ -204,6 +209,16 @@ function fix_binaries_qgis() {
     do
       install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/$i
     done
+
+    if [[ "$WITH_PDAL" == "true" ]]; then
+      for j in \
+        $LINK_zstd \
+        $LINK_libpdalcpp \
+        $LINK_libpdal_util
+      do
+        install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/$i
+      done
+    fi
 
     for j in \
       libgrass_gis \

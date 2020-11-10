@@ -54,6 +54,9 @@ function prebuild_grass() {
   # missing space in gpde Makefile
   try ${SED} "s;EXTRA_LIBS=\$(GISLIB);EXTRA_LIBS = \$(GISLIB);g" lib/gpde/Makefile
 
+  # fix permissions
+  chmod 777 $STAGE_PATH/grass${VERSION_grass_major}${VERSION_grass_minor}/etc/colors/grass
+
   touch .patched
 }
 
