@@ -39,7 +39,7 @@ function prebuild_bison() {
 function shouldbuild_bison() {
   # If lib is newer than the sourcecode skip build
   if [ ${STAGE_PATH}/bin/bison -nt $BUILD_bison/.patched ]; then
-    DO_BUILD=1
+    DO_BUILD=0
   fi
 }
 

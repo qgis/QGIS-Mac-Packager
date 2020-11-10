@@ -39,7 +39,7 @@ function prebuild_qtwebkit() {
 function shouldbuild_qtwebkit() {
   # If lib is newer than the sourcecode skip build
   if [ ${STAGE_PATH}/lib/qml/QtWebKit/libqmlwebkitplugin.so -nt $BUILD_qtwebkit/.patched ]; then
-    DO_BUILD=1
+    DO_BUILD=0
   fi
 }
 

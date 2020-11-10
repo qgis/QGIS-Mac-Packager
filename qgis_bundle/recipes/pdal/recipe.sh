@@ -1,9 +1,11 @@
 #!/bin/bash
 
 function check_pdal() {
-  env_var_exists VERSION_pdal
-  env_var_exists LINK_libpdalcpp
-  env_var_exists LINK_libpdal_util
+  if [[ "$WITH_PDAL" == "true" ]]; then
+    env_var_exists VERSION_pdal
+    env_var_exists LINK_libpdalcpp
+    env_var_exists LINK_libpdal_util
+  fi
 }
 
 function bundle_pdal() {

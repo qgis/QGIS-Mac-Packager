@@ -45,7 +45,7 @@ fi
 if [[ "$WITH_PDAL" == "true" ]]; then
   PDAL_CMAKE="-DWITH_EPT=TRUE -DWITH_PDAL=TRUE"
 else
-  PDAL_CMAKE="-DWITH_EPT=FALSE -DWITH_PDAL=TRUE"
+  PDAL_CMAKE="-DWITH_EPT=FALSE -DWITH_PDAL=FALSE"
 fi
 
 # SERVER_SKIP_ECW == ECW in server apps requires a special license
