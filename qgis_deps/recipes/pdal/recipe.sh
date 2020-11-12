@@ -84,6 +84,9 @@ function build_pdal() {
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_util
 
+  try install_name_tool -change $BUILD_PATH/pdal/build-$ARCH/lib/$LINK_libpdalcpp $STAGE_PATH/lib/$LINK_libpdalcpp $STAGE_PATH/bin/pdal
+  try install_name_tool -change $BUILD_PATH/pdal/build-$ARCH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_util $STAGE_PATH/bin/pdal
+
   pop_env
 }
 
@@ -92,6 +95,7 @@ function postbuild_pdal() {
   verify_binary lib/${LINK_libpdalcpp}
   verify_binary lib/${LINK_libpdal_plugin_kernel_fauxplugin}
   verify_binary lib/${LINK_libpdal_util}
+  verify_binary bin/pdal
 }
 
 # function to append information to config file

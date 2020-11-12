@@ -43,7 +43,6 @@ function shouldbuild_freetds() {
   if [ ${STAGE_PATH}/lib/$LINK_ct -nt $BUILD_freetds/.patched ]; then
     DO_BUILD=0
   fi
-  DO_BUILD=1
 }
 
 # function called to build the source code
