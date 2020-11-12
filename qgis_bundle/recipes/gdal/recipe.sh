@@ -16,6 +16,9 @@ function bundle_gdal() {
   try cp -av $DEPS_LIB_DIR/libgdal*dylib $BUNDLE_LIB_DIR
 
   # GDAL binaries
+  GDAL_RECIPE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+  try cp -av $GDAL_RECIPE_DIR/run_gdal_binary.bash $BUNDLE_BIN_DIR/
+  chmod +x $BUNDLE_BIN_DIR/run_gdal_binary.bash
   for i in \
     gdal_contour \
     gdal_grid \
@@ -41,7 +44,13 @@ function bundle_gdal() {
     ogrlineref \
     ogrtindex
   do
-    try cp -av $DEPS_BIN_DIR/$i $BUNDLE_BIN_DIR/$i
+    touch $BUNDLE_BIN_DIR/$i
+    chmod +x $BUNDLE_BIN_DIR/$i
+    echo "#!/bin/bash" >> $BUNDLE_BIN_DIR/$i
+    echo 'THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"' >> $BUNDLE_BIN_DIR/$i
+    echo '$THISDIR/run_gdal_binary.bash "'$i'" "$@"'  >> $BUNDLE_BIN_DIR/$i
+
+    try cp -av $DEPS_BIN_DIR/$i $BUNDLE_BIN_DIR/_$i
   done
 
   # GDAL plugins
@@ -80,29 +89,29 @@ function fix_binaries_gdal() {
   install_name_id @rpath/$LINK_gdal $BUNDLE_LIB_DIR/$LINK_gdal
 
   for i in \
-    bin/gdal_contour \
-    bin/gdal_grid \
-    bin/gdal_rasterize \
-    bin/gdal_translate \
-    bin/gdal_viewshed \
-    bin/gdaladdo \
-    bin/gdalbuildvrt \
-    bin/gdaldem \
-    bin/gdalenhance \
-    bin/gdalinfo \
-    bin/gdallocationinfo \
-    bin/gdalmanage \
-    bin/gdalmdiminfo \
-    bin/gdalmdimtranslate \
-    bin/gdalserver \
-    bin/gdalsrsinfo \
-    bin/gdaltindex \
-    bin/gdaltransform \
-    bin/gdalwarp \
-    bin/ogr2ogr \
-    bin/ogrinfo \
-    bin/ogrlineref \
-    bin/ogrtindex \
+    bin/_gdal_contour \
+    bin/_gdal_grid \
+    bin/_gdal_rasterize \
+    bin/_gdal_translate \
+    bin/_gdal_viewshed \
+    bin/_gdaladdo \
+    bin/_gdalbuildvrt \
+    bin/_gdaldem \
+    bin/_gdalenhance \
+    bin/_gdalinfo \
+    bin/_gdallocationinfo \
+    bin/_gdalmanage \
+    bin/_gdalmdiminfo \
+    bin/_gdalmdimtranslate \
+    bin/_gdalserver \
+    bin/_gdalsrsinfo \
+    bin/_gdaltindex \
+    bin/_gdaltransform \
+    bin/_gdalwarp \
+    bin/_ogr2ogr \
+    bin/_ogrinfo \
+    bin/_ogrlineref \
+    bin/_ogrtindex \
     lib/$LINK_gdal
   do
       for j in \
@@ -147,28 +156,28 @@ function fix_binaries_gdal() {
 
   # bin/gdal_viewshed \
   for i in \
-    bin/gdal_contour \
-    bin/gdal_grid \
-    bin/gdal_rasterize \
-    bin/gdal_translate \
-    bin/gdaladdo \
-    bin/gdalbuildvrt \
-    bin/gdaldem \
-    bin/gdalenhance \
-    bin/gdalinfo \
-    bin/gdallocationinfo \
-    bin/gdalmanage \
-    bin/gdalmdiminfo \
-    bin/gdalmdimtranslate \
-    bin/gdalserver \
-    bin/gdalsrsinfo \
-    bin/gdaltindex \
-    bin/gdaltransform \
-    bin/gdalwarp \
-    bin/ogr2ogr \
-    bin/ogrinfo \
-    bin/ogrlineref \
-    bin/ogrtindex
+    bin/_gdal_contour \
+    bin/_gdal_grid \
+    bin/_gdal_rasterize \
+    bin/_gdal_translate \
+    bin/_gdaladdo \
+    bin/_gdalbuildvrt \
+    bin/_gdaldem \
+    bin/_gdalenhance \
+    bin/_gdalinfo \
+    bin/_gdallocationinfo \
+    bin/_gdalmanage \
+    bin/_gdalmdiminfo \
+    bin/_gdalmdimtranslate \
+    bin/_gdalserver \
+    bin/_gdalsrsinfo \
+    bin/_gdaltindex \
+    bin/_gdaltransform \
+    bin/_gdalwarp \
+    bin/_ogr2ogr \
+    bin/_ogrinfo \
+    bin/_ogrlineref \
+    bin/_ogrtindex
   do
      install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/$i
      install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/$i
@@ -197,7 +206,7 @@ function fix_binaries_gdal() {
 
 function fix_binaries_gdal_check() {
   verify_binary $BUNDLE_LIB_DIR/$LINK_gdal
-  verify_binary $BUNDLE_BIN_DIR/gdalinfo
+  verify_binary $BUNDLE_BIN_DIR/_gdalinfo
 
   if [[ "$WITH_ECW" == "true" ]]; then
     verify_binary $BUNDLE_GDAL_PLUGINS_DIR/$LINK_gdal_ecw
