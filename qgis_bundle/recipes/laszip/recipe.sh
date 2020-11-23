@@ -1,8 +1,10 @@
 #!/bin/bash
 
 function check_laszip() {
-  env_var_exists VERSION_laszip
-  env_var_exists LINK_liblaszip
+  if [[ "$WITH_PDAL" == "true" ]]; then
+    env_var_exists VERSION_laszip
+    env_var_exists LINK_liblaszip
+  fi
 }
 
 function bundle_laszip() {
