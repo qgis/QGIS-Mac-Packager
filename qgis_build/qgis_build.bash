@@ -107,6 +107,7 @@ do
 done
 
 # make
+try rm -rf $QGIS_INSTALL_DIR/*
 try cd $QGIS_BUILD_DIR
 try ninja
 try ninja install
