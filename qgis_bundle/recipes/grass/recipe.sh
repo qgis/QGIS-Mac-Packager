@@ -175,7 +175,12 @@ function fix_binaries_grass() {
       @loader_path/../../../MacOS/lib \
       $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib # from QGIS.app/Contents/Resources/
 
-    sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib"
+    if [[ "$USE_SEM" == "true" ]]; then
+      sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib"
+    else
+      echo "fixing $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib"
+      fix_rpaths_grass $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib
+    fi
   done
 
 
@@ -185,7 +190,13 @@ function fix_binaries_grass() {
   for i in $BINS; do
     install_name_add_rpath @executable_path/../lib $i # from QGIS.app/Contents/MacOS/grass78
     install_name_add_rpath @executable_path/../../../MacOS/lib $i # from QGIS.app/Contents/Resources/
-    sem -j+0 "fix_rpaths_grass $i"
+
+    if [[ "$USE_SEM" == "true" ]]; then
+      sem -j+0 "fix_rpaths_grass $i"
+    else
+      echo "fixing $i"
+      fix_rpaths_grass $i
+    fi
   done
 
   ######
@@ -195,7 +206,12 @@ function fix_binaries_grass() {
   do
     install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/tools/$i # from QGIS.app/Contents/MacOS/grass78
     install_name_add_rpath @executable_path/../../../MacOS/lib $GRASS_BUNDLE_DIR/tools/$i # from QGIS.app/Contents/Resources/
-    sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/tools/$i"
+    if [[ "$USE_SEM" == "true" ]]; then
+      sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/tools/$i"
+    else
+      echo "fixing $GRASS_BUNDLE_DIR/tools/$i"
+      fix_rpaths_grass $GRASS_BUNDLE_DIR/tools/$i
+    fi
   done
 
   ######
@@ -204,7 +220,12 @@ function fix_binaries_grass() {
   for i in $DRIVERS; do
     install_name_add_rpath @loader_path/../../lib $i # from QGIS.app/Contents/MacOS/grass78
     install_name_add_rpath @loader_path/../../../../MacOS/lib $i # from QGIS.app/Contents/Resources/
-    sem -j+0 "fix_rpaths_grass $i"
+    if [[ "$USE_SEM" == "true" ]]; then
+      sem -j+0 "fix_rpaths_grass $i"
+    else
+      echo "fixing $i"
+      fix_rpaths_grass $i
+    fi
   done
 
   ######
@@ -220,11 +241,18 @@ function fix_binaries_grass() {
   do
     install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS.app/Contents/MacOS/grass78
     install_name_add_rpath @executable_path/../../../MacOS/lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS.app/Contents/Resources/
-    sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/etc/$i"
+    if [[ "$USE_SEM" == "true" ]]; then
+      sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/etc/$i"
+    else
+      echo "fixing $i"
+      fix_rpaths_grass $GRASS_BUNDLE_DIR/etc/$i
+    fi
   done
 
   ### DONE
-  sem --wait
+  if [[ "$USE_SEM" == "true" ]]; then
+    sem --wait
+  fi
 
   ### now clean leftovers
   clean_binary $GRASS_BUNDLE_DIR/bin/g.mkfontcap
