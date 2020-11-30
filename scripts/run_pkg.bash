@@ -106,12 +106,16 @@ if [ $PKG = "ltr" ]; then
     $BD \
     ${TAG} \
     ${PKG} \
-    ${QGISAPP} "$@"
+    ${QGISAPP} \
+    "$@"
 else
   # qgis-deps&GDAL3 based packages
   $DIR/run_build2.bash \
     ${TAG} \
     ${PKG} \
+    ${MAJOR} \
+    ${MINOR} \
+    ${PATCH} \
     "$@"
 fi
 

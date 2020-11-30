@@ -101,12 +101,12 @@ function fix_binaries_qgis() {
  install_name_add_rpath @executable_path/../../../lib $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
  install_name_add_rpath @executable_path/../../../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
 
- install_name_add_rpath @loader_path/../../MacOS/lib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
+ install_name_add_rpath @loader_path/../../MacOS/lib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
 
- install_name_id @rpath/libqgispython.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib
- install_name_id @rpath/libqgis_server.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_server.$QGIS_VERSION.0.dylib
- install_name_id @rpath/libqgis_app.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib
- install_name_id @rpath/libqgis_customwidgets.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib
+ install_name_id @rpath/libqgispython.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
+ install_name_id @rpath/libqgis_server.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_server.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
+ install_name_id @rpath/libqgis_app.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
+ install_name_id @rpath/libqgis_customwidgets.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
 
  install_name_add_rpath @executable_path/../../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
  install_name_add_rpath @executable_path/../../../../lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
@@ -174,10 +174,10 @@ function fix_binaries_qgis() {
     Resources/python/qgis/_server.so \
     Resources/python/qgis/_analysis.so \
     Resources/python/qgis/_gui.so \
-    MacOS/lib/libqgis_app.$QGIS_VERSION.0.dylib \
-    MacOS/lib/libqgispython.$QGIS_VERSION.0.dylib \
-    MacOS/lib/libqgis_server.$QGIS_VERSION.0.dylib \
-    PlugIns/designer/libqgis_customwidgets.$QGIS_VERSION.0.dylib \
+    MacOS/lib/libqgis_app.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib \
+    MacOS/lib/libqgispython.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib \
+    MacOS/lib/libqgis_server.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib \
+    PlugIns/designer/libqgis_customwidgets.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib \
     MacOS/lib/qgis/grass/modules/qgis.d.rast7 \
     MacOS/lib/qgis/grass/modules/qgis.g.info7 \
     MacOS/lib/qgis/grass/modules/qgis.r.in7 \
@@ -233,10 +233,10 @@ function fix_binaries_qgis() {
       install_name_change $DEPS_GRASS_LIB_DIR/$j.${VERSION_grass_major}.${VERSION_grass_minor}.dylib @rpath/$j.${VERSION_grass_major}.${VERSION_grass_minor}.dylib $BUNDLE_CONTENTS_DIR/$i
     done
 
-    install_name_change $QGIS_BUILD_DIR/output/lib/libqgis_app.$QGIS_VERSION.0.dylib @rpath/libqgis_app.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/$i
-    install_name_change $QGIS_BUILD_DIR/output/lib/libqgispython.$QGIS_VERSION.0.dylib @rpath/libqgispython.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/$i
+    install_name_change $QGIS_BUILD_DIR/output/lib/libqgis_app.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib @rpath/libqgis_app.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/$i
+    install_name_change $QGIS_BUILD_DIR/output/lib/libqgispython.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib @rpath/libqgispython.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/$i
     install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/$i
-    install_name_change $QGIS_BUILD_DIR/output/lib/libqgis_server.$QGIS_VERSION.0.dylib @rpath/libqgis_server.$QGIS_VERSION.0.dylib $BUNDLE_CONTENTS_DIR/$i
+    install_name_change $QGIS_BUILD_DIR/output/lib/libqgis_server.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib @rpath/libqgis_server.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/$i
 
     for j in \
       qgis_core \

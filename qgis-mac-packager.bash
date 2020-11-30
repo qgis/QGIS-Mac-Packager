@@ -5,14 +5,19 @@ set -eo pipefail
 PWD=$(pwd)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-if (( $# < 2 )); then
-    echo "usage: $0 package_name config_file"
-    echo "example: ./$0 /path/to/qgis_nightly_master_20200717_024956.dmg config/nightly.conf"
+if (( $# < 5 )); then
+    echo "usage: $0 package_name config_file major minor patch"
+    echo "example: ./$0 /path/to/qgis_nightly_master_20200717_024956.dmg config/nightly.conf 3 18 0"
     exit 1
 fi
 
 PACKAGE=$1
 CONFIG_FILE=$2
+export QGIS_MAJOR_VERSION=$3
+export QGIS_MINOR_VERSION=$4
+export QGIS_PATCH_VERSION=$5
+
+echo "qgis-mac-packager.bash QGIS $QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION"
 
 echo "Checking config file $CONFIG_FILE"
 if [ ! -f "$CONFIG_FILE" ]; then
