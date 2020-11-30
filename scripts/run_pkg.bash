@@ -53,6 +53,8 @@ nightly)
 
 esac
 
+git checkout -- .
+git clean -fd
 git checkout $BRANCH
 git pull
 
