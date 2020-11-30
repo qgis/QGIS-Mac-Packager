@@ -58,9 +58,9 @@ git clean -fd
 git checkout $BRANCH
 git pull
 
-MAJOR=$(sed -ne 's/SET(CPACK_PACKAGE_VERSION_MAJOR "\([0-9]*\)")/\1/p' CMakeLists.txt)
-MINOR=$(sed -ne 's/SET(CPACK_PACKAGE_VERSION_MINOR "\([0-9]*\)")/\1/p' CMakeLists.txt)
-PATCH=$(sed -ne 's/SET(CPACK_PACKAGE_VERSION_PATCH "\([0-9]*\)")/\1/p' CMakeLists.txt)
+MAJOR=$(sed -ne 's/[sS][eE][tT](CPACK_PACKAGE_VERSION_MAJOR "\([0-9]*\)")/\1/p' CMakeLists.txt)
+MINOR=$(sed -ne 's/[sS][eE][tT](CPACK_PACKAGE_VERSION_MINOR "\([0-9]*\)")/\1/p' CMakeLists.txt)
+PATCH=$(sed -ne 's/[sS][eE][tT](CPACK_PACKAGE_VERSION_PATCH "\([0-9]*\)")/\1/p' CMakeLists.txt)
 echo "Building QGIS version ${MAJOR}_${MINOR}_${PATCH}"
 
 if [ $PKG = "nightly" ]; then
