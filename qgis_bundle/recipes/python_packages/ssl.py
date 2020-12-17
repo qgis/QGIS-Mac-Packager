@@ -23,3 +23,5 @@ from _ssl2 import *
 # private functions are not imported by default
 # but this one is used in some QGIS plugins
 from _ssl2 import _create_unverified_context
+from _ssl2 import _create_default_https_context
+
