@@ -30,7 +30,7 @@ STATUS_PNG=$BUILD_DIR/qgis_${RELEASE}_${GIT}_${TIMESTAMP}.png
 DEPS=$BUILD_DIR/qgis_${RELEASE}_${GIT}_${TIMESTAMP}.deps
 LOG=$BUILD_DIR/qgis_${RELEASE}_${GIT}_${TIMESTAMP}.log
 
-if (( $# == 6 )); then
+if (( $# == 5 )); then
     UPLOAD=1
 else
     UPLOAD=0
