@@ -112,6 +112,10 @@ function fix_binaries_qgis() {
  install_name_add_rpath @executable_path/../../../../lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
  install_name_add_rpath @executable_path/../../../../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
 
+ if [[ "$WITH_HANA" == "true" ]]; then
+  HANA_PROVIDER=PlugIns/qgis/libhanaprovider.so
+ fi
+
  if [[ "$WITH_ORACLE" == "true" ]]; then
   ORACLE_PROVIDER=PlugIns/qgis/liboracleprovider.so
  fi
@@ -138,6 +142,7 @@ function fix_binaries_qgis() {
     Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis \
     Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui \
     Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} \
+    $HANA_PROVIDER \
     $ORACLE_PROVIDER \
     $PDALPROVIDER \
     PlugIns/qgis/libgeometrycheckerplugin.so \
