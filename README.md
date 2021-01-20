@@ -18,15 +18,11 @@ Set of scripts to create MacOS standalone QGIS package (dmg)
 
 To know when we release, see [QGIS release schedule](https://www.qgis.org/en/site/getinvolved/development/roadmap.html#release-schedule)
 
-# NOTE: QGIS LTR builds!
-
-QGIS 3.10 LTR is still build with GDAL2 and homebrew-deps. Documentation can be found in [here](qmp/qmp.md)
-
 # How to report issues 
 
 - Add link to the installed package
 - Add crash report if QGIS crashed
-- State MacOS version (e.g. 10.14.1)
+- State MacOS version (e.g. 10.15.0)
 - Run `open /Applications/QGIS.app` from Terminal and add the output
 - Append any messages from QGIS message log or python warnings log if present
 

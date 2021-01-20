@@ -100,24 +100,14 @@ QGISAPP="QGIS${MAJOR}.${MINOR}.app"
 BD=$DIR/../../builds/${PKG}
 
 echo "BUILDING ${PKG}"
-if [ $PKG = "ltr" ]; then
-  # homebrew&GDAL2 based packages
-  $DIR/run_build.bash \
-    $BD \
-    ${TAG} \
-    ${PKG} \
-    ${QGISAPP} \
-    "$@"
-else
-  # qgis-deps&GDAL3 based packages
-  $DIR/run_build2.bash \
-    ${TAG} \
-    ${PKG} \
-    ${MAJOR} \
-    ${MINOR} \
-    ${PATCH} \
-    "$@"
-fi
+# qgis-deps&GDAL3 based packages
+$DIR/run_build.bash \
+  ${TAG} \
+  ${PKG} \
+  ${MAJOR} \
+  ${MINOR} \
+  ${PATCH} \
+  "$@"
 
 if [ "$PKG" = "nightly" ]; then
 	cd $BD/qgis

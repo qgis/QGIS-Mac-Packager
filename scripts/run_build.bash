@@ -1,54 +1,59 @@
 #!/bin/bash
 
-set -o pipefail
+set -eo pipefail
 
-# 2018 Peter Petrik (zilolv at gmail dot com)
-# GNU General Public License 2 any later version
-
-PWD=`pwd`
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+PWD=$(pwd)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-if (( $# < 4 )); then
-    echo "usage: $0 build_dir git_tag release_name qgisapp_name [no-upload]"
+if (( $# < 5 )); then
+    echo "usage: $0 git_tag release_name major minor patch [no-upload]"
+    echo "example: ./$0 master nightly 3 18 0 no-upload"
     exit 1
 fi
 
-BUILD_DIR=$1
-GIT=$2
-RELEASE=$3
-QGISAPP=$4
-PACKAGE=qgis_${RELEASE}_${GIT}_${TIMESTAMP}.dmg
+GIT=$1
+RELEASE=$2
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+QGIS_MAJOR_VERSION=$3
+QGIS_MINOR_VERSION=$4
+QGIS_PATCH_VERSION=$5
+
+CONFIG_FILE=$DIR/../config/$RELEASE.conf
+if [ ! -f "$CONFIG_FILE" ]; then
+  echo "invalid config file (1st argument) $CONFIG_FILE"
+fi
+source $CONFIG_FILE
+
+BUILD_DIR=$QGIS_BUILD_DIR/../
+PACKAGE=$BUILD_DIR/qgis_${RELEASE}_${GIT}_${TIMESTAMP}.dmg
 STATUS_PNG=$BUILD_DIR/qgis_${RELEASE}_${GIT}_${TIMESTAMP}.png
 DEPS=$BUILD_DIR/qgis_${RELEASE}_${GIT}_${TIMESTAMP}.deps
 LOG=$BUILD_DIR/qgis_${RELEASE}_${GIT}_${TIMESTAMP}.log
 
-if (( $# == 4 )); then
+if (( $# == 5 )); then
     UPLOAD=1
 else
     UPLOAD=0
 fi
 
-echo "Building & Packaging QGIS to $BUILD_DIR"
-mkdir -p $BUILD_DIR
+echo "Building & Packaging QGIS in $BUILD_DIR"
+mkdir -p "$BUILD_DIR"
 
 echo "Building QGIS $GIT for $RELEASE"
 
-echo "Please run brew update manually to get new deps"
-python3 $DIR/deps.py | tee $DEPS
+echo "Please update qgis-deps package manually to get new deps"
+$DIR/deps.bash $CONFIG_FILE | tee $DEPS
 
 cd $DIR/..
-echo "Run"
+echo "Run qgis-mac-packager.bash"
 
 res=0
-
-if python3 qgis-mac-packager.py \
-    --output_directory $BUILD_DIR \
-    --git $GIT \
-    --release_type $RELEASE \
-    --qgisapp_name ${QGISAPP} \
-    --dmg_name $PACKAGE \
-    -vv \
+if $DIR/../qgis-mac-packager.bash \
+  $PACKAGE \
+  $CONFIG_FILE \
+  $QGIS_MAJOR_VERSION \
+  $QGIS_MINOR_VERSION \
+  $QGIS_PATCH_VERSION \
 2>&1 | tee -a $LOG; then
     echo "SUCCESS" | tee -a $LOG
     python3 $DIR/image_creator.py --text "$RELEASE-$GIT" --out $STATUS_PNG --success
@@ -59,10 +64,10 @@ else
 fi
 
 if (( $UPLOAD > 0 )); then
-    $DIR/upload_to_qgis2.bash $RELEASE $LOG $BUILD_DIR/$PACKAGE $DEPS $STATUS_PNG $BUILD_DIR/$PACKAGE.sha256sum
+    $DIR/upload_to_qgis2.bash $RELEASE $LOG $PACKAGE $DEPS $STATUS_PNG $PACKAGE.sha256sum
 fi
 
-echo "All done"
+echo "All done (scripts/run_build.bash)"
 cd $PWD
 
 exit $res
