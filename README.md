@@ -23,17 +23,17 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - Add link to the installed package
 - Add crash report if QGIS crashed
 - State MacOS version (e.g. 10.15.0)
-- Run `open /Applications/QGIS.app` from Terminal and add the output
+- Run `open /Applications/QGIS*.app` from Terminal and add the output
 - Append any messages from QGIS message log or python warnings log if present
 
 # Debugging Tips
-- [gatekeeper](https://stackoverflow.com/a/29221163/2838364): `codesign --verbose --deep-verify /Applications/QGIS.app/` 
+- [gatekeeper](https://stackoverflow.com/a/29221163/2838364): `codesign --verbose --deep-verify /Applications/QGIS*.app/` 
 - loaded dylibs: `ps -A | grep -i qgis; vmmap <pid>`
 - signature: `codesign -d -vvvv <file>` 
 - accept by gatekeeper: `spctl -a -t exec -vv <path>.dmg`
 - signature: `codesign --verify --deep --strict --verbose=2`
 - library deps (similar to Windows' Dependency Walker): https://github.com/kwin/macdependency
-- to debug Qt Plugins (e.g. SQL), use : `QT_DEBUG_PLUGINS=1 open /Application/QGIS.app`
+- to debug Qt Plugins (e.g. SQL), use : `QT_DEBUG_PLUGINS=1 open /Application/QGIS*.app`
 - if QGIS crashes on start, try with clean profile `mv ~/Library/Application\ Support/QGIS/QGIS3/profiles ~/Library/Application\ Support/QGIS/QGIS3/profiles_bk`
 - if QGIS crashes after load, try use clean profile from the QGIS Menu 
 

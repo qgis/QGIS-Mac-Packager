@@ -1,5 +1,7 @@
 #!/bin/bash
 
+QGIS_CONTENTS_DIR=$QGIS_INSTALL_DIR/QGIS.app/Contents/
+
 function check_qgis() {
   env_var_exists QGIS_VERSION
   env_var_exists QGIS_INSTALL_DIR
@@ -7,7 +9,6 @@ function check_qgis() {
 }
 
 function bundle_qgis() {
-  QGIS_CONTENTS_DIR=$QGIS_INSTALL_DIR/QGIS.app/Contents/
   QGIS_RECIPE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
   mkdir -p $BUNDLE_LIB_DIR/qgis
@@ -83,7 +84,7 @@ function fix_binaries_qgis() {
  # RPATHS
  install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_CONTENTS_DIR/MacOS/QGIS
  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_delete_rpath $QGIS_INSTALL_DIR/QGIS.app/Contents/MacOS/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+ install_name_delete_rpath $QGIS_CONTENTS_DIR/MacOS/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
  install_name_add_rpath @executable_path/../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/QGIS
  install_name_add_rpath @executable_path/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
