@@ -232,15 +232,27 @@ function fix_binaries_grass() {
   # ETC
   for i in \
     clean_temp \
-    r.watershed/seg \
-    r.watershed/ram \
     lock \
-    lister/cell \
-    lister/vector \
     i.find
   do
     install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS*.app/Contents/MacOS/grass78
     install_name_add_rpath @executable_path/../../../MacOS/lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS*.app/Contents/Resources/
+    if [[ "$USE_SEM" == "true" ]]; then
+      sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/etc/$i"
+    else
+      echo "fixing $i"
+      fix_rpaths_grass $GRASS_BUNDLE_DIR/etc/$i
+    fi
+  done
+
+  for i in \
+    r.watershed/seg \
+    r.watershed/ram \
+    lister/cell \
+    lister/vector
+  do
+    install_name_add_rpath @executable_path/../../lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS*.app/Contents/MacOS/grass78
+    install_name_add_rpath @executable_path/../../../../MacOS/lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS*.app/Contents/Resources/
     if [[ "$USE_SEM" == "true" ]]; then
       sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/etc/$i"
     else
