@@ -1,5 +1,7 @@
 #!/bin/bash
 
+QGIS_CONTENTS_DIR=$QGIS_INSTALL_DIR/QGIS.app/Contents/
+
 function check_qgis() {
   env_var_exists QGIS_VERSION
   env_var_exists QGIS_INSTALL_DIR
@@ -7,7 +9,6 @@ function check_qgis() {
 }
 
 function bundle_qgis() {
-  QGIS_CONTENTS_DIR=$QGIS_INSTALL_DIR/QGIS.app/Contents/
   QGIS_RECIPE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
   mkdir -p $BUNDLE_LIB_DIR/qgis
@@ -83,7 +84,7 @@ function fix_binaries_qgis() {
  # RPATHS
  install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_CONTENTS_DIR/MacOS/QGIS
  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_delete_rpath $QGIS_INSTALL_DIR/QGIS.app/Contents/MacOS/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+ install_name_delete_rpath $QGIS_CONTENTS_DIR/MacOS/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
  install_name_add_rpath @executable_path/../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/QGIS
  install_name_add_rpath @executable_path/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
@@ -287,10 +288,14 @@ function fix_binaries_qgis_check() {
 function fix_paths_qgis() {
  ###################
  # Patch Info.plist
+ QGIS_APP_NAME_SHORT=${QGIS_APP_NAME/.app/}
  /usr/libexec/PlistBuddy -c "Add :LSMinimumSystemVersion string $MACOSX_DEPLOYMENT_TARGET" $BUNDLE_CONTENTS_DIR/Info.plist
  /usr/libexec/PlistBuddy -c "Add :LSFileQuarantineEnabled bool false" $BUNDLE_CONTENTS_DIR/Info.plist
  # PYQGIS_STARTUP should be relative to Contents/Resources/python
  /usr/libexec/PlistBuddy -c "Add :LSEnvironment:PYQGIS_STARTUP string pyqgis-startup.py" $BUNDLE_CONTENTS_DIR/Info.plist
+ /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier string org.qgis.qgis$QGIS_MAJOR_VERSION_$QGIS_MINOR_VERSION" $BUNDLE_CONTENTS_DIR/Info.plist
+ /usr/libexec/PlistBuddy -c "Set :CFBundleName string $QGIS_APP_NAME_SHORT" $BUNDLE_CONTENTS_DIR/Info.plist
+ /usr/libexec/PlistBuddy -c "Set :CFBundleSignature string $QGIS_APP_NAME_SHORT" $BUNDLE_CONTENTS_DIR/Info.plist
  # PROJ_LIB see ../proj/recipe.sh
  # GDAL_DATA and GDAL_DRIVER_PATH see ../gdal/recipe.sh
  # PYTHONHOME see ../python/recipe.sh

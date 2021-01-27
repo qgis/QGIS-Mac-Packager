@@ -16,7 +16,7 @@ source $CONFIG_FILE
 
 PACKAGE=$2
 
-QGIS_APP="$BUNDLE_DIR/QGIS.app"
+QGIS_APP="$BUNDLE_DIR/$QGIS_APP_NAME"
 if [ ! -d "$QGIS_APP" ]; then
   error "missing bundled app $QGIS_APP"
 fi
@@ -38,7 +38,7 @@ fi
 info "Print identities"
 security find-identity -v -p codesigning
 
-info "Signing the QGIS.app"
+info "Signing the $QGIS_APP_NAME"
 codesign -s "$IDENTITY" -v --force --keychain "$KEYCHAIN_FILE" "$QGIS_APP" --deep
 codesign --deep-verify --verbose "$QGIS_APP"
 
@@ -46,7 +46,7 @@ info "Create dmg image"
 dmgbuild \
   -Dapp="$QGIS_APP" \
   -s `dirname $0`/../resources/dmgsettings.py \
-  "QGIS.app" \
+  "$QGIS_APP_NAME" \
   "$PACKAGE"
 
 info "Signing the dmg"

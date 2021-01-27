@@ -169,11 +169,11 @@ function fix_binaries_grass() {
 
     install_name_add_rpath \
       @loader_path/../lib \
-      $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib # from QGIS.app/Contents/MacOS/grass78
+      $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib # from QGIS*.app/Contents/MacOS/grass78
 
     install_name_add_rpath \
       @loader_path/../../../MacOS/lib \
-      $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib # from QGIS.app/Contents/Resources/
+      $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib # from QGIS*.app/Contents/Resources/
 
     if [[ "$USE_SEM" == "true" ]]; then
       sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/lib/$i.${VERSION_grass_major}.${VERSION_grass_minor}.dylib"
@@ -188,8 +188,8 @@ function fix_binaries_grass() {
   # BINS
   BINS=$(find $GRASS_BUNDLE_DIR/bin -type f)
   for i in $BINS; do
-    install_name_add_rpath @executable_path/../lib $i # from QGIS.app/Contents/MacOS/grass78
-    install_name_add_rpath @executable_path/../../../MacOS/lib $i # from QGIS.app/Contents/Resources/
+    install_name_add_rpath @executable_path/../lib $i # from QGIS*.app/Contents/MacOS/grass78
+    install_name_add_rpath @executable_path/../../../MacOS/lib $i # from QGIS*.app/Contents/Resources/
 
     if [[ "$USE_SEM" == "true" ]]; then
       sem -j+0 "fix_rpaths_grass $i"
@@ -204,8 +204,8 @@ function fix_binaries_grass() {
   for i in \
     g.echo
   do
-    install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/tools/$i # from QGIS.app/Contents/MacOS/grass78
-    install_name_add_rpath @executable_path/../../../MacOS/lib $GRASS_BUNDLE_DIR/tools/$i # from QGIS.app/Contents/Resources/
+    install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/tools/$i # from QGIS*.app/Contents/MacOS/grass78
+    install_name_add_rpath @executable_path/../../../MacOS/lib $GRASS_BUNDLE_DIR/tools/$i # from QGIS*.app/Contents/Resources/
     if [[ "$USE_SEM" == "true" ]]; then
       sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/tools/$i"
     else
@@ -218,8 +218,8 @@ function fix_binaries_grass() {
   # DRIVERS
   DRIVERS=$(find $GRASS_BUNDLE_DIR/driver/db -type f)
   for i in $DRIVERS; do
-    install_name_add_rpath @loader_path/../../lib $i # from QGIS.app/Contents/MacOS/grass78
-    install_name_add_rpath @loader_path/../../../../MacOS/lib $i # from QGIS.app/Contents/Resources/
+    install_name_add_rpath @loader_path/../../lib $i # from QGIS*.app/Contents/MacOS/grass78
+    install_name_add_rpath @loader_path/../../../../MacOS/lib $i # from QGIS*.app/Contents/Resources/
     if [[ "$USE_SEM" == "true" ]]; then
       sem -j+0 "fix_rpaths_grass $i"
     else
@@ -232,15 +232,27 @@ function fix_binaries_grass() {
   # ETC
   for i in \
     clean_temp \
-    r.watershed/seg \
-    r.watershed/ram \
     lock \
-    lister/cell \
-    lister/vector \
     i.find
   do
-    install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS.app/Contents/MacOS/grass78
-    install_name_add_rpath @executable_path/../../../MacOS/lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS.app/Contents/Resources/
+    install_name_add_rpath @executable_path/../lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS*.app/Contents/MacOS/grass78
+    install_name_add_rpath @executable_path/../../../MacOS/lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS*.app/Contents/Resources/
+    if [[ "$USE_SEM" == "true" ]]; then
+      sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/etc/$i"
+    else
+      echo "fixing $i"
+      fix_rpaths_grass $GRASS_BUNDLE_DIR/etc/$i
+    fi
+  done
+
+  for i in \
+    r.watershed/seg \
+    r.watershed/ram \
+    lister/cell \
+    lister/vector
+  do
+    install_name_add_rpath @executable_path/../../lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS*.app/Contents/MacOS/grass78
+    install_name_add_rpath @executable_path/../../../../MacOS/lib $GRASS_BUNDLE_DIR/etc/$i # from QGIS*.app/Contents/Resources/
     if [[ "$USE_SEM" == "true" ]]; then
       sem -j+0 "fix_rpaths_grass $GRASS_BUNDLE_DIR/etc/$i"
     else

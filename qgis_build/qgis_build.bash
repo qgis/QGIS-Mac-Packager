@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
+# set -o verbose
 
 QGIS_BUILD_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
@@ -60,6 +61,7 @@ cmake -DCMAKE_BUILD_TYPE=Release \
       $HANA_CMAKE \
       $ORACLE_CMAKE \
       -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
+      -DODBC_CONFIG=$ROOT_OUT_PATH/stage/unixodbc/bin/odbc_config \
       -DCMAKE_PREFIX_PATH=$QT_BASE/clang_64 \
       -DQGIS_MACAPP_BUNDLE=-1 \
       -DWITH_GEOREFERENCER=TRUE \

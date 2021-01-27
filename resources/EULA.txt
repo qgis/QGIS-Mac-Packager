@@ -31,6 +31,8 @@ expat: MIT
 freetype: GPLv2
 geos: LGPL
 MDAL: MIT
+PDAL: BSD
+laszip: LGPL
 libgeotiff: libgeotiff license
 libgfortran license
 libgif license
