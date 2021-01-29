@@ -3,18 +3,25 @@
 set -euo pipefail
 
 # load configuration
-if (( $# < 2 )); then
-    echo "qgis_package: $0 <path/to>/config/<my>.conf package_file ..."
+if (( $# < 5 )); then
+    echo "qgis_package: $0 <path/to>/config/<my>.conf major minor patch package_file ..."
     exit 1
 fi
+
 CONFIG_FILE=$1
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "invalid config file (1st argument) $CONFIG_FILE"
   exit 1
 fi
+shift
+export QGIS_MAJOR_VERSION=$1
+shift
+export QGIS_MINOR_VERSION=$1
+shift
+export QGIS_PATCH_VERSION=$1
+shift
 source $CONFIG_FILE
-
-PACKAGE=$2
+PACKAGE=$1
 
 QGIS_APP="$BUNDLE_DIR/$QGIS_APP_NAME"
 if [ ! -d "$QGIS_APP" ]; then

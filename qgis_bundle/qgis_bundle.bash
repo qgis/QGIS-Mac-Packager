@@ -6,17 +6,25 @@ QGIS_BUNDLE_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1
 
 ####################
 # load configuration
-if (( $# < 1 )); then
-    echo "qgis_bundle: $0 <path/to>/config/<my>.conf ..."
+if (( $# < 4 )); then
+    echo "qgis_bundle: $0 <path/to>/config/<my>.conf major minor patch ..."
     exit 1
 fi
+
 CONFIG_FILE=$1
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "invalid config file (1st argument) $CONFIG_FILE"
   exit 1
 fi
 shift
+export QGIS_MAJOR_VERSION=$1
+shift
+export QGIS_MINOR_VERSION=$1
+shift
+export QGIS_PATCH_VERSION=$1
+shift
 source $CONFIG_FILE
+
 
 # source the ENV vars from the qgis_deps
 if [ ! -f "$QGIS_DEPS_STAGE_PATH/qgis-deps.config" ]; then

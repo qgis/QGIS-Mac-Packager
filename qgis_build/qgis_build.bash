@@ -6,14 +6,21 @@ set -euo pipefail
 QGIS_BUILD_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # load configuration
-if (( $# < 1 )); then
-    error "qgis_build: $0 <path/to>/config/<my>.conf ..."
+if (( $# < 4 )); then
+    error "qgis_build: $0 <path/to>/config/<my>.conf major minor patch ..."
 fi
+
 CONFIG_FILE=$1
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "invalid config file (1st argument) $CONFIG_FILE"
   exit 1
 fi
+shift
+export QGIS_MAJOR_VERSION=$1
+shift
+export QGIS_MINOR_VERSION=$1
+shift
+export QGIS_PATCH_VERSION=$1
 shift
 source $CONFIG_FILE
 

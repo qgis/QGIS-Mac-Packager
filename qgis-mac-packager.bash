@@ -42,13 +42,13 @@ if [ ! -d "$QGIS_DEPS_STAGE_PATH" ]; then
 fi
 
 echo "Building QGIS"
-$DIR/qgis_build/qgis_build.bash "$CONFIG_FILE"
+$DIR/qgis_build/qgis_build.bash "$CONFIG_FILE" $QGIS_MAJOR_VERSION $QGIS_MINOR_VERSION $QGIS_PATCH_VERSION
 
 echo "Bundle QGIS"
-$DIR/qgis_bundle/qgis_bundle.bash "$CONFIG_FILE"
+$DIR/qgis_bundle/qgis_bundle.bash "$CONFIG_FILE" $QGIS_MAJOR_VERSION $QGIS_MINOR_VERSION $QGIS_PATCH_VERSION
 
 echo "Package QGIS to $PACKAGE"
-$DIR/qgis_package/qgis_package.bash "$CONFIG_FILE" "$PACKAGE"
+$DIR/qgis_package/qgis_package.bash "$CONFIG_FILE" $QGIS_MAJOR_VERSION $QGIS_MINOR_VERSION $QGIS_PATCH_VERSION "$PACKAGE"
 
 echo "All done (qgis-mac-packager.bash)"
 cd "$PWD"

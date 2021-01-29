@@ -1,6 +1,6 @@
 #!/bin/bash
 
-QGIS_CONTENTS_DIR=$QGIS_INSTALL_DIR/QGIS.app/Contents/
+QGIS_CONTENTS_DIR=$QGIS_INSTALL_DIR/QGIS.app/Contents
 
 function check_qgis() {
   env_var_exists QGIS_VERSION
