@@ -28,6 +28,12 @@ if [ ! -f "$QGIS_SOURCE_DIR/CMakeLists.txt" ]; then
   error "QGIS repo is not available at $QGIS_SOURCE_DIR"
 fi
 
+# source the ENV vars from the qgis_deps
+if [ ! -f "$QGIS_DEPS_STAGE_PATH/qgis-deps.config" ]; then
+  error "missing $QGIS_DEPS_STAGE_PATH/qgis-deps.config"
+fi
+source $QGIS_DEPS_STAGE_PATH/qgis-deps.config
+
 # create build dirs
 OLD_PATH=$PATH
 try mkdir -p "$QGIS_BUILD_DIR"
@@ -69,6 +75,8 @@ cmake -DCMAKE_BUILD_TYPE=Release \
       $ORACLE_CMAKE \
       -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DODBC_CONFIG=$ROOT_OUT_PATH/stage/unixodbc/bin/odbc_config \
+      -DODBC_INCLUDE_DIR=$ROOT_OUT_PATH/stage/unixodbc/include \
+      -DODBC_LIBRARY=$ROOT_OUT_PATH/stage/unixodbc/lib/$LINK_unixodbc \
       -DCMAKE_PREFIX_PATH=$QT_BASE/clang_64 \
       -DQGIS_MACAPP_BUNDLE=-1 \
       -DWITH_GEOREFERENCER=TRUE \
@@ -89,15 +97,16 @@ cmake -DCMAKE_BUILD_TYPE=Release \
 cat cmake.configure
 
 targets=(
-    libgdal.dylib
-    libgeos_c.dylib
-    libproj.dylib
+    lib/libgdal.dylib
+    lib/libgeos_c.dylib
+    lib/libproj.dylib
+    opt/unixodbc/lib/libodbc
 )
 for i in ${targets[*]}
 do
-    if grep -q /usr/local/lib/$i cmake.configure
+    if grep -q /usr/local/$i cmake.configure
     then
-      error "CMake configured QGIS build with /usr/local/lib/$i.dylib string -- we should be using qgis_deps version of this library"
+      error "CMake configured QGIS build with /usr/local/$i.dylib string -- we should be using qgis_deps version of this library"
     fi
 done
 
@@ -113,6 +122,7 @@ targets=(
     liblzma
     libarchive
     libbz2
+    libiodbc
 )
 for i in ${targets[*]}
 do

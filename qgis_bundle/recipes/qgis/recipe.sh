@@ -243,6 +243,7 @@ function fix_binaries_qgis() {
     install_name_change $QGIS_BUILD_DIR/output/lib/libqgispython.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib @rpath/libqgispython.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/$i
     install_name_change $DEPS_LIB_DIR/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca @rpath/$LINK_qca.framework/Versions/${VERSION_qca}/$LINK_qca $BUNDLE_CONTENTS_DIR/$i
     install_name_change $QGIS_BUILD_DIR/output/lib/libqgis_server.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib @rpath/libqgis_server.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/$i
+    install_name_change $QGIS_DEPS_STAGE_PATH/unixodbc/lib/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_CONTENTS_DIR/$i
 
     for j in \
       qgis_core \
