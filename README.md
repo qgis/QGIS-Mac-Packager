@@ -22,8 +22,8 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 
 - Add link to the installed package
 - Add crash report if QGIS crashed
-- State MacOS version (e.g. 10.15.0)
-- Run `open /Applications/QGIS*.app` from Terminal and add the output
+- State MacOS version (e.g. 10.15.0), QGIS version
+- Run `/Applications/QGIS*.app/Contents/MacOS/QGIS` from Terminal and add the output
 - Append any messages from QGIS message log or python warnings log if present
 
 # Debugging Tips
