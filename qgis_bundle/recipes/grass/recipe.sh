@@ -268,9 +268,9 @@ function fix_binaries_grass() {
 
   ### now clean leftovers
   clean_binary $GRASS_BUNDLE_DIR/bin/g.mkfontcap
-  clean_binary $GRASS_BUNDLE_DIR/bin/r.terraflow matches
-  clean_binary $GRASS_BUNDLE_DIR/bin/r.viewshed matches
-  clean_binary $GRASS_BUNDLE_DIR/bin/g.version matches
+  clean_binary $GRASS_BUNDLE_DIR/bin/r.terraflow
+  clean_binary $GRASS_BUNDLE_DIR/bin/r.viewshed
+  clean_binary $GRASS_BUNDLE_DIR/bin/g.version
 
   # not sure what to do with these?
   try ${SED} "s;$DEPS_GRASS_ROOT_DIR;..;g" $GRASS_BUNDLE_DIR/etc/fontcap

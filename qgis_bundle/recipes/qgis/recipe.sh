@@ -294,7 +294,6 @@ function fix_paths_qgis() {
  /usr/libexec/PlistBuddy -c "Add :LSFileQuarantineEnabled bool false" $BUNDLE_CONTENTS_DIR/Info.plist
  # PYQGIS_STARTUP should be relative to Contents/Resources/python
  /usr/libexec/PlistBuddy -c "Add :LSEnvironment:PYQGIS_STARTUP string pyqgis-startup.py" $BUNDLE_CONTENTS_DIR/Info.plist
- /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier string org.qgis.qgis$QGIS_MAJOR_VERSION_$QGIS_MINOR_VERSION" $BUNDLE_CONTENTS_DIR/Info.plist
  /usr/libexec/PlistBuddy -c "Set :CFBundleName string $QGIS_APP_NAME_SHORT" $BUNDLE_CONTENTS_DIR/Info.plist
  /usr/libexec/PlistBuddy -c "Set :CFBundleSignature string $QGIS_APP_NAME_SHORT" $BUNDLE_CONTENTS_DIR/Info.plist
  # PROJ_LIB see ../proj/recipe.sh

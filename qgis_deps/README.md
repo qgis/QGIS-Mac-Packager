@@ -26,6 +26,10 @@ the qgis-deps pacakges
 3. Run `create_package.bash`
 4. Run `upload_to_qgis2.bash`
 
+How to create patch file
+-----------------------
+diff -rupN file.orig file
+
 Build QGIS
 -----------------------
 
