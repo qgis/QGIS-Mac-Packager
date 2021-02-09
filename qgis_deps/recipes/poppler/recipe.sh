@@ -19,6 +19,8 @@ DEPS_poppler=(
   libtiff
   little_cms2
   openjpeg
+  libiconv
+  libcurl
 )
 
 # url of the package

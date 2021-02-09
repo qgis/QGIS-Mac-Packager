@@ -5,10 +5,10 @@ DESC_grass="Geographic Resources Analysis Support System"
 # version of your package
 VERSION_grass_major=7
 VERSION_grass_minor=8
-VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.3
+VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.5
 
 # dependencies of this recipe
-DEPS_grass=(python boost bison flex libtiff png  sqlite geos zlib wxmac zstd zlib xz netcdf proj gdal libgeotiff python_pyqt5 mysql postgres openssl )
+DEPS_grass=(python boost bison libiconv flex libtiff png  sqlite geos zlib wxmac zstd zlib xz netcdf proj gdal libgeotiff python_pyqt5 mysql postgres openssl )
 
 LINK_libgrass_version=26
 
@@ -34,12 +34,8 @@ function prebuild_grass() {
     return
   fi
 
-  # Usage of cc instead of clang (/usr/bin/cc -> clang)
-  try ${SED} "s;cc ;clang ;g" aclocal.m4
-
   # Usage of cc instead of clang
   patch_configure_file configure
-  try ${SED} "s;cc ;clang ;g" configure
 
   # Usage of /usr/local
   try ${SED} "s;/usr/local/lib' ;$STAGE_PATH/lib', '$STAGE_PATH/grass${VERSION_grass_major}${VERSION_grass_minor}/lib ;g" lib/python/ctypes/loader.py

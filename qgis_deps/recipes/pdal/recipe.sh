@@ -19,6 +19,7 @@ DEPS_pdal=(
   xz
   hdf5
   zlib
+  libcurl
 )
 
 # url of the package

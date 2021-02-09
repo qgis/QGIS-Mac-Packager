@@ -28,6 +28,7 @@ function pop_env() {
   export PIP=$OLD_PIP
   export QSPEC=$OLD_QSPEC
   export PKG_CONFIG_PATH=$OLD_PKG_CONFIG_PATH
+  unset DYLD_INSERT_LIBRARIES
 }
 
 #########################################################################################################
@@ -368,6 +369,7 @@ function check_linked_rpath() {
     libarchive
     libbz2
     libiodbc
+    libcurl
   )
   for i in ${targets[*]}
   do

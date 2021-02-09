@@ -4,7 +4,7 @@ DESC_gdal="Geospatial Data Abstraction Library"
 
 # version of your package
 # keep in SYNC with python_gdal receipt
-VERSION_gdal=3.1.2
+VERSION_gdal=3.2.1
 
 source $RECIPES_PATH/netcdf/recipe.sh
 source $RECIPES_PATH/xerces/recipe.sh
@@ -35,6 +35,8 @@ DEPS_gdal=(
   pcre
   unixodbc
   spatialite
+  libiconv
+  libcurl
 )
 
 # url of the package

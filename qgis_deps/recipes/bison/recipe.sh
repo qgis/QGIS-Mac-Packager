@@ -4,7 +4,7 @@ DESC_bison="Parser generator"
 
 # version of your package
 # 3.7.x is problem when compiling qtwebkit -> generated headers have suffix .hpp and not .h
-VERSION_bison=3.5.4
+VERSION_bison=3.6.4
 
 # dependencies of this recipe
 DEPS_bison=(gettext)
@@ -13,7 +13,7 @@ DEPS_bison=(gettext)
 URL_bison=https://ftp.gnu.org/gnu/bison/bison-${VERSION_bison}.tar.xz
 
 # md5 of the package
-MD5_bison=eca85fc68de0aa77b26963b0a30d995a
+MD5_bison=08bf8aa8334d7f817b7b24509ef412bf
 
 # default build path
 BUILD_bison=$BUILD_PATH/bison/$(get_directory $URL_bison)

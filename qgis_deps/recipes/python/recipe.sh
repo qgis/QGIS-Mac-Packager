@@ -8,13 +8,13 @@ VERSION_python=${VERSION_major_python}.${VERSION_minor_python}
 LINK_python=libpython3.7m.dylib
 
 # dependencies of this recipe
-DEPS_python=( openssl xz libffi zlib libzip sqlite expat unixodbc bz2 gettext )
+DEPS_python=( openssl xz libffi zlib libzip sqlite expat unixodbc bz2 gettext libarchive libiconv libcurl )
 
 # url of the package
 URL_python=https://www.python.org/ftp/python/${VERSION_python}/Python-${VERSION_python}.tar.xz
 
 # md5 of the package
-MD5_python=172c650156f7bea68ce31b2fd01fa766
+MD5_python=60fe018fffc7f33818e6c340d29e2db9
 
 # default build path
 BUILD_python=$BUILD_PATH/python/$(get_directory $URL_python)
@@ -137,7 +137,7 @@ function install_python() {
 
 # function called to build the source code
 function build_python() {
-   install_python
+   # install_python
    install_default_packages
 }
 
