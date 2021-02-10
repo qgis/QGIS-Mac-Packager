@@ -8,7 +8,7 @@ LINK_libxslt=libxslt.1.dylib
 LINK_libexslt=libexslt.0.dylib
 
 # dependencies of this recipe
-DEPS_libxslt=(libxml2 libiconv)
+DEPS_libxslt=(libxml2)
 
 # url of the package
 URL_libxslt=http://xmlsoft.org/sources/libxslt-${VERSION_libxslt}.tar.gz

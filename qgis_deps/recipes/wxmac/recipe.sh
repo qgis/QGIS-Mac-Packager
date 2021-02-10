@@ -8,7 +8,7 @@ VERSION_wxmac=${VERSION_wxmac_major}.4
 LINK_wxmac_version=3.0.0.4.0
 
 # dependencies of this recipe
-DEPS_wxmac=( jpeg png libtiff libiconv )
+DEPS_wxmac=( jpeg png libtiff )
 
 # url of the package
 URL_wxmac=https://github.com/wxWidgets/wxWidgets/releases/download/v${VERSION_wxmac}/wxWidgets-${VERSION_wxmac}.tar.bz2

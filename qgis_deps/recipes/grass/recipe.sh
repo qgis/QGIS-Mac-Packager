@@ -8,7 +8,7 @@ VERSION_grass_minor=8
 VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.5
 
 # dependencies of this recipe
-DEPS_grass=(python boost bison libiconv flex libtiff png  sqlite geos zlib wxmac zstd zlib xz netcdf proj gdal libgeotiff python_pyqt5 mysql postgres openssl )
+DEPS_grass=(python boost bison flex libtiff png  sqlite geos zlib wxmac zstd zlib xz netcdf proj gdal libgeotiff python_pyqt5 mysql postgres openssl )
 
 LINK_libgrass_version=26
 
@@ -16,7 +16,7 @@ LINK_libgrass_version=26
 URL_grass=https://github.com/OSGeo/grass/archive/${VERSION_grass}.tar.gz
 
 # md5 of the package
-MD5_grass=2ca90dcddb0b5a21ac69b3faddc642ca
+MD5_grass=91f4830a5164cea703384814cd89cdf9
 
 # default build path
 BUILD_grass=$BUILD_PATH/grass/$(get_directory $URL_grass)
@@ -49,9 +49,6 @@ function prebuild_grass() {
 
   # missing space in gpde Makefile
   try ${SED} "s;EXTRA_LIBS=\$(GISLIB);EXTRA_LIBS = \$(GISLIB);g" lib/gpde/Makefile
-
-  # fix permissions
-  chmod 777 $STAGE_PATH/grass${VERSION_grass_major}${VERSION_grass_minor}/etc/colors/grass
 
   touch .patched
 }
@@ -137,8 +134,8 @@ function build_grass() {
   # plain Make fails to run, since it expects some libraries in stage,
   # even before libs like libgrass_gis.dylib are installed in stage dir
   # see https://github.com/OSGeo/grass/issues/474#issuecomment-609011156
-  $MAKESMP
-  try $MAKE install
+  # $MAKESMP
+  # try $MAKE install
 
   # OK now we can build everything else
   try $MAKESMP
@@ -149,6 +146,9 @@ function build_grass() {
   # SDKs/MacOSX.sdk/usr/include/sys/stdio.h:39: Syntax error at '__attribute__'
   # very scary but compilation passes?
   # see https://github.com/OSGeo/grass/issues/474#issuecomment-609011006
+
+  # fix permissions
+  chmod 777 $STAGE_PATH/grass${VERSION_grass_major}${VERSION_grass_minor}/etc/colors/grass
 
   pop_env
 }

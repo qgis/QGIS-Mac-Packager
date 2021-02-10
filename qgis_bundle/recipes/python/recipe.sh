@@ -68,12 +68,12 @@ function fix_paths_python() {
     fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
   done
 
-  fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/python-config.py
-  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/Makefile
-  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/Setup
+  fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}m-darwin/python-config.py
+  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}m-darwin/Makefile
+  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}m-darwin/Setup
 }
 
 function fix_paths_python_check() {
   verify_file_paths $BUNDLE_BIN_DIR/pip3
-  verify_file_paths $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/python-config.py
+  verify_file_paths $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}m-darwin/python-config.py
 }

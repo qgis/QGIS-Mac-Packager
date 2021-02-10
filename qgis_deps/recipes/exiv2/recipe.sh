@@ -7,7 +7,7 @@ VERSION_exiv2=0.27.2
 LINK_exiv2=libexiv2.27.dylib
 
 # dependencies of this recipe
-DEPS_exiv2=(libiconv)
+DEPS_exiv2=()
 
 # url of the package
 URL_exiv2=https://www.exiv2.org/builds/exiv2-${VERSION_exiv2}-Source.tar.gz

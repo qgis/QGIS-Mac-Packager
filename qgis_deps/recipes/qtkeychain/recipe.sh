@@ -14,7 +14,7 @@ DEPS_qtkeychain=()
 URL_qtkeychain=https://github.com/frankosterfeld/qtkeychain/archive/v${VERSION_qtkeychain}.tar.gz
 
 # md5 of the package
-MD5_qtkeychain=00856441d995146b11fb8cfab87b8bc6
+MD5_qtkeychain=474f172b42017872dd50eec6c9981fed
 
 # default build path
 BUILD_qtkeychain=$BUILD_PATH/qtkeychain/$(get_directory $URL_qtkeychain)

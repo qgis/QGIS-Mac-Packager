@@ -7,7 +7,7 @@ VERSION_xerces=3.2.3
 
 LINK_libxerces_c=libxerces-c-3.2.dylib
 # dependencies of this recipe
-DEPS_xerces=(expat libcurl)
+DEPS_xerces=(expat libcurl libicu)
 
 # url of the package
 URL_xerces=https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-${VERSION_xerces}.tar.gz

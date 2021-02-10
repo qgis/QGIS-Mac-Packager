@@ -4,10 +4,10 @@ DESC_boost="Collection of portable C++ source libraries"
 
 # version of your package
 # version required by MySQL
-VERSION_boost=1.70.0
+VERSION_boost=1.73.0
 
 # dependencies of this recipe
-DEPS_boost=(zlib python)
+DEPS_boost=(zlib python libicu)
 
 # url of the package
 # URL_boost=https://sourceforge.net/projects/boost/files/boost/${VERSION_boost}/boost_${VERSION_boost//./_}.tar.bz2
@@ -17,7 +17,7 @@ URL_boost=https://dl.bintray.com/boostorg/release/${VERSION_boost}/source/boost_
 # URL_boost=https://github.com/boostorg/boost/archive/boost-${VERSION_boost}.tar.gz
 
 # md5 of the package
-MD5_boost=242ecc63507711d6706b9b0c0d0c7d4f
+MD5_boost=9273c8c4576423562bbe84574b07b2bd
 
 # default build path
 BUILD_boost=$BUILD_PATH/boost/$(get_directory $URL_boost)
@@ -55,19 +55,23 @@ function build_boost() {
   try ./bootstrap.sh \
     --prefix="${STAGE_PATH}" \
     --with-toolset=clang \
-    --with-icu="${PREFIX}" \
-    --with-python="${PYTHON}" \
-    --with-python-root="${STAGE_PATH} : ${STAGE_PATH}/include/python${VERSION_major_python}m : ${STAGE_PATH}/include/python${VERSION_major_python}"
+    --with-icu="${STAGE_PATH}" \
+    --with-python="$PYTHON" \
+    --with-python-root="$PYTHON" \
+    --with-python-version="$VERSION_major_python"
 
   try ./b2 -q \
     variant=release \
+    address-model="64" \
+    architecture="arm" \
+    binary-format="mach-o" \
     debug-symbols=off \
     threading=multi \
     runtime-link=shared \
     link=static,shared \
     toolset=clang \
-    python="${VERSION_major_python}" \
     include="${STAGE_PATH}/include" \
+    python="$VERSION_major_python" \
     cxxflags="${CXXFLAGS}" \
     linkflags="-L$${STAGE_PATH}/lib" \
     --layout=system \

@@ -30,6 +30,9 @@ function prebuild_qtwebkit() {
     return
   fi
 
+  #https://github.com/qtwebkit/qtwebkit/pull/1012/files
+  try patch --verbose --forward -p1 < $RECIPE_qtwebkit/patches/bison37.patch
+
   # Ambiguous Handle (also in MacPorts.h)
   try ${SED} 's;isReachableFromOpaqueRoots(Handle<JSC::Unknown>;isReachableFromOpaqueRoots(JSC::Handle<JSC::Unknown>;g' Source/JavaScriptCore/jsc.cpp
 

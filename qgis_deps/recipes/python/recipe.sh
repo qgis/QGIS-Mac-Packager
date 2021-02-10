@@ -5,10 +5,10 @@ DESC_python="Interpreted, interactive, object-oriented programming language"
 # version of your package (set in config.conf)
 VERSION_minor_python=7
 VERSION_python=${VERSION_major_python}.${VERSION_minor_python}
-LINK_python=libpython3.7m.dylib
+LINK_python=libpython${VERSION_major_python}.dylib
 
 # dependencies of this recipe
-DEPS_python=( openssl xz libffi zlib libzip sqlite expat unixodbc bz2 gettext libarchive libiconv libcurl )
+DEPS_python=(openssl xz libffi zlib libzip sqlite expat unixodbc bz2 gettext libcurl)
 
 # url of the package
 URL_python=https://www.python.org/ftp/python/${VERSION_python}/Python-${VERSION_python}.tar.xz
@@ -29,9 +29,8 @@ REQUIREMENTS_python=(
   wheel==https://files.pythonhosted.org/packages/75/28/521c6dc7fef23a68368efefdcd682f5b3d1d58c2b90b06dc1d0b805b51ae/wheel-0.34.2.tar.gz==ce2a27f99c130a927237b5da1ff5ceaf
 )
 
-install_default_packages () {
-  for i in ${REQUIREMENTS_python[*]}
-  do
+install_default_packages() {
+  for i in ${REQUIREMENTS_python[*]}; do
     arr=(${i//==/ })
     NAME=${arr[0]}
     URL=${arr[1]}
@@ -48,20 +47,20 @@ install_default_packages () {
     export DYLD_LIBRARY_PATH=$STAGE_PATH/lib
 
     if [ "X$NAME" == "Xsetuptools" ]; then
-        try $PYTHON bootstrap.py
+      try $PYTHON bootstrap.py
     fi
 
-    echo `pwd`
+    echo $(pwd)
 
     try $PYTHON \
-          -s setup.py \
-          --no-user-cfg install \
-          --force \
-          --verbose \
-          --install-scripts=$STAGE_PATH/bin \
-          --install-lib=$QGIS_SITE_PACKAGES_PATH \
-          --single-version-externally-managed \
-          --record=installed.txt
+      -s setup.py \
+      --no-user-cfg install \
+      --force \
+      --verbose \
+      --install-scripts=$STAGE_PATH/bin \
+      --install-lib=$QGIS_SITE_PACKAGES_PATH \
+      --single-version-externally-managed \
+      --record=installed.txt
 
     pop_env
 
@@ -113,19 +112,19 @@ function install_python() {
   export CXXFLAGS="${CFLAGS}"
 
   try ${CONFIGURE} \
-      --enable-ipv6 \
-      --datarootdir=$STAGE_PATH/share \
-      --datadir=$STAGE_PATH/share \
-      --without-gcc \
-      --with-openssl=$STAGE_PATH \
-      --enable-optimizations \
-      --enable-shared \
-      --with-system-expat \
-      --with-system-ffi \
-      --with-ensurepip=no \
-      --with-ssl-default-suites=openssl \
-      --enable-loadable-sqlite-extensions \
-      --with-system-ffi
+    --enable-ipv6 \
+    --datarootdir=$STAGE_PATH/share \
+    --datadir=$STAGE_PATH/share \
+    --without-gcc \
+    --with-openssl=$STAGE_PATH \
+    --enable-optimizations \
+    --enable-shared \
+    --with-system-expat \
+    --with-system-ffi \
+    --with-ensurepip=no \
+    --with-ssl-default-suites=openssl \
+    --enable-loadable-sqlite-extensions \
+    --with-system-ffi
 
   check_file_configuration config.status
 
@@ -137,18 +136,22 @@ function install_python() {
 
 # function called to build the source code
 function build_python() {
-   # install_python
-   install_default_packages
+  install_python
+  install_default_packages
 }
 
 # function called after all the compile have been done
 function postbuild_python() {
-    verify_binary bin/python3
-    verify_binary lib/$LINK_python
+  verify_binary bin/python3
+  verify_binary lib/$LINK_python
 
-    if ! python_package_installed bz2; then
-      error "Missing python bz2, probably libbz2 was not picked by compilation of python"
-    fi
+  if ! python_package_installed bz2; then
+    error "Missing python bz2, probably libbz2 was not picked by compilation of python"
+  fi
+}
+
+function postbuild_wheel() {
+  :
 }
 
 # function to append information to config file

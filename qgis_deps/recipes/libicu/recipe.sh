@@ -7,7 +7,8 @@ VERSION_libicu_major=68
 VERSION_libicu_minor=2
 VERSION_libicu=VERSION_libicu_major.VERSION_libicu_minor
 
-LINK_libicu=libicu.2.dylib
+LINK_libicudata=libicudata.${VERSION_libicu_major}.dylib
+LINK_libicuuc=libicuuc.dylib
 
 # dependencies of this recipe
 DEPS_libicu=(python)
@@ -40,7 +41,7 @@ function prebuild_libicu() {
 }
 
 function shouldbuild_libicu() {
-  if [ ${STAGE_PATH}/lib/${LINK_libicu} -nt $BUILD_libicu/.patched ]; then
+  if [ ${STAGE_PATH}/lib/${LINK_libicudata} -nt $BUILD_libicu/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -61,17 +62,35 @@ function build_libicu() {
   try $MAKESMP
   try $MAKESMP install
 
+  targets=(
+    libicudata.$VERSION_libicu_major.dylib
+    libicui18n.$VERSION_libicu_major.dylib
+    libicuio.$VERSION_libicu_major.dylib
+    libicutu.$VERSION_libicu_major.dylib
+    libicuuc.$VERSION_libicu_major.dylib
+  )
+  for i in ${targets[*]}
+  do
+    try install_name_tool -id $STAGE_PATH/lib/$i $STAGE_PATH/lib/$i
+    for j in ${targets[*]}
+    do
+      try install_name_tool -change $j $STAGE_PATH/lib/$j $STAGE_PATH/lib/$i
+    done
+  done
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_libicu() {
-  verify_binary lib/$LINK_libicu
+  verify_binary lib/$LINK_libicudata
+  verify_binary lib/$LINK_libicuuc
 }
 
 # function to append information to config file
 function add_config_info_libicu() {
   append_to_config_file "# libicu-${VERSION_libicu}: ${DESC_libicu}"
   append_to_config_file "export VERSION_libicu=${VERSION_libicu}"
-  append_to_config_file "export LINK_libicu=${LINK_libicu}"
+  append_to_config_file "export LINK_libicudata=${LINK_libicudata}"
+  append_to_config_file "export LINK_libicuuc=${LINK_libicuuc}"
 }

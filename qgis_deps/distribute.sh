@@ -125,12 +125,22 @@ function check_file_configuration() {
     error "File $1 contains /usr/local/lib string <-- CMake picked some homebrew libs!"
   fi
 
-  if grep -q /usr/local/opt/*/lib $1
-  then
-    info "Found: "
-    cat $1 | grep /usr/local/opt/*/lib
-    error "File $1 contains /usr/local/*/lib string <-- CMake picked some homebrew libs!"
-  fi
+  targets=(
+    openssl
+    openssl@1.1
+    gettext
+    libunistring
+    xz
+  )
+  for i in ${targets[*]}
+  do
+    if grep -q /usr/local/opt/$i/lib $1
+    then
+      info "Found: "
+      cat $1 | grep /usr/local/opt/$i/lib
+      error "File $1 contains /usr/local/$i/lib string <-- CMake picked some homebrew libs!"
+    fi
+  done
 }
 
 function python_package_installed() {
@@ -363,10 +373,7 @@ function check_linked_rpath() {
     libxml2
     libsqlite3
     libexpat
-    libexpat
-    libiconv
     liblzma
-    libarchive
     libbz2
     libiodbc
     libcurl

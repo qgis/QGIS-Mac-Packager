@@ -7,7 +7,7 @@ VERSION_spatialite=4.3.0a
 LINK_spatialite=libspatialite.7.dylib
 
 # dependencies of this recipe
-DEPS_spatialite=(proj geos freexl libxml2 libiconv)
+DEPS_spatialite=(proj geos freexl libxml2)
 
 # url of the package
 URL_spatialite=https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-${VERSION_spatialite}.tar.gz

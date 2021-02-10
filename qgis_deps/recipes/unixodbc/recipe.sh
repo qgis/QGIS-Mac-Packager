@@ -8,7 +8,7 @@ LINK_unixodbc=libodbc.2.dylib
 LINK_unixodbcinst=libodbcinst.2.dylib
 
 # dependencies of this recipe
-DEPS_unixodbc=(libtool libiconv)
+DEPS_unixodbc=(libtool)
 
 # url of the package
 URL_unixodbc=http://www.unixodbc.org/unixODBC-${VERSION_unixodbc}.tar.gz
