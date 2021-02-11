@@ -8,7 +8,10 @@ VERSION_libicu_minor=2
 VERSION_libicu=VERSION_libicu_major.VERSION_libicu_minor
 
 LINK_libicudata=libicudata.${VERSION_libicu_major}.dylib
-LINK_libicuuc=libicuuc.dylib
+LINK_libicuuc=libicuuc.$VERSION_libicu_major.dylib
+LINK_libicui18n=libicui18n.$VERSION_libicu_major.dylib
+LINK_libicuio=libicuio.$VERSION_libicu_major.dylib
+LINK_libicutu=libicutu.$VERSION_libicu_major.dylib
 
 # dependencies of this recipe
 DEPS_libicu=(python)
@@ -93,4 +96,7 @@ function add_config_info_libicu() {
   append_to_config_file "export VERSION_libicu=${VERSION_libicu}"
   append_to_config_file "export LINK_libicudata=${LINK_libicudata}"
   append_to_config_file "export LINK_libicuuc=${LINK_libicuuc}"
+  append_to_config_file "export LINK_libicui18n=${LINK_libicui18n}"
+  append_to_config_file "export LINK_libicuio=${LINK_libicuio}"
+  append_to_config_file "export LINK_libicutu=${LINK_libicutu}"
 }

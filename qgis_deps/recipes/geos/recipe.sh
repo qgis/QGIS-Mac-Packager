@@ -3,7 +3,7 @@
 DESC_geos="Geometry Engine"
 
 # version of your package
-VERSION_geos=3.9.0
+VERSION_geos=3.9.1
 
 LINK_libgeos_c=libgeos_c.1.dylib
 LINK_libgeos=libgeos.${VERSION_geos}.dylib
@@ -15,7 +15,7 @@ DEPS_geos=()
 URL_geos=http://download.osgeo.org/geos/geos-${VERSION_geos}.tar.bz2
 
 # md5 of the package
-MD5_geos=6dc99a0376c3d8ce1cbb7419b99aabb4
+MD5_geos=efc4ce81bdbaa5e5c1caefe6c9b8553c
 
 # default build path
 BUILD_geos=$BUILD_PATH/geos/$(get_directory $URL_geos)

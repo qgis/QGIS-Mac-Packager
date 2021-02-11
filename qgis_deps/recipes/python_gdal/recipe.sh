@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DESC_python_gdal="Proj binding for python"
+DESC_python_gdal="GDAL binding for python"
 
 # version of your package
 # keep in SYNC with gdal receipt
@@ -37,7 +37,7 @@ function prebuild_python_gdal() {
 
 function shouldbuild_python_gdal() {
   # If lib is newer than the sourcecode skip build
-  if python_package_installed gdal; then
+  if python_package_installed osgeo; then
     DO_BUILD=0
   fi
 }
@@ -58,8 +58,8 @@ function build_python_gdal() {
 
 # function called after all the compile have been done
 function postbuild_python_gdal() {
-   if ! python_package_installed_verbose gdal; then
-      error "Missing python package gdal"
+   if ! python_package_installed_verbose osgeo; then
+      error "Missing python package osgeo"
    fi
 }
 

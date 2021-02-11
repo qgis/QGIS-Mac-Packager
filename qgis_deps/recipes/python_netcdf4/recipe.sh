@@ -4,16 +4,16 @@ DESC_python_netcdf4="Python binding of HDF5"
 
 # version of your package
 # need to keep in sync with compatible version of netcdf lib
-VERSION_python_netcdf4=1.5.3
+VERSION_python_netcdf4=1.5.4
 
 # dependencies of this recipe
-DEPS_python_netcdf4=(python python_packages netcdf hdf5 python_numpy)
+DEPS_python_netcdf4=(python python_packages netcdf hdf5 python_numpy libcurl python_cftime)
 
 # url of the package
 URL_python_netcdf4=https://github.com/Unidata/netcdf4-python/archive/v${VERSION_python_netcdf4}rel.tar.gz
 
 # md5 of the package
-MD5_python_netcdf4=8c44711c6d078ee70c5df9a55be1b42e
+MD5_python_netcdf4=eddb60fddd0f018da33111931fe49d33
 
 # default build path
 BUILD_python_netcdf4=$BUILD_PATH/python_netcdf4/$(get_directory $URL_python_netcdf4)
@@ -45,13 +45,16 @@ function build_python_netcdf4() {
   try cd $BUILD_PATH/python_netcdf4/build-$ARCH
 
   push_env
+
   export HDF5_DIR=$STAGE_PATH
   export NETCDF4_DIR=$STAGE_PATH
-  try $PYTHON setup.py build
-  try $PYTHON setup.py install
+  export CURL_DIR=$STAGE_PATH
+
+  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
 
   unset HDF5_DIR
   unset NETCDF4_DIR
+  unset CURL_DIR
 
   pop_env
 }

@@ -134,8 +134,8 @@ function build_grass() {
   # plain Make fails to run, since it expects some libraries in stage,
   # even before libs like libgrass_gis.dylib are installed in stage dir
   # see https://github.com/OSGeo/grass/issues/474#issuecomment-609011156
-  # $MAKESMP
-  # try $MAKE install
+  $MAKESMP
+  try $MAKE install
 
   # OK now we can build everything else
   try $MAKESMP
