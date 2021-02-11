@@ -10,10 +10,14 @@ function bundle_xerces() {
 
 function fix_binaries_xerces() {
   install_name_id @rpath/$LINK_libxerces_c $BUNDLE_LIB_DIR/$LINK_libxerces_c
+
+  install_name_change $DEPS_LIB_DIR/$LINK_libcurl @rpath/$LINK_libcurl $BUNDLE_LIB_DIR/$LINK_libxerces_c
 }
 
 function fix_binaries_xerces_check() {
   verify_binary $BUNDLE_LIB_DIR/$LINK_libxerces_c
+
+
 }
 
 function fix_paths_xerces() {

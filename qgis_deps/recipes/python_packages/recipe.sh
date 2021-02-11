@@ -115,6 +115,9 @@ REQUIREMENTS_python_packages=(
     importlib-metadata==1.7.0
     zipp==3.1.0
     rasterstats==0.15.0
+    clipboard==0.0.4
+    pyperclip==1.8.1
+    pyvenv=0.2.2
 )
 
 IMPORTS_python_packages=(

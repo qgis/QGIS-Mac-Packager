@@ -17,7 +17,7 @@ function bundle_python_packages() {
   try rm -rf $BUNDLE_PYTHON_PACKAGES_DIR/test
 
   # we do not need to ship cmake, it is development tool
-  try rm -r $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}m-darwin/python.o
+  try rm -rf $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}-darwin/python.o
   try rm $BUNDLE_PYTHON_PACKAGES_DIR/site-packages/setuptools.pth
 
   cd $BUNDLE_PYTHON_SITE_PACKAGES_DIR

@@ -34,7 +34,6 @@ function bundle_gdal() {
     gdalmanage \
     gdalmdiminfo \
     gdalmdimtranslate \
-    gdalserver \
     gdalsrsinfo \
     gdaltindex \
     gdaltransform \
@@ -103,7 +102,6 @@ function fix_binaries_gdal() {
     bin/_gdalmanage \
     bin/_gdalmdiminfo \
     bin/_gdalmdimtranslate \
-    bin/_gdalserver \
     bin/_gdalsrsinfo \
     bin/_gdaltindex \
     bin/_gdaltransform \
@@ -123,6 +121,7 @@ function fix_binaries_gdal() {
         $LINK_libtiff \
         $LINK_libxml2 \
         $LINK_libcrypto \
+        $LINK_libssl \
         $LINK_libpng \
         $LINK_libpq \
         $LINK_libproj \
@@ -145,6 +144,8 @@ function fix_binaries_gdal() {
         $LINK_poppler \
         $LINK_openjpeg \
         $LINK_libltdl \
+        $LINK_libcurl \
+        $LINK_libssh2 \
         $LINK_gdal
       do
          install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/MacOS/$i
@@ -169,7 +170,6 @@ function fix_binaries_gdal() {
     bin/_gdalmanage \
     bin/_gdalmdiminfo \
     bin/_gdalmdimtranslate \
-    bin/_gdalserver \
     bin/_gdalsrsinfo \
     bin/_gdaltindex \
     bin/_gdaltransform \

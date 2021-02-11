@@ -10,9 +10,17 @@ function bundle_libssh2() {
 }
 
 function fix_binaries_libssh2() {
-  install_name_id  @rpath/$LINK_libssh2 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libssh2
+  install_name_id  @rpath/$LINK_libssh2 $BUNDLE_LIB_DIR/$LINK_libssh2
 
-  install_name_change $DEPS_LIB_DIR/$LINK_libssh2 @rpath/$LINK_libssh2 $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libssh2
+  install_name_change $DEPS_LIB_DIR/$LINK_libssh2 @rpath/$LINK_libssh2 $BUNDLE_LIB_DIR/$LINK_libssh2
+
+  for i in \
+    $LINK_libssl \
+    $LINK_zlib \
+    $LINK_libcrypto
+  do
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_libssh2
+  done
 }
 
 function fix_binaries_libssh2_check() {

@@ -16,7 +16,8 @@ function fix_binaries_fontconfig() {
     $LINK_expat \
     $LINK_freetype \
     $LINK_libintl \
-    $LINK_zlib
+    $LINK_zlib \
+    $LINK_libpng
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_fontconfig
   done

@@ -2,7 +2,7 @@
 
 function check_libicu() {
   env_var_exists VERSION_libicu
-  env_var_exists LINK_libicu
+  env_var_exists LINK_libicudata
 }
 
 function bundle_libicu() {
@@ -14,8 +14,6 @@ function bundle_libicu() {
 }
 
 function fix_binaries_libicu() {
-  install_name_id  @rpath/$LINK_libicu $BUNDLE_CONTENTS_DIR/MacOS/lib/$LINK_libicu
-
   targets=(
     $LINK_libicudata
     $LINK_libicuuc
@@ -25,16 +23,16 @@ function fix_binaries_libicu() {
   )
   for i in ${targets[*]}
   do
-    try install_name_tool -id $STAGE_PATH/lib/$i $STAGE_PATH/lib/$i
+    try install_name_tool -id @rpath/$i $BUNDLE_LIB_DIR/$i
     for j in ${targets[*]}
     do
-      try install_name_tool -change $j $STAGE_PATH/lib/$j $STAGE_PATH/lib/$i
+      try install_name_tool -change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_LIB_DIR/$i
     done
   done
 }
 
 function fix_binaries_libicu_check() {
-    targets=(
+  targets=(
     $LINK_libicudata
     $LINK_libicuuc
     $LINK_libicui18n
