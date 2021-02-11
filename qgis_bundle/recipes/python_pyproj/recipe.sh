@@ -19,13 +19,13 @@ function fix_binaries_python_pyproj() {
     _proj \
     _transformer
   do
-    install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $PYPROJ_EGG/pyproj/$i.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $PYPROJ_EGG/pyproj/$i.cpython-${VERSION_major_python//./}-darwin.so
   done
 }
 
 function fix_binaries_python_pyproj_check() {
-  verify_binary $PYPROJ_EGG/pyproj/_proj.cpython-${VERSION_major_python//./}m-darwin.so
-  verify_binary $PYPROJ_EGG/pyproj/_datadir.cpython-${VERSION_major_python//./}m-darwin.so
+  verify_binary $PYPROJ_EGG/pyproj/_proj.cpython-${VERSION_major_python//./}-darwin.so
+  verify_binary $PYPROJ_EGG/pyproj/_datadir.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_paths_python_pyproj() {

@@ -40,12 +40,12 @@ function bundle_python_packages() {
 }
 
 function fix_binaries_python_packages() {
-  install_name_change $QGIS_DEPS_STAGE_PATH/unixodbc/lib/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_PYTHON_SITE_PACKAGES_DIR/pyodbc.cpython-${VERSION_major_python//./}m-darwin.so
+  install_name_change $QGIS_DEPS_STAGE_PATH/unixodbc/lib/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_PYTHON_SITE_PACKAGES_DIR/pyodbc.cpython-${VERSION_major_python//./}-darwin.so
   install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_PYTHON_SITE_PACKAGES_DIR/cryptography/hazmat/bindings/_openssl.abi3.so
   install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_PYTHON_SITE_PACKAGES_DIR/cryptography/hazmat/bindings/_openssl.abi3.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_cffi_backend.cpython-${VERSION_major_python//./}m-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_cffi_backend.cpython-${VERSION_major_python//./}-darwin.so
 
-  install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}m-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}-darwin.so
 
   for i in \
     $LINK_libxml2 \
@@ -53,18 +53,18 @@ function fix_binaries_python_packages() {
     $LINK_libxslt \
     $LINK_libexslt
   do
-    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}m-darwin.so
-    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/objectify.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}-darwin.so
+    install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/objectify.cpython-${VERSION_major_python//./}-darwin.so
   done
 }
 
 function fix_binaries_python_packages_check() {
-  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/pyodbc.cpython-${VERSION_major_python//./}m-darwin.so
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/pyodbc.cpython-${VERSION_major_python//./}-darwin.so
   verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/cryptography/hazmat/bindings/_openssl.abi3.so
   verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/cryptography/hazmat/bindings/_openssl.abi3.so
-  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_cffi_backend.cpython-${VERSION_major_python//./}m-darwin.so
-  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}m-darwin.so
-  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/objectify.cpython-${VERSION_major_python//./}m-darwin.so
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_cffi_backend.cpython-${VERSION_major_python//./}-darwin.so
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}-darwin.so
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/objectify.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_paths_python_packages() {
@@ -75,7 +75,6 @@ function fix_paths_python_packages() {
       idle3 \
       idle${VERSION_major_python} \
       pyvenv \
-      pyvenv-${VERSION_major_python} \
       pydoc3 \
       pydoc${VERSION_major_python} \
       pyrcc5 \
@@ -87,12 +86,12 @@ function fix_paths_python_packages() {
     fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
   done
 
-  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/_sysconfigdata_m_darwin_darwin.py
+  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/_sysconfigdata__darwin_darwin.py
   clean_path $BUNDLE_PYTHON_SITE_PACKAGES_DIR/sipconfig.py
 }
 
 function fix_paths_python_packages_check() {
   verify_file_paths $BUNDLE_BIN_DIR/pyrcc5
-  verify_file_paths $BUNDLE_PYTHON_PACKAGES_DIR/_sysconfigdata_m_darwin_darwin.py
+  verify_file_paths $BUNDLE_PYTHON_PACKAGES_DIR/_sysconfigdata__darwin_darwin.py
   verify_file_paths $BUNDLE_PYTHON_SITE_PACKAGES_DIR/sipconfig.py
 }

@@ -48,14 +48,14 @@ function fix_binaries_python_gdal() {
     _gnm \
     _gdalconst
   do
-    install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/$i.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $GDAL_EGG_DIR/osgeo/$i.cpython-${VERSION_major_python//./}-darwin.so
   done
 }
 
 function fix_binaries_python_gdal_check() {
   GDAL_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
 
-  verify_binary $GDAL_EGG_DIR/osgeo/_gdal.cpython-${VERSION_major_python//./}m-darwin.so
+  verify_binary $GDAL_EGG_DIR/osgeo/_gdal.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_paths_python_gdal() {

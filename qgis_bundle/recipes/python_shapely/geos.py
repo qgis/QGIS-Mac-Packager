@@ -17,8 +17,8 @@ else:
     raise Exception("Unable to load geos_c required by shapely from " + DIR1 + " nor " + DIR2)
 
 # fix:
-# ImportError: dlopen(.../site-packages/Fiona-....egg/fiona/ogrext.cpython-37m-darwin.so, 2): Symbol not found: _GEOSArea
-#   Referenced from: .../stage/lib/libspatialite.7.dylib
+# ImportError: dlopen(.../site-packages/Fiona-....egg/fiona/ogrext.cpython-3x-darwin.so, 2): Symbol not found: _GEOSArea
+#   Referenced from: .../stage/lib/libspatialite.x.dylib
 #   Expected in: flat namespace
 import fiona
 

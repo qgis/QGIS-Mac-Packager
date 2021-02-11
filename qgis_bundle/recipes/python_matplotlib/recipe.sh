@@ -15,14 +15,14 @@ function fix_binaries_python_matplotlib() {
     backends/_backend_agg \
     ft2font
   do
-    install_name_change $DEPS_LIB_DIR/$LINK_freetype @rpath/$LINK_freetype $MATPLOTLIB_EGG_DIR/matplotlib/$i.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_freetype @rpath/$LINK_freetype $MATPLOTLIB_EGG_DIR/matplotlib/$i.cpython-${VERSION_major_python//./}-darwin.so
   done
 }
 
 function fix_binaries_python_matplotlib_check() {
   MATPLOTLIB_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/matplotlib-${VERSION_python_matplotlib}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
 
-  verify_binary $MATPLOTLIB_EGG_DIR/matplotlib/ft2font.cpython-${VERSION_major_python//./}m-darwin.so
+  verify_binary $MATPLOTLIB_EGG_DIR/matplotlib/ft2font.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_paths_python_matplotlib() {
