@@ -26,14 +26,14 @@ function fix_binaries_python_rasterio() {
     _warp \
     shutil
   do
-    install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $RASTERIO_EGG_DIR/rasterio/$i.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_gdal @rpath/$LINK_gdal $RASTERIO_EGG_DIR/rasterio/$i.cpython-${VERSION_major_python//./}-darwin.so
   done
 }
 
 function fix_binaries_python_rasterio_check() {
   RASTERIO_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/rasterio-${VERSION_python_rasterio}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
 
-  verify_binary $RASTERIO_EGG_DIR/rasterio/_base.cpython-${VERSION_major_python//./}m-darwin.so
+  verify_binary $RASTERIO_EGG_DIR/rasterio/_base.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_paths_python_rasterio() {

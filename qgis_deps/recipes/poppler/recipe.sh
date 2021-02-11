@@ -19,6 +19,7 @@ DEPS_poppler=(
   libtiff
   little_cms2
   openjpeg
+  libcurl
 )
 
 # url of the package
@@ -36,8 +37,6 @@ RECIPE_poppler=$RECIPES_PATH/poppler
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_poppler() {
-  install_name_tool -id $STAGE_PATH/lib/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler
-
   cd $BUILD_poppler
 
   # check marker

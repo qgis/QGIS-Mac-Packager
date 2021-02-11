@@ -1,6 +1,6 @@
 import os
 # this file is part of qgis/QGIS-Mac-Packager package
-# from QGIS*.app/Contents/MacOS/lib/python3.7/site-packages/RTree-*.egg/rtree -> QGIS*.app/Contents/MacOS/lib/
+# from QGIS*.app/Contents/MacOS/lib/python3.x/site-packages/RTree-*.egg/rtree -> QGIS*.app/Contents/MacOS/lib/
 DIR1=os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir, os.path.pardir, os.path.pardir))
 SPATIALINDEX_C_LIBRARY_1=os.path.join(DIR1, 'libspatialindex_c.dylib')
 

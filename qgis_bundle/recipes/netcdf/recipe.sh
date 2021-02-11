@@ -14,7 +14,8 @@ function fix_binaries_netcdf() {
   for i in \
     $LINK_libhdf5 \
     $LINK_libhdf5_hl \
-    $LINK_zlib
+    $LINK_zlib \
+    $LINK_libcurl
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_netcdf
   done

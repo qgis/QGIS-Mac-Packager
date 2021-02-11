@@ -30,7 +30,8 @@ function fix_binaries_poppler() {
       $LINK_openjpeg \
       $LINK_libpng \
       $LINK_libtiff \
-      $LINK_little_cms2
+      $LINK_little_cms2 \
+      $LINK_libcurl
     do
       install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_LIB_DIR/$i
     done

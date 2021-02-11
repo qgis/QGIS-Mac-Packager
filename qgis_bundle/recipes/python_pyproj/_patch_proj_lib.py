@@ -2,7 +2,7 @@ import os
 # this file is part of qgis/QGIS-Mac-Packager package
 
 if not os.getenv("PROJ_LIB"):
-    # from QGIS*.app/Contents/MacOS/lib/python3.7/site-packages/pyproj-*.egg/pyproj -> QGIS*.app/Contents/Resources/proj/
+    # from QGIS*.app/Contents/MacOS/lib/python3.x/site-packages/pyproj-*.egg/pyproj -> QGIS*.app/Contents/Resources/proj/
     PROJ_DIR_1=os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir, os.path.pardir, os.path.pardir, os.path.pardir, os.path.pardir, "Resources", "proj"))
     if os.path.exists(PROJ_DIR_1):
         os.environ['PROJ_LIB'] = PROJ_DIR_1

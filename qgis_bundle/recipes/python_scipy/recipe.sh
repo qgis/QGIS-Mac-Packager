@@ -51,9 +51,9 @@ function fix_binaries_python_scipy() {
    stats/statlib \
    stats/mvn
   do
-    install_name_change $DEPS_LIB_DIR/$LINK_libquadmath @rpath/$LINK_libquadmath $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}m-darwin.so
-    install_name_change $DEPS_LIB_DIR/$LINK_libgfortran @rpath/$LINK_libgfortran $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}m-darwin.so
-    install_name_change $DEPS_LIB_DIR/$LINK_gcc_s @rpath/$LINK_gcc_s $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_libquadmath @rpath/$LINK_libquadmath $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_libgfortran @rpath/$LINK_libgfortran $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_gcc_s @rpath/$LINK_gcc_s $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}-darwin.so
   done
 
   for i in \
@@ -82,15 +82,15 @@ function fix_binaries_python_scipy() {
    sparse/linalg/dsolve/_superlu \
    spatial/qhull
   do
-    install_name_change $DEPS_LIB_DIR/$LINK_libopenblas @rpath/$LINK_libopenblas $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}m-darwin.so
-    install_name_change $DEPS_LIB_DIR/$LINK_libopenblasp @rpath/$LINK_libopenblasp $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}m-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_libopenblas @rpath/$LINK_libopenblas $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_libopenblasp @rpath/$LINK_libopenblasp $SCIPY_EGG_DIR/scipy/$i.cpython-${VERSION_major_python//./}-darwin.so
   done
 }
 
 function fix_binaries_python_scipy_check() {
   SCIPY_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/scipy-${VERSION_python_scipy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
 
-  verify_binary $SCIPY_EGG_DIR/scipy/odr/__odrpack.cpython-${VERSION_major_python//./}m-darwin.so
+  verify_binary $SCIPY_EGG_DIR/scipy/odr/__odrpack.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_paths_python_scipy() {

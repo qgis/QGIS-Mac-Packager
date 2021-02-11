@@ -7,7 +7,7 @@ VERSION_netcdf=4.7.3
 LINK_netcdf=libnetcdf.15.dylib
 
 # dependencies of this recipe
-DEPS_netcdf=()
+DEPS_netcdf=(libcurl)
 
 # url of the package
 URL_netcdf=https://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-c-${VERSION_netcdf}.tar.gz

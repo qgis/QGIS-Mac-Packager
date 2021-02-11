@@ -7,7 +7,7 @@ VERSION_gettext=0.21
 LINK_libintl=libintl.8.dylib
 
 # dependencies of this recipe
-DEPS_gettext=()
+DEPS_gettext=(libcurl libxml2 libunistring)
 
 # url of the package
 URL_gettext=https://ftp.gnu.org/pub/gnu/gettext/gettext-$VERSION_gettext.tar.gz
@@ -62,7 +62,8 @@ function build_gettext() {
 
 # function called after all the compile have been done
 function postbuild_gettext() {
-  verify_binary lib/libintl.8.dylib
+  verify_binary lib/$LINK_libintl
+  verify_binary lib/libgettextlib.dylib
 }
 
 # function to append information to config file

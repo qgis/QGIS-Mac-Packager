@@ -31,29 +31,29 @@ function fix_binaries_python() {
   install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_BIN_DIR/python$VERSION_major_python
   install_name_add_rpath @executable_path/../Frameworks $BUNDLE_BIN_DIR/python$VERSION_major_python
 
-  install_name_change $DEPS_LIB_DIR/$LINK_libintl @rpath/$LINK_libintl $BUNDLE_LIB_DIR/libpython${VERSION_major_python}m.dylib
+  install_name_change $DEPS_LIB_DIR/$LINK_libintl @rpath/$LINK_libintl $BUNDLE_LIB_DIR/libpython${VERSION_major_python}.dylib
 
-  install_name_change $DEPS_LIB_DIR/$LINK_bz2 @rpath/$LINK_bz2 $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_bz2.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/pyexpat.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_elementtree.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_hashlib.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_hashlib.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_sqlite3.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_liblzma @rpath/$LINK_liblzma $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_lzma.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/zlib.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/binascii.cpython-${VERSION_major_python//./}m-darwin.so
-  install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ctypes.cpython-${VERSION_major_python//./}m-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_bz2 @rpath/$LINK_bz2 $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_bz2.cpython-${VERSION_major_python//./}-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/pyexpat.cpython-${VERSION_major_python//./}-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_expat @rpath/$LINK_expat $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_elementtree.cpython-${VERSION_major_python//./}-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-${VERSION_major_python//./}-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_libssl @rpath/$LINK_libssl $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_hashlib.cpython-${VERSION_major_python//./}-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-${VERSION_major_python//./}-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_libcrypto @rpath/$LINK_libcrypto $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_hashlib.cpython-${VERSION_major_python//./}-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_sqlite @rpath/$LINK_sqlite $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_sqlite3.cpython-${VERSION_major_python//./}-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_liblzma @rpath/$LINK_liblzma $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_lzma.cpython-${VERSION_major_python//./}-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/zlib.cpython-${VERSION_major_python//./}-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_zlib @rpath/$LINK_zlib $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/binascii.cpython-${VERSION_major_python//./}-darwin.so
+  install_name_change $DEPS_LIB_DIR/$LINK_libffi @rpath/$LINK_libffi $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ctypes.cpython-${VERSION_major_python//./}-darwin.so
 
   # this one contains path to cert.pem
-  clean_binary $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-${VERSION_major_python//./}m-darwin.so
+  clean_binary $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_ssl.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_binaries_python_check() {
   verify_binary $BUNDLE_LIB_DIR/$LINK_python
   verify_binary $BUNDLE_BIN_DIR/python$VERSION_major_python
-  verify_binary $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_elementtree.cpython-${VERSION_major_python//./}m-darwin.so
+  verify_binary $BUNDLE_CONTENTS_DIR/Resources/python/lib-dynload/_elementtree.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_paths_python() {
@@ -62,18 +62,17 @@ function fix_paths_python() {
       pip \
       pip3 \
       pip${VERSION_major_python} \
-      python${VERSION_major_python}-config \
-      python${VERSION_major_python}m-config
+      python${VERSION_major_python}-config
   do
     fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
   done
 
-  fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/python-config.py
-  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/Makefile
-  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/Setup
+  fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}-darwin/python-config.py
+  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}-darwin/Makefile
+  clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}-darwin/Setup
 }
 
 function fix_paths_python_check() {
   verify_file_paths $BUNDLE_BIN_DIR/pip3
-  verify_file_paths $BUNDLE_PYTHON_PACKAGES_DIR/config-3.7m-darwin/python-config.py
+  verify_file_paths $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}-darwin/python-config.py
 }

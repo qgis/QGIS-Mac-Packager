@@ -7,7 +7,7 @@ VERSION_freetype=2.10.0
 LINK_freetype=libfreetype.6.dylib
 
 # dependencies of this recipe
-DEPS_freetype=()
+DEPS_freetype=(png)
 
 # url of the package
 URL_freetype=https://download.savannah.gnu.org/releases/freetype/freetype-$VERSION_freetype.tar.gz

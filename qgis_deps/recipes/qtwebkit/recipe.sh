@@ -6,7 +6,7 @@ DESC_qtwebkit="WebKit extension for QT5"
 VERSION_qtwebkit=${VERSION_qt}
 
 # dependencies of this recipe
-DEPS_qtwebkit=( sqlite bison webp zlib libxslt jpeg png libtiff )
+DEPS_qtwebkit=( sqlite bison webp zlib libxslt jpeg png libtiff libicu )
 
 # url of the package
 URL_qtwebkit=https://github.com/qt/qtwebkit/archive/v5.212.0-alpha4.tar.gz
@@ -29,6 +29,9 @@ function prebuild_qtwebkit() {
   if [ -f .patched ]; then
     return
   fi
+
+  #https://github.com/qtwebkit/qtwebkit/pull/1012/files
+  try patch --verbose --forward -p1 < $RECIPE_qtwebkit/patches/bison37.patch
 
   # Ambiguous Handle (also in MacPorts.h)
   try ${SED} 's;isReachableFromOpaqueRoots(Handle<JSC::Unknown>;isReachableFromOpaqueRoots(JSC::Handle<JSC::Unknown>;g' Source/JavaScriptCore/jsc.cpp
@@ -54,6 +57,9 @@ function build_qtwebkit() {
     -DENABLE_TOOLS=FALSE \
     -DENABLE_API_TESTS=FALSE \
     -DSHOULD_INSTALL_JS_SHELL=FALSE \
+    -DUSE_LIBHYPHEN=OFF \
+    -DMACOS_USE_SYSTEM_ICU=OFF \
+    -DMACOS_FORCE_SYSTEM_XML_LIBRARIES=OFF \
     -DQT_INSTALL_PREFIX=$QT_BASE/clang_64 \
     $BUILD_qtwebkit
 

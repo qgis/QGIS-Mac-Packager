@@ -3,7 +3,7 @@ import os
 # https://github.com/qgis/QGIS-Mac-Packager/issues/79
 
 def mod_spatialite_path():
-  # from QGIS*.app/Contents/MacOS/lib/python3.7/qgis/ -> QGIS*.app/Contents/MacOS/lib
+  # from QGIS*.app/Contents/MacOS/lib/python3.x/qgis/ -> QGIS*.app/Contents/MacOS/lib
   DIR1=os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
   MOD_SPATIALITE_1=os.path.join(DIR1, 'mod_spatialite.so')
   if os.path.exists(MOD_SPATIALITE_1):

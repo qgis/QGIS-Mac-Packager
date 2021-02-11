@@ -28,6 +28,7 @@ function fix_binaries_pdal() {
         $LINK_zlib \
         $LINK_libxml2 \
         $LINK_liblaszip \
+        $LINK_libcurl \
         $LINK_gdal
       do
          install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_libpdalcpp
