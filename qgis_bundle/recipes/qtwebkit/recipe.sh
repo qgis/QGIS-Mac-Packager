@@ -28,7 +28,9 @@ function fix_binaries_qtwebkit() {
     $LINK_zlib \
     $LINK_libxml2 \
     $LINK_libxslt \
-    $LINK_sqlite
+    $LINK_sqlite \
+    $LINK_libicuuc \
+    $LINK_libicui18n
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_CONTENTS_DIR/Frameworks/QtWebKit.framework/Versions/5/QtWebKit
   done
