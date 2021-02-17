@@ -10,15 +10,18 @@ function bundle_saga() {
 
   try rsync -av $DEPS_LIB_DIR/saga/ $BUNDLE_LIB_DIR/saga/ --exclude=*.la --exclude=*.a
   try cp -av $DEPS_LIB_DIR/libsaga_api*dylib $BUNDLE_LIB_DIR/
-  
-  try cp -av $DEPS_BIN_DIR/saga_cmd $BUNDLE_BIN_DIR/
+
+  SAGA_RECIPE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+  try cp -av $SAGA_RECIPE_DIR/saga_cmd $BUNDLE_BIN_DIR/
+  chmod +x $BUNDLE_BIN_DIR/saga_cmd
+  try cp -av $DEPS_BIN_DIR/saga_cmd $BUNDLE_BIN_DIR/_saga_cmd
 }
 
 function fix_binaries_saga() {
-  install_name_change $DEPS_LIB_DIR/libsaga_api-$VERSION_saga.dylib @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_CONTENTS_DIR/MacOS/bin/saga_cmd
+  install_name_change $DEPS_LIB_DIR/libsaga_api-$VERSION_saga.dylib @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_CONTENTS_DIR/MacOS/bin/_saga_cmd
   install_name_id @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_LIB_DIR/libsaga_api-$VERSION_saga.dylib
-  install_name_add_rpath @executable_path/../lib $BUNDLE_BIN_DIR/saga_cmd
-
+  install_name_add_rpath @executable_path/../lib $BUNDLE_BIN_DIR/_saga_cmd
+  
   for i in \
     libimagery_segmentation \
     libgarden_games \
@@ -96,7 +99,7 @@ function fix_binaries_saga() {
     lib/saga/libio_shapes.dylib \
     lib/saga/libio_virtual.dylib \
     lib/libsaga_api-$VERSION_saga.dylib \
-    bin/saga_cmd
+    bin/_saga_cmd
   do
     install_name_change $DEPS_LIB_DIR/libwx_baseu-${VERSION_wxmac_major}.dylib @rpath/libwx_baseu-${VERSION_wxmac_major}.dylib $BUNDLE_CONTENTS_DIR/MacOS/$i
     install_name_change $DEPS_LIB_DIR/libwx_baseu_net-${VERSION_wxmac_major}.dylib @rpath/libwx_baseu_net-${VERSION_wxmac_major}.dylib $BUNDLE_CONTENTS_DIR/MacOS/$i
@@ -118,12 +121,13 @@ function fix_binaries_saga() {
 
 function fix_binaries_saga_check() {
   verify_binary $BUNDLE_LIB_DIR/saga/libio_gdal.dylib
+  verify_binary $BUNDLE_BIN_DIR/_saga_cmd
 }
 
 function fix_paths_saga() {
-  :
+  clean_binary $BUNDLE_BIN_DIR/_saga_cmd
 }
 
 function fix_paths_saga_check() {
-  :
+  verify_file_paths $BUNDLE_BIN_DIR/_saga_cmd
 }
