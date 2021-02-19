@@ -9,9 +9,9 @@ PWD=`pwd`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 WORLD_VER="world-1.0"
-EUROPE_VER="europe-1.2"
-OCEANIA_VER="oceania-1.0"
-NORTH_AMERICA_VER="north-america-1.2"
+EUROPE_VER="europe-1.6"
+OCEANIA_VER="oceania-1.2"
+NORTH_AMERICA_VER="north-america-1.4"
 MAIN_VER="1.8"
 
 WORLD="https://github.com/OSGeo/proj-datumgrid/releases/download/$WORLD_VER/proj-datumgrid-$WORLD_VER.tar.gz"
