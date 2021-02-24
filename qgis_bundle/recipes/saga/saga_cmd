@@ -4,6 +4,6 @@ THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # This runs from Contents/MacOS/bin directory
 export PROJ_LIB=$THISDIR/../../Resources/proj
-export SAGA_TLB=$THISDIR/../../Resources/saga/toolchains
+export SAGA_TLB=$THISDIR/../lib/saga:$THISDIR/../../Resources/saga/toolchains
 
 "$THISDIR/_saga_cmd" "$@"
