@@ -58,6 +58,11 @@ function bundle_qgis() {
   try cp -av $QGIS_CONTENTS_DIR/MacOS/bin/qgis_process.app $BUNDLE_MACOS_DIR
   try cp -av $QGIS_RECIPE_DIR/qgis_process $BUNDLE_MACOS_DIR/bin/qgis_process
 
+  #### UNTWINE
+  if [[ "$WITH_PDAL" == "true" ]]; then
+    try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/qgis/untwine $BUNDLE_LIB_DIR/qgis/
+  fi
+
   #### PLUGINS
   try rsync -av $QGIS_CONTENTS_DIR/PlugIns/ $BUNDLE_PLUGINS_DIR/
 
@@ -124,6 +129,7 @@ function fix_binaries_qgis() {
  # LIBS
  if [[ "$WITH_PDAL" == "true" ]]; then
       PDALPROVIDER=PlugIns/qgis/libpdalprovider.so
+      UNTWINE=MacOS/lib/qgis/untwine
  fi
 
  for i in \
@@ -146,6 +152,7 @@ function fix_binaries_qgis() {
     $HANA_PROVIDER \
     $ORACLE_PROVIDER \
     $PDALPROVIDER \
+    $UNTWINE \
     PlugIns/qgis/libgeometrycheckerplugin.so \
     PlugIns/qgis/libdb2provider.so \
     PlugIns/qgis/libidentcertauthmethod.so \
@@ -272,6 +279,11 @@ function fix_binaries_qgis() {
     install_name_add_rpath @loader_path/../../Frameworks $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlocispatial.dylib
     install_name_add_rpath @loader_path/../../MacOS/lib $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlocispatial.dylib
   fi
+
+  ## UNTWINE
+  if [[ "$WITH_PDAL" == "true" ]]; then
+    install_name_add_rpath @loader_path/.. $BUNDLE_LIB_DIR/qgis/untwine
+  fi
 }
 
 function fix_binaries_qgis_check() {
@@ -283,6 +295,11 @@ function fix_binaries_qgis_check() {
   if [[ "$WITH_ORACLE" == "true" ]]; then
     verify_binary $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlocispatial.dylib
     verify_binary $BUNDLE_LIB_DIR/libclntsh.dylib
+  fi
+
+  ## UNTWINE
+  if [[ "$WITH_PDAL" == "true" ]]; then
+    verify_binary $BUNDLE_LIB_DIR/qgis/untwine
   fi
 }
 
