@@ -86,6 +86,7 @@ cmake -DCMAKE_BUILD_TYPE=Release \
       -DSERVER_SKIP_ECW=TRUE \
       -DWITH_SERVER=TRUE \
       -DWITH_CUSTOM_WIDGETS=ON \
+      -DWITH_QUICK=TRUE \
       -DQT_PLUGINS_DIR:PATH=$QGIS_INSTALL_DIR/plugins \
       -DENABLE_TESTS=FALSE \
       -GNinja -DCMAKE_MAKE_PROGRAM=/usr/local/bin/ninja\
