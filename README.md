@@ -39,7 +39,7 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 
 # Server Setup 
 
-- Get Mojave server (Catalina?)
+- Get macOS Big Sur server 
 - Get Apple Development Program for your Apple ID
 - Login to the server (have static IP)
 - Change default password to some secure one

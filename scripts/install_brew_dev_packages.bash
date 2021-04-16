@@ -24,3 +24,4 @@ brew install the_silver_searcher # ag (for QGIS spell check)
 
 pip3 install dmgbuild
 pip3 install autopep8 # for QGIS prepare commit
+pip3 install pillow # for image_creator.py
