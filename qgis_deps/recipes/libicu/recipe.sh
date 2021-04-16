@@ -5,7 +5,7 @@ DESC_libicu="International Components for Unicode"
 # version of your package
 VERSION_libicu_major=68
 VERSION_libicu_minor=2
-VERSION_libicu=VERSION_libicu_major.VERSION_libicu_minor
+VERSION_libicu=$VERSION_libicu_major.$VERSION_libicu_minor
 
 LINK_libicudata=libicudata.${VERSION_libicu_major}.dylib
 LINK_libicuuc=libicuuc.$VERSION_libicu_major.dylib

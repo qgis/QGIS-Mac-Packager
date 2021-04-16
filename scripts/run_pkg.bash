@@ -67,18 +67,18 @@ if [ $PKG = "nightly" ]; then
 	TAG=master
 	git reset --hard
 
-	# Get the QT from the QGIS-Deps
+	# Get the qt+pylupdate5 from the QGIS-Deps
 	CONFIG_FILE=$DIR/../config/$PKG.conf
   if [ ! -f "$CONFIG_FILE" ]; then
     echo "invalid config file (1st argument) $CONFIG_FILE"
   fi
   source $CONFIG_FILE
-	if ! PATH=$QT_BASE/clang_64/bin:$PATH scripts/pull_ts.sh; then
+	if ! PATH=$QT_BASE/clang_64/bin:$DEPS_BIN_DIR:$PATH scripts/pull_ts.sh; then
 		echo "Pulling translations failed [$?]"
 		rm -rvf i18n doc/TRANSLATORS
 		git checkout
 	fi
-	
+
 else
 	TAG=final-${MAJOR}_${MINOR}_${PATCH}
 

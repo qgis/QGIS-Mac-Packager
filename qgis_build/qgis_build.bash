@@ -68,6 +68,8 @@ else
   PDAL_CMAKE="-DWITH_EPT=FALSE -DWITH_PDAL=FALSE"
 fi
 
+
+echo "Running CMAKE command, check $QGIS_BUILD_DIR/cmake.configure in case of error!"
 # SERVER_SKIP_ECW == ECW in server apps requires a special license
 PATH=$ROOT_OUT_PATH/stage/bin:$PATH \
 cmake -DCMAKE_BUILD_TYPE=Release \
