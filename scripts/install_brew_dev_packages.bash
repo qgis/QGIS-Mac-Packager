@@ -25,3 +25,5 @@ brew install the_silver_searcher # ag (for QGIS spell check)
 pip3 install dmgbuild
 pip3 install autopep8 # for QGIS prepare commit
 pip3 install pillow # for image_creator.py
+pip3 install transifex-client # for qgis pull_tx script
+pip3 install biplist # for dmgbuild settings
