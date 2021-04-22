@@ -98,3 +98,4 @@ launchctl load ~/Library/LaunchAgents/org.qgis.build.plist
 - remove homebrew (`/usr/local/*`)
 - reinstall homebrew packages
 - update version & run `scripts/fetch_proj-datumgrid.bash`
+- clear ccache `ccache -C`
