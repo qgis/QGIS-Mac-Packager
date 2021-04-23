@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import sys
+
 # Before Python 3.4, use biplist; afterwards, use plistlib
 if sys.version_info < (3, 4):
     import biplist
