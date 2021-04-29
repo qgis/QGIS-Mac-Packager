@@ -29,4 +29,3 @@ pip3 install transifex-client # for qgis pull_tx script
 
 # Setup
 ccache --set-config=max_size=2.0G
-ccache -s

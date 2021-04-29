@@ -46,7 +46,7 @@ info "Print identities"
 security find-identity -v -p codesigning
 
 info "Signing the $QGIS_APP_NAME"
-codesign -s "$IDENTITY" -v --force --keychain "$KEYCHAIN_FILE" "$QGIS_APP" --deep
+codesign -s "$IDENTITY" -v --force –timestamp=none --keychain "$KEYCHAIN_FILE" "$QGIS_APP" --deep
 codesign --deep-verify --verbose "$QGIS_APP"
 
 info "Create dmg image"
@@ -57,7 +57,7 @@ dmgbuild \
   "$PACKAGE"
 
 info "Signing the dmg"
-codesign -s "$IDENTITY" -v --force --keychain "$KEYCHAIN_FILE" "$PACKAGE"
+codesign -s "$IDENTITY" -v --force –timestamp=none --keychain "$KEYCHAIN_FILE" "$PACKAGE"
 codesign --deep-verify --verbose "$PACKAGE"
 
 info "Create checksum"
