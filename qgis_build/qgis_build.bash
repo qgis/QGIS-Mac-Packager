@@ -24,6 +24,9 @@ export QGIS_PATCH_VERSION=$1
 shift
 source $CONFIG_FILE
 
+CC="/usr/bin/clang"
+CXX="/usr/bin/clang++"
+
 if [ ! -f "$QGIS_SOURCE_DIR/CMakeLists.txt" ]; then
   error "QGIS repo is not available at $QGIS_SOURCE_DIR"
 fi
@@ -70,6 +73,7 @@ fi
 
 
 echo "Running CMAKE command, check $QGIS_BUILD_DIR/cmake.configure in case of error!"
+echo "Using $CXX compiler"
 # SERVER_SKIP_ECW == ECW in server apps requires a special license
 PATH=$ROOT_OUT_PATH/stage/bin:$PATH \
 cmake -DCMAKE_BUILD_TYPE=Release \
@@ -93,6 +97,7 @@ cmake -DCMAKE_BUILD_TYPE=Release \
       -GNinja -DCMAKE_MAKE_PROGRAM=/usr/local/bin/ninja\
       -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
       -DCMAKE_INSTALL_PREFIX:PATH=$QGIS_INSTALL_DIR \
+      -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX \
       "$QGIS_SOURCE_DIR" > cmake.configure 2>&1
 
 # check we use correct deps
