@@ -56,6 +56,12 @@ function fix_binaries_python_packages() {
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}-darwin.so
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/objectify.cpython-${VERSION_major_python//./}-darwin.so
   done
+
+  if [ "X$LINK_libyaml" == "X" ]; then
+     echo "skipping libyaml, added in qgis_deps-0.8.0"
+  else
+    install_name_change $DEPS_LIB_DIR/$LINK_libyaml @rpath/$LINK_libyaml $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_yaml.cpython-${VERSION_major_python//./}-darwin.so
+  fi
 }
 
 function fix_binaries_python_packages_check() {
@@ -65,6 +71,7 @@ function fix_binaries_python_packages_check() {
   verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_cffi_backend.cpython-${VERSION_major_python//./}-darwin.so
   verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}-darwin.so
   verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/objectify.cpython-${VERSION_major_python//./}-darwin.so
+  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_yaml.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_paths_python_packages() {

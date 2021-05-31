@@ -7,7 +7,7 @@ DESC_python_packages="Common packages for python (pre)"
 VERSION_python_packages=${VERSION_python}
 
 # dependencies of this recipe
-DEPS_python_packages=(python python_sip python_pyqt5 little_cms2)
+DEPS_python_packages=(python python_sip python_pyqt5 little_cms2 libyaml)
 
 # url of the package
 URL_python_packages=
@@ -142,7 +142,7 @@ function prebuild_python_packages() {
 }
 
 function shouldbuild_python_packages() {
-  if python_package_installed requests; then
+  if python_package_installed yaml; then
     DO_BUILD=0
   fi
 }

@@ -20,6 +20,7 @@ function fix_binaries_python_pyqt5() {
     QtMultimediaWidgets \
     QtNfc \
     QtQuick \
+    QtQuick3D \
     QtNetwork \
     _QOpenGLFunctions_4_1_Core \
     QtWebChannel \

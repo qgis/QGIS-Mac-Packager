@@ -17,6 +17,7 @@ function fix_binaries_python_numpy() {
     linalg/_umath_linalg
   do
     install_name_change $DEPS_LIB_DIR/$LINK_libopenblas @rpath/$LINK_libopenblas $NUMPY_EGG_DIR/numpy/$i.cpython-${VERSION_major_python//./}-darwin.so
+    install_name_change $DEPS_LIB_DIR/$LINK_libopenblasp @rpath/$LINK_libopenblasp $NUMPY_EGG_DIR/numpy/$i.cpython-${VERSION_major_python//./}-darwin.so
   done
 }
 
@@ -24,6 +25,8 @@ function fix_binaries_python_numpy_check() {
   NUMPY_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/numpy-${VERSION_python_numpy}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg
 
   verify_binary $NUMPY_EGG_DIR/numpy/core/_multiarray_umath.cpython-${VERSION_major_python//./}-darwin.so
+  verify_binary $NUMPY_EGG_DIR/numpy/linalg/lapack_lite.cpython-${VERSION_major_python//./}-darwin.so
+  verify_binary $NUMPY_EGG_DIR/numpy/linalg/_umath_linalg.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_paths_python_numpy() {
