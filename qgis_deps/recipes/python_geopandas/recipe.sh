@@ -23,7 +23,7 @@ DEPS_python_geopandas=(
 URL_python_geopandas=https://github.com/geopandas/geopandas/archive/v$VERSION_python_geopandas.tar.gz
 
 # md5 of the package
-MD5_python_geopandas=3a410f39e2c0d51eb47b634a4d0e5365
+MD5_python_geopandas=dc241fdd62012c3b5ae0e990ba20df26
 
 # default build path
 BUILD_python_geopandas=$BUILD_PATH/python_geopandas/$(get_directory $URL_python_geopandas)

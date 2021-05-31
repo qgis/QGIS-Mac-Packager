@@ -61,6 +61,8 @@ function build_libcurl() {
     --without-libpsl \
     --without-gssapi \
     --without-libmetalink \
+    --without-nghttp2 \
+    --without-brotli \
     --without-librtmp \
     --with-libssh2 \
     --without-libidn2 \

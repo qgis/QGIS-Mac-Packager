@@ -4,7 +4,7 @@ DESC_gdal="Geospatial Data Abstraction Library"
 
 # version of your package
 # keep in SYNC with python_gdal receipt
-VERSION_gdal=3.2.1
+VERSION_gdal=3.2.3
 
 source $RECIPES_PATH/netcdf/recipe.sh
 source $RECIPES_PATH/xerces/recipe.sh
@@ -42,7 +42,7 @@ DEPS_gdal=(
 URL_gdal=https://github.com/OSGeo/gdal/releases/download/v${VERSION_gdal}/gdal-${VERSION_gdal}.tar.gz
 
 # md5 of the package
-MD5_gdal=142dd8a1dc6a598b7e60c1e9e8a1b8ed
+MD5_gdal=86f7975190981820bbe0544870bdd164
 
 # default build path
 BUILD_gdal=$BUILD_PATH/gdal/$(get_directory $URL_gdal)
@@ -59,7 +59,7 @@ GDAL_PLUGINS_DIR=${STAGE_PATH}/lib/gdalplugins
 # normally you are not able to load them from qgis-deps
 GDAL_NOFOSS_PLUGINS_DIR=${STAGE_PATH}/3rdParty/gdalplugins
 
-ECW_SDK_VER="ERDASEcwJpeg2000SDK5.4.0"
+ECW_SDK_VER="ERDASEcwJpeg2000SDK5.5.0"
 ECW_SDK="$RECIPES_PATH/../../../external/$ECW_SDK_VER/Desktop_Read-Only/"
 LINK_gdal_ecw=gdal_ECW_JP2ECW.dylib
 
@@ -104,7 +104,7 @@ function build_ecw() {
     SRC=$(find frmts/ecw -name *.cpp)
 
     try $CXX -std=c++11 \
-      -Iport -Igcore -Ifrmts -Iogr -DFRMT_ecw -DECWSDK_VERSION=53 -Ifrmts/ecw -DDO_NOT_USE_DEBUG_BOOL \
+      -Iport -Igcore -Ifrmts -Iogr -DFRMT_ecw -DECWSDK_VERSION=55 -Ifrmts/ecw -DDO_NOT_USE_DEBUG_BOOL \
       -I$ECW_SDK/include -I$ECW_SDK/include/NCSEcw/API \
       -I$ECW_SDK/include/NCSEcw/ECW -I$ECW_SDK/include/NCSEcw/JP2 \
       ${SRC} \

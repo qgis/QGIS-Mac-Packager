@@ -10,8 +10,8 @@ VERSION_boost=1.73.0
 DEPS_boost=(zlib python libicu)
 
 # url of the package
-# URL_boost=https://sourceforge.net/projects/boost/files/boost/${VERSION_boost}/boost_${VERSION_boost//./_}.tar.bz2
-URL_boost=https://dl.bintray.com/boostorg/release/${VERSION_boost}/source/boost_${VERSION_boost//./_}.tar.bz2
+URL_boost=https://sourceforge.net/projects/boost/files/boost/${VERSION_boost}/boost_${VERSION_boost//./_}.tar.bz2
+# URL_boost=https://dl.bintray.com/boostorg/release/${VERSION_boost}/source/boost_${VERSION_boost//./_}.tar.bz2
 
 # from github it does not contain submodules in the build subdir
 # URL_boost=https://github.com/boostorg/boost/archive/boost-${VERSION_boost}.tar.gz

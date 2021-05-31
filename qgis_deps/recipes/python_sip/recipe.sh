@@ -14,7 +14,7 @@ DEPS_python_sip=(python qtwebkit qscintilla qtwebkit)
 URL_python_sip=https://www.riverbankcomputing.com/hg/sip/archive/a2a4d8ba9178.tar.bz2
 
 # md5 of the package
-MD5_python_sip=b1e4b667fcc957e0e1700d0dd389804b
+MD5_python_sip=68231ac70fccf4dff4b09e8bc01d9f9a
 
 # default build path
 BUILD_python_sip=$BUILD_PATH/python_sip/sip-$(get_directory $URL_python_sip)

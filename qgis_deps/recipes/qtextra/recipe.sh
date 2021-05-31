@@ -10,13 +10,13 @@ LINK_libqsqlodbc=libqsqlodbc.dylib
 LINK_libqsqlpsql=libqsqlpsql.dylib
 
 # dependencies of this recipe
-DEPS_qtextra=()
+DEPS_qtextra=(sqlite unixodbc postgres)
 
 # url of the package
 URL_qtextra=https://github.com/qt/qtbase/archive/v${VERSION_qtextra}.tar.gz
 
 # md5 of the package
-MD5_qtextra=d9004f22f69eed689dfb3668e7d5acc8
+MD5_qtextra=8b6bcfa8eb124e7c36b824d04f7c068e
 
 # default build path
 BUILD_qtextra=$BUILD_PATH/qtextra/$(get_directory $URL_qtextra)
@@ -59,6 +59,7 @@ function build_qtextra() {
 
   cd src/plugins/sqldrivers/
   try ${SED} 's;-liodbc;-lodbc;g' configure.json
+  rm -f config.cache
 
   try ${QMAKE} -- \
     ODBC_PREFIX=$STAGE_PATH/unixodbc \

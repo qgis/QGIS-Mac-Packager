@@ -3,16 +3,16 @@
 DESC_python_pyqt5="PyQt5 package for python"
 
 # version of your package
-VERSION_python_pyqt5=5.14.1
+VERSION_python_pyqt5=$VERSION_qt
 
 # dependencies of this recipe
 DEPS_python_pyqt5=(python python_sip qtwebkit qscintilla)
 
 # url of the package
-URL_python_pyqt5=https://files.pythonhosted.org/packages/3a/fb/eb51731f2dc7c22d8e1a63ba88fb702727b324c6352183a32f27f73b8116/PyQt5-${VERSION_python_pyqt5}.tar.gz
+URL_python_pyqt5=https://files.pythonhosted.org/packages/28/6c/640e3f5c734c296a7193079a86842a789edb7988dca39eab44579088a1d1/PyQt5-${VERSION_python_pyqt5}.tar.gz
 
 # md5 of the package
-MD5_python_pyqt5=404ea30ccc1e0ae1c5c0c4318c9a952b
+MD5_python_pyqt5=b94576e9e013210dc5aba061913e4bd4
 
 # default build path
 BUILD_python_pyqt5=$BUILD_PATH/python_pyqt5/$(get_directory $URL_python_pyqt5)
@@ -32,6 +32,9 @@ function fix_python_pyqt5_paths() {
 
   for i in ${targets[*]}
   do
+    try ${SED} "s;exec ./python${VERSION_major_python}.${VERSION_minor_python};exec $STAGE_PATH/bin/python${VERSION_major_python}.${VERSION_minor_python};g" $STAGE_PATH/$i
+    try ${SED} "s;exec python${VERSION_major_python}.${VERSION_minor_python};exec $STAGE_PATH/bin/python${VERSION_major_python}.${VERSION_minor_python};g" $STAGE_PATH/$i
+
     try ${SED} "s;exec ./python${VERSION_major_python};exec $STAGE_PATH/bin/python${VERSION_major_python};g" $STAGE_PATH/$i
     try ${SED} "s;exec python${VERSION_major_python};exec $STAGE_PATH/bin/python${VERSION_major_python};g" $STAGE_PATH/$i
     rm -f $STAGE_PATH/$i.orig

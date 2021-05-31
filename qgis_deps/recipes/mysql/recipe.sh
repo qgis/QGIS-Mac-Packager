@@ -54,7 +54,7 @@ function build_mysql() {
   try ${CMAKE}  \
       -DWITHOUT_SERVER=ON \
       -DFORCE_INSOURCE_BUILD=1 \
-      -ENABLED_PROFILING=OFF \
+      -DENABLED_PROFILING=OFF \
       -DCOMPILATION_COMMENT=qgis_deps \
       -DINSTALL_DOCDIR=share/doc/mysql \
       -DINSTALL_INCLUDEDIR=include/mysql \
