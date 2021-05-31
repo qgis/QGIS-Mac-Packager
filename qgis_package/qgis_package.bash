@@ -56,6 +56,14 @@ dmgbuild \
   "$QGIS_APP_NAME" \
   "$PACKAGE"
 
+info "Add license to dmg"
+$CONFIGDIR/../scripts/add_license_to_dmg.bash \
+  $CONFIGDIR/../resources/license_ecw.txt \
+  $CONFIGDIR/../resources/license_mrsid.txt \
+  $CONFIGDIR/../resources/EULA.txt \
+  $CONFIGDIR/../eula-resources-template.xml \
+  "$PACKAGE"
+
 info "Signing the dmg"
 codesign -s "$IDENTITY" -v --force -–timestamp=none --keychain "$KEYCHAIN_FILE" "$PACKAGE"
 codesign --deep-verify --verbose "$PACKAGE"

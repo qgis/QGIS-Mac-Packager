@@ -49,7 +49,7 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - Open XCode and accept license
 - install homebrew and QGIS deps by running `install_brew.bash`
 - Download MrSID SDK [referenced in](https://github.com/OSGeo/homebrew-osgeo4mac/blob/master/Formula/osgeo-mrsid-sdk.rb) and place it in the folder `$HOME/Library/Caches/Homebrew`. Make a symbolic link in `../external/MrSID_DSDK-<ver>-darwin14.universal.clang60`
-- Download erdas-ecw-jp2 [referenced in](https://github.com/OSGeo/homebrew-osgeo4mac/blob/master/Formula/osgeo-ecwjp2-sdk.rb). Open dmg, open pkg and install to default location (Desktop Read-Only Free type). Make a symbolic link in `../external/ERDASEcwJpeg2000SDK<ver>`
+- Download erdas-ecw-jp2 5.5.0 [referenced in](https://github.com/OSGeo/homebrew-osgeo4mac/blob/master/Formula/osgeo-ecwjp2-sdk.rb). Open dmg, open pkg and install to default location (Desktop Read-Only Free type). Make a symbolic link in `../external/ERDASEcwJpeg2000SDK<ver>`
 - Download Oracle (18.1.0.0.0) package [from Oracle Download Section](https://www.oracle.com/database/technologies/instant-client/macos-intel-x86-downloads.html). Only  "Instant Client Package - Basic" and "Instant Client Package - SDK" are needed. Unpack/install to `../external/oracle`
 - install homebrew packages by `install_brew_dev_packages.bash`
 - get proj datumgrids by running `scripts/fetch_proj-datumgrid.bash`

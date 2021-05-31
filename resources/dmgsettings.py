@@ -181,34 +181,37 @@ list_column_sort_directions = {
     'comments': 'ascending',
     }
 
+#
+# BROKEN: https://github.com/qgis/QGIS-Mac-Packager/issues/130
+#
 # .. License configuration .....................................................
-with open(thisFileDir + '/EULA.txt', 'r') as fh:
-    eula = fh.read()
-with open(thisFileDir + '/license_ecw.txt', 'r') as fh:
-    eula += "\n" + 100 * "-"
-    eula += "\n[1] ERDAS ECW/JP2\n"
-    eula += 100 * "-" + "\n"
-    eula += fh.read()
-with open(thisFileDir + '/license_mrsid.txt', 'r') as fh:
-    eula += "\n" + 100 * "-"
-    eula += "\n[2] MrSID Decode SDKs\n"
-    eula += 100 * "-" + "\n"
-    eula += fh.read()
+# with open(thisFileDir + '/EULA.txt', 'r') as fh:
+#    eula = fh.read()
+#with open(thisFileDir + '/license_ecw.txt', 'r') as fh:
+#    eula += "\n" + 100 * "-"
+#    eula += "\n[1] ERDAS ECW/JP2\n"
+#    eula += 100 * "-" + "\n"
+#    eula += fh.read()
+#with open(thisFileDir + '/license_mrsid.txt', 'r') as fh:
+#    eula += "\n" + 100 * "-"
+#    eula += "\n[2] MrSID Decode SDKs\n"
+#    eula += 100 * "-" + "\n"
+#    eula += fh.read()
 
-license = {
-    'default-language': 'en_US',
-    'licenses': {
-        'en_US': eula,
-    },
-    'buttons': {
-         'en_US': (
-             b'English',
-             b'Agree',
-             b'Disagree',
-             b'Print',
-             b'Save',
-             b'If you agree with the terms of this license, press "Agree" to '
-             b'install the software.  If you do not agree, press "Disagree".'
-         ),
-     },
-}
+#license = {
+    #   'default-language': 'en_US',
+    #'licenses': {
+    #    'en_US': eula,
+    #},
+    #'buttons': {
+    #     'en_US': (
+    #         b'English',
+    #         b'Agree',
+    #         b'Disagree',
+    #         b'Print',
+    #         b'Save',
+    #         b'If you agree with the terms of this license, press "Agree" to '
+    #         b'install the software.  If you do not agree, press "Disagree".'
+    #     ),
+# },
+#}

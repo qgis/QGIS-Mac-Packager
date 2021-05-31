@@ -7,7 +7,8 @@ QGIS_BUILD_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 
 
 # load configuration
 if (( $# < 4 )); then
-    error "qgis_build: $0 <path/to>/config/<my>.conf major minor patch ..."
+    echo "qgis_build: $0 <path/to>/config/<my>.conf major minor patch ..."
+    exit 1
 fi
 
 CONFIG_FILE=$1
