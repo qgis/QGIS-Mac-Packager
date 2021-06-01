@@ -71,7 +71,6 @@ function fix_binaries_python_packages_check() {
   verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_cffi_backend.cpython-${VERSION_major_python//./}-darwin.so
   verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/etree.cpython-${VERSION_major_python//./}-darwin.so
   verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/lxml/objectify.cpython-${VERSION_major_python//./}-darwin.so
-  verify_binary $BUNDLE_PYTHON_SITE_PACKAGES_DIR/_yaml.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_paths_python_packages() {
