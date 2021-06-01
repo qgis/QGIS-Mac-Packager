@@ -89,7 +89,7 @@ function fix_paths_python_packages() {
       pipenv-resolver \
       pipenv
   do
-    fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
+    fix_python_exec_link $BUNDLE_BIN_DIR/$i
   done
 
   clean_path $BUNDLE_PYTHON_PACKAGES_DIR/_sysconfigdata__darwin_darwin.py

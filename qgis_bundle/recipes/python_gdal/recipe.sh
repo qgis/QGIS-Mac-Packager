@@ -88,8 +88,8 @@ function fix_paths_python_gdal() {
     pct2rgb.py \
     rgb2pct.py
   do
-    fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $GDAL_EGG_DIR/EGG-INFO/scripts/$i
-    fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
+    fix_python_exec_link $GDAL_EGG_DIR/EGG-INFO/scripts/$i
+    fix_python_exec_link $BUNDLE_BIN_DIR/$i
   done
 }
 

@@ -64,10 +64,11 @@ function fix_paths_python() {
       pip${VERSION_major_python} \
       python${VERSION_major_python}-config
   do
-    fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_BIN_DIR/$i
+    fix_python_exec_link $BUNDLE_BIN_DIR/$i
   done
 
-  fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}-darwin/python-config.py
+  fix_python_exec_link $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}-darwin/python-config.py
+
   clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}-darwin/Makefile
   clean_path $BUNDLE_PYTHON_PACKAGES_DIR/config-${VERSION_major_python}-darwin/Setup
 }

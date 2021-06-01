@@ -77,6 +77,12 @@ function fix_exec_link {
   try ${SED} "s;exec $FROMSTR;exec \'\`dirname \$0\`/$TOSTR\';g" "$FILENAME"
 }
 
+function fix_python_exec_link {
+  FILENAME=$1
+  fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python$VERSION_major_python python$VERSION_major_python $FILENAME
+  fix_exec_link $QGIS_DEPS_STAGE_PATH/bin/python3 python3 $FILENAME
+}
+
 function clean_path {
   FNAME=$1
 
