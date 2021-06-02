@@ -20,12 +20,14 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-        repository: ${{ github.repository }}
-        path: builds/${CI_RELEASE}/QGIS-Mac-Packager
+        with:
+          repository: ${{ github.repository }}
+          path: builds/${CI_RELEASE}/QGIS-Mac-Packager
 
       - uses: actions/checkout@v2
-        repository: qgis/QGIS
-        path: builds/${CI_RELEASE}/QGIS
+        with:
+          repository: qgis/QGIS
+          path: builds/${CI_RELEASE}/QGIS
 
       - name: Prepare build cache for pull request
         uses: pat-s/always-upload-cache@v2.1.3
