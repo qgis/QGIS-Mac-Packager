@@ -143,7 +143,15 @@ done
 # make
 try rm -rf $QGIS_INSTALL_DIR/*
 try cd $QGIS_BUILD_DIR
-try ninja
+if [[ "$NINJA_PARALLEL" == "true" ]]; then
+  try ninja
+else
+  # on the build server with limited RAM
+  # running in parallel sometimes halt
+  # system RAM and massive swapping
+  # makes the build goes forever
+  try ninja -j1
+fi
 try ninja install
 
 echo "build done"
