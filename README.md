@@ -43,7 +43,8 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - Get Apple Development Program for your Apple ID
 - Login to the server (have static IP)
 - Change default password to some secure one
-- Install XCode from App Store 
+- Open Settings > Spotlight and disable all search locations & add `/opt` and `~/qgis` to exclude locations  
+- Install XCode from App Store (It is enough to JUST install command line tools!)
 - Go to Apple Developer Download page -> More and command line tools. Install both
 - Sign out from the apple developer page and app store
 - Open XCode and accept license
