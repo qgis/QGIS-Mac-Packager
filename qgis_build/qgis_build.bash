@@ -72,6 +72,15 @@ else
   PDAL_CMAKE="-DWITH_EPT=FALSE -DWITH_PDAL=FALSE"
 fi
 
+if [[ "$NINJA_PARALLEL" == "true" ]]; then
+  CMAME_CCACHE_FLAG="-DUSE_CCACHE=ON"
+else
+  # on the build server with very limited RAM
+  # population and running of ccache
+  # uses all the RAM so the clang process
+  # is stuck with swapping to SSD
+  CMAME_CCACHE_FLAG="-DUSE_CCACHE=OFF"
+fi
 
 echo "Running CMAKE command, check $QGIS_BUILD_DIR/cmake.configure in case of error!"
 echo "Using $CXX compiler"
@@ -80,6 +89,7 @@ PATH=$ROOT_OUT_PATH/stage/bin:$PATH \
 cmake -DCMAKE_BUILD_TYPE=Release \
       $HANA_CMAKE \
       $ORACLE_CMAKE \
+      $CMAME_CCACHE_FLAG \
       -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DODBC_CONFIG=$ROOT_OUT_PATH/stage/unixodbc/bin/odbc_config \
       -DODBC_INCLUDE_DIR=$ROOT_OUT_PATH/stage/unixodbc/include \
