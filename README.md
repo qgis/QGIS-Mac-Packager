@@ -90,8 +90,18 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 ``` 
 cp scripts/org.qgis.build.plist ~/Library/LaunchAgents/
 plutil ~/Library/LaunchAgents/org.qgis.build.plist 
-launchctl load ~/Library/LaunchAgents/org.qgis.build.plist
+echo $UID
+launchctl bootstrap gui/503 ~/Library/LaunchAgents/org.qgis.build.plist
+launchctl enable gui/503/org.qgis.build
 ``` 
+
+If you want to kick the cron manually and see the errors try
+
+```
+launchctl kickstart gui/503/org.qgis.build
+tail -n 200 -f /var/log/system.log | grep qgis
+cat 
+```
 
 ## Server Update
 

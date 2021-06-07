@@ -132,6 +132,15 @@ function fix_binaries_qgis() {
       UNTWINE=MacOS/lib/qgis/untwine
  fi
 
+  # REMOVE when LTS is >= 3.20
+  # ows provider removed in 3.20
+  OWSPROVIDER=
+  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so" ]; then
+    OWSPROVIDER=PlugIns/qgis/libowsprovider.so
+  fi
+
+  https://github.com/qgis/QGIS/pull/43559
+
  for i in \
     MacOS/QGIS \
     MacOS/bin/_qgis_mapserver \
@@ -153,6 +162,7 @@ function fix_binaries_qgis() {
     $ORACLE_PROVIDER \
     $PDALPROVIDER \
     $UNTWINE \
+    $OWSPROVIDER \
     PlugIns/qgis/libgeometrycheckerplugin.so \
     PlugIns/qgis/libdb2provider.so \
     PlugIns/qgis/libidentcertauthmethod.so \
@@ -171,7 +181,6 @@ function fix_binaries_qgis() {
     PlugIns/qgis/liboauth2authmethod.so \
     PlugIns/qgis/libbasicauthmethod.so \
     PlugIns/qgis/libarcgisfeatureserverprovider.so \
-    PlugIns/qgis/libowsprovider.so \
     PlugIns/qgis/libpkipathsauthmethod.so \
     PlugIns/qgis/libwmsprovider.so \
     PlugIns/qgis/libofflineeditingplugin.so \
