@@ -61,7 +61,7 @@ $CONFIGDIR/../scripts/add_license_to_dmg.bash \
   $CONFIGDIR/../resources/license_ecw.txt \
   $CONFIGDIR/../resources/license_mrsid.txt \
   $CONFIGDIR/../resources/EULA.txt \
-  $CONFIGDIR/../eula-resources-template.xml \
+  $CONFIGDIR/../resources/eula-resources-template.xml \
   "$PACKAGE"
 
 info "Signing the dmg"
