@@ -84,6 +84,18 @@ function bundle_qgis() {
 }
 
 function fix_binaries_qgis() {
+
+ function qgis_providerlibname(){
+   _module=$1
+   _lib=$2
+   if [[ ${QGIS_MINOR_VERSION:-99} -gt 21 ]]; then
+     echo "lib${_lib}provider"
+   else
+     echo "libprovider_${_lib}"
+   fi
+ } 
+
+
  chmod +x $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
  # RPATHS
@@ -119,29 +131,29 @@ function fix_binaries_qgis() {
  install_name_add_rpath @executable_path/../../../../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
 
  if [[ "$WITH_HANA" == "true" ]]; then
-  HANA_PROVIDER=PlugIns/qgis/libhanaprovider.so
+  HANA_PROVIDER=PlugIns/qgis/$(qgis_libname provider hana).so
  fi
 
  if [[ "$WITH_ORACLE" == "true" ]]; then
-  ORACLE_PROVIDER=PlugIns/qgis/liboracleprovider.so
+  ORACLE_PROVIDER=PlugIns/qgis/$(qgis_libname provider oracle).so
  fi
 
  # LIBS
  if [[ "$WITH_PDAL" == "true" ]]; then
-      PDALPROVIDER=PlugIns/qgis/libpdalprovider.so
+      PDALPROVIDER=PlugIns/qgis/$(qgis_libname provider pdal).so
       UNTWINE=MacOS/lib/qgis/untwine
  fi
 
   # REMOVE when LTS is >= 3.20
   # ows provider removed in 3.20
   OWSPROVIDER=
-  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/libowsprovider.so" ]; then
-    OWSPROVIDER=PlugIns/qgis/libowsprovider.so
+  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider libows).so" ]; then
+    OWSPROVIDER=PlugIns/qgis/$(qgis_libname provider libows).so
   fi
 
   https://github.com/qgis/QGIS/pull/43559
 
- for i in \
+  for i in \
     MacOS/QGIS \
     MacOS/bin/_qgis_mapserver \
     MacOS/fcgi-bin/_qgis_mapserv.fcgi \
@@ -164,33 +176,33 @@ function fix_binaries_qgis() {
     $UNTWINE \
     $OWSPROVIDER \
     PlugIns/qgis/libgeometrycheckerplugin.so \
-    PlugIns/qgis/libdb2provider.so \
-    PlugIns/qgis/libidentcertauthmethod.so \
+    PlugIns/qgis/$(qgis_libname provider db2).so \
+    PlugIns/qgis/$(qgis_libname authmethod identcert).so \
     PlugIns/qgis/libtopolplugin.so \
-    PlugIns/qgis/libgpxprovider.so \
-    PlugIns/qgis/libesritokenauthmethod.so \
-    PlugIns/qgis/libpostgresrasterprovider.so \
-    PlugIns/qgis/libwcsprovider.so \
-    PlugIns/qgis/libmdalprovider.so \
-    PlugIns/qgis/libdelimitedtextprovider.so \
+    PlugIns/qgis/$(qgis_libname provider gpx).so \
+    PlugIns/qgis/$(qgis_libname authmethod esritoken).so \
+    PlugIns/qgis/$(qgis_libname provider postgresraster).so \
+    PlugIns/qgis/$(qgis_libname provider wcs).so \
+    PlugIns/qgis/$(qgis_libname provider mdal).so \
+    PlugIns/qgis/$(qgis_libname provider delimitedtext).so \
     PlugIns/qgis/libgpsimporterplugin.so \
-    PlugIns/qgis/libspatialiteprovider.so \
-    PlugIns/qgis/libgeonodeprovider.so \
-    PlugIns/qgis/libgrassrasterprovider${VERSION_grass_major}.so \
-    PlugIns/qgis/libwfsprovider.so \
-    PlugIns/qgis/liboauth2authmethod.so \
-    PlugIns/qgis/libbasicauthmethod.so \
+    PlugIns/qgis/$(qgis_libname provider spatialite).so \
+    PlugIns/qgis/$(qgis_libname provider geonode).so \
+    PlugIns/qgis/$(qgis_libname provider grassrasterprovider${VERSION_grass_major}.so \
+    PlugIns/qgis/$(qgis_libname provider wfs).so \
+    PlugIns/qgis/$(qgis_libname authmethod oauth2).so \
+    PlugIns/qgis/$(qgis_libname authmethod basic).so \
     PlugIns/qgis/libarcgisfeatureserverprovider.so \
-    PlugIns/qgis/libpkipathsauthmethod.so \
-    PlugIns/qgis/libwmsprovider.so \
+    PlugIns/qgis/$(qgis_libname authmethod pkipaths).so \
+    PlugIns/qgis/$(qgis_libname provider wms).so \
     PlugIns/qgis/libofflineeditingplugin.so \
-    PlugIns/qgis/libpkcs12authmethod.so \
-    PlugIns/qgis/libgrassprovider${VERSION_grass_major}.so \
-    PlugIns/qgis/libmssqlprovider.so \
-    PlugIns/qgis/libarcgismapserverprovider.so \
-    PlugIns/qgis/libpostgresprovider.so \
+    PlugIns/qgis/$(qgis_libname authmethod pkcs12).so \
+    PlugIns/qgis/$(qgis_libname provider rassprovider${VERSION_grass_major}.so \
+    PlugIns/qgis/$(qgis_libname provider mssql).so \
+    PlugIns/qgis/libarcgismapserver).so \
+    PlugIns/qgis/$(qgis_libname provider postgres).so \
     PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so \
-    PlugIns/qgis/libvirtuallayerprovider.so \
+    PlugIns/qgis/$(qgis_libname provider virtuallayer).so \
     Resources/python/qgis/_core.so \
     Resources/python/qgis/_3d.so \
     Resources/python/qgis/_server.so \
@@ -298,7 +310,7 @@ function fix_binaries_qgis() {
 function fix_binaries_qgis_check() {
   verify_binary $BUNDLE_CONTENTS_DIR/MacOS/QGIS
   verify_binary $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
-  verify_binary $BUNDLE_CONTENTS_DIR/PlugIns/qgis/libdb2provider.so
+  verify_binary $BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider db2).so
 
   ## ORACLE
   if [[ "$WITH_ORACLE" == "true" ]]; then
