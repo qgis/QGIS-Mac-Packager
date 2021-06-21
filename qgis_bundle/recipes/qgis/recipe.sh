@@ -192,7 +192,7 @@ function fix_binaries_qgis() {
     PlugIns/qgis/$(qgis_libname provider wfs).so \
     PlugIns/qgis/$(qgis_libname authmethod oauth2).so \
     PlugIns/qgis/$(qgis_libname authmethod basic).so \
-    PlugIns/qgis/$(qgis_libname provider barcgisfeatureserver).so \
+    PlugIns/qgis/$(qgis_libname provider arcgisfeatureserver).so \
     PlugIns/qgis/$(qgis_libname authmethod pkipaths).so \
     PlugIns/qgis/$(qgis_libname provider wms).so \
     PlugIns/qgis/libofflineeditingplugin.so \
