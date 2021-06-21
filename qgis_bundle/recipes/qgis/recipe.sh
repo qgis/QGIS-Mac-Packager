@@ -192,14 +192,14 @@ function fix_binaries_qgis() {
     PlugIns/qgis/$(qgis_libname provider wfs).so \
     PlugIns/qgis/$(qgis_libname authmethod oauth2).so \
     PlugIns/qgis/$(qgis_libname authmethod basic).so \
-    PlugIns/qgis/libarcgisfeatureserverprovider.so \
+    PlugIns/qgis/$(qgis_libname provider barcgisfeatureserver).so \
     PlugIns/qgis/$(qgis_libname authmethod pkipaths).so \
     PlugIns/qgis/$(qgis_libname provider wms).so \
     PlugIns/qgis/libofflineeditingplugin.so \
     PlugIns/qgis/$(qgis_libname authmethod pkcs12).so \
-    PlugIns/qgis/$(qgis_libname provider rassprovider${VERSION_grass_major}.so \
+    PlugIns/qgis/$(qgis_libname provider grassprovider${VERSION_grass_major}.so \
     PlugIns/qgis/$(qgis_libname provider mssql).so \
-    PlugIns/qgis/libarcgismapserver).so \
+    PlugIns/qgis/$(qgis_libname provider arcgismapserver).so \
     PlugIns/qgis/$(qgis_libname provider postgres).so \
     PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so \
     PlugIns/qgis/$(qgis_libname provider virtuallayer).so \
