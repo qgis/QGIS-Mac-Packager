@@ -13,9 +13,9 @@ DMG_FILE=$5
 EULA_RSRC=$(mktemp -t dmglicense.tmp.XXXXXXXXXX)
 cat $QGIS_LICENSE > $EULA_RSRC
 echo "[1] ERDAS ECW/JP2" >> $EULA_RSRC
-cat $ECW_LICENSE > $EULA_RSRC
+cat $ECW_LICENSE >> $EULA_RSRC
 echo "[2] MrSID Decode SDKs" >> $EULA_RSRC
-cat $MRSID_LICENSE > $EULA_RSRC
+cat $MRSID_LICENSE >> $EULA_RSRC
 
 echo "Created license $EULA_RSRC"
 
