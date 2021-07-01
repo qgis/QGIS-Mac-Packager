@@ -25,7 +25,8 @@ function bundle_qgis() {
   try cp -av $QGIS_CONTENTS_DIR/MacOS/bin/qgis_mapserver $BUNDLE_BIN_DIR/_qgis_mapserver
   try cp -av $QGIS_RECIPE_DIR/qgis_mapserver $BUNDLE_BIN_DIR/qgis_mapserver
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/qgis/server $BUNDLE_LIB_DIR/qgis/
-
+  try rm -f $BUNDLE_LIB_DIR/qgis/server/libdummy.so
+  
   # LIBS
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgis_app.* $BUNDLE_LIB_DIR
   try cp -av $QGIS_CONTENTS_DIR/MacOS/lib/libqgispython.* $BUNDLE_LIB_DIR
