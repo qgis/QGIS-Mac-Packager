@@ -152,7 +152,7 @@ function fix_binaries_qgis() {
     OWSPROVIDER=PlugIns/qgis/$(qgis_libname provider libows).so
   fi
 
-  https://github.com/qgis/QGIS/pull/43559
+  # https://github.com/qgis/QGIS/pull/43559
 
   for i in \
     MacOS/QGIS \
