@@ -161,7 +161,6 @@ function fix_binaries_qgis() {
     MacOS/QGIS \
     MacOS/bin/_qgis_mapserver \
     MacOS/fcgi-bin/_qgis_mapserv.fcgi \
-    MacOS/lib/qgis/server/libdummy.so \
     MacOS/lib/qgis/server/liblandingpage.so \
     MacOS/lib/qgis/server/libwcs.so \
     MacOS/lib/qgis/server/libwfs.so \
