@@ -84,19 +84,22 @@ function bundle_qgis() {
   fi
 }
 
-function fix_binaries_qgis() {
-
- function qgis_providerlibname(){
+function qgis_libname() {
    _module=$1
    _lib=$2
-   if [[ ${QGIS_MINOR_VERSION:-99} -gt 21 ]]; then
-     echo "lib${_lib}provider"
+   if [[ ${QGIS_MINOR_VERSION:-99} -gt 21 ]]
+   then
+      # old way
+      # libdb2provider.so
+     echo "lib${_lib}${_module}"
    else
-     echo "libprovider_${_lib}"
+     # new way
+     # libprovider_db2.so
+     echo "lib${_module}_${_lib}"
    fi
- } 
+}
 
-
+function fix_binaries_qgis() {
  chmod +x $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
  # RPATHS
@@ -189,7 +192,7 @@ function fix_binaries_qgis() {
     PlugIns/qgis/libgpsimporterplugin.so \
     PlugIns/qgis/$(qgis_libname provider spatialite).so \
     PlugIns/qgis/$(qgis_libname provider geonode).so \
-    PlugIns/qgis/$(qgis_libname provider grassrasterprovider${VERSION_grass_major}.so \
+    PlugIns/qgis/$(qgis_libname provider grassrasterprovider)${VERSION_grass_major}.so \
     PlugIns/qgis/$(qgis_libname provider wfs).so \
     PlugIns/qgis/$(qgis_libname authmethod oauth2).so \
     PlugIns/qgis/$(qgis_libname authmethod basic).so \
@@ -198,7 +201,7 @@ function fix_binaries_qgis() {
     PlugIns/qgis/$(qgis_libname provider wms).so \
     PlugIns/qgis/libofflineeditingplugin.so \
     PlugIns/qgis/$(qgis_libname authmethod pkcs12).so \
-    PlugIns/qgis/$(qgis_libname provider grassprovider${VERSION_grass_major}.so \
+    PlugIns/qgis/$(qgis_libname provider grassprovider)${VERSION_grass_major}.so \
     PlugIns/qgis/$(qgis_libname provider mssql).so \
     PlugIns/qgis/$(qgis_libname provider arcgismapserver).so \
     PlugIns/qgis/$(qgis_libname provider postgres).so \
