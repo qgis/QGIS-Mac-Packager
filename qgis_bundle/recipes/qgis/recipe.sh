@@ -191,7 +191,7 @@ function fix_binaries_qgis() {
     PlugIns/qgis/libgpsimporterplugin.so \
     PlugIns/qgis/$(qgis_libname provider spatialite).so \
     PlugIns/qgis/$(qgis_libname provider geonode).so \
-    PlugIns/qgis/$(qgis_libname provider grassrasterprovider)${VERSION_grass_major}.so \
+    PlugIns/qgis/$(qgis_libname provider grassraster)${VERSION_grass_major}.so \
     PlugIns/qgis/$(qgis_libname provider wfs).so \
     PlugIns/qgis/$(qgis_libname authmethod oauth2).so \
     PlugIns/qgis/$(qgis_libname authmethod basic).so \
@@ -200,7 +200,7 @@ function fix_binaries_qgis() {
     PlugIns/qgis/$(qgis_libname provider wms).so \
     PlugIns/qgis/libofflineeditingplugin.so \
     PlugIns/qgis/$(qgis_libname authmethod pkcs12).so \
-    PlugIns/qgis/$(qgis_libname provider grassprovider)${VERSION_grass_major}.so \
+    PlugIns/qgis/$(qgis_libname provider grass)${VERSION_grass_major}.so \
     PlugIns/qgis/$(qgis_libname provider mssql).so \
     PlugIns/qgis/$(qgis_libname provider arcgismapserver).so \
     PlugIns/qgis/$(qgis_libname provider postgres).so \
