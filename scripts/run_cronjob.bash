@@ -53,11 +53,12 @@ for i in nightly pr ltr; do
 done
 
 if [ -n "$failed" ]; then
+	gzip $LOG
 	(
 		echo QGIS MacOS Build Status:
 		[ -z "$ok" ] || echo ok:$ok
 		[ -z "$failed" ] || echo failed:$failed
-	) | mutt -a $LOG -s "QGIS MacOS Build Failure" -- admin@localhost
+	) | mutt -a $LOG.gz -s "QGIS MacOS Build Failure" -- admin@localhost
 
 	echo "QGIS MacOS Build failed:$failed ok:$ok"
 	exit 1
