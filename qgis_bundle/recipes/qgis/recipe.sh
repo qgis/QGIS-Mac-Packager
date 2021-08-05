@@ -87,15 +87,14 @@ function bundle_qgis() {
 function qgis_libname() {
    _module=$1
    _lib=$2
-   if [[ ${QGIS_MINOR_VERSION:-99} -gt 21 ]]
-   then
-      # old way
-      # libdb2provider.so
-     echo "lib${_lib}${_module}"
-   else
+   if [[ "$QGIS_321_PROVIDER_NAMES" == "true" ]]; then
      # new way
      # libprovider_db2.so
      echo "lib${_module}_${_lib}"
+   else
+     # old way
+     # libdb2provider.so
+     echo "lib${_lib}${_module}"
    fi
 }
 
@@ -155,6 +154,14 @@ function fix_binaries_qgis() {
     OWSPROVIDER=PlugIns/qgis/$(qgis_libname provider libows).so
   fi
 
+  # REMOVE when LTS is >= 3.22
+  # gps plugin removed in 3.21
+  GPSPLUGIN=
+  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/libgpsimporterplugin.so" ]; then
+    GPSPLUGIN=PlugIns/qgis/libgpsimporterplugin.so
+  fi
+
+
   # https://github.com/qgis/QGIS/pull/43559
 
   for i in \
@@ -188,7 +195,7 @@ function fix_binaries_qgis() {
     PlugIns/qgis/$(qgis_libname provider wcs).so \
     PlugIns/qgis/$(qgis_libname provider mdal).so \
     PlugIns/qgis/$(qgis_libname provider delimitedtext).so \
-    PlugIns/qgis/libgpsimporterplugin.so \
+    $GPSPLUGIN \
     PlugIns/qgis/$(qgis_libname provider spatialite).so \
     PlugIns/qgis/$(qgis_libname provider geonode).so \
     PlugIns/qgis/$(qgis_libname provider grassraster)${VERSION_grass_major}.so \
