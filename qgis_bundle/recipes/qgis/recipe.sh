@@ -150,8 +150,8 @@ function fix_binaries_qgis() {
   # REMOVE when LTS is >= 3.20
   # ows provider removed in 3.20
   OWSPROVIDER=
-  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider libows).so" ]; then
-    OWSPROVIDER=PlugIns/qgis/$(qgis_libname provider libows).so
+  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider ows).so" ]; then
+    OWSPROVIDER=PlugIns/qgis/$(qgis_libname provider ows).so
   fi
 
   # REMOVE when LTS is >= 3.22
