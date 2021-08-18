@@ -99,53 +99,53 @@ function qgis_libname() {
 }
 
 function fix_binaries_qgis() {
- chmod +x $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+  chmod +x $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
- # RPATHS
- install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_delete_rpath $QGIS_CONTENTS_DIR/MacOS/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+  # RPATHS
+  install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+  install_name_delete_rpath $QGIS_CONTENTS_DIR/MacOS/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
- install_name_add_rpath @executable_path/../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_add_rpath @executable_path/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
- install_name_add_rpath @executable_path/../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+  install_name_add_rpath @executable_path/../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+  install_name_add_rpath @executable_path/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+  install_name_add_rpath @executable_path/../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
- install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/_qgis_mapserv.fcgi
- install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/_qgis_mapserv.fcgi
- install_name_add_rpath @executable_path/../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/_qgis_mapserv.fcgi
+  install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/_qgis_mapserv.fcgi
+  install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/_qgis_mapserv.fcgi
+  install_name_add_rpath @executable_path/../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/fcgi-bin/_qgis_mapserv.fcgi
 
- install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/bin/_qgis_mapserver
- install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/bin/_qgis_mapserver
- install_name_add_rpath @executable_path/../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/bin/_qgis_mapserver
+  install_name_add_rpath @executable_path/../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/bin/_qgis_mapserver
+  install_name_add_rpath @executable_path/../lib $BUNDLE_CONTENTS_DIR/MacOS/bin/_qgis_mapserver
+  install_name_add_rpath @executable_path/../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/bin/_qgis_mapserver
 
- install_name_add_rpath @executable_path/../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
- install_name_add_rpath @executable_path/../../../lib $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
- install_name_add_rpath @executable_path/../../../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
+  install_name_add_rpath @executable_path/../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
+  install_name_add_rpath @executable_path/../../../lib $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
+  install_name_add_rpath @executable_path/../../../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/qgis_process.app/Contents/MacOS/qgis_process
 
- install_name_add_rpath @loader_path/../../MacOS/lib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
+  install_name_add_rpath @loader_path/../../MacOS/lib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
 
- install_name_id @rpath/libqgispython.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
- install_name_id @rpath/libqgis_server.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_server.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
- install_name_id @rpath/libqgis_app.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
- install_name_id @rpath/libqgis_customwidgets.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
+  install_name_id @rpath/libqgispython.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgispython.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
+  install_name_id @rpath/libqgis_server.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_server.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
+  install_name_id @rpath/libqgis_app.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/MacOS/lib/libqgis_app.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
+  install_name_id @rpath/libqgis_customwidgets.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib $BUNDLE_CONTENTS_DIR/PlugIns/designer/libqgis_customwidgets.$QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION.dylib
 
- install_name_add_rpath @executable_path/../../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
- install_name_add_rpath @executable_path/../../../../lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
- install_name_add_rpath @executable_path/../../../../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
+  install_name_add_rpath @executable_path/../../../../../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
+  install_name_add_rpath @executable_path/../../../../lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
+  install_name_add_rpath @executable_path/../../../../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
 
- if [[ "$WITH_HANA" == "true" ]]; then
-  HANA_PROVIDER=PlugIns/qgis/$(qgis_libname provider hana).so
- fi
+  if [[ "$WITH_HANA" == "true" ]]; then
+    HANA_PROVIDER=PlugIns/qgis/$(qgis_libname provider hana).so
+  fi
 
- if [[ "$WITH_ORACLE" == "true" ]]; then
-  ORACLE_PROVIDER=PlugIns/qgis/$(qgis_libname provider oracle).so
- fi
+  if [[ "$WITH_ORACLE" == "true" ]]; then
+    ORACLE_PROVIDER=PlugIns/qgis/$(qgis_libname provider oracle).so
+  fi
 
- # LIBS
- if [[ "$WITH_PDAL" == "true" ]]; then
-      PDALPROVIDER=PlugIns/qgis/$(qgis_libname provider pdal).so
-      UNTWINE=MacOS/lib/qgis/untwine
- fi
+  # LIBS
+  if [[ "$WITH_PDAL" == "true" ]]; then
+    PDALPROVIDER=PlugIns/qgis/$(qgis_libname provider pdal).so
+    UNTWINE=MacOS/lib/qgis/untwine
+  fi
 
   # REMOVE when LTS is >= 3.20
   # ows provider removed in 3.20
@@ -161,6 +161,11 @@ function fix_binaries_qgis() {
     GPSPLUGIN=PlugIns/qgis/libgpsimporterplugin.so
   fi
 
+  # virtualraster added in 3.21
+  VIRTUALRASTER=
+  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtualraster.so" ]; then
+    VIRTUALRASTER=PlugIns/qgis/libvirtualraster.so
+  fi
 
   # https://github.com/qgis/QGIS/pull/43559
 
@@ -213,6 +218,7 @@ function fix_binaries_qgis() {
     PlugIns/qgis/$(qgis_libname provider postgres).so \
     PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so \
     PlugIns/qgis/$(qgis_libname provider virtuallayer).so \
+    $VIRTUALRASTER \
     Resources/python/qgis/_core.so \
     Resources/python/qgis/_3d.so \
     Resources/python/qgis/_server.so \
@@ -226,7 +232,7 @@ function fix_binaries_qgis() {
     MacOS/lib/qgis/grass/modules/qgis.g.info7 \
     MacOS/lib/qgis/grass/modules/qgis.r.in7 \
     MacOS/lib/qgis/grass/modules/qgis.v.in7
- do
+  do
     for j in \
       $LINK_exiv2 \
       $LINK_expat \
@@ -294,17 +300,17 @@ function fix_binaries_qgis() {
       install_name_id @rpath/$j.framework/Versions/$QGIS_VERSION/$j $BUNDLE_CONTENTS_DIR/Frameworks/$j.framework/Versions/$QGIS_VERSION/$j
       install_name_change $QGIS_BUILD_DIR/output/lib/$j.framework/Versions/$QGIS_VERSION/$j @rpath/$j.framework/Versions/$QGIS_VERSION/$j $BUNDLE_CONTENTS_DIR/$i
     done
- done
+  done
 
- for j in \
+  for j in \
     $BUNDLE_CONTENTS_DIR/MacOS/QGIS \
     $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core \
     $BUNDLE_CONTENTS_DIR/Frameworks/qgisgrass7.framework/Versions/$QGIS_VERSION/qgisgrass7
- do
-   clean_binary $j
- done
+  do
+    clean_binary $j
+  done
 
- ## ORACLE
+  ## ORACLE
   if [[ "$WITH_ORACLE" == "true" ]]; then
     install_name_id @rpath/PlugIns/sqldrivers/libqsqlocispatial.dylib $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlocispatial.dylib
     install_name_add_rpath @loader_path/../../Frameworks $BUNDLE_PLUGINS_DIR/sqldrivers/libqsqlocispatial.dylib
