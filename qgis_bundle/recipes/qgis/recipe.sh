@@ -163,8 +163,8 @@ function fix_binaries_qgis() {
 
   # virtualraster added in 3.21
   VIRTUALRASTER=
-  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/libvirtualraster.so" ]; then
-    VIRTUALRASTER=PlugIns/qgis/libvirtualraster.so
+  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider virtualraster).so" ]; then
+    VIRTUALRASTER=PlugIns/qgis/$(qgis_libname provider virtualraster).so
   fi
 
   # https://github.com/qgis/QGIS/pull/43559
