@@ -5,16 +5,16 @@ DESC_python_sip="SIP bindings package for python"
 # version of your package
 # we need SIP 4.x and the version is not longer updated in pip
 # so we need to compile directly
-VERSION_python_sip=4.19.21
+VERSION_python_sip=4.19.25
 
 # dependencies of this recipe
 DEPS_python_sip=(python qtwebkit qscintilla qtwebkit)
 
 # url of the package
-URL_python_sip=https://www.riverbankcomputing.com/hg/sip/archive/a2a4d8ba9178.tar.bz2
+URL_python_sip=https://www.riverbankcomputing.com/static/Downloads/sip/${VERSION_python_sip}/sip-${VERSION_python_sip}.tar.gz
 
 # md5 of the package
-MD5_python_sip=68231ac70fccf4dff4b09e8bc01d9f9a
+MD5_python_sip=1891a7b71c72d83951d5851ae10b2f0c
 
 # default build path
 BUILD_python_sip=$BUILD_PATH/python_sip/sip-$(get_directory $URL_python_sip)

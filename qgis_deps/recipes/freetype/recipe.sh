@@ -3,7 +3,7 @@
 DESC_freetype="Software library to render fonts"
 
 # version of your package
-VERSION_freetype=2.10.0
+VERSION_freetype=2.10.2
 LINK_freetype=libfreetype.6.dylib
 
 # dependencies of this recipe

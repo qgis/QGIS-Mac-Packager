@@ -32,11 +32,11 @@ if [ ! -d $ROOT_OUT_PATH ]; then
   error "The root output directory '$ROOT_OUT_PATH' not found."
 fi
 
-echo "Create packages for qgis-deps-${RELEASE_VERSION}"
+echo "Create packages for qgis-deps-${QGIS_DEPS_SDK_VERSION}"
 
 ##############################################
 # Create install script
-INSTALL_SCRIPT=$ROOT_OUT_PATH/install_qgis_deps-${RELEASE_VERSION}.bash
+INSTALL_SCRIPT=$ROOT_OUT_PATH/install_qgis_deps-${QGIS_DEPS_SDK_VERSION}.bash
 if [ -f $INSTALL_SCRIPT ]; then
   rm -rf $INSTALL_SCRIPT
   touch $INSTALL_SCRIPT
@@ -72,7 +72,7 @@ echo "fi" >> $INSTALL_SCRIPT
 
 ##############################################
 # Create Deps package
-QGIS_DEPS_PACKAGE_FILE=qgis-deps-${RELEASE_VERSION}.tar.gz
+QGIS_DEPS_PACKAGE_FILE=qgis-deps-${QGIS_DEPS_SDK_VERSION}.tar.gz
 QGIS_DEPS_PACKAGE=$ROOT_OUT_PATH/${QGIS_DEPS_PACKAGE_FILE}
 QGIS_INSTALL_DIR=\$\{QGIS_DEPS_PREFIX\}$ROOT_OUT_PATH/stage/
 if [ -f $QGIS_DEPS_PACKAGE ]; then
@@ -85,12 +85,12 @@ $COMPRESS ${QGIS_DEPS_PACKAGE} ./
 cd $PWD
 echo "echo \"----------------------\"" >> $INSTALL_SCRIPT
 echo "if [ -f \$ROOT_PATH/$QGIS_DEPS_PACKAGE_FILE ] && [ ! -d $QGIS_INSTALL_DIR ]; then" >> $INSTALL_SCRIPT
-echo "  echo \"Installing QGIS_deps ${RELEASE_VERSION} to $QGIS_INSTALL_DIR\"" >> $INSTALL_SCRIPT
+echo "  echo \"Installing QGIS_deps ${QGIS_DEPS_SDK_VERSION} to $QGIS_INSTALL_DIR\"" >> $INSTALL_SCRIPT
 echo "  mkdir -p $QGIS_INSTALL_DIR" >> $INSTALL_SCRIPT
 echo "  cd $QGIS_INSTALL_DIR" >> $INSTALL_SCRIPT
 echo "  $DECOMPRESS \$ROOT_PATH/$QGIS_DEPS_PACKAGE_FILE" >> $INSTALL_SCRIPT
 echo "else " >> $INSTALL_SCRIPT
-echo "  echo \"Skipped installation of QGIS_deps ${RELEASE_VERSION} to $QGIS_INSTALL_DIR\"" >> $INSTALL_SCRIPT
+echo "  echo \"Skipped installation of QGIS_deps ${QGIS_DEPS_SDK_VERSION} to $QGIS_INSTALL_DIR\"" >> $INSTALL_SCRIPT
 echo "fi" >> $INSTALL_SCRIPT
 
 ##############################################

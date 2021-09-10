@@ -24,6 +24,7 @@ DEPS_qgis_deps=(
     netcdf
     postgres
     protobuf
+    proj_data
     python
     python_packages
     python_matplotlib

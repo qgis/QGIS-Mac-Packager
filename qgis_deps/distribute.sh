@@ -68,6 +68,10 @@ function check_config_conf_vars() {
       error "you need at RELEASE_VERSION in config.conf"
     fi
 
+    if [ "X$RELEASE_VERSION_PATCH" == "X" ]; then
+      error "you need at RELEASE_VERSION_PATCH in config.conf"
+    fi
+
     if [ "X$MACOSX_DEPLOYMENT_TARGET" == "X" ]; then
       error "you need at MACOSX_DEPLOYMENT_TARGET in config.conf"
     fi
@@ -798,7 +802,7 @@ function run_create_config_file() {
   append_to_config_file "export VERSION_qt=${VERSION_qt}"
   append_to_config_file "export QT_BASE=/opt/Qt/${VERSION_qt}"
   append_to_config_file "export MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}"
-  append_to_config_file "export RELEASE_VERSION=${RELEASE_VERSION}"
+  append_to_config_file "export QGIS_DEPS_SDK_VERSION=${QGIS_DEPS_SDK_VERSION}"
 
   cd $BUILD_PATH
   for module in $MODULES; do

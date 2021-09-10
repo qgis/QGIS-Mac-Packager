@@ -4,7 +4,7 @@ DESC_hdf5="File format designed to store large amounts of data"
 
 # version of your package
 VERSION_hdf5_major=1.10
-VERSION_hdf5=${VERSION_hdf5_major}.0
+VERSION_hdf5=${VERSION_hdf5_major}.7
 
 LINK_libhdf5=libhdf5.100.dylib
 LINK_libhdf5_hl=libhdf5_hl.100.dylib
