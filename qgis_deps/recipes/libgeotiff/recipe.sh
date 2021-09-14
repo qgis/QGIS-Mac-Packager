@@ -3,7 +3,7 @@
 DESC_libgeotiff="Library and tools for dealing with GeoTIFF"
 
 # version of your package
-VERSION_libgeotiff=1.5.1
+VERSION_libgeotiff=1.7.0
 
 # dependencies of this recipe
 DEPS_libgeotiff=(proj libtiff)
@@ -12,7 +12,7 @@ DEPS_libgeotiff=(proj libtiff)
 URL_libgeotiff=https://github.com/OSGeo/libgeotiff/releases/download/${VERSION_libgeotiff}/libgeotiff-${VERSION_libgeotiff}.tar.gz
 
 # md5 of the package
-MD5_libgeotiff=6d0fa650c206791bc7d5e60ef625ea77
+MD5_libgeotiff=e57b69098d70a008ddfc65b675cbfcf4
 
 # default build path
 BUILD_libgeotiff=$BUILD_PATH/libgeotiff/$(get_directory $URL_libgeotiff)

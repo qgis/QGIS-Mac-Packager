@@ -13,7 +13,7 @@ DEPS_exiv2=()
 URL_exiv2=https://www.exiv2.org/builds/exiv2-${VERSION_exiv2}-Source.tar.gz
 
 # md5 of the package
-MD5_exiv2=8c39c39dc8141bb158e8e9d663bcbf21
+MD5_exiv2=68a59595e8617284b2e1eee528ae1f77
 
 # default build path
 BUILD_exiv2=$BUILD_PATH/exiv2/$(get_directory $URL_exiv2)

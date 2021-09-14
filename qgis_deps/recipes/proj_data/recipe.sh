@@ -3,16 +3,17 @@
 DESC_proj_data="Cartographic proj library data"
 
 # version of your package
-VERSION_proj_data=1.7
+VERSION_proj_data_major=1.7
+VERSION_proj_data=${VERSION_proj_data_major}.0
 
 # dependencies of this recipe
 DEPS_proj_data=(proj)
 
 # url of the package
-URL_proj_data=http://ftp.osuosl.org/pub/osgeo/download/proj/proj-data-$VERSION_proj_data.tar.gz
+URL_proj_data=https://github.com/OSGeo/PROJ-data/archive/refs/tags/${VERSION_proj_data}.zip
 
 # md5 of the package
-MD5_proj_data=2ca6366e12cd9d34d73b4602049ee480
+MD5_proj_data=6bef1715b34a3048240a0536fc85a10c
 
 # default build path
 BUILD_proj_data=$BUILD_PATH/proj_data/$(get_directory $URL_proj_data)
@@ -34,15 +35,30 @@ function prebuild_proj_data() {
 }
 
 function shouldbuild_proj_data() {
-  if [ ${STAGE_PATH}/lib/${LINK_libproj_data} -nt $BUILD_proj_data/.patched ]; then
+  if [ ${STAGE_PATH}/share/proj/README.DATA -nt $BUILD_proj_data/.patched ]; then
     DO_BUILD=0
   fi
 }
 
 # function called to build the source code
 function build_proj_data() {
-  mkdir -p ${STAGE_PATH}/share/proj
-  try cp -R $BUILD_proj_data/* ${STAGE_PATH}/share/proj/
+  try mkdir -p $BUILD_PATH/proj_data/build-$ARCH
+  try cd $BUILD_PATH/proj_data/build-$ARCH
+
+  push_env
+
+  try $CMAKE $BUILD_proj_data .
+
+  check_file_configuration CMakeCache.txt
+
+  try $NINJA dist
+
+  mkdir -p install
+  cd install
+  try tar -zxf ../proj-data-${VERSION_proj_data_major}.tar.gz
+  try cp -R * $STAGE_PATH/share/proj/
+
+  pop_env
 }
 
 # function called after all the compile have been done

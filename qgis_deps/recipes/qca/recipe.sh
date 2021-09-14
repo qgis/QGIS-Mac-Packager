@@ -3,7 +3,7 @@
 DESC_qca="Qt Cryptographic Architecture (QCA)"
 
 # version of your package
-VERSION_qca=2.3.0
+VERSION_qca=2.3.1
 LINK_qca=qca-qt5
 
 # dependencies of this recipe
@@ -13,7 +13,7 @@ DEPS_qca=(openssl)
 URL_qca=https://github.com/KDE/qca/archive/v${VERSION_qca}.tar.gz
 
 # md5 of the package
-MD5_qca=46bf9aef445129fa101dd68a3596a58f
+MD5_qca=96c4769d51140e03087266cf705c2b86
 
 # default build path
 BUILD_qca=$BUILD_PATH/qca/$(get_directory $URL_qca)

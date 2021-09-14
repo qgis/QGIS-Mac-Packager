@@ -98,12 +98,13 @@ REQUIREMENTS_python_packages=(
     toml==0.10.1
     pytest==6.0.1
     pytest-cov==2.10.0
-    beautifulsoup4==4.9.1
+    beautifulsoup4==4.10.0
     Sphinx==2.4.3
     quantecon==0.4.8
     tqdm==4.48.2
     seaborn==0.10.1
     click==7.1.2
+    click-plugins==1.1.1
     cligj==0.5.0
     munch==2.5.0
     appdirs==1.4.4
@@ -118,6 +119,8 @@ REQUIREMENTS_python_packages=(
     clipboard==0.0.4
     pyperclip==1.8.1
     pyvenv==0.2.2
+    snuggs==1.4.7
+    affine==2.3.0
 )
 
 IMPORTS_python_packages=(
@@ -125,6 +128,7 @@ IMPORTS_python_packages=(
   requests
   dateutil
   yaml
+  affine
 )
 
 # function called for preparing source code if needed

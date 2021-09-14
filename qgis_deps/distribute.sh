@@ -288,7 +288,7 @@ function push_env() {
     ###################
     # PYTHON
     export PYTHON="$STAGE_PATH/bin/python3"
-    export PIP="$STAGE_PATH/bin/pip3"
+    export PIP="$STAGE_PATH/bin/pip3 --trusted-host pypi.org"
 
     export PIP_NO_BINARY="$PIP install --no-dependencies --no-binary all"
     export PIP_NO_BINARY="$PIP_NO_BINARY --global-option=build_ext"

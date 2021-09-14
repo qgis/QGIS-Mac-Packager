@@ -9,7 +9,7 @@ VERSION_gdal=3.3.2
 source $RECIPES_PATH/netcdf/recipe.sh
 source $RECIPES_PATH/xerces/recipe.sh
 
-LINK_libgdal_version=28
+LINK_libgdal_version=29
 LINK_gdal=libgdal.$LINK_libgdal_version.dylib
 
 # dependencies of this recipe
@@ -42,7 +42,7 @@ DEPS_gdal=(
 URL_gdal=https://github.com/OSGeo/gdal/releases/download/v${VERSION_gdal}/gdal-${VERSION_gdal}.tar.gz
 
 # md5 of the package
-MD5_gdal=86f7975190981820bbe0544870bdd164
+MD5_gdal=fd82c580ec9e16a0a46cd176243a8a56
 
 # default build path
 BUILD_gdal=$BUILD_PATH/gdal/$(get_directory $URL_gdal)

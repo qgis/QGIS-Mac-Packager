@@ -17,7 +17,7 @@ URL_python_sip=https://www.riverbankcomputing.com/static/Downloads/sip/${VERSION
 MD5_python_sip=1891a7b71c72d83951d5851ae10b2f0c
 
 # default build path
-BUILD_python_sip=$BUILD_PATH/python_sip/sip-$(get_directory $URL_python_sip)
+BUILD_python_sip=$BUILD_PATH/python_sip/$(get_directory $URL_python_sip)
 
 # default recipe path
 RECIPE_python_sip=$RECIPES_PATH/python_sip
@@ -48,8 +48,6 @@ function build_python_sip() {
   try cd $BUILD_PATH/python_sip/build-$ARCH
 
   push_env
-
-  try $PYTHON build.py prepare
 
   try $PYTHON ./configure.py \
     --sipdir=$STAGE_PATH/share/sip \

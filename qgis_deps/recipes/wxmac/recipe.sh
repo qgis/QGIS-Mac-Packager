@@ -3,9 +3,9 @@
 DESC_wxmac="Cross-platform C++ GUI toolkit (wxWidgets for macOS)"
 
 # version of your package
-VERSION_wxmac_major=3.0
-VERSION_wxmac=${VERSION_wxmac_major}.4
-LINK_wxmac_version=3.0.0.4.0
+VERSION_wxmac_major=3.1
+VERSION_wxmac=${VERSION_wxmac_major}.5
+LINK_wxmac_version=3.1.5.0.0
 
 # dependencies of this recipe
 DEPS_wxmac=( jpeg png libtiff )
@@ -14,7 +14,7 @@ DEPS_wxmac=( jpeg png libtiff )
 URL_wxmac=https://github.com/wxWidgets/wxWidgets/releases/download/v${VERSION_wxmac}/wxWidgets-${VERSION_wxmac}.tar.bz2
 
 # md5 of the package
-MD5_wxmac=b0035731777acc5597cea8982da10317
+MD5_wxmac=8b2ac42364a02bb5f3df22e1b1a517e5
 
 # default build path
 BUILD_wxmac=$BUILD_PATH/wxmac/$(get_directory $URL_wxmac)
@@ -60,7 +60,6 @@ function build_wxmac() {
      --enable-std_string \
      --enable-svg \
      --enable-unicode \
-     --enable-webkit \
      --with-expat \
      --with-libjpeg \
      --with-libpng \
@@ -86,6 +85,7 @@ function postbuild_wxmac() {
   verify_binary lib/"libwx_baseu_net-${VERSION_wxmac_major}.dylib"
   verify_binary lib/"libwx_baseu_xml-${VERSION_wxmac_major}.dylib"
   verify_binary lib/"libwx_osx_cocoau_html-${VERSION_wxmac_major}.dylib"
+  verify_binary lib/"libwx_osx_cocoau_html-${LINK_wxmac_version}.dylib"
 }
 
 # function to append information to config file

@@ -3,9 +3,9 @@
 DESC_saga="System for Automated Geoscientific Analyses"
 
 # version of your package
-# see https://github.com/qgis/QGIS/blob/master/python/plugins/processing/algs/saga/SagaAlgorithmProvider.py
+# see https://github.com/qgis/QGIS/blob/master/python/plugins/sagaprovider/SagaAlgorithmProvider.py
 # for supported versions
-VERSION_saga=7.3.0
+VERSION_saga=7.8.2
 
 LINK_saga_version=${VERSION_saga}
 
@@ -16,7 +16,7 @@ DEPS_saga=( proj gdal python geos libtiff xz sqlite hdf5 netcdf postgres wxmac )
 URL_saga=https://downloads.sourceforge.net/project/saga-gis/SAGA%20-%207/SAGA%20-%20${VERSION_saga}/saga-${VERSION_saga}.tar.gz
 
 # md5 of the package
-MD5_saga=2383eb43f12da743c5ac52ecc8dfd302
+MD5_saga=895345d820098fb0e1f671d67ce2e798
 
 # default build path
 BUILD_saga=$BUILD_PATH/saga/$(get_directory $URL_saga)
