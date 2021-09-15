@@ -69,7 +69,8 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
     - create `sing_identity.txt` with the ID of your identity
     - allow to use it in cronjob (https://stackoverflow.com/a/20324331/2838364)
     - create symbolic link to keychain with the imported identity
-
+    - if used for signing the qgis-deps, you may need to "unlock" it in KeyChain Access App 
+  
 - so your folders structure is
 ```
   sign_identity.txt
