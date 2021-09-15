@@ -58,7 +58,7 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - now clone this repository
 - for upload, add you ssh keys to `qgis/ssh/` and secure them
 - copy `run_cronjob` one folder above
-- to Code Signing (you need Apple certificate to be "Indentified developer")
+- to Code Signing (you need Apple certificate to be "Identified developer")
     - You need application certificate from https://developer.apple.com/account
     - Generate production/development signing identify
     - Get cer file and scp to the server
