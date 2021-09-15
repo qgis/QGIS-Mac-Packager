@@ -10,7 +10,17 @@ function bundle_wxmac() {
 }
 
 function fix_binaries_wxmac() {
+
+  # introduced in qgis-deps-0.9.0
+  WEBVIEW=
+  WEBVIEW_FULL=
+  if [ -f "$BUNDLE_LIB_DIR/libwx_osx_cocoau_webview-${LINK_wxmac_version}.dylib" ]; then
+    WEBVIEW=libwx_osx_cocoau_webview
+    WEBVIEW_FULL=libwx_osx_cocoau_webview-${LINK_wxmac_version}.dylib
+  fi
+
   for i in \
+    $WEBVIEW \
     libwx_baseu_xml \
     libwx_baseu_net \
     libwx_osx_cocoau_gl \
@@ -37,6 +47,7 @@ function fix_binaries_wxmac() {
       $LINK_expat \
       $LINK_libcurl \
       $LINK_liblzma \
+      $WEBVIEW_FULL \
       libwx_baseu_xml-${LINK_wxmac_version}.dylib \
       libwx_baseu_net-${LINK_wxmac_version}.dylib \
       libwx_osx_cocoau_gl-${LINK_wxmac_version}.dylib \
