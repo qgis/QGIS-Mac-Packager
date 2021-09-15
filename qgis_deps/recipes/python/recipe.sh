@@ -3,7 +3,7 @@
 DESC_python="Interpreted, interactive, object-oriented programming language"
 
 # version of your package (set in config.conf)
-VERSION_minor_python=7
+VERSION_minor_python=5
 VERSION_python=${VERSION_major_python}.${VERSION_minor_python}
 LINK_python=libpython${VERSION_major_python}.dylib
 
@@ -14,7 +14,7 @@ DEPS_python=(openssl xz libffi zlib libzip sqlite expat unixodbc bz2 gettext lib
 URL_python=https://www.python.org/ftp/python/${VERSION_python}/Python-${VERSION_python}.tar.xz
 
 # md5 of the package
-MD5_python=60fe018fffc7f33818e6c340d29e2db9
+MD5_python=71f7ada6bec9cdbf4538adc326120cfd
 
 # default build path
 BUILD_python=$BUILD_PATH/python/$(get_directory $URL_python)
@@ -24,10 +24,21 @@ RECIPE_python=$RECIPES_PATH/python
 
 # requirements
 REQUIREMENTS_python=(
-  setuptools==https://files.pythonhosted.org/packages/df/ed/bea598a87a8f7e21ac5bbf464102077c7102557c07db9ff4e207bd9f7806/setuptools-46.0.0.zip==74de3ab356d1246d251977e16a44ef1e
-  pip==https://files.pythonhosted.org/packages/8e/76/66066b7bc71817238924c7e4b448abdb17eb0c92d645769c223f9ace478f/pip-20.0.2.tar.gz==7d42ba49b809604f0df3d55df1c3fd86
-  wheel==https://files.pythonhosted.org/packages/75/28/521c6dc7fef23a68368efefdcd682f5b3d1d58c2b90b06dc1d0b805b51ae/wheel-0.34.2.tar.gz==ce2a27f99c130a927237b5da1ff5ceaf
+  setuptools==https://files.pythonhosted.org/packages/9a/74/de4d8c69466b6413b1616048b39f8b73d65f98c15f6202b68ccfc9550f1f/setuptools-58.0.4.tar.gz==17245af34e1a7d54976bca8c1bf092b7
+  pip==https://files.pythonhosted.org/packages/52/e1/06c018197d8151383f66ebf6979d951995cf495629fc54149491f5d157d0/pip-21.2.4.tar.gz==efbdb4201a5e6383fb4d12e26f78f355
+  wheel==https://files.pythonhosted.org/packages/4e/be/8139f127b4db2f79c8b117c80af56a3078cc4824b5b94250c7f81a70e03b/wheel-0.37.0.tar.gz==79f55b898e6f274f5586bbde39f6fe8e
 )
+
+download_default_packages() {
+  for i in ${REQUIREMENTS_python[*]}; do
+    arr=(${i//==/ })
+    NAME=${arr[0]}
+    URL=${arr[1]}
+    MD5=${arr[2]}
+    info "Downloading $NAME"
+    download_file $NAME $URL $MD5
+  done
+}
 
 install_default_packages() {
   for i in ${REQUIREMENTS_python[*]}; do
@@ -35,7 +46,6 @@ install_default_packages() {
     NAME=${arr[0]}
     URL=${arr[1]}
     MD5=${arr[2]}
-    download_file $NAME $URL $MD5
 
     info "Installing $NAME"
 
@@ -43,14 +53,8 @@ install_default_packages() {
     push_env
 
     # when building extensions in setup.py it
-    # dlopen some libraries (e.g. _ssl -> libcrypto.dylib)
+    # dlopen some libraries (e.g. _ssl -> libcrypto.dylib, _ffi_call -> _ffi_call)
     export DYLD_LIBRARY_PATH=$STAGE_PATH/lib
-
-    if [ "X$NAME" == "Xsetuptools" ]; then
-      try $PYTHON bootstrap.py
-    fi
-
-    echo $(pwd)
 
     try $PYTHON \
       -s setup.py \
@@ -110,21 +114,23 @@ function install_python() {
   export CFLAGS="$CFLAGS -I$STAGE_PATH/unixodbc/include"
   export LDFLAGS="$LDFLAGS -L$STAGE_PATH/unixodbc/lib"
   export CXXFLAGS="${CFLAGS}"
+  # pkg-config removes -I flags for paths in CPATH, which confuses python.
+  export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
 
+  #      --enable-optimizations \
   try ${CONFIGURE} \
     --enable-ipv6 \
     --datarootdir=$STAGE_PATH/share \
     --datadir=$STAGE_PATH/share \
     --without-gcc \
     --with-openssl=$STAGE_PATH \
-    --enable-optimizations \
     --enable-shared \
     --with-system-expat \
     --with-system-ffi \
+    --with-computed-gotos \
     --with-ensurepip=no \
     --with-ssl-default-suites=openssl \
-    --enable-loadable-sqlite-extensions \
-    --with-system-ffi
+    --enable-loadable-sqlite-extensions
 
   check_file_configuration config.status
 
@@ -136,6 +142,7 @@ function install_python() {
 
 # function called to build the source code
 function build_python() {
+  download_default_packages
   install_python
   install_default_packages
 }

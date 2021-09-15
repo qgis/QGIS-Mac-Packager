@@ -5,7 +5,8 @@ DESC_grass="Geographic Resources Analysis Support System"
 # version of your package
 VERSION_grass_major=7
 VERSION_grass_minor=8
-VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.5
+VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.6
+VERSION_grass_build=${VERSION_grass}RC2
 
 # dependencies of this recipe
 DEPS_grass=(python boost bison flex libtiff png  sqlite geos zlib wxmac zstd zlib xz netcdf proj gdal libgeotiff python_pyqt5 mysql postgres openssl )
@@ -13,10 +14,10 @@ DEPS_grass=(python boost bison flex libtiff png  sqlite geos zlib wxmac zstd zli
 LINK_libgrass_version=26
 
 # url of the package
-URL_grass=https://github.com/OSGeo/grass/archive/${VERSION_grass}.tar.gz
+URL_grass=https://github.com/OSGeo/grass/archive/${VERSION_grass_build}.tar.gz
 
 # md5 of the package
-MD5_grass=91f4830a5164cea703384814cd89cdf9
+MD5_grass=915440060be87c3fa9bd22212aaeb55d
 
 # default build path
 BUILD_grass=$BUILD_PATH/grass/$(get_directory $URL_grass)
@@ -164,4 +165,5 @@ function add_config_info_grass() {
   append_to_config_file "export VERSION_grass_major=${VERSION_grass_major}"
   append_to_config_file "export VERSION_grass_minor=${VERSION_grass_minor}"
   append_to_config_file "export VERSION_grass=${VERSION_grass}"
+  append_to_config_file "export VERSION_grass_build=${VERSION_grass_build}"
 }

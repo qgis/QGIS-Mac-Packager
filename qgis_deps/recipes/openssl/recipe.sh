@@ -5,7 +5,7 @@ DESC_openssl="Cryptography and SSL/TLS Toolkit"
 # version of your package
 # NOTE openssl version must be compatible with QT version, for example
 # for Qt 5.14 see https://wiki.qt.io/Qt_5.14.1_Known_Issues
-VERSION_openssl=1.1.1d
+VERSION_openssl=1.1.1h
 
 # dependencies of this recipe
 DEPS_openssl=()
@@ -18,7 +18,7 @@ LINK_libcrypto=libcrypto.${LINK_libssl_version}.dylib
 URL_openssl=https://github.com/openssl/openssl/archive/OpenSSL_${VERSION_openssl//./_}.tar.gz
 
 # md5 of the package
-MD5_openssl=148010aa1eff4c317fb9f68b78b1216e
+MD5_openssl=e365330dabdc29bb8b5d2984f14d2e62
 
 # default build path
 BUILD_openssl=$BUILD_PATH/openssl/$(get_directory $URL_openssl)

@@ -21,8 +21,31 @@ function fix_binaries_saga() {
   install_name_change $DEPS_LIB_DIR/libsaga_api-$VERSION_saga.dylib @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_CONTENTS_DIR/MacOS/bin/_saga_cmd
   install_name_id @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_LIB_DIR/libsaga_api-$VERSION_saga.dylib
   install_name_add_rpath @executable_path/../lib $BUNDLE_BIN_DIR/_saga_cmd
-  
+
+  # introduced in qgis-deps-0.9.0
+  CLIFFMETRICS=
+  if [ -f "$BUNDLE_LIB_DIR/saga/libta_cliffmetrics.dylib" ]; then
+    CLIFFMETRICS=libta_cliffmetrics
+  fi
+
+  # introduced in qgis-deps-0.9.0
+  WEBSERVICES=
+  WEBSERVICES_FULL=
+  if [ -f "$BUNDLE_LIB_DIR/saga/libio_webservices.dylib" ]; then
+    WEBSERVICES=libio_webservices
+    WEBSERVICES_FULL=lib/saga/libio_webservices.dylib
+  fi
+
+  # introduced in qgis-deps-0.9.0
+  AIR_FLOW=
+  if [ -f "$BUNDLE_LIB_DIR/saga/libsim_air_flow.dylib" ]; then
+    AIR_FLOW=libsim_air_flow
+  fi
+
   for i in \
+    $CLIFFMETRICS \
+    $WEBSERVICES \
+    $AIR_FLOW \
     libimagery_segmentation \
     libgarden_games \
     libgarden_fractals   \
@@ -95,12 +118,14 @@ function fix_binaries_saga() {
   install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_LIB_DIR/saga/libpj_proj4.dylib
 
   for i in \
+    {WEBSERVICES_FULL} \
     lib/saga/libpointcloud_tools.dylib \
     lib/saga/libio_shapes.dylib \
     lib/saga/libio_virtual.dylib \
     lib/libsaga_api-$VERSION_saga.dylib \
     bin/_saga_cmd
   do
+    install_name_change $DEPS_LIB_DIR/$LINK_libcurl @rpath/$LINK_libcurl $BUNDLE_CONTENTS_DIR/MacOS/$i
     install_name_change $DEPS_LIB_DIR/libwx_baseu-${VERSION_wxmac_major}.dylib @rpath/libwx_baseu-${VERSION_wxmac_major}.dylib $BUNDLE_CONTENTS_DIR/MacOS/$i
     install_name_change $DEPS_LIB_DIR/libwx_baseu_net-${VERSION_wxmac_major}.dylib @rpath/libwx_baseu_net-${VERSION_wxmac_major}.dylib $BUNDLE_CONTENTS_DIR/MacOS/$i
     install_name_change $DEPS_LIB_DIR/libwx_baseu_xml-${VERSION_wxmac_major}.dylib @rpath/libwx_baseu_xml-${VERSION_wxmac_major}.dylib $BUNDLE_CONTENTS_DIR/MacOS/$i
@@ -108,6 +133,7 @@ function fix_binaries_saga() {
   done
 
   for i in \
+    {WEBSERVICES_FULL} \
     lib/saga/libpointcloud_tools.dylib \
     lib/saga/libio_shapes.dylib \
     lib/saga/libio_virtual.dylib

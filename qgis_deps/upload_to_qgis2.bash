@@ -20,8 +20,8 @@ shift
 source $CONFIG_FILE
 
 QT_PACKAGE=$ROOT_OUT_PATH/qt-${VERSION_qt}.tar.gz
-QGIS_DEPS_PACKAGE=$ROOT_OUT_PATH/qgis-deps-${RELEASE_VERSION}.tar.gz
-INSTALL_SCRIPT=$ROOT_OUT_PATH/install_qgis_deps-${RELEASE_VERSION}.bash
+QGIS_DEPS_PACKAGE=$ROOT_OUT_PATH/qgis-deps-${QGIS_DEPS_SDK_VERSION}.tar.gz
+INSTALL_SCRIPT=$ROOT_OUT_PATH/install_qgis_deps-${QGIS_DEPS_SDK_VERSION}.bash
 
 if [ ! -f $QT_PACKAGE ] || [ ! -f $QGIS_DEPS_PACKAGE ] || [ ! -f $INSTALL_SCRIPT ] ; then
   echo "Missing archives to upload, maybe you forgot to run ./create_package.bash?"

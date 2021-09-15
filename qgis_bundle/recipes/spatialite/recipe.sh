@@ -21,7 +21,9 @@ function fix_binaries_spatialite() {
     $LINK_libxml2 \
     $LINK_libproj \
     $LINK_sqlite \
-    $LINK_zlib
+    $LINK_zlib \
+    $LINK_libminizip \
+    $LINK_rttopo
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_spatialite
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/mod_spatialite.so

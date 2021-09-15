@@ -3,7 +3,7 @@
 DESC_expat="XML 1.0 parser"
 
 # version of your package
-VERSION_expat=2.2.9
+VERSION_expat=2.2.10
 LINK_expat=libexpat.1.dylib
 
 # dependencies of this recipe
@@ -13,7 +13,7 @@ DEPS_expat=()
 URL_expat=https://github.com/libexpat/libexpat/releases/download/R_${VERSION_expat//./_}/expat-${VERSION_expat}.tar.xz
 
 # md5 of the package
-MD5_expat=d2384fa607223447e713e1b9bd272376
+MD5_expat=e0fe49a6b3480827c9455e4cfc799133
 
 # default build path
 BUILD_expat=$BUILD_PATH/expat/$(get_directory $URL_expat)

@@ -3,9 +3,10 @@
 DESC_libtiff="TIFF library and utilities"
 
 # version of your package
-VERSION_libtiff=4.1.0
+VERSION_libtiff=4.3.0
 
 LINK_libtiff=libtiff.5.dylib
+LINK_libtiffxx=libtiffxx.5.dylib
 
 # dependencies of this recipe
 DEPS_libtiff=(xz zstd webp jpeg)
@@ -14,7 +15,7 @@ DEPS_libtiff=(xz zstd webp jpeg)
 URL_libtiff=http://download.osgeo.org/libtiff/tiff-${VERSION_libtiff}.tar.gz
 
 # md5 of the package
-MD5_libtiff=2165e7aba557463acc0664e71a3ed424
+MD5_libtiff=0a2e4744d1426a8fc8211c0cdbc3a1b3
 
 # default build path
 BUILD_libtiff=$BUILD_PATH/libtiff/$(get_directory $URL_libtiff)
@@ -49,23 +50,26 @@ function shouldbuild_libtiff() {
 
 # function called to build the source code
 function build_libtiff() {
-  try rsync -a $BUILD_libtiff/ $BUILD_PATH/libtiff/build-$ARCH/
+  try mkdir -p $BUILD_PATH/libtiff/build-$ARCH
   try cd $BUILD_PATH/libtiff/build-$ARCH
 
   push_env
 
-  try ${CONFIGURE} \
-      --disable-debug \
-      --disable-dependency-tracking \
-      --disable-lzma \
-      --with-jpeg-include-dir=$STAGE_PATH/include \
-      --with-jpeg-lib-dir=$STAGE_PATH/lib \
-      --without-x
+  try $CMAKE $BUILD_libtiff .
+  check_file_configuration CMakeCache.txt
 
-  check_file_configuration config.status
+  try $NINJA
+  try $NINJA install
 
-  try $MAKESMP
-  try $MAKE install
+  try install_name_tool -id $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff
+  try install_name_tool -change $BUILD_PATH/libtiff/build-$ARCH/libtiff/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff
+  try install_name_tool -change $BUILD_PATH/libtiff/build-$ARCH/libtiff/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiff
+
+  try install_name_tool -id $STAGE_PATH/lib/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiffxx
+  try install_name_tool -change $BUILD_PATH/libtiff/build-$ARCH/libtiff/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiffxx
+  try install_name_tool -change $BUILD_PATH/libtiff/build-$ARCH/libtiff/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiffxx
+
+  try install_name_tool -change $BUILD_PATH/libtiff/build-$ARCH/libtiff/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/bin/tiffsplit
 
   pop_env
 }
@@ -73,7 +77,7 @@ function build_libtiff() {
 # function called after all the compile have been done
 function postbuild_libtiff() {
   verify_binary lib/$LINK_libtiff
-  verify_binary lib/libtiffxx.dylib
+  verify_binary lib/${LINK_libtiffxx}
   verify_binary bin/tiffsplit
 }
 
@@ -82,4 +86,5 @@ function add_config_info_libtiff() {
   append_to_config_file "# libtiff-${VERSION_libtiff}: ${DESC_libtiff}"
   append_to_config_file "export VERSION_libtiff=${VERSION_libtiff}"
   append_to_config_file "export LINK_libtiff=${LINK_libtiff}"
+  append_to_config_file "export LINK_libtiffxx=${LINK_libtiffxx}"
 }

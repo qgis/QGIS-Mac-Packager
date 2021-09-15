@@ -8,7 +8,7 @@ VERSION_fontconfig=2.13.92
 LINK_fontconfig=libfontconfig.1.dylib
 
 # dependencies of this recipe
-DEPS_fontconfig=(libtool gettext freetype png)
+DEPS_fontconfig=(libtool gettext freetype png brotli)
 
 # url of the package
 URL_fontconfig=https://www.freedesktop.org/software/fontconfig/release/fontconfig-$VERSION_fontconfig.tar.gz

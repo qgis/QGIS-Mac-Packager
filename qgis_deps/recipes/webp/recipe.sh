@@ -9,7 +9,7 @@ LINK_libwebp=libwebp.7.dylib
 LINK_libwebpdemux=libwebpdemux.2.dylib
 
 # dependencies of this recipe
-DEPS_webp=()
+DEPS_webp=(png)
 
 # url of the package
 URL_webp=https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${VERSION_webp}.tar.gz

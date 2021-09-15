@@ -36,6 +36,7 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - to debug Qt Plugins (e.g. SQL), use : `QT_DEBUG_PLUGINS=1 open /Application/QGIS*.app`
 - if QGIS crashes on start, try with clean profile `mv ~/Library/Application\ Support/QGIS/QGIS3/profiles ~/Library/Application\ Support/QGIS/QGIS3/profiles_bk`
 - if QGIS crashes after load, try use clean profile from the QGIS Menu 
+- list symbols of dynlib: `nm -gU <libname>`
 
 # Server Setup 
 
@@ -53,12 +54,11 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
 - Download erdas-ecw-jp2 5.5.0 [referenced in](https://github.com/OSGeo/homebrew-osgeo4mac/blob/master/Formula/osgeo-ecwjp2-sdk.rb). Open dmg, open pkg and install to default location (Desktop Read-Only Free type). Make a symbolic link in `../external/ERDASEcwJpeg2000SDK<ver>`
 - Download Oracle (18.1.0.0.0) package [from Oracle Download Section](https://www.oracle.com/database/technologies/instant-client/macos-intel-x86-downloads.html). Only  "Instant Client Package - Basic" and "Instant Client Package - SDK" are needed. Unpack/install to `../external/oracle`
 - install homebrew packages by `install_brew_dev_packages.bash`
-- get proj datumgrids by running `scripts/fetch_proj-datumgrid.bash`
 - Update `~/.bash_profile` from `scrips/bash_profile`
 - now clone this repository
 - for upload, add you ssh keys to `qgis/ssh/` and secure them
 - copy `run_cronjob` one folder above
-- to Code Signing (you need Apple certificate to be "Indentified developer")
+- to Code Signing (you need Apple certificate to be "Identified developer")
     - You need application certificate from https://developer.apple.com/account
     - Generate production/development signing identify
     - Get cer file and scp to the server
@@ -69,14 +69,14 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
     - create `sing_identity.txt` with the ID of your identity
     - allow to use it in cronjob (https://stackoverflow.com/a/20324331/2838364)
     - create symbolic link to keychain with the imported identity
-
+    - if used for signing the qgis-deps, you may need to "unlock" it in KeyChain Access App 
+  
 - so your folders structure is
 ```
   sign_identity.txt
   qgis.keychain.db --> ~/Library/Keychains/login.keychain-db
   run_cronjob.bash
   QGIS-Mac-Packager/
-  proj-datumgrid/
   external/ECW.. --> link to SDK
   external/MrSid.. --> link to SDK
   external/Oracle/sdk
@@ -108,5 +108,4 @@ cat
 - remove all build folders 
 - remove homebrew (`/usr/local/*`)
 - reinstall homebrew packages
-- update version & run `scripts/fetch_proj-datumgrid.bash`
 - clear ccache `ccache -C`

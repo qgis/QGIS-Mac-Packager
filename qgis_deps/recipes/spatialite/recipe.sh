@@ -3,17 +3,17 @@
 DESC_spatialite="SpatiaLite database"
 
 # version of your package
-VERSION_spatialite=4.3.0a
+VERSION_spatialite=5.0.1
 LINK_spatialite=libspatialite.7.dylib
 
 # dependencies of this recipe
-DEPS_spatialite=(proj geos freexl libxml2)
+DEPS_spatialite=(proj geos freexl libxml2 rttopo minizip)
 
 # url of the package
-URL_spatialite=https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-${VERSION_spatialite}.tar.gz
+URL_spatialite=https://www.gaia-gis.it/gaia-sins/libspatialite-${VERSION_spatialite}.tar.gz
 
 # md5 of the package
-MD5_spatialite=6b380b332c00da6f76f432b10a1a338c
+MD5_spatialite=5f4a961afbb95dcdc715b5d7f8590573
 
 # default build path
 BUILD_spatialite=$BUILD_PATH/spatialite/$(get_directory $URL_spatialite)
@@ -49,11 +49,7 @@ function build_spatialite() {
   try cd $BUILD_PATH/spatialite/build-$ARCH
   push_env
 
-  # Use Proj 6.0.0 compatibility headers.
-  # Remove in libspatialite 5.0.0
-  CFLAGS="$CFLAGS -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H" \
   try ${CONFIGURE} \
-    --disable-debug \
     --enable-geocallbacks \
     --disable-dependency-tracking
 

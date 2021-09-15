@@ -54,16 +54,16 @@ function fix_binaries_python_pyqt5() {
     PYQT5_LIB=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/$i.so
     if [ -f "$PYQT5_LIB" ]; then
       install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/$i.so
-      install_name_delete_rpath /opt/QGIS/qgis-deps-${RELEASE_VERSION}/stage/lib $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/$i.so
+      install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/$i.so
       # for some reason "some" have it twice
-      install_name_tool -delete_rpath /opt/QGIS/qgis-deps-${RELEASE_VERSION}/stage/lib $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/$i.so >/dev/null 2>&1
+      install_name_tool -delete_rpath $DEPS_LIB_DIR $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/$i.so >/dev/null 2>&1
     else
       info "skipping pyqt5 lib $PYQT5_LIB, not present in this version of Qt/PyQt5"
     fi
   done
 
-  install_name_delete_rpath /opt/QGIS/qgis-deps-${RELEASE_VERSION}/stage/lib $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/Qt.so
-  install_name_delete_rpath /opt/QGIS/qgis-deps-${RELEASE_VERSION}/stage/lib $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/Qt.so
+  install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/Qt.so
+  install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/Qt.so
 
   install_name_change $DEPS_LIB_DIR/$LINK_libqscintilla2_qt5 @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/Qsci.so
 }

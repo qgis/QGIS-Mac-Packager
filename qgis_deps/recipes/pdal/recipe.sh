@@ -3,11 +3,11 @@
 DESC_pdal="Point data abstraction library"
 
 # version of your package
-VERSION_pdal=2.2.0
+VERSION_pdal=2.3.0
 
-LINK_libpdalcpp=libpdalcpp.12.dylib
-LINK_libpdal_plugin_kernel_fauxplugin=libpdal_plugin_kernel_fauxplugin.12.dylib
-LINK_libpdal_util=libpdal_util.12.dylib
+LINK_libpdalcpp=libpdalcpp.13.dylib
+LINK_libpdal_plugin_kernel_fauxplugin=libpdal_plugin_kernel_fauxplugin.13.dylib
+LINK_libpdal_util=libpdal_util.13.dylib
 
 # dependencies of this recipe
 DEPS_pdal=(
@@ -26,7 +26,7 @@ DEPS_pdal=(
 URL_pdal=https://github.com/PDAL/PDAL/releases/download/${VERSION_pdal}/PDAL-${VERSION_pdal}-src.tar.gz
 
 # md5 of the package
-MD5_pdal=52d84c5b64b7cd30770a225e3d13fce3
+MD5_pdal=1c899546211df92029df3ed884d1d560
 
 # default build path
 BUILD_pdal=$BUILD_PATH/pdal/$(get_directory $URL_pdal)

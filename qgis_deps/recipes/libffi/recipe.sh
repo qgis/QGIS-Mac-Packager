@@ -3,17 +3,17 @@
 DESC_libffi="Portable Foreign Function Interface library"
 
 # version of your package
-VERSION_libffi=3.2.1
-LINK_libffi=libffi.6.dylib
+VERSION_libffi=3.4.2
+LINK_libffi=libffi.8.dylib
 
 # dependencies of this recipe
 DEPS_libffi=()
 
 # url of the package
-URL_libffi=https://sourceware.org/pub/libffi/libffi-${VERSION_libffi}.tar.gz
+URL_libffi=https://github.com/libffi/libffi/releases/download/v${VERSION_libffi}/libffi-${VERSION_libffi}.tar.gz
 
 # md5 of the package
-MD5_libffi=83b89587607e3eb65c70d361f13bab43
+MD5_libffi=294b921e6cf9ab0fbaea4b639f8fdbe8
 
 # default build path
 BUILD_libffi=$BUILD_PATH/libffi/$(get_directory $URL_libffi)
@@ -57,10 +57,6 @@ function build_libffi() {
   check_file_configuration config.status
   try $MAKESMP
   try $MAKE install
-
-  mkdir -p $STAGE_PATH/include
-  cp $STAGE_PATH/lib/libffi-${VERSION_libffi}/include/* $STAGE_PATH/include/
-  rm -rf $STAGE_PATH/lib/libffi-${VERSION_libffi}
 
   pop_env
 }

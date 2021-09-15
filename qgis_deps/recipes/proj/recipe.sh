@@ -4,18 +4,18 @@ DESC_proj="Cartographic Projections Library"
 
 # version of your package
 # keep in SYNC with python_pyproj receipt
-VERSION_proj=6.3.2
+VERSION_proj=8.1.1
 
-LINK_libproj=libproj.18.dylib
+LINK_libproj=libproj.22.dylib
 
 # dependencies of this recipe
-DEPS_proj=(sqlite libxml2 openssl)
+DEPS_proj=(sqlite libxml2 openssl libtiff)
 
 # url of the package
 URL_proj=https://github.com/OSGeo/PROJ/releases/download/$VERSION_proj/proj-$VERSION_proj.tar.gz
 
 # md5 of the package
-MD5_proj=2ca6366e12cd9d34d73b4602049ee480
+MD5_proj=f017fd7d35311b0d65b2cf0503844690
 
 # default build path
 BUILD_proj=$BUILD_PATH/proj/$(get_directory $URL_proj)
@@ -49,7 +49,14 @@ function build_proj() {
 
   push_env
 
-  try $CMAKE $BUILD_proj .
+  try $CMAKE \
+    -DPROJ_CMAKE_SUBDIR=share/cmake/proj4 \
+    -DPROJ_DATA_SUBDIR=share/proj \
+    -DPROJ_INCLUDE_SUBDIR=include \
+    -DBUILD_TESTING=OFF \
+    -DBUILD_SHARED_LIBS=ON \
+  $BUILD_proj .
+
   check_file_configuration CMakeCache.txt
 
   try $NINJA

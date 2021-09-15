@@ -24,31 +24,8 @@ DEPS_qgis_deps=(
     netcdf
     postgres
     protobuf
-    python
-    python_packages
-    python_matplotlib
-    python_llvmlite
-    python_pymssql
-    python_statsmodels
-    python_gdal
-    python_fiona
-    python_opencv
-    python_scikit_learn
-    python_pyproj
-    python_h5py
-    python_netcdf4
-    python_numpy
-    python_owslib
-    python_pyqt5
-    python_qscintilla
-    python_sip
-    python_pillow
-    python_scipy
-    python_shapely
-    python_psycopg2
-    python_pysal
-    python_patsy
-    python_pandas
+    proj_data
+    python_all
     qca
     qscintilla
     qtextra

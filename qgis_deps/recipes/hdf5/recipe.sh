@@ -4,10 +4,13 @@ DESC_hdf5="File format designed to store large amounts of data"
 
 # version of your package
 VERSION_hdf5_major=1.10
-VERSION_hdf5=${VERSION_hdf5_major}.0
+VERSION_hdf5=${VERSION_hdf5_major}.7
 
-LINK_libhdf5=libhdf5.100.dylib
+LINK_libhdf5=libhdf5.103.dylib
+LINK_libhdf5_cpp=libhdf5_cpp.103.dylib
 LINK_libhdf5_hl=libhdf5_hl.100.dylib
+LINK_libhdf5_hl_cpp=libhdf5_hl_cpp.100.dylib
+
 
 # dependencies of this recipe
 DEPS_hdf5=()
@@ -16,7 +19,7 @@ DEPS_hdf5=()
 URL_hdf5=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${VERSION_hdf5_major}/hdf5-${VERSION_hdf5}/src/hdf5-${VERSION_hdf5}.tar.bz2
 
 # md5 of the package
-MD5_hdf5=355243bda5df386aea25f079d550947b
+MD5_hdf5=dff8a882b61d0b59296dccc3ad13dc29
 
 # default build path
 BUILD_hdf5=$BUILD_PATH/hdf5/$(get_directory $URL_hdf5)
@@ -72,10 +75,15 @@ function build_hdf5() {
 function postbuild_hdf5() {
   verify_binary lib/$LINK_libhdf5
   verify_binary lib/$LINK_libhdf5_hl
-  verify_binary lib/"libhdf5_cpp.dylib"
-  verify_binary lib/"libhdf5_hl_cpp.dylib"
-
+  verify_binary lib/$LINK_libhdf5_cpp
+  verify_binary lib/$LINK_libhdf5_hl_cpp
   verify_binary bin/"h5copy"
+  verify_binary bin/h5perf_serial
+  verify_binary bin/h5repack
+  verify_binary bin/h5jam
+  verify_binary bin/h5unjam
+  verify_binary bin/h5format_convert
+  verify_binary bin/h5stat
 }
 
 # function to append information to config file
@@ -83,5 +91,7 @@ function add_config_info_hdf5() {
   append_to_config_file "# hdf5-${VERSION_hdf5}: ${DESC_hdf5}"
   append_to_config_file "export VERSION_hdf5=${VERSION_hdf5}"
   append_to_config_file "export LINK_libhdf5=${LINK_libhdf5}"
+  append_to_config_file "export LINK_libhdf5_cpp=${LINK_libhdf5_cpp}"
   append_to_config_file "export LINK_libhdf5_hl=${LINK_libhdf5_hl}"
+  append_to_config_file "export LINK_libhdf5_hl_cpp=${LINK_libhdf5_hl_cpp}"
 }

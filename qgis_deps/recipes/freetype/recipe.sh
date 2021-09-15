@@ -3,17 +3,17 @@
 DESC_freetype="Software library to render fonts"
 
 # version of your package
-VERSION_freetype=2.10.0
+VERSION_freetype=2.10.2
 LINK_freetype=libfreetype.6.dylib
 
 # dependencies of this recipe
-DEPS_freetype=(png)
+DEPS_freetype=(png brotli bz2 zlib)
 
 # url of the package
 URL_freetype=https://download.savannah.gnu.org/releases/freetype/freetype-$VERSION_freetype.tar.gz
 
 # md5 of the package
-MD5_freetype=58d56c9ad775326d6c9c5417c462a527
+MD5_freetype=b1cb620e4c875cd4d1bfa04945400945
 
 # default build path
 BUILD_freetype=$BUILD_PATH/freetype/$(get_directory $URL_freetype)
