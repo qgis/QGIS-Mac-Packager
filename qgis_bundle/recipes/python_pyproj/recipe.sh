@@ -11,20 +11,37 @@ function bundle_python_pyproj() {
 }
 
 function fix_binaries_python_pyproj() {
-  for i in \
-    _list \
-    _datadir \
-    _crs \
-    _geod \
-    _proj \
-    _transformer
+  PYPROJ_LIBS=
+  if [[ "$OLD_PROJ" == "true" ]]; then
+    PYPROJ_LIBS=(
+      _list \
+      _datadir \
+      _crs \
+      _geod \
+      _proj \
+      _transformer
+    )
+  else
+    PYPROJ_LIBS=(
+      _compat \
+      list \
+      _datadir \
+      _crs \
+      _geod \
+      _network \
+      _sync \
+      database \
+      _transformer
+    )
+  fi
+
+  for i in "${PYPROJ_LIBS[@]}"
   do
     install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $PYPROJ_EGG/pyproj/$i.cpython-${VERSION_major_python//./}-darwin.so
   done
 }
 
 function fix_binaries_python_pyproj_check() {
-  verify_binary $PYPROJ_EGG/pyproj/_proj.cpython-${VERSION_major_python//./}-darwin.so
   verify_binary $PYPROJ_EGG/pyproj/_datadir.cpython-${VERSION_major_python//./}-darwin.so
 }
 

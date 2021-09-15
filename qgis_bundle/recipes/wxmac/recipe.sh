@@ -35,6 +35,8 @@ function fix_binaries_wxmac() {
       $LINK_jpeg \
       $LINK_libtiff \
       $LINK_expat \
+      $LINK_libcurl \
+      $LINK_liblzma \
       libwx_baseu_xml-${LINK_wxmac_version}.dylib \
       libwx_baseu_net-${LINK_wxmac_version}.dylib \
       libwx_osx_cocoau_gl-${LINK_wxmac_version}.dylib \

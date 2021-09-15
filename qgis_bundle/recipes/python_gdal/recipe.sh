@@ -1,11 +1,10 @@
 #!/bin/bash
 
-function check_python_gdal() {
-  env_var_exists VERSION_python_gdal
-}
+GDAL_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
 
-function bundle_python_gdal() {
-  for i in \
+# REMOVE when qgis-deps-0.9 is used everywhere
+if [ "${VERSION_python_gdal:0:2}" = "3.2" ]; then
+  PYGDAL_SCRIPTS=(
     epsg_tr.py \
     esri2wkt.py \
     gcps2vec.py \
@@ -31,15 +30,41 @@ function bundle_python_gdal() {
     ogrmerge.py \
     pct2rgb.py \
     rgb2pct.py \
-    ogrmerge.py
+  )
+else
+  PYGDAL_SCRIPTS=(
+    gdal2tiles.py \
+    gdal2xyz.py \
+    gdal_calc.py \
+    gdal_edit.py \
+    gdal_fillnodata.py \
+    gdal_merge.py \
+    gdal_pansharpen.py \
+    gdal_polygonize.py \
+    gdal_proximity.py \
+    gdal_retile.py \
+    gdal_sieve.py \
+    gdalcompare.py \
+    gdalmove.py \
+    ogrmerge.py \
+    pct2rgb.py \
+    rgb2pct.py \
+    gdalattachpct.py
+)
+fi
+
+function check_python_gdal() {
+  env_var_exists VERSION_python_gdal
+}
+
+function bundle_python_gdal() {
+  for i in "${PYGDAL_SCRIPTS[@]}"
   do
     try cp -av $DEPS_BIN_DIR/$i $BUNDLE_BIN_DIR/$i
   done
 }
 
 function fix_binaries_python_gdal() {
-  GDAL_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
-
   for i in \
     _osr \
     _gdal_array \
@@ -53,40 +78,11 @@ function fix_binaries_python_gdal() {
 }
 
 function fix_binaries_python_gdal_check() {
-  GDAL_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
-
   verify_binary $GDAL_EGG_DIR/osgeo/_gdal.cpython-${VERSION_major_python//./}-darwin.so
 }
 
 function fix_paths_python_gdal() {
-  GDAL_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
-
-  for i in \
-    epsg_tr.py \
-    esri2wkt.py \
-    gcps2vec.py \
-    gcps2wld.py \
-    gdal2tiles.py \
-    gdal2xyz.py \
-    gdal_auth.py \
-    gdal_calc.py \
-    gdal_edit.py \
-    gdal_fillnodata.py \
-    gdal_merge.py \
-    gdal_pansharpen.py \
-    gdal_polygonize.py \
-    gdal_proximity.py \
-    gdal_retile.py \
-    gdal_sieve.py \
-    gdalchksum.py \
-    gdalcompare.py \
-    gdalident.py \
-    gdalimport.py \
-    gdalmove.py \
-    mkgraticule.py \
-    ogrmerge.py \
-    pct2rgb.py \
-    rgb2pct.py
+  for i in "${PYGDAL_SCRIPTS[@]}"
   do
     fix_python_exec_link $GDAL_EGG_DIR/EGG-INFO/scripts/$i
     fix_python_exec_link $BUNDLE_BIN_DIR/$i
@@ -94,8 +90,10 @@ function fix_paths_python_gdal() {
 }
 
 function fix_paths_python_gdal_check() {
-  GDAL_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
-  verify_file_paths $BUNDLE_BIN_DIR/$i
-  verify_file_paths $GDAL_EGG_DIR/EGG-INFO/scripts/$i
+  for i in "${PYGDAL_SCRIPTS[@]}"
+  do
+    verify_file_paths $BUNDLE_BIN_DIR/$i
+    verify_file_paths $GDAL_EGG_DIR/EGG-INFO/scripts/$i
+  done
 }
 

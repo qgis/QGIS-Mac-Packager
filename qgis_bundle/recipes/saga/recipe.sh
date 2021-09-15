@@ -21,8 +21,21 @@ function fix_binaries_saga() {
   install_name_change $DEPS_LIB_DIR/libsaga_api-$VERSION_saga.dylib @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_CONTENTS_DIR/MacOS/bin/_saga_cmd
   install_name_id @rpath/libsaga_api-$VERSION_saga.dylib $BUNDLE_LIB_DIR/libsaga_api-$VERSION_saga.dylib
   install_name_add_rpath @executable_path/../lib $BUNDLE_BIN_DIR/_saga_cmd
-  
+
+  CLIFFMETRICS=
+  if [ -f "$BUNDLE_LIB_DIR/saga/libta_cliffmetrics.dylib" ]; then
+    CLIFFMETRICS=libta_cliffmetrics
+  fi
+
+  WEBSERVICES=
+  if [ -f "$BUNDLE_LIB_DIR/saga/libio_webservices.dylib" ]; then
+    WEBSERVICES=libio_webservices
+  fi
+
+
   for i in \
+    $CLIFFMETRICS \
+    $WEBSERVICES \
     libimagery_segmentation \
     libgarden_games \
     libgarden_fractals   \
