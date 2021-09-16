@@ -147,7 +147,8 @@ function fix_binaries_gdal() {
         $LINK_libcurl \
         $LINK_libssh2 \
         $LINK_gdal \
-        $LINK_rttopo
+        $LINK_rttopo \
+        $LINK_liblerc
       do
          install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/MacOS/$i
       done

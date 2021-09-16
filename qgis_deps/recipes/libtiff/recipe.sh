@@ -9,7 +9,7 @@ LINK_libtiff=libtiff.5.dylib
 LINK_libtiffxx=libtiffxx.5.dylib
 
 # dependencies of this recipe
-DEPS_libtiff=(xz zstd webp jpeg)
+DEPS_libtiff=(xz zstd webp jpeg lerc zlib)
 
 # url of the package
 URL_libtiff=http://download.osgeo.org/libtiff/tiff-${VERSION_libtiff}.tar.gz
@@ -55,7 +55,14 @@ function build_libtiff() {
 
   push_env
 
-  try $CMAKE $BUILD_libtiff .
+  try $CMAKE \
+   -DWEBP_SUPPORT=BOOL:ON \
+   -DLZMA_SUPPORT=BOOL:ON \
+   -DZSTD_SUPPORT=BOOL:ON \
+   -DLERC_SUPPORT=BOOL:ON \
+   -DJPEG_SUPPORT=BOOL:ON \
+   -DZIP_SUPPORT=BOOL:ON \
+  $BUILD_libtiff .
   check_file_configuration CMakeCache.txt
 
   try $NINJA

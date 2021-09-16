@@ -36,6 +36,7 @@ DEPS_gdal=(
   unixodbc
   spatialite
   libcurl
+  lerc
 )
 
 # url of the package
@@ -177,6 +178,7 @@ function build_gdal() {
   try ${CONFIGURE} \
     --with-ecw=no \
     --with-mrsid=no \
+    --with-lerc=$STAGE_PATH \
     --disable-debug \
     --enable-driver-gpkg \
     --enable-driver-mbtiles \

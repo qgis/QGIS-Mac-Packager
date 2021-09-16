@@ -118,7 +118,7 @@ function fix_binaries_saga() {
   install_name_change $DEPS_LIB_DIR/$LINK_libproj @rpath/$LINK_libproj $BUNDLE_LIB_DIR/saga/libpj_proj4.dylib
 
   for i in \
-    {WEBSERVICES_FULL} \
+    ${WEBSERVICES_FULL} \
     lib/saga/libpointcloud_tools.dylib \
     lib/saga/libio_shapes.dylib \
     lib/saga/libio_virtual.dylib \
@@ -133,7 +133,7 @@ function fix_binaries_saga() {
   done
 
   for i in \
-    {WEBSERVICES_FULL} \
+    ${WEBSERVICES_FULL} \
     lib/saga/libpointcloud_tools.dylib \
     lib/saga/libio_shapes.dylib \
     lib/saga/libio_virtual.dylib

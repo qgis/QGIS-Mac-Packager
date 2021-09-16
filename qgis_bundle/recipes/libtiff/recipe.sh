@@ -15,7 +15,9 @@ function fix_binaries_libtiff() {
     $LINK_jpeg \
     $LINK_libwebp \
     $LINK_zlib \
-    $LINK_zstd
+    $LINK_zstd \
+    $LINK_webp \
+    $LINK_liblerc
   do
     install_name_change $DEPS_LIB_DIR/$i @rpath/$i $BUNDLE_LIB_DIR/$LINK_libtiff
   done
