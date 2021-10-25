@@ -3,7 +3,7 @@
 GDAL_EGG_DIR=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/GDAL-${VERSION_gdal}-py${VERSION_major_python}-macosx-${MACOSX_DEPLOYMENT_TARGET}-x86_64.egg/
 
 # REMOVE when qgis-deps-0.9 is used everywhere
-if [ "${VERSION_python_gdal:0:2}" = "3.2" ]; then
+if [ "${VERSION_python_gdal:0:3}" = "3.2" ]; then
   PYGDAL_SCRIPTS=(
     epsg_tr.py \
     esri2wkt.py \
