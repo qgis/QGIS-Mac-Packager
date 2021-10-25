@@ -167,6 +167,12 @@ function fix_binaries_qgis() {
     VIRTUALRASTER=PlugIns/qgis/$(qgis_libname provider virtualraster).so
   fi
 
+  # authmethod apiheader added in 3.23
+  APIHEADER=
+  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname authmethod apiheader).so" ]; then
+    APIHEADER=PlugIns/qgis/$(qgis_libname authmethod apiheader).so
+  fi
+
   # https://github.com/qgis/QGIS/pull/43559
 
   for i in \
@@ -190,6 +196,7 @@ function fix_binaries_qgis() {
     $PDALPROVIDER \
     $UNTWINE \
     $OWSPROVIDER \
+    $APIHEADER \
     PlugIns/qgis/libgeometrycheckerplugin.so \
     PlugIns/qgis/$(qgis_libname provider db2).so \
     PlugIns/qgis/$(qgis_libname authmethod identcert).so \
