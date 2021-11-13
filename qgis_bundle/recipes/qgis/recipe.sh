@@ -225,7 +225,7 @@ function fix_binaries_qgis() {
     PlugIns/qgis/$(qgis_libname provider arcgisfeatureserver).so \
     PlugIns/qgis/$(qgis_libname authmethod pkipaths).so \
     PlugIns/qgis/$(qgis_libname provider wms).so \
-    PlugIns/qgis/$(qgis_libname plugin offlineediting)..so \
+    PlugIns/qgis/$(qgis_libname plugin offlineediting).so \
     PlugIns/qgis/$(qgis_libname authmethod pkcs12).so \
     PlugIns/qgis/$(qgis_libname provider grass)${VERSION_grass_major}.so \
     PlugIns/qgis/$(qgis_libname provider mssql).so \
