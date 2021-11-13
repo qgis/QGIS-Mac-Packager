@@ -87,7 +87,8 @@ function bundle_qgis() {
 function qgis_libname() {
    _module=$1
    _lib=$2
-   if [[ "$QGIS_321_PROVIDER_NAMES" == "true" ]]; then
+   if [[ "$_module" != "plugin" && "$QGIS_321_PROVIDER_NAMES" == "true" ]] ||
+      [[ "$_module" == "plugin" && "$QGIS_323_PLUGIN_NAMES" == "true" ]]; then
      # new way
      # libprovider_db2.so
      echo "lib${_module}_${_lib}"
@@ -173,6 +174,13 @@ function fix_binaries_qgis() {
     APIHEADER=PlugIns/qgis/$(qgis_libname authmethod apiheader).so
   fi
 
+  TOPOLOGYPLUGIN=
+  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname plugin topol).so" ]; then
+    TOPOLOGYPLUGIN=PlugIns/qgis/$(qgis_libname plugin topol).so
+  elif [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname plugin topology).so" ]; then
+    TOPOLOGYPLUGIN=PlugIns/qgis/$(qgis_libname plugin topology).so
+  fi
+
   # https://github.com/qgis/QGIS/pull/43559
 
   for i in \
@@ -197,10 +205,10 @@ function fix_binaries_qgis() {
     $UNTWINE \
     $OWSPROVIDER \
     $APIHEADER \
-    PlugIns/qgis/libgeometrycheckerplugin.so \
+    PlugIns/qgis/$(qgis_libname plugin geometrychecker).so \
     PlugIns/qgis/$(qgis_libname provider db2).so \
     PlugIns/qgis/$(qgis_libname authmethod identcert).so \
-    PlugIns/qgis/libtopolplugin.so \
+    $TOPOLOGYPLUGIN \
     PlugIns/qgis/$(qgis_libname provider gpx).so \
     PlugIns/qgis/$(qgis_libname authmethod esritoken).so \
     PlugIns/qgis/$(qgis_libname provider postgresraster).so \
@@ -217,13 +225,13 @@ function fix_binaries_qgis() {
     PlugIns/qgis/$(qgis_libname provider arcgisfeatureserver).so \
     PlugIns/qgis/$(qgis_libname authmethod pkipaths).so \
     PlugIns/qgis/$(qgis_libname provider wms).so \
-    PlugIns/qgis/libofflineeditingplugin.so \
+    PlugIns/qgis/$(qgis_libname plugin offlineediting)..so \
     PlugIns/qgis/$(qgis_libname authmethod pkcs12).so \
     PlugIns/qgis/$(qgis_libname provider grass)${VERSION_grass_major}.so \
     PlugIns/qgis/$(qgis_libname provider mssql).so \
     PlugIns/qgis/$(qgis_libname provider arcgismapserver).so \
     PlugIns/qgis/$(qgis_libname provider postgres).so \
-    PlugIns/qgis/libgrassplugin${VERSION_grass_major}.so \
+    PlugIns/qgis/$(qgis_libname plugin grass)${VERSION_grass_major}.so \
     PlugIns/qgis/$(qgis_libname provider virtuallayer).so \
     $VIRTUALRASTER \
     Resources/python/qgis/_core.so \
