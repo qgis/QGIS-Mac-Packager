@@ -174,6 +174,12 @@ function fix_binaries_qgis() {
     APIHEADER=PlugIns/qgis/$(qgis_libname authmethod apiheader).so
   fi
 
+  # authmethod maptiler added in 3.23
+  MAPTILER=
+  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname authmethod maptilerhmacsha256).so" ]; then
+    MAPTILER=PlugIns/qgis/$(qgis_libname authmethod maptilerhmacsha256).so
+  fi
+
   TOPOLOGYPLUGIN=
   if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname plugin topol).so" ]; then
     TOPOLOGYPLUGIN=PlugIns/qgis/$(qgis_libname plugin topol).so
@@ -205,6 +211,7 @@ function fix_binaries_qgis() {
     $UNTWINE \
     $OWSPROVIDER \
     $APIHEADER \
+    $MAPTILER \
     PlugIns/qgis/$(qgis_libname plugin geometrychecker).so \
     PlugIns/qgis/$(qgis_libname provider db2).so \
     PlugIns/qgis/$(qgis_libname authmethod identcert).so \
