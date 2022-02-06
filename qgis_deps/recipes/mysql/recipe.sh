@@ -3,17 +3,17 @@
 DESC_mysql="Open source relational database management system"
 
 # version of your package
-VERSION_mysql=8.0.23
+VERSION_mysql=8.0.28
 LINK_libmysqlclient=libmysqlclient.21.dylib
 
 # dependencies of this recipe
 DEPS_mysql=(openssl protobuf boost zstd zlib)
 
 # url of the package
-URL_mysql=https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-boost-${VERSION_mysql}.tar.gz
+URL_mysql=https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-boost-${VERSION_mysql}.tar.gz
 
 # md5 of the package
-MD5_mysql=27cfcf24fc754b592acd69fd32a3940a
+MD5_mysql=362b8141ecaf425b803fe55292e2df98
 
 # default build path
 BUILD_mysql=$BUILD_PATH/mysql/$(get_directory $URL_mysql)

@@ -1,0 +1,51 @@
+name: Deps
+on:
+  workflow_dispatch:
+  push:
+    paths:
+    - 'qgis_deps/**'
+    - '.github/workflows/deps.yml'
+
+env:
+  CONFIG_FILE: ../config/dev.conf
+  RELEASE_VERSION: '0.10'
+
+jobs:
+  mac_os_build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: brew install python3
+
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v1  # not v2!
+        with:
+          path: ${{ github.workspace }}/Qt
+          key: ${{ runner.os }}-QtCache
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          dir: ${{ github.workspace }}
+          cached: ${{ steps.cache-qt.outputs.cache-hit }}
+          version: '5.15.2'
+          host: 'mac'
+          target: 'desktop'
+
+      - name: move Qt to /opt
+        run: |
+          sudo mkdir -p /opt/Qt
+          sudo mv ${{ github.workspace }}/Qt /opt
+    
+      - name: create dirs
+        run: sudo mkdir -p /opt/QGIS/qgis-deps-${{ env.RELEASE_VERSION }}
+
+      - name: install brew deps
+        run: ./scripts/install_brew_dev_packages.bash
+
+      - name: build deps
+        run: |
+          cd qgis_deps
+          sudo ./distribute.sh ${CONFIG_FILE} -mqgis_deps

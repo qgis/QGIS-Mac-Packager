@@ -21,7 +21,7 @@ DEPS_libkml=(
 )
 
 # url of the package
-URL_libkml=https://github.com/libkml/libkml/archive/$VERSION_libkml.tar.gz
+URL_libkml=https://github.com/libkml/libkml/archive/refs/tags/${VERSION_libkml}.tar.gz
 
 # md5 of the package
 MD5_libkml=e663141e9ebd480538b25d226e1b2979

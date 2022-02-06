@@ -3,17 +3,17 @@
 DESC_proj_data="Cartographic proj library data"
 
 # version of your package
-VERSION_proj_data_major=1.7
+VERSION_proj_data_major=1.8
 VERSION_proj_data=${VERSION_proj_data_major}.0
 
 # dependencies of this recipe
 DEPS_proj_data=(proj)
 
 # url of the package
-URL_proj_data=https://github.com/OSGeo/PROJ-data/archive/refs/tags/${VERSION_proj_data}.zip
+URL_proj_data=https://github.com/OSGeo/PROJ-data/archive/refs/tags/${VERSION_proj_data}.tar.gz
 
 # md5 of the package
-MD5_proj_data=6bef1715b34a3048240a0536fc85a10c
+MD5_proj_data=18da4c9d0c6bd70c34603c1b610dba69
 
 # default build path
 BUILD_proj_data=$BUILD_PATH/proj_data/$(get_directory $URL_proj_data)

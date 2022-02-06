@@ -4,7 +4,7 @@ DESC_gdal="Geospatial Data Abstraction Library"
 
 # version of your package
 # keep in SYNC with python_gdal receipt
-VERSION_gdal=3.3.2
+VERSION_gdal=3.4.1
 
 source $RECIPES_PATH/netcdf/recipe.sh
 source $RECIPES_PATH/xerces/recipe.sh
@@ -32,7 +32,7 @@ DEPS_gdal=(
   expat
   freexl
   libkml
-  pcre
+  pcre2
   unixodbc
   spatialite
   libcurl
@@ -43,7 +43,7 @@ DEPS_gdal=(
 URL_gdal=https://github.com/OSGeo/gdal/releases/download/v${VERSION_gdal}/gdal-${VERSION_gdal}.tar.gz
 
 # md5 of the package
-MD5_gdal=fd82c580ec9e16a0a46cd176243a8a56
+MD5_gdal=c90e741ad1a77c30da2241c63208c93a
 
 # default build path
 BUILD_gdal=$BUILD_PATH/gdal/$(get_directory $URL_gdal)

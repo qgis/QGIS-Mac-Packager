@@ -3,7 +3,7 @@
 DESC_jpeg="Image manipulation library"
 
 # version of your package
-VERSION_jpeg=9d
+VERSION_jpeg=9e
 
 LINK_jpeg=libjpeg.9.dylib
 
@@ -14,7 +14,7 @@ DEPS_jpeg=()
 URL_jpeg=https://www.ijg.org/files/jpegsrc.v${VERSION_jpeg}.tar.gz
 
 # md5 of the package
-MD5_jpeg=ad7e40dedc268f97c44e7ee3cd54548a
+MD5_jpeg=2489f1597b046425f5fcd3cf2df7d85f
 
 # default build path
 BUILD_jpeg=$BUILD_PATH/jpeg/$(get_directory $URL_jpeg)

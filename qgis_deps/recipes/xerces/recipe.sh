@@ -10,7 +10,7 @@ LINK_libxerces_c=libxerces-c-3.2.dylib
 DEPS_xerces=(expat libcurl libicu)
 
 # url of the package
-URL_xerces=https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-${VERSION_xerces}.tar.gz
+URL_xerces=https://dlcdn.apache.org//xerces/c/3/sources/xerces-c-${VERSION_xerces}.tar.gz
 
 # md5 of the package
 MD5_xerces=a5fa4d920fce31c9ca3bfef241644494
