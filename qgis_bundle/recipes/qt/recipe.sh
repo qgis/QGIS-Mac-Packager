@@ -14,50 +14,51 @@ function bundle_qt() {
 
   #### FRAMEWORKS
   for i in \
-    QtRemoteObjects \
+    Qt3DCore \
+    Qt3DExtras \
     Qt3DInput \
-    QtDesigner \
-    QtNfc \
-    QtQuickWidgets \
+    Qt3DLogic \
+    Qt3DQuick \
     Qt3DQuickScene2D \
     Qt3DRender \
-    QtHelp \
-    QtPrintSupport \
-    QtGui \
-    QtDBus \
-    QtWebSockets \
-    QtPositioningQuick \
-    Qt3DCore \
-    QtLocation \
-    QtXml \
-    QtSerialPort \
-    QtWebView \
-    QtQuick \
-    QtCore \
-    QtQml \
-    Qt3DExtras \
-    QtWebChannel \
-    QtMultimedia \
-    QtOpenGL \
-    Qt3DQuick \
-    QtMacExtras \
-    QtTest \
-    QtWidgets \
-    QtPositioning \
     QtBluetooth \
-    Qt3DLogic \
-    QtSql \
     QtConcurrent \
-    QtSerialBus \
+    QtCore \
+    QtDBus \
+    QtDesigner \
+    QtDesignerComponents \
     QtGamepad \
-    QtNetwork \
-    QtXmlPatterns \
-    QtSvg \
+    QtGui \
+    QtHelp \
+    QtLocation \
+    QtMacExtras \
+    QtMultimedia \
     QtMultimediaWidgets \
-    QtSensors \
-    QtTextToSpeech \
+    QtNetwork \
+    QtNfc \
+    QtOpenGL \
+    QtPositioning \
+    QtPositioningQuick \
+    QtPrintSupport \
+    QtQml \
     QtQmlModels \
-    QtDesignerComponents
+    QtQuick \
+    QtQuickControls2 \
+    QtQuickWidgets \
+    QtRemoteObjects \
+    QtSensors \
+    QtSerialBus \
+    QtSerialPort \
+    QtSql \
+    QtSvg \
+    QtTest \
+    QtTextToSpeech \
+    QtWebChannel \
+    QtWebSockets \
+    QtWebView \
+    QtWidgets \
+    QtXml \
+    QtXmlPatterns
   do
     try rsync -av $QT_ROOT_DIR/lib/$i.framework $BUNDLE_FRAMEWORKS_DIR/ --exclude Headers
   done
