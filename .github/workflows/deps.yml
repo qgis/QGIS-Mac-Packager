@@ -48,4 +48,4 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo ./distribute.sh ${CONFIG_FILE} -mqgis_deps
+          sudo ./distribute_v2.sh ${CONFIG_FILE} -mqgis_deps
