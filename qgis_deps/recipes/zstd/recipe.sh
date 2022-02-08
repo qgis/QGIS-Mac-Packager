@@ -3,7 +3,7 @@
 DESC_zstd="Zstandard is a real-time compression algorithm"
 
 # version of your package
-VERSION_zstd=1.4.4
+VERSION_zstd=1.5.2
 LINK_zstd=libzstd.1.dylib
 
 # dependencies of this recipe
@@ -13,7 +13,7 @@ DEPS_zstd=()
 URL_zstd=https://github.com/facebook/zstd/archive/v${VERSION_zstd}.tar.gz
 
 # md5 of the package
-MD5_zstd=532aa7b3a873e144bbbedd9c0ea87694
+MD5_zstd=6dc24b78e32e7c99f80c9441e40ff8bc
 
 # default build path
 BUILD_zstd=$BUILD_PATH/zstd/$(get_directory $URL_zstd)

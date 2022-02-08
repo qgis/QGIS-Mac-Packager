@@ -3,7 +3,7 @@
 DESC_libtasn1="ASN.1 structure parser library"
 
 # version of your package
-VERSION_libtasn1=4.16.0
+VERSION_libtasn1=4.18.0
 
 LINK_libtasn1=libtasn1.6.dylib
 
@@ -14,7 +14,7 @@ DEPS_libtasn1=()
 URL_libtasn1=https://ftp.gnu.org/gnu/libtasn1/libtasn1-${VERSION_libtasn1}.tar.gz
 
 # md5 of the package
-MD5_libtasn1=531208de3729d42e2af0a32890f08736
+MD5_libtasn1=8203e72a2c0390515410b2ea2c032f04
 
 # default build path
 BUILD_libtasn1=$BUILD_PATH/libtasn1/$(get_directory $URL_libtasn1)

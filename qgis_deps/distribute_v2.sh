@@ -746,7 +746,11 @@ function run_get_packages() {
 function run_prebuild() {
   info "Run prebuild"
   cd ${BUILD_PATH}
-  for module in ${MODULES}; do
+  modules_arr=(${MODULES})
+  nmod=${#modules_arr[@]}
+  for (( j=0; j<nmod; j++ )); do
+    module="${modules_arr[$j]}"
+    fold_push "building ${module} (${j}/${nmod})"
     fn=$(echo prebuild_${module})
     debug "Call ${fn}"
     ${fn}
@@ -760,8 +764,11 @@ function run_build() {
 
   cd ${BUILD_PATH}
 
-  for module in ${MODULES}; do
-    fold_push "building ${module}"
+  modules_arr=(${MODULES})
+  nmod=${#modules_arr[@]}
+  for (( j=0; j<nmod; j++ )); do
+    module="${modules_arr[$j]}"
+    fold_push "building ${module} (${j}/${nmod})"
 
     fn="build_${module}"
     shouldbuildfn="shouldbuild_${module}"
@@ -894,11 +901,25 @@ if [ ${DO_SET_X} -eq 1 ]; then
 fi
 
 cd ${ROOT_PATH}
+fold_push prepare
 run_prepare
+fold_pop
+fold_push source
 run_source_modules
+fold_pop
+fold_push download
 run_get_packages
+fold_pop
+fold_push prebuild
 run_prebuild
+fold_pop
+fold_push build
 run_build
+fold_pop
+fold_push final_check
 run_final_check
+fold_pop
+fold_push create_config_file
 run_create_config_file
+fold_pop
 info "All done !"

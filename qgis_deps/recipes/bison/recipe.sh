@@ -3,7 +3,7 @@
 DESC_bison="Parser generator"
 
 # version of your package
-VERSION_bison=3.7.5
+VERSION_bison=3.8.2
 
 # dependencies of this recipe
 DEPS_bison=(gettext)
@@ -12,7 +12,7 @@ DEPS_bison=(gettext)
 URL_bison=https://ftp.gnu.org/gnu/bison/bison-${VERSION_bison}.tar.xz
 
 # md5 of the package
-MD5_bison=9b762dc24a6723f86d14d957d3deeb90
+MD5_bison=c28f119f405a2304ff0a7ccdcc629713
 
 # default build path
 BUILD_bison=$BUILD_PATH/bison/$(get_directory $URL_bison)

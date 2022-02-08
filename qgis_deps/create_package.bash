@@ -4,7 +4,7 @@ set -e
 
 function error() {
   echo -e $1;
-  exit -1
+  exit 1
 }
 
 PWD=`pwd`
@@ -34,19 +34,11 @@ fi
 
 echo "Create packages for qgis-deps-${QGIS_DEPS_SDK_VERSION}"
 
-##############################################
-# Create install script
-INSTALL_SCRIPT=$ROOT_OUT_PATH/install_qgis_deps-${QGIS_DEPS_SDK_VERSION}.bash
-if [ -f $INSTALL_SCRIPT ]; then
-  rm -rf $INSTALL_SCRIPT
-  touch $INSTALL_SCRIPT
-  chmod +x $INSTALL_SCRIPT
-fi
+
 
 ##############################################
 # Create QT package
-QT_PACKAGE_FILE=qt-${VERSION_qt}.tar.gz
-QT_PACKAGE=$ROOT_OUT_PATH/${QT_PACKAGE_FILE}
+QT_PACKAGE=$ROOT_OUT_PATH/qt-${VERSION_qt}.tar.gz
 QT_INSTALL_DIR=\$\{QGIS_DEPS_PREFIX\}$QT_BASE/clang_64
 if [ -f $QT_PACKAGE ]; then
   echo "Archive $QT_PACKAGE exists, skipping"
@@ -56,25 +48,12 @@ else
   cd $PWD
 fi
 
-echo "#!/usr/bin/env bash" >> $INSTALL_SCRIPT
-echo "set -e" >> $INSTALL_SCRIPT
-echo "ROOT_PATH=\"\$( cd \"\$( dirname \"\${BASH_SOURCE[0]}\" )\" && pwd )\"" >> $INSTALL_SCRIPT
-echo "echo \"Running qgis-deps installer\"" >> $INSTALL_SCRIPT
-echo "echo \"----------------------\"" >> $INSTALL_SCRIPT
-echo "if [ -f \$ROOT_PATH/$QT_PACKAGE_FILE ] && [ ! -d $QT_INSTALL_DIR ]; then" >> $INSTALL_SCRIPT
-echo "  echo \"Installing QT ${VERSION_qt} to $QT_INSTALL_DIR\"" >> $INSTALL_SCRIPT
-echo "  mkdir -p $QT_INSTALL_DIR" >> $INSTALL_SCRIPT
-echo "  cd $QT_INSTALL_DIR" >> $INSTALL_SCRIPT
-echo "  $DECOMPRESS \$ROOT_PATH/$QT_PACKAGE_FILE" >> $INSTALL_SCRIPT
-echo "else " >> $INSTALL_SCRIPT
-echo "  echo \"Skipped installation of QT ${VERSION_qt} to $QT_INSTALL_DIR\"" >> $INSTALL_SCRIPT
-echo "fi" >> $INSTALL_SCRIPT
-
 ##############################################
 # Create Deps package
 QGIS_DEPS_PACKAGE_FILE=qgis-deps-${QGIS_DEPS_SDK_VERSION}.tar.gz
-QGIS_DEPS_PACKAGE=$ROOT_OUT_PATH/${QGIS_DEPS_PACKAGE_FILE}
+QGIS_DEPS_PACKAGE=$ROOT_OUT_PATH/qgis-deps-${QGIS_DEPS_SDK_VERSION}.tar.gz
 QGIS_INSTALL_DIR=\$\{QGIS_DEPS_PREFIX\}$ROOT_OUT_PATH/stage/
+
 if [ -f $QGIS_DEPS_PACKAGE ]; then
   echo "Archive $QGIS_DEPS_PACKAGE exists, removing"
   rm -rf $QGIS_DEPS_PACKAGE
@@ -83,6 +62,20 @@ fi
 cd $ROOT_OUT_PATH/stage/
 $COMPRESS ${QGIS_DEPS_PACKAGE} ./
 cd $PWD
+
+
+##############################################
+# Create install script
+INSTALL_SCRIPT=$ROOT_OUT_PATH/install_qgis_deps-${QGIS_DEPS_SDK_VERSION}.bash
+if [ -f $INSTALL_SCRIPT ]; then
+  rm -rf $INSTALL_SCRIPT
+  touch $INSTALL_SCRIPT
+  chmod +x $INSTALL_SCRIPT
+fi
+sed -i "s/__VERSION_QT__/${VERSION_qt}/g" $INSTALL_SCRIPT
+sed -i "s/__QT_INSTALL_DIR__/${QT_INSTALL_DIR}/g" $INSTALL_SCRIPT
+
+
 echo "echo \"----------------------\"" >> $INSTALL_SCRIPT
 echo "if [ -f \$ROOT_PATH/$QGIS_DEPS_PACKAGE_FILE ] && [ ! -d $QGIS_INSTALL_DIR ]; then" >> $INSTALL_SCRIPT
 echo "  echo \"Installing QGIS_deps ${QGIS_DEPS_SDK_VERSION} to $QGIS_INSTALL_DIR\"" >> $INSTALL_SCRIPT

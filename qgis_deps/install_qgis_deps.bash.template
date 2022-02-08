@@ -1,0 +1,13 @@
+#/usr/bin/env perl -v bash
+set -e
+ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "Running qgis-deps installer"
+echo "----------------------"
+if [ -f $ROOT_PATH/q-__VERSION_QT__.tar.gz ] && [ ! -d __QT_INSTALL_DIR__ ]; then
+  echo "Installing QT __VERSION_QT__ to __QT_INSTALL_DIR__"
+  mkdir -p __QT_INSTALL_DIR__
+  cd __QT_INSTALL_DIR__
+   $ROOT_PATH/q-__VERSION_QT__.tar.gz
+else 
+  echo "Skipped installation of QT __VERSION_QT__ to __QT_INSTALL_DIR__"
+fi

@@ -4,7 +4,7 @@ DESC_pcre2="Perl compatible regular expressions library"
 
 # version of your package
 VERSION_pcre2=10.39
-LINK_pcre2=libpcre2.2.dylib
+LINK_pcre2=libpcre2-8.dylib
 
 # dependencies of this recipe
 DEPS_pcre2=(
@@ -54,13 +54,11 @@ function build_pcre2() {
 
   try ${CONFIGURE} \
       --disable-dependency-tracking \
-      --enable-utf8 \
-      --enable-pcre8 \
-      --enable-pcre16 \
-      --enable-pcre32 \
-      --enable-unicode-properties \
-      --enable-pcregrep-libz \
-      --enable-pcregrep-libbz2
+      --enable-pcre2-8 \
+      --enable-pcre2-16 \
+      --enable-pcre2-32 \
+      --enable-pcre2grep-libz \
+      --enable-pcre2grep-libbz2
 
   check_file_configuration config.status
   try $MAKESMP
@@ -71,12 +69,12 @@ function build_pcre2() {
 
 # function called after all the compile have been done
 function postbuild_pcre2() {
-  verify_binary lib/$LINK_pcre
+  verify_binary lib/$LINK_pcre2
 }
 
 # function to append information to config file
 function add_config_info_pcre2() {
-  append_to_config_file "# pcre-${VERSION_pcre}: ${DESC_pcre}"
-  append_to_config_file "export VERSION_pcre=${VERSION_pcre}"
-  append_to_config_file "export LINK_pcre=${LINK_pcre}"
+  append_to_config_file "# pcre2-${VERSION_pcre2}: ${DESC_pcre2}"
+  append_to_config_file "export VERSION_pcre2=${VERSION_pcre2}"
+  append_to_config_file "export LINK_pcre2=${LINK_pcre2}"
 }
