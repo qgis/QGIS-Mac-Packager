@@ -25,7 +25,7 @@ echo ""
 echo "QGIS-DEPS $QGIS_DEPS_SDK_VERSION"
 DEPS=$(grep "VERSION" "${QGIS_DEPS_STAGE_PATH}/qgis-deps.config")
 DEPS="${DEPS//export VERSION_/}"
-DEPS="${DEPS//export RELEASE_VERSION_/}"
+DEPS="${DEPS//export QGIS_RELEASE_VERSION_/}"
 DEPS="${DEPS//export QGIS_DEPS_SDK_VERSION_/}"
 DEPS="${DEPS//python_packages_pre_/python: }"
 DEPS="${DEPS//python_packages_post_/python: }"

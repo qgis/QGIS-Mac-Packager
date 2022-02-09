@@ -3,7 +3,7 @@
 DESC_python_all="python and all its site-packages"
 
 # version of your package
-VERSION_python_all=${RELEASE_VERSION}
+VERSION_python_all=${QGIS_DEPS_RELEASE_VERSION}
 
 # dependencies of this recipe
 DEPS_python_all=(

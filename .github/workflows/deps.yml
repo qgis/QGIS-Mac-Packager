@@ -7,14 +7,19 @@ on:
     - '.github/workflows/deps.yml'
 
 env:
-  CONFIG_FILE: ../config/dev.conf
-  RELEASE_VERSION: '0.10'
+  # can be dev/ltr/nightly/pr
+  MAC_PACKAGE_CONFIG: dev
 
 jobs:
   mac_os_build:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Set environment
+        run: |
+          source ./config/${{ env.MAC_PACKAGE_CONFIG }}.conf
+          sudo -E mkdir -p /opt/QGIS/qgis-deps-${QGIS_DEPS_RELEASE_VERSION}
 
       - run: brew install python3
 
@@ -38,9 +43,6 @@ jobs:
         run: |
           sudo mkdir -p /opt/Qt
           sudo mv ${{ github.workspace }}/Qt /opt
-    
-      - name: create dirs
-        run: sudo mkdir -p /opt/QGIS/qgis-deps-${{ env.RELEASE_VERSION }}
 
       - name: install brew deps
         run: ./scripts/install_brew_dev_packages.bash
@@ -48,4 +50,15 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo ./distribute_v2.sh ${CONFIG_FILE} -mqgis_deps
+          sudo -E ./distribute.sh -mqgis_deps
+
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
+
+      - name: build deps
+        run: |
+          cd qgis_deps
+          sudo -E ./create_package.bash

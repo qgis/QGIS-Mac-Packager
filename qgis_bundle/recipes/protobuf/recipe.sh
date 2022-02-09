@@ -8,7 +8,7 @@ function check_protobuf() {
 }
 
 function bundle_protobuf() {
-  try cp -av $DEPS_LIB_DIR/libprotobuf-lite.*dylib $BUNDLE_LIB_DIR
+  try cp -av $DEPS_LIB_DIR/libprotobuf-lite.*.dylib $BUNDLE_LIB_DIR
 }
 
 function fix_binaries_protobuf() {

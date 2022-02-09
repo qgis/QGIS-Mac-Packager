@@ -3,9 +3,8 @@
 DESC_protobuf="Protocol buffers (Google's data interchange format)"
 
 # version of your package
-VERSION_protobuf=3.11.4
-LINK_protobuf_lite=libprotobuf-lite.22.dylib
-LINK_protobuf=libprotobuf.22.dylib
+VERSION_protobuf=3.19.4
+LINK_protobuf_lite=libprotobuf-lite.30.dylib
 
 # dependencies of this recipe
 DEPS_protobuf=(zlib)
@@ -14,7 +13,7 @@ DEPS_protobuf=(zlib)
 URL_protobuf=https://github.com/protocolbuffers/protobuf/releases/download/v${VERSION_protobuf}/protobuf-cpp-${VERSION_protobuf}.tar.gz
 
 # md5 of the package
-MD5_protobuf=44fa1fde51cc21c79d0e64caef2d2933
+MD5_protobuf=ccedd5b7b09a9eda37e8654155baca5a
 
 # default build path
 BUILD_protobuf=$BUILD_PATH/protobuf/$(get_directory $URL_protobuf)
@@ -53,6 +52,7 @@ function build_protobuf() {
   try ./autogen.sh
   patch_configure_file configure
   try ${CONFIGURE} \
+    --enable-static \
     --disable-debug \
     --disable-dependency-tracking \
     --with-zlib
@@ -66,9 +66,9 @@ function build_protobuf() {
 
 # function called after all the compile have been done
 function postbuild_protobuf() {
-  verify_binary lib/libprotobuf.dylib
+  # verify_binary lib/libprotobuf.dylib
+  # verify_binary lib/$LINK_protobuf
   verify_binary lib/$LINK_protobuf_lite
-  verify_binary lib/$LINK_protobuf
   verify_binary lib/libprotoc.dylib
   verify_binary bin/protoc
 }
@@ -77,6 +77,6 @@ function postbuild_protobuf() {
 function add_config_info_protobuf() {
   append_to_config_file "# protobuf-${VERSION_protobuf}: ${DESC_protobuf}"
   append_to_config_file "export VERSION_protobuf=${VERSION_protobuf}"
-  append_to_config_file "export LINK_protobuf=${LINK_protobuf}"
+  # append_to_config_file "export LINK_protobuf=${LINK_protobuf}"
   append_to_config_file "export LINK_protobuf_lite=${LINK_protobuf_lite}"
 }

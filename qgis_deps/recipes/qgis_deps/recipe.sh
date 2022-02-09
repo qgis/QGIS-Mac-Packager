@@ -3,7 +3,7 @@
 DESC_qgis_deps="QGIS dependencies package"
 
 # version of your package
-VERSION_qgis_deps=${RELEASE_VERSION}
+VERSION_qgis_deps=${QGIS_DEPS_RELEASE_VERSION}
 
 # dependencies of this recipe
 DEPS_qgis_deps=(
