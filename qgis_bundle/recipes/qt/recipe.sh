@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function check_qt() {
-  env_var_exists VERSION_qt
+  env_var_exists VERSION_QT
   env_var_exists QT_BASE
   env_var_exists VERSION_qtextra
   env_var_exists LINK_libqsqlodbc

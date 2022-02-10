@@ -33,7 +33,7 @@ fi
 
 echo "Verifying the Qt package installation"
 if [ ! -d "$QT_BASE" ]; then
-  error "missing QT in $QT_BASE, install version ${VERSION_qt} from ${QGIS_DOWNLOAD_ROOT_URL}/deps/"
+  error "missing QT in $QT_BASE, install version ${VERSION_QT} from ${QGIS_DOWNLOAD_ROOT_URL}/deps/"
 fi
 
 echo "Verifying the qgis-deps package installation"

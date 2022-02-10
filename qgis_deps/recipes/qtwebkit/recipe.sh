@@ -3,7 +3,7 @@
 DESC_qtwebkit="WebKit extension for QT5"
 
 # version of your package
-VERSION_QTwebkit=${VERSION_QT}
+VERSION_qtwebkit=${VERSION_QT}
 
 # dependencies of this recipe
 DEPS_qtwebkit=( sqlite bison webp zlib libxslt jpeg png libtiff libicu )
@@ -79,6 +79,6 @@ function postbuild_qtwebkit() {
 
 # function to append information to config file
 function add_config_info_qtwebkit() {
-  append_to_config_file "# qtwebkit-${VERSION_QTwebkit}: ${DESC_qtwebkit}"
-  append_to_config_file "export VERSION_QTwebkit=${VERSION_QTwebkit}"
+  append_to_config_file "# qtwebkit-${VERSION_qtwebkit}: ${DESC_qtwebkit}"
+  append_to_config_file "export VERSION_qtwebkit=${VERSION_qtwebkit}"
 }

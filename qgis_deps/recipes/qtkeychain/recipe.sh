@@ -3,7 +3,7 @@
 DESC_qtkeychain="Platform-independent Qt API for storing passwords securely"
 
 # version of your package
-VERSION_QTkeychain=0.12.0
+VERSION_qtkeychain=0.12.0
 
 LINK_qtkeychain=libqt5keychain.1.dylib
 
@@ -11,7 +11,7 @@ LINK_qtkeychain=libqt5keychain.1.dylib
 DEPS_qtkeychain=()
 
 # url of the package
-URL_qtkeychain=https://github.com/frankosterfeld/qtkeychain/archive/v${VERSION_QTkeychain}.tar.gz
+URL_qtkeychain=https://github.com/frankosterfeld/qtkeychain/archive/v${VERSION_qtkeychain}.tar.gz
 
 # md5 of the package
 MD5_qtkeychain=474f172b42017872dd50eec6c9981fed
@@ -70,7 +70,7 @@ function postbuild_qtkeychain() {
 
 # function to append information to config file
 function add_config_info_qtkeychain() {
-  append_to_config_file "# qtkeychain-${VERSION_QTkeychain}: ${DESC_qtkeychain}"
-  append_to_config_file "export VERSION_QTkeychain=${VERSION_QTkeychain}"
+  append_to_config_file "# qtkeychain-${VERSION_qtkeychain}: ${DESC_qtkeychain}"
+  append_to_config_file "export VERSION_qtkeychain=${VERSION_qtkeychain}"
   append_to_config_file "export LINK_qtkeychain=${LINK_qtkeychain}"
 }
