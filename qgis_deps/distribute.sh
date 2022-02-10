@@ -688,7 +688,7 @@ function run_get_packages() {
   nmod=${#modules_arr[@]}
   for (( j=0; j<nmod; j++ )); do
     module="${modules_arr[$j]}"
-    fold_push "getting ${module} ($((j+1))}/${nmod})"
+    fold_push "getting ${module} ($((j+1))/${nmod})"
 
     # download dependencies for this module
     # check if there is not an overload from environment

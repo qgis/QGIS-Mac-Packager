@@ -8,7 +8,7 @@ VERSION_libtasn1=4.18.0
 LINK_libtasn1=libtasn1.6.dylib
 
 # dependencies of this recipe
-DEPS_libtasn1=()
+DEPS_libtasn1=(gettext)
 
 # url of the package
 URL_libtasn1=https://ftp.gnu.org/gnu/libtasn1/libtasn1-${VERSION_libtasn1}.tar.gz
