@@ -3,7 +3,7 @@
 DESC_qtextra="Build of some extra QT plugins"
 
 # version of your package
-VERSION_qtextra=$VERSION_qt
+VERSION_QTextra=$VERSION_QT
 
 # full link version of the library
 LINK_libqsqlodbc=libqsqlodbc.dylib
@@ -13,7 +13,7 @@ LINK_libqsqlpsql=libqsqlpsql.dylib
 DEPS_qtextra=(sqlite unixodbc postgres)
 
 # url of the package
-URL_qtextra=https://github.com/qt/qtbase/archive/v${VERSION_qtextra}.tar.gz
+URL_qtextra=https://github.com/qt/qtbase/archive/v${VERSION_QTextra}.tar.gz
 
 # md5 of the package
 MD5_qtextra=8b6bcfa8eb124e7c36b824d04f7c068e
@@ -83,8 +83,8 @@ function postbuild_qtextra() {
 
 # function to append information to config file
 function add_config_info_qtextra() {
-  append_to_config_file "# qtextra-${VERSION_qtextra}: ${DESC_qtextra}"
-  append_to_config_file "export VERSION_qtextra=${VERSION_qtextra}"
+  append_to_config_file "# qtextra-${VERSION_QTextra}: ${DESC_qtextra}"
+  append_to_config_file "export VERSION_QTextra=${VERSION_QTextra}"
   append_to_config_file "export LINK_libqsqlodbc=${LINK_libqsqlodbc}"
   append_to_config_file "export LINK_libqsqlpsql=${LINK_libqsqlpsql}"
 }

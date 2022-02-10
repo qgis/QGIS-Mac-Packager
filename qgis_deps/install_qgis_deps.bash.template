@@ -4,21 +4,28 @@ ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Running qgis-deps installer"
 
 echo "----------------------"
-if [ -f $ROOT_PATH/q-__VERSION_QT__.tar.gz ] && [ ! -d __QT_INSTALL_DIR__ ]; then
+if [ -f ${ROOT_PATH}/qt-__VERSION_QT__.tar.gz ] && [ ! -d __QT_INSTALL_DIR__ ]; then
   echo "Installing QT __VERSION_QT__ to __QT_INSTALL_DIR__"
   mkdir -p __QT_INSTALL_DIR__
   cd __QT_INSTALL_DIR__
-   $ROOT_PATH/q-__VERSION_QT__.tar.gz
+   ${ROOT_PATH}/qt-__VERSION_QT__.tar.gz
 else 
   echo "Skipped installation of QT __VERSION_QT__ to __QT_INSTALL_DIR__"
 fi
 
 echo "----------------------"
-if [ -f $ROOT_PATH/ ] && [ ! -d __QGIS_INSTALL_DIR__ ]; then
+if [ -f ${ROOT_PATH}/ ] && [ ! -d __QGIS_INSTALL_DIR__ ]; then
   echo "Installing QGIS_deps __QGIS_DEPS_SDK_VERSION__ to __QGIS_INSTALL_DIR__"
   mkdir -p __QGIS_INSTALL_DIR__
   cd __QGIS_INSTALL_DIR__
-   $ROOT_PATH/
+   ${ROOT_PATH}/
 else 
   echo "Skipped installation of QGIS_deps __QGIS_DEPS_SDK_VERSION__ to __QGIS_INSTALL_DIR__"
 fi
+
+
+echo "----------------------"
+echo "QT installed __QT_INSTALL_DIR__"
+echo "QGIS deps installed __QGIS_INSTALL_DIR__"
+
+

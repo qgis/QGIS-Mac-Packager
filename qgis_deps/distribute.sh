@@ -69,8 +69,8 @@ if [[ -z ${MACOSX_DEPLOYMENT_TARGET} ]]; then
   error "you need at MACOSX_DEPLOYMENT_TARGET in config.conf"
 fi
 
-if [[ -z ${VERSION_qt} ]]; then
-  error "No VERSION_qt environment set, abort"
+if [[ -z ${VERSION_QT} ]]; then
+  error "No VERSION_QT environment set, abort"
 fi
 
 if [[ -z ${QT_BASE} ]]; then
@@ -806,8 +806,8 @@ function run_create_config_file() {
   touch ${BUILD_CONFIG_FILE}
 
   append_to_config_file "export VERSION_major_python=${VERSION_major_python}"
-  append_to_config_file "export VERSION_qt=${VERSION_qt}"
-  append_to_config_file "export QT_BASE=/opt/Qt/${VERSION_qt}"
+  append_to_config_file "export VERSION_QT=${VERSION_QT}"
+  append_to_config_file "export QT_BASE=/opt/Qt/${VERSION_QT}"
   append_to_config_file "export MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}"
   append_to_config_file "export QGIS_DEPS_SDK_VERSION=${QGIS_DEPS_SDK_VERSION}"
 
