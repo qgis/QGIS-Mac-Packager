@@ -57,7 +57,6 @@ function build_fontconfig() {
   export LIBTOOLIZE="glibtoolize"
   export GETTEXTIZE="ggettextize"
   export AUTOPOINT="gautopoint"
-  export PKG_CONFIG_PATH=$STAGE_PATH/lib/pkgconfig
 
   try ${CONFIGURE}
 
@@ -69,7 +68,6 @@ function build_fontconfig() {
   unset LIBTOOLIZE
   unset GETTEXTIZE
   unset AUTOPOINT
-  unset PKG_CONFIG_PATH
 
   pop_env
 }

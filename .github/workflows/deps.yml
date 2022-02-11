@@ -50,7 +50,7 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh -mlibtasn1
+          sudo -E ./distribute.sh -mqgis_deps
 
       - name: Setup tmate session
         if: ${{ failure() }}
