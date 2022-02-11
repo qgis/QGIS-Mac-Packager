@@ -18,6 +18,7 @@ jobs:
 
       - name: Set environment
         run: |
+          source config/deps/deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}.conf
           sudo -E mkdir -p /opt/QGIS/qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
 
       - run: brew install python3
@@ -61,3 +62,15 @@ jobs:
         run: |
           cd qgis_deps
           sudo -E ./create_package.bash
+
+      - name: upload Qt archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: Qt
+          path: ${{ env.QT_PACKAGE_PATH }}
+
+      - name: upload QGIS deps
+        uses: actions/upload-artifact@v2
+        with:
+          name: qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
+          path: ${{ env.QGIS_DEPS_PACKAGE_PATH }}

@@ -7,11 +7,11 @@ echo "Running qgis-deps installer"
 QGIS_VERSION=${1:dev}
 
 echo "----------------------"
-if [ -f ${ROOT_PATH}/qt-__VERSION_QT__.tar.gz ] && [ ! -d __QT_INSTALL_DIR__ ]; then
+if [ -f __QT_PACKAGE_PATH__ ] && [ ! -d __QT_INSTALL_DIR__ ]; then
   echo "Installing QT __VERSION_QT__ to __QT_INSTALL_DIR__"
   mkdir -p __QT_INSTALL_DIR__
   cd __QT_INSTALL_DIR__
-   ${ROOT_PATH}/qt-__VERSION_QT__.tar.gz
+   __QT_PACKAGE_PATH__
 else 
   echo "Skipped installation of QT __VERSION_QT__ to __QT_INSTALL_DIR__"
 fi

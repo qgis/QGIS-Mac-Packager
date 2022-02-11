@@ -32,29 +32,26 @@ echo "Create packages for qgis-deps-${QGIS_DEPS_SDK_VERSION}"
 
 ##############################################
 # Create QT package
-QT_PACKAGE=${ROOT_OUT_PATH}/qt-${VERSION_QT}.tar.gz
 QT_INSTALL_DIR=${QGIS_DEPS_PREFIX}${QT_BASE}/clang_64
-if [ -f ${QT_PACKAGE} ]; then
-  echo "Archive ${QT_PACKAGE} exists, skipping"
+if [ -f ${QT_PACKAGE_PATH} ]; then
+  echo "Archive ${QT_PACKAGE_PATH} exists, skipping"
 else
   cd ${QT_BASE}/clang_64
-  ${COMPRESS} ${QT_PACKAGE} ./
+  ${COMPRESS} ${QT_PACKAGE_PATH} ./
   cd ${CURRENT_PWD}
 fi
 
 ##############################################
 # Create Deps package
-QGIS_DEPS_PACKAGE_FILE=qgis-deps-${QGIS_DEPS_SDK_VERSION}.tar.gz
-QGIS_DEPS_PACKAGE=${ROOT_OUT_PATH}/qgis-deps-${QGIS_DEPS_SDK_VERSION}.tar.gz
 QGIS_INSTALL_DIR=${QGIS_DEPS_PREFIX}${ROOT_OUT_PATH}/stage/
 
-if [ -f ${QGIS_DEPS_PACKAGE} ]; then
-  echo "Archive ${QGIS_DEPS_PACKAGE} exists, removing"
-  rm -rf ${QGIS_DEPS_PACKAGE}
+if [ -f ${QGIS_DEPS_PACKAGE_PATH} ]; then
+  echo "Archive ${QGIS_DEPS_PACKAGE_PATH} exists, removing"
+  rm -rf ${QGIS_DEPS_PACKAGE_PATH}
 fi
 
 cd ${ROOT_OUT_PATH}/stage/
-${COMPRESS} ${QGIS_DEPS_PACKAGE} ./
+${COMPRESS} ${QGIS_DEPS_PACKAGE_PATH} ./
 cd ${CURRENT_PWD}
 
 
@@ -67,6 +64,7 @@ fi
 cp install_qgis_deps.bash.template ${INSTALL_SCRIPT}
 chmod +x ${INSTALL_SCRIPT}
 gsed -i "s|__VERSION_QT__|${VERSION_QT}|g" ${INSTALL_SCRIPT}
+gsed -i "s|__QT_PACKAGE_PATH__|${QT_PACKAGE_PATH}|g" ${INSTALL_SCRIPT}
 gsed -i "s|__QT_INSTALL_DIR__|${QT_INSTALL_DIR}|g" ${INSTALL_SCRIPT}
 gsed -i "s|__QGIS_DEPS_SDK_VERSION__|${QGIS_DEPS_SDK_VERSION}|g" ${INSTALL_SCRIPT}
 gsed -i "s|__QGIS_INSTALL_DIR__|${QGIS_INSTALL_DIR}|g" ${INSTALL_SCRIPT}
@@ -74,6 +72,6 @@ gsed -i "s|__QGIS_INSTALL_DIR__|${QGIS_INSTALL_DIR}|g" ${INSTALL_SCRIPT}
 ##############################################
 
 
-echo "QT archive ${QT_PACKAGE} (`filesize ${QT_PACKAGE}`)"
-echo "QGIS deps archive ${QGIS_DEPS_PACKAGE} (`filesize ${QGIS_DEPS_PACKAGE}`)"
+echo "QT archive ${QT_PACKAGE_PATH} (`filesize ${QT_PACKAGE_PATH}`)"
+echo "QGIS deps archive ${QGIS_DEPS_PACKAGE_PATH} (`filesize ${QGIS_DEPS_PACKAGE_PATH}`)"
 echo "Install script ${INSTALL_SCRIPT} (`filesize ${INSTALL_SCRIPT}`)"
