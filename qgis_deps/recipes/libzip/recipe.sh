@@ -51,6 +51,7 @@ function build_libzip() {
   # see issue #38: with ENABLE_GNUTLS it requires nette library
   try ${CMAKE} \
     -DENABLE_GNUTLS=FALSE \
+    -DENABLE_MBEDTLS=FALSE \
     -DCMAKE_DISABLE_FIND_PACKAGE_NETTLE=TRUE \
     $BUILD_libzip
 

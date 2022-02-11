@@ -51,10 +51,9 @@ if [ -z ${QGIS_DEPS_RELEASE_VERSION} ]; then
 fi
 CONFIG_FILE="../config/deps/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
 echo $CONFIG_FILE
-if ( [[ ! -f "${CONFIG_FILE}" ]] ); then
-  error "invalid config file (1st argument) ${CONFIG_FILE}"
+if [[ ! -f "${CONFIG_FILE}" ]]; then
+  error "invalid config file ${CONFIG_FILE}"
 fi
-
 source ${CONFIG_FILE}
 
 if [[ -z ${QGIS_DEPS_RELEASE_VERSION} ]]; then

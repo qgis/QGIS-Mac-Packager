@@ -11,7 +11,7 @@ LINK_gcc_s=libgcc_s.1.dylib
 LINK_libquadmath=libquadmath.0.dylib
 
 # dependencies of this recipe
-DEPS_gcc=(zlib gmp mpfr libmpc)
+DEPS_gcc=(zlib gmp mpfr libmpc libisl)
 
 # url of the package
 URL_gcc=https://ftp.gnu.org/gnu/gcc/gcc-${VERSION_gcc}/gcc-${VERSION_gcc}.tar.xz

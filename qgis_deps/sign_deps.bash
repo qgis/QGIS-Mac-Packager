@@ -3,21 +3,18 @@
 PWD=`pwd`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-####################
-# load configuration
-if (( $# < 1 )); then
-    echo "sign_deps: $0 <path/to>/config/<my>.conf ..."
-    exit 1
+# Load configuration
+if [ -z ${QGIS_DEPS_RELEASE_VERSION} ]; then
+  error "QGIS_DEPS_RELEASE_VERSION variable should be set"
 fi
-CONFIG_FILE=$1
-if [ ! -f "$CONFIG_FILE" ]; then
-  echo "invalid config file (1st argument) $CONFIG_FILE"
-  exit 1
+CONFIG_FILE="../config/deps/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
+echo $CONFIG_FILE
+if [[ ! -f "${CONFIG_FILE}" ]]; then
+  error "invalid config file ${CONFIG_FILE}"
 fi
-shift
-source $CONFIG_FILE
+source ${CONFIG_FILE}
 
-PATH_TO_SIGN=$ROOT_OUT_PATH/stage/
+PATH_TO_SIGN=${STAGE_PATH}
 
 if [ ! -f "$SIGN_FILE" ]; then
   error "identity file $SIGN_FILE missing"
