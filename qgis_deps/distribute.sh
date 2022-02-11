@@ -765,7 +765,7 @@ function run_build() {
   nmod=${#modules_arr[@]}
   for (( j=0; j<nmod; j++ )); do
     module="${modules_arr[$j]}"
-    fold_push "building ${module} ($((j+1))}/${nmod})"
+    fold_push "building ${module} ($((j+1))/${nmod})"
 
     fn="build_${module}"
     shouldbuildfn="shouldbuild_${module}"

@@ -3,7 +3,7 @@
 DESC_xz="General-purpose data compression with high compression ratio"
 
 # version of your package
-VERSION_xz=5.2.4
+VERSION_xz=5.2.5
 
 LINK_liblzma=liblzma.5.dylib
 
@@ -11,10 +11,10 @@ LINK_liblzma=liblzma.5.dylib
 DEPS_xz=(gettext)
 
 # url of the package
-URL_xz=https://downloads.sourceforge.net/project/lzmautils/xz-${VERSION_xz}.tar.gz
+URL_xz=https://downloads.sourceforge.net/project/lzmautils/xz-${VERSION_xz}.tar.xz
 
 # md5 of the package
-MD5_xz=5ace3264bdd00c65eeec2891346f65e6
+MD5_xz=aa1621ec7013a19abab52a8aff04fe5b
 
 # default build path
 BUILD_xz=$BUILD_PATH/xz/$(get_directory $URL_xz)

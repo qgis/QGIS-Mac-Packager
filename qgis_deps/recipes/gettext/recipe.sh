@@ -51,6 +51,7 @@ function build_gettext() {
 
   try ${CONFIGURE} \
     --disable-debug \
+    --disable-static \
     --program-prefix=g
 
   check_file_configuration config.status
