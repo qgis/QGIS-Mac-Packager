@@ -50,7 +50,7 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh -mqgis_deps
+          sudo -E ./distribute.sh -mlibtasn1
 
       - name: Setup tmate session
         if: ${{ failure() }}
@@ -68,12 +68,10 @@ jobs:
           p12-file-base64: ${{ secrets.IOS_CERTIFICATES_FILE_BASE64 }}
           p12-password: ${{ secrets.IOS_CERTIFICATES_PASSWORD }}
 
-      - uses: Apple-Actions/download-provisioning-profiles@v1
-        with:
-          bundle-id: ch.opengis.qfield
-          issuer-id: ${{ secrets.IOS_APPSTORE_ISSUER_ID }}
-          api-key-id: ${{ secrets.IOS_APPSTORE_KEY_ID }}
-          api-private-key: ${{ secrets.IOS_APPSTORE_PRIVATE_KEY }}
+      - name: signing deps
+        run: |
+          cd qgis_deps
+          sudo -E ./sign_deps.bash
 
       - name: upload Qt archive
         uses: actions/upload-artifact@v2
