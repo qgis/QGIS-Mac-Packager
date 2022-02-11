@@ -3,12 +3,12 @@ on:
   workflow_dispatch:
   push:
     paths:
+    - 'config/deps/**'
     - 'qgis_deps/**'
     - '.github/workflows/deps.yml'
 
 env:
-  # can be dev/ltr/nightly/pr
-  MAC_PACKAGE_CONFIG: dev
+  QGIS_DEPS_RELEASE_VERSION: "0.10"
 
 jobs:
   mac_os_build:
@@ -18,8 +18,7 @@ jobs:
 
       - name: Set environment
         run: |
-          source ./config/${{ env.MAC_PACKAGE_CONFIG }}.conf
-          sudo -E mkdir -p /opt/QGIS/qgis-deps-${QGIS_DEPS_RELEASE_VERSION}
+          sudo -E mkdir -p /opt/QGIS/qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
 
       - run: brew install python3
 

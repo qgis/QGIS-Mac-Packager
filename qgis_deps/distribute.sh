@@ -46,10 +46,10 @@ DO_SET_X=0
 DEBUG=0
 
 # Load configuration
-if [ -z ${MAC_PACKAGE_CONFIG} ]; then
-  error "MAC_PACKAGE_CONFIG variable should be set"
+if [ -z ${QGIS_DEPS_RELEASE_VERSION} ]; then
+  error "QGIS_DEPS_RELEASE_VERSION variable should be set"
 fi
-CONFIG_FILE="../config/${MAC_PACKAGE_CONFIG}.conf"
+CONFIG_FILE="../config/deps/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
 echo $CONFIG_FILE
 if ( [[ ! -f "${CONFIG_FILE}" ]] ); then
   error "invalid config file (1st argument) ${CONFIG_FILE}"
@@ -427,8 +427,9 @@ function usage() {
   echo "  -h                     Show this help"
   echo "  -c                     Run command in the build environment"
   echo "  -l                     Show a list of available modules"
-  echo "  -m 'mod1 mod2'         Modules to include"
-  echo "  -f                     Restart from scratch (remove the current build)"
+  echo "  -m 'mod1 mod2'         Modules to build"
+  echo "  -d 'mod1 mod2'         Shos the list of modules to build, including dependencies"
+  echo "  -f                     Clean build"
   echo "  -x                     display expanded values (execute 'set -x')"
   echo
   echo "For developers:"
@@ -509,7 +510,6 @@ function run_source_modules() {
   > ${fn_optional_deps}
 
   while [ ${#needed[*]} -ne 0 ]; do
-
     # pop module from the needed list
     module=${needed[0]}
     original_module=${needed[0]}
@@ -563,13 +563,23 @@ function run_source_modules() {
     fi
   done
 
-  info `pwd`
+  info $(pwd)
   push_env
   cd ${ROOT_PATH}
   MODULES="$(python3 tools/depsort.py --optional ${fn_optional_deps} < ${fn_deps})"
   pop_env
 
   info "Modules changed to ${MODULES}"
+
+  UNUSED_MODULES=()
+  for d in $(find ${RECIPES_PATH} -type d -d 1); do
+    mod=$(echo "${d}" | gsed "s|${RECIPES_PATH}/||")
+    if [[ ! " ${MODULES} " =~ " ${mod} " ]]; then
+      UNUSED_MODULES+=("${mod}")
+    fi
+  done
+  info "Unused modules: ${UNUSED_MODULES[@]}"
+
 }
 
 function download_file() {
@@ -827,7 +837,7 @@ function list_modules() {
 }
 
 # Do the build
-while getopts ":hBvlfxic:m:u:s:g" opt; do
+while getopts ":hBvlfxic:d:m:u:s:g" opt; do
   case ${opt} in
     h)
       usage
@@ -852,6 +862,12 @@ while getopts ":hBvlfxic:m:u:s:g" opt; do
       ;;
     m)
       MODULES="${OPTARG}"
+      ;;
+    d)
+      MODULES="${OPTARG}"
+      run_prepare
+      run_source_modules
+      exit 0
       ;;
     c)
       push_env

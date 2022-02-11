@@ -3,6 +3,9 @@ set -e
 ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Running qgis-deps installer"
 
+# Can be ltr, pr, etc. default to dev
+QGIS_VERSION=${1:dev}
+
 echo "----------------------"
 if [ -f ${ROOT_PATH}/qt-__VERSION_QT__.tar.gz ] && [ ! -d __QT_INSTALL_DIR__ ]; then
   echo "Installing QT __VERSION_QT__ to __QT_INSTALL_DIR__"

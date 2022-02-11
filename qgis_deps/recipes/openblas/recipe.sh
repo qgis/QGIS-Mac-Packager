@@ -10,7 +10,7 @@ LINK_libopenblas=libopenblas.0.dylib
 LINK_libopenblasp=libopenblasp-r0.3.10.dylib
 
 # dependencies of this recipe
-DEPS_openblas=(sqlite libxml2 openssl gcc)
+DEPS_openblas=(sqlite libxml2 openssl)
 
 # url of the package
 URL_openblas=https://github.com/xianyi/OpenBLAS/archive/v$VERSION_openblas.tar.gz
