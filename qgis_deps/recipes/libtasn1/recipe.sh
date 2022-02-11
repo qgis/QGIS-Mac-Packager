@@ -51,7 +51,7 @@ function build_libtasn1() {
   export CFLAGS="$CFLAGS -O2 -DPIC"
   patch_configure_file configure
 
-  try ${CONFIGURE} --disable-static
+  try ${CONFIGURE} --disable-static --disable-doc
 
   check_file_configuration config.status
 
