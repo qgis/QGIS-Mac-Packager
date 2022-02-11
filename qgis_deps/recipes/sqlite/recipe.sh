@@ -4,7 +4,7 @@ DESC_sqlite="Portable Foreign Function Interface library"
 
 # version of your package
 VERSION_sqlite_MAJOR=3
-VERSION_sqlite_MINOR=35
+VERSION_sqlite_MINOR=37
 VERSION_sqlite_PATCH=2
 VERSION_sqlite=${VERSION_sqlite_MAJOR}.${VERSION_sqlite_MINOR}.${VERSION_sqlite_PATCH}
 LINK_sqlite=libsqlite3.0.dylib
@@ -14,10 +14,10 @@ DEPS_sqlite=()
 
 # url of the package
 URL_sqlite_BASE=$(printf "%d%02d%02d00" $VERSION_sqlite_MAJOR $VERSION_sqlite_MINOR $VERSION_sqlite_PATCH)
-URL_sqlite=https://sqlite.org/2021/sqlite-autoconf-${URL_sqlite_BASE}.tar.gz
+URL_sqlite=https://sqlite.org/2022/sqlite-autoconf-${URL_sqlite_BASE}.tar.gz
 
 # md5 of the package
-MD5_sqlite=454e0899d99a7b28825db3d807526774
+MD5_sqlite=683cc5312ee74e71079c14d24b7a6d27
 
 # default build path
 BUILD_sqlite=$BUILD_PATH/sqlite/$(get_directory $URL_sqlite)
