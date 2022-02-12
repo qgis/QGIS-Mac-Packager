@@ -54,7 +54,8 @@ function build_libxslt() {
     --disable-silent-rules \
     --disable-dependency-tracking \
     --without-python \
-    --with-libxml-prefix=$STAGE_PATH
+    --with-libxml-prefix=$STAGE_PATH \
+    --with-libxml-libs-prefix=$STAGE_PATH
 
   check_file_configuration config.status
   try $MAKESMP
