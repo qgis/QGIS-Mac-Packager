@@ -32,8 +32,6 @@ function prebuild_libxslt() {
     return
   fi
 
-  patch_configure_file configure
-
   touch .patched
 }
 
@@ -50,12 +48,15 @@ function build_libxslt() {
   try cd $BUILD_PATH/libxslt/build-$ARCH
   push_env
 
+  patch_configure_file configure
+
   try ${CONFIGURE} \
     --disable-silent-rules \
     --disable-dependency-tracking \
     --without-python \
-    --with-libxml-prefix=$STAGE_PATH \
-    --with-libxml-libs-prefix=$STAGE_PATH
+    --with-libxml-prefix=${STAGE_PATH} \
+    --with-libxml-include-prefix=${STAGE_PATH}/include \
+    --with-libxml-libs-prefix=${STAGE_PATH}/lib
 
   check_file_configuration config.status
   try $MAKESMP
