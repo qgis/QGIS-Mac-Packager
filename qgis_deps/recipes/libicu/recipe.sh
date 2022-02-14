@@ -57,13 +57,12 @@ function build_libicu() {
   cd $BUILD_PATH/libicu/build-$ARCH/icu4c/source
   push_env
 
+  PYTHON=python3 ./runConfigureICU MacOSX --prefix=${STAGE_PATH} \
+   --disable-samples \
+   --disable-extras \
+   --disable-layout \
+   --disable-tests \
 
-  #export CFLAGS="-DICU_DATA_DIR=\\\"${STAGE_PATH}/share/icu\\\" ${CFLAGS}"
-  #export CXXFLAGS="-DICU_DATA_DIR=\\\"${STAGE_PATH}/share/icu\\\" ${CXXFLAGS}"
-
-  info $CXXFLAGS
-
-  PYTHON=python3 ./runConfigureICU MacOSX  # --enable-tracing --prefix=${STAGE_PATH}
 
   check_file_configuration config.status
   $MAKESMP
