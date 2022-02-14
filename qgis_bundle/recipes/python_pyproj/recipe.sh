@@ -11,29 +11,17 @@ function bundle_python_pyproj() {
 }
 
 function fix_binaries_python_pyproj() {
-  PYPROJ_LIBS=
-  if [[ "$OLD_PROJ" == "true" ]]; then
-    PYPROJ_LIBS=(
-      _list \
-      _datadir \
-      _crs \
-      _geod \
-      _proj \
-      _transformer
-    )
-  else
-    PYPROJ_LIBS=(
-      _compat \
-      list \
-      _datadir \
-      _crs \
-      _geod \
-      _network \
-      _sync \
-      database \
-      _transformer
-    )
-  fi
+  PYPROJ_LIBS=(
+    _compat \
+    list \
+    _datadir \
+    _crs \
+    _geod \
+    _network \
+    _sync \
+    database \
+    _transformer
+  )
 
   for i in "${PYPROJ_LIBS[@]}"
   do
