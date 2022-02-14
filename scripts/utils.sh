@@ -34,7 +34,7 @@ function mk_sym_link {
   cd ${PWD}
 }
 
-function try () {
+function try() {
     "$@" || exit 1
 }
 

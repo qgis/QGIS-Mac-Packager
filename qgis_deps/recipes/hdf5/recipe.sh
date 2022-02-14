@@ -6,10 +6,10 @@ DESC_hdf5="File format designed to store large amounts of data"
 VERSION_hdf5_major=1.12
 VERSION_hdf5=${VERSION_hdf5_major}.1
 
-LINK_libhdf5=libhdf5.103.dylib
-LINK_libhdf5_cpp=libhdf5_cpp.103.dylib
-LINK_libhdf5_hl=libhdf5_hl.100.dylib
-LINK_libhdf5_hl_cpp=libhdf5_hl_cpp.100.dylib
+LINK_libhdf5=libhdf5.200.dylib
+LINK_libhdf5_cpp=libhdf5_cpp.200.dylib
+LINK_libhdf5_hl=libhdf5_hl.200.dylib
+LINK_libhdf5_hl_cpp=libhdf5_hl_cpp.200.dylib
 
 
 # dependencies of this recipe
@@ -50,11 +50,11 @@ function shouldbuild_hdf5() {
 
 # function called to build the source code
 function build_hdf5() {
-  try rsync -a $BUILD_hdf5/ $BUILD_PATH/hdf5/build-$ARCH/
-  try cd $BUILD_PATH/hdf5/build-$ARCH
+  rsync -a $BUILD_hdf5/ $BUILD_PATH/hdf5/build-$ARCH/
+  cd $BUILD_PATH/hdf5/build-$ARCH
   push_env
 
-  try ${CONFIGURE} \
+  ${CONFIGURE} \
     --enable-build-mode=release \
     --disable-dependency-tracking \
     --disable-silent-rules \
@@ -65,8 +65,8 @@ function build_hdf5() {
     # enable-parallel ??? MPI Support
 
   check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
+  $MAKESMP
+  $MAKESMP install
 
   pop_env
 }

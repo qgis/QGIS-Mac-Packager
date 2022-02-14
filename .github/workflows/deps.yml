@@ -52,11 +52,18 @@ jobs:
           cd qgis_deps
           sudo -E ./distribute.sh -mqgis_deps
 
+      - name: Last build log
+        if: ${{ failure() }}
+        run: |
+          cat ${BUILD_PATH}/last-build.log
+          exit 1
+
       - name: Setup tmate session
         if: ${{ failure() }}
         uses: mxschmitt/action-tmate@v3
         with:
           limit-access-to-actor: true
+          timeout-minutes: 30
 
       - name: build deps
         run: |

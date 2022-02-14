@@ -102,9 +102,7 @@ function error() {
 
 # Paths
 ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-STAGE_PATH="${ROOT_OUT_PATH}/stage"
 RECIPES_PATH="${ROOT_PATH}/recipes"
-BUILD_PATH="${ROOT_OUT_PATH}/build"
 PACKAGES_PATH="${PACKAGES_PATH:-${ROOT_OUT_PATH}/.packages}"
 QGIS_SITE_PACKAGES_PATH=${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages
 BUILD_CONFIG_FILE="${STAGE_PATH}/qgis-deps.config"
@@ -790,7 +788,9 @@ function run_build() {
     if [ "X${DO_BUILD}" == "X1" ] || [ ! -f "${MARKER_FN}" ]; then
       debug "Call ${fn}"
       rm -f "${MARKER_FN}"
-      ${fn}
+      set -e
+      ${fn} |& tee ${BUILD_PATH}/last-build.log
+      set +e
       touch "${MARKER_FN}"
     else
       debug "Skipped ${fn}"
