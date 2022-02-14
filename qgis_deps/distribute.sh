@@ -49,7 +49,7 @@ DEBUG=0
 if [ -z ${QGIS_DEPS_RELEASE_VERSION} ]; then
   error "QGIS_DEPS_RELEASE_VERSION variable should be set"
 fi
-CONFIG_FILE="../config/deps/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
+CONFIG_FILE="config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
 echo $CONFIG_FILE
 if [[ ! -f "${CONFIG_FILE}" ]]; then
   error "invalid config file ${CONFIG_FILE}"
@@ -58,10 +58,6 @@ source ${CONFIG_FILE}
 
 if [[ -z ${QGIS_DEPS_RELEASE_VERSION} ]]; then
   error "you need at QGIS_DEPS_RELEASE_VERSION in config.conf"
-fi
-
-if [[ -z ${QGIS_DEPS_RELEASE_VERSION_PATCH} ]]; then
-  error "you need at QGIS_DEPS_RELEASE_VERSION_PATCH in config.conf"
 fi
 
 if [[ -z ${MACOSX_DEPLOYMENT_TARGET} ]]; then
@@ -924,4 +920,6 @@ fold_pop
 fold_push create_config_file
 run_create_config_file
 fold_pop
+info create deps config file
+cp ${QGIS_DEPS_CONFIG_FILE} ${STAGE_PATH}/qeps-${QGIS_DEPS_VERSION}.conf
 info "All done !"

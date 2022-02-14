@@ -11,15 +11,22 @@ CURRENT_PWD=$(pwd)
 
 ####################
 # load configuration
-# Load configuration
-if [[ -z ${MAC_PACKAGE_CONFIG} ]]; then
-  error "MAC_PACKAGE_CONFIG variable should be set"
+if [ -z ${QGIS_DEPS_RELEASE_VERSION} ]; then
+  error "QGIS_DEPS_RELEASE_VERSION variable should be set"
 fi
-CONFIG_FILE=../config/${MAC_PACKAGE_CONFIG}.conf
-if [ ! -f "${CONFIG_FILE}" ]; then
-  error "invalid config file (1st argument) ${CONFIG_FILE}"
+CONFIG_FILE="../config/deps/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
+echo $CONFIG_FILE
+if [[ ! -f "${CONFIG_FILE}" ]]; then
+  error "invalid config file ${CONFIG_FILE}"
 fi
 source ${CONFIG_FILE}
+
+if [[ -z ${QGIS_DEPS_RELEASE_VERSION_PATCH} ]] || [[ ${QGIS_DEPS_RELEASE_VERSION_PATCH} = dev ]]; then
+  error "QGIS_DEPS_RELEASE_VERSION_PATCH should be set in ${CONFIG_FILE}"
+fi
+if [[ ${QGIS_DEPS_RELEASE_VERSION} = dev ]]; then
+  error "QGIS_DEPS_RELEASE_VERSION should be set in ${CONFIG_FILE} (cannot be 'dev')"
+fi
 
 
 if [ ! -d ${ROOT_OUT_PATH} ]; then
