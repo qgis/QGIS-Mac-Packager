@@ -21,6 +21,19 @@ jobs:
           source config/deps/deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}.conf
           sudo -E mkdir -p /opt/QGIS/qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
 
+      - name: QGIS private SDKs
+        uses: actions/checkout@v2
+        with:
+          repository: qgis/qgis-private-sdks
+          path: qgis-private-sdks
+          fetch-deps: 1
+          token: ${{ secrets.GH_PAT }}
+
+      - name: QGIS private SDKs env
+        run: |
+          echo "QGIS_PRIVATE_SDKS_PATH=$GITHUB_WORKSPACE/qgis-private-sdks" >> $GITHUB_ENV
+          ls $GITHUB_WORKSPACE/qgis-private-sdks
+
       - run: brew install python3
 
       - name: Cache Qt
@@ -50,7 +63,7 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh -mqgis_deps
+          sudo -E ./distribute.sh -mgdal
 
       - name: Last build log
         if: ${{ failure() }}

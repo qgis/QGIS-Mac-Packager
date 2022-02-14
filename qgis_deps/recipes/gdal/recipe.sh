@@ -61,11 +61,11 @@ GDAL_PLUGINS_DIR=${STAGE_PATH}/lib/gdalplugins
 GDAL_NOFOSS_PLUGINS_DIR=${STAGE_PATH}/3rdParty/gdalplugins
 
 ECW_SDK_VER="ERDASEcwJpeg2000SDK5.5.0"
-ECW_SDK="$RECIPES_PATH/../../../external/$ECW_SDK_VER/Desktop_Read-Only/"
+ECW_SDK="${QGIS_PRIVATE_SDKS_PATH}/$ECW_SDK_VER/Desktop_Read-Only/"
 LINK_gdal_ecw=gdal_ECW_JP2ECW.dylib
 
 MRSID_SDK_VER="MrSID_DSDK-9.5.1.4427-darwin14.universal.clang60"
-MRSID_SDK="$RECIPES_PATH/../../../external/$MRSID_SDK_VER"
+MRSID_SDK="${QGIS_PRIVATE_SDKS_PATH}/$MRSID_SDK_VER"
 LINK_gdal_mrsid_lidar=gdal_MG4Lidar.dylib
 LINK_gdal_mrsid_raster=gdal_MrSID.dylib
 

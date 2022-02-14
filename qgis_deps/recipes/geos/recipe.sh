@@ -49,7 +49,7 @@ function build_geos() {
   try cd $BUILD_PATH/geos/build-$ARCH
   push_env
 
-  try ${CMAKE} $BUILD_geos
+  try ${CMAKE} -DGEOS_ENABLE_TESTS=OFF $BUILD_geos
   check_file_configuration CMakeCache.txt
 
   try $NINJA

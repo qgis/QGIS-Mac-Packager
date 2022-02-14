@@ -73,7 +73,7 @@ function bundle_qgis() {
   if [[ "$WITH_ORACLE" == "true" ]]; then
     mkdir -p $BUNDLE_PLUGINS_DIR/sqldrivers
     try cp -av $QGIS_INSTALL_DIR/plugins/sqldrivers/libqsqlocispatial.dylib $BUNDLE_PLUGINS_DIR/sqldrivers/
-    ORACLE_CLIENT="$QGIS_RECIPE_DIR/../../../../external/oracle/instantclient"
+    ORACLE_CLIENT="${QGIS_PRIVATE_SDKS_PATH}/oracle/instantclient"
     if [ ! -d "$ORACLE_CLIENT" ]; then
       error "invalid oracle basic-light client $ORACLE_CLIENT"
     fi

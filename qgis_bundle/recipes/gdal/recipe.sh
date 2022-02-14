@@ -68,7 +68,7 @@ function bundle_gdal() {
     try cp -av $DEPS_GDAL_NOFOSS_PLUGINS_DIR/$LINK_gdal_mrsid_raster $BUNDLE_GDAL_PLUGINS_DIR/
     try cp -av $DEPS_GDAL_NOFOSS_PLUGINS_DIR/$LINK_gdal_mrsid_lidar $BUNDLE_GDAL_PLUGINS_DIR/
 
-    MRSID_SDK="$QGIS_BUNDLE_SCRIPT_DIR/../../external/$MRSID_SDK_VER"
+    MRSID_SDK="${QGIS_PRIVATE_SDKS_PATH}/$MRSID_SDK_VER"
     if [ ! -d "$MRSID_SDK" ]; then
       echo "Missing MRSID SDK in $MRSID_SDK"
       exit 1

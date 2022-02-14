@@ -53,11 +53,11 @@ else
 fi
 
 if [[ "$WITH_ORACLE" == "true" ]]; then
-  ORACLE_SDK="$QGIS_BUILD_SCRIPT_DIR/../../external/oracle/sdk"
+  ORACLE_SDK="${QGIS_PRIVATE_SDKS_PATH}/oracle/sdk"
   if [ ! -d "$ORACLE_SDK" ]; then
     error "missing oracle SDK $ORACLE_SDK"
   fi
-  ORACLE_CLIENT="$QGIS_BUILD_SCRIPT_DIR/../../external/oracle/instantclient"
+  ORACLE_CLIENT="${QGIS_PRIVATE_SDKS_PATH}/oracle/instantclient"
   if [ ! -d "$ORACLE_CLIENT" ]; then
     error "invalid oracle basic-light client $ORACLE_CLIENT"
   fi
