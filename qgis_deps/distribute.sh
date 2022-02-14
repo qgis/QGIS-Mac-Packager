@@ -789,7 +789,8 @@ function run_build() {
       debug "Call ${fn}"
       rm -f "${MARKER_FN}"
       set -e
-      ${fn} |& tee ${BUILD_PATH}/last-build.log
+      #${fn} |& tee ${BUILD_PATH}/last-build.log
+      stdbuf --output=L ${fn} tee ${BUILD_PATH}/last-build.log
       set +e
       touch "${MARKER_FN}"
     else
