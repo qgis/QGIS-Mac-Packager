@@ -3,11 +3,11 @@
 DESC_libicu="International Components for Unicode"
 
 # version of your package
-VERSION_libicu_major=68
-VERSION_libicu_minor=2
-VERSION_libicu=$VERSION_libicu_major.$VERSION_libicu_minor
+VERSION_libicu=70.1
 
-LINK_libicudata=libicudata.${VERSION_libicu_major}.dylib
+VERSION_libicu_major=${VERSION_libicu//\.d+/}
+
+LINK_libicudata=libicudata.$VERSION_libicu_major.dylib
 LINK_libicuuc=libicuuc.$VERSION_libicu_major.dylib
 LINK_libicui18n=libicui18n.$VERSION_libicu_major.dylib
 LINK_libicuio=libicuio.$VERSION_libicu_major.dylib
@@ -17,10 +17,12 @@ LINK_libicutu=libicutu.$VERSION_libicu_major.dylib
 DEPS_libicu=(python)
 
 # url of the package
-URL_libicu=https://github.com/unicode-org/icu/archive/release-$VERSION_libicu_major-$VERSION_libicu_minor.tar.gz
+URL_libicu=https://github.com/unicode-org/icu/releases/download/release-${VERSION_libicu//\./-}/icu4c-${VERSION_libicu//\./_}-src.tgz
+URL_libicu=https://github.com/unicode-org/icu/archive/release-${VERSION_libicu//\./-}.tar.gz
+
 
 # md5 of the package
-MD5_libicu=ea591dfbcbc3aa44029ca66d6abf8070
+MD5_libicu=ebe2080640a063e9237cc41e80034d96
 
 # default build path
 BUILD_libicu=$BUILD_PATH/libicu/$(get_directory $URL_libicu)
@@ -51,19 +53,21 @@ function shouldbuild_libicu() {
 
 # function called to build the source code
 function build_libicu() {
-  try rsync -a $BUILD_libicu/ $BUILD_PATH/libicu/build-$ARCH/
-  try cd $BUILD_PATH/libicu/build-$ARCH/icu4c/source
+  rsync -a $BUILD_libicu/ $BUILD_PATH/libicu/build-$ARCH/
+  cd $BUILD_PATH/libicu/build-$ARCH/icu4c/source
   push_env
 
-  try ${CONFIGURE} \
-    --disable-samples \
-    --disable-extras \
-    --disable-layout \
-    --disable-tests \
+
+  #export CFLAGS="-DICU_DATA_DIR=\\\"${STAGE_PATH}/share/icu\\\" ${CFLAGS}"
+  #export CXXFLAGS="-DICU_DATA_DIR=\\\"${STAGE_PATH}/share/icu\\\" ${CXXFLAGS}"
+
+  info $CXXFLAGS
+
+  PYTHON=python3 ./runConfigureICU MacOSX  # --enable-tracing --prefix=${STAGE_PATH}
 
   check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
+  $MAKESMP
+  $MAKESMP install
 
   targets=(
     libicudata.$VERSION_libicu_major.dylib

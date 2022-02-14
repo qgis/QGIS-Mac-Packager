@@ -19,20 +19,26 @@ jobs:
       - name: Set environment
         run: |
           source config/deps/deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}.conf
-          sudo -E mkdir -p /opt/QGIS/qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
+          echo "BUILD_PATH=${BUILD_PATH}" >> $GITHUB_ENV
+          echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
+          echo "QGIS_PRIVATE_SDKS_PATH=$GITHUB_WORKSPACE/qgis-private-sdks" >> $GITHUB_ENV
+          sudo -E mkdir -p ${BUILD_PATH}
 
-      - name: QGIS private SDKs
+      - name: Cache packages
+        uses: pat-s/always-upload-cache@v2.1.5
+        with:
+          path: ${{ env.PACKAGES_PATH }}
+          key: cache-packages-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
+          restore-keys: |
+            cache-packages-qgis-deps-
+
+      - name: Fetch QGIS private SDKs
         uses: actions/checkout@v2
         with:
           repository: qgis/qgis-private-sdks
           path: qgis-private-sdks
           fetch-deps: 1
           token: ${{ secrets.GH_PAT }}
-
-      - name: QGIS private SDKs env
-        run: |
-          echo "QGIS_PRIVATE_SDKS_PATH=$GITHUB_WORKSPACE/qgis-private-sdks" >> $GITHUB_ENV
-          ls $GITHUB_WORKSPACE/qgis-private-sdks
 
       - run: brew install python3
 

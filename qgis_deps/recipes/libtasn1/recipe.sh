@@ -49,6 +49,7 @@ function build_libtasn1() {
   push_env
 
   export CFLAGS="$CFLAGS -O2 -DPIC"
+
   patch_configure_file configure
 
   export PKG_CONFIG=${PKG_CONFIG_PATH}
