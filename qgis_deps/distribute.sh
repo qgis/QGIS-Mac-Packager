@@ -103,7 +103,6 @@ function error() {
 # Paths
 ROOT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 RECIPES_PATH="${ROOT_PATH}/recipes"
-PACKAGES_PATH="${PACKAGES_PATH:-${ROOT_OUT_PATH}/.packages}"
 QGIS_SITE_PACKAGES_PATH=${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages
 BUILD_CONFIG_FILE="${STAGE_PATH}/qgis-deps.config"
 
@@ -789,8 +788,10 @@ function run_build() {
       debug "Call ${fn}"
       rm -f "${MARKER_FN}"
       set -e
-      #${fn} |& tee ${BUILD_PATH}/last-build.log
-      stdbuf --output=L ${fn} tee ${BUILD_PATH}/last-build.log
+      # https://stackoverflow.com/a/363239/1548052
+      ${fn} 2>&1 | tee ${BUILD_PATH}/last-build.log
+      # https://stackoverflow.com/a/11337109/1548052
+      #stdbuf --output=L ${fn} tee ${BUILD_PATH}/last-build.log
       set +e
       touch "${MARKER_FN}"
     else
