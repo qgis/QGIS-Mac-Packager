@@ -8,6 +8,9 @@ source ${CUR_DIR}/../scripts/utils.sh
 
 CURRENT_PWD=$(pwd)
 
+QT_PACKAGE_PATH=${QT_PACKAGE_PATH:-qt-${VERSION_QT}.tar.gz}
+QGIS_DEPS_PACKAGE_PATH=${QGIS_DEPS_PACKAGE_PATH:-qgis-deps-${QGIS_DEPS_SDK_VERSION}.tar.gz}
+INSTALL_SCRIPT=${INSTALL_SCRIPT:-install_qgis_deps-${QGIS_DEPS_SDK_VERSION}.bash}
 
 ####################
 # load configuration
@@ -33,7 +36,6 @@ echo "Create packages for qgis-deps-${QGIS_DEPS_SDK_VERSION}"
 
 ##############################################
 # Create QT package
-QT_INSTALL_DIR=${QGIS_DEPS_PREFIX}${QT_BASE}/clang_64
 if [ -f ${QT_PACKAGE_PATH} ]; then
   echo "Archive ${QT_PACKAGE_PATH} exists, skipping"
 else
@@ -44,8 +46,6 @@ fi
 
 ##############################################
 # Create Deps package
-QGIS_INSTALL_DIR=${QGIS_DEPS_PREFIX}${ROOT_OUT_PATH}/stage/
-
 if [ -f ${QGIS_DEPS_PACKAGE_PATH} ]; then
   echo "Archive ${QGIS_DEPS_PACKAGE_PATH} exists, removing"
   rm -rf ${QGIS_DEPS_PACKAGE_PATH}
@@ -58,7 +58,9 @@ cd ${CURRENT_PWD}
 
 ##############################################
 # Create install script
-INSTALL_SCRIPT=${ROOT_OUT_PATH}/install_qgis_deps-${QGIS_DEPS_SDK_VERSION}.bash
+QT_INSTALL_DIR=${QGIS_DEPS_PREFIX}${QT_BASE}/clang_64
+QGIS_INSTALL_DIR=${QGIS_DEPS_PREFIX}${ROOT_OUT_PATH}/stage/
+
 if [ -f ${INSTALL_SCRIPT} ]; then
   rm -rf ${INSTALL_SCRIPT}
 fi
