@@ -73,6 +73,7 @@ function build_poppler() {
     -DENABLE_GLIB=OFF \
     -DENABLE_QT5=ON \
     -DENABLE_QT6=OFF \
+    -DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
     -DENABLE_GOBJECT_INTROSPECTION=ON \
     $BUILD_poppler
 
