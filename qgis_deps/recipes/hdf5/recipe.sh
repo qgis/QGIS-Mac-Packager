@@ -50,11 +50,11 @@ function shouldbuild_hdf5() {
 
 # function called to build the source code
 function build_hdf5() {
-  rsync -a $BUILD_hdf5/ $BUILD_PATH/hdf5/build-$ARCH/
-  cd $BUILD_PATH/hdf5/build-$ARCH
+  try rsync -a $BUILD_hdf5/ $BUILD_PATH/hdf5/build-$ARCH/
+  try cd $BUILD_PATH/hdf5/build-$ARCH
   push_env
 
-  ${CONFIGURE} \
+  try ${CONFIGURE} \
     --enable-build-mode=release \
     --disable-dependency-tracking \
     --disable-silent-rules \
@@ -65,8 +65,8 @@ function build_hdf5() {
     # enable-parallel ??? MPI Support
 
   check_file_configuration config.status
-  $MAKESMP
-  $MAKESMP install
+  try $MAKESMP
+  try $MAKESMP install
 
   pop_env
 }

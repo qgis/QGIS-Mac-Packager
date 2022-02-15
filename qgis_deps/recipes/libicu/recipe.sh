@@ -53,14 +53,11 @@ function shouldbuild_libicu() {
 
 # function called to build the source code
 function build_libicu() {
-  rsync -a $BUILD_libicu/ $BUILD_PATH/libicu/build-$ARCH/
-  cd $BUILD_PATH/libicu/build-$ARCH/icu4c/source
+  try rsync -a $BUILD_libicu/ $BUILD_PATH/libicu/build-$ARCH/
+  try cd $BUILD_PATH/libicu/build-$ARCH/icu4c/source
   push_env
 
-  #export LDFLAGS="$LDFLAGS -Wl,-export_dynamic"
-  info $LDFLAGS
-
-  PYTHON=python3 ./runConfigureICU MacOSX --prefix=${STAGE_PATH} --enable-rpath \
+  try ./runConfigureICU MacOSX --prefix=${STAGE_PATH} --enable-rpath \
     --disable-samples \
     --disable-extras \
     --disable-layout \
@@ -68,8 +65,8 @@ function build_libicu() {
     --with-data-packaging=library
 
   check_file_configuration config.status
-  $MAKESMP
-  $MAKE install
+  try $MAKESMP
+  try $MAKE install
 
   # not sure why, but the original file seems corrupted after installtion
   cp ${BUILD_PATH}/libicu/build-x86_64/icu4c/source/lib/libicudata.${VERSION_libicu}.dylib ${STAGE_PATH}/lib/libicudata.${VERSION_libicu}.dylib

@@ -44,21 +44,21 @@ function shouldbuild_libxslt() {
 
 # function called to build the source code
 function build_libxslt() {
-  rsync -a $BUILD_libxslt/ $BUILD_PATH/libxslt/build-$ARCH/
-  cd $BUILD_PATH/libxslt/build-$ARCH
+  try rsync -a $BUILD_libxslt/ $BUILD_PATH/libxslt/build-$ARCH/
+  try cd $BUILD_PATH/libxslt/build-$ARCH
   push_env
 
   patch_configure_file configure
 
-  ${CONFIGURE} \
+  try ${CONFIGURE} \
     --enable-silent-rules \
     --with-debugger=off \
     --disable-dependency-tracking \
     --without-python
 
   check_file_configuration config.status
-  $MAKESMP
-  $MAKESMP install
+  try $MAKESMP
+  try $MAKESMP install
 
   pop_env
 }
