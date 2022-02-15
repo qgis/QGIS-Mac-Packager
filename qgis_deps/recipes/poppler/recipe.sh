@@ -68,6 +68,7 @@ function build_poppler() {
     -DBUILD_CPP_TESTS=OFF \
     -DENABLE_BOOST=OFF \
     -DWITH_Cairo=OFF \
+    -DWITH_NSS3=OFF \
     -DENABLE_CMS=lcms2 \
     -DENABLE_GLIB=OFF \
     -DENABLE_QT5=ON \

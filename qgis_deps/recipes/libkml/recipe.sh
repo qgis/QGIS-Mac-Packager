@@ -58,8 +58,7 @@ function build_libkml() {
   try cd $BUILD_PATH/libkml/build-$ARCH
   push_env
 
-  try ${CMAKE} \
-   $BUILD_libkml
+  try ${CMAKE} $BUILD_libkml
   check_file_configuration CMakeCache.txt
 
   try $NINJA
