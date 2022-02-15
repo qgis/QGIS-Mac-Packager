@@ -5,7 +5,7 @@ DESC_poppler="PDF rendering library (based on the xpdf-3.0 code base)"
 # version of your package
 VERSION_poppler=22.02.0
 
-LINK_poppler=libpoppler.101.dylib
+LINK_poppler=libpoppler.118.dylib
 LINK_poppler_cpp=libpoppler-cpp.0.dylib
 LINK_poppler_qt5=libpoppler-qt5.1.dylib
 

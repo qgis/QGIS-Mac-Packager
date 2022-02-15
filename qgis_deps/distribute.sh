@@ -454,7 +454,7 @@ function run_prepare()
   fi
 
   # create build directory if not found
-  test -d ${PACKAGES_PATH} || mkdir -p ${PACKAGES_PATH}
+  test -d ${SOURCE_PACKAGES_PATH} || mkdir -p ${SOURCE_PACKAGES_PATH}
   test -d ${BUILD_PATH} || mkdir -p ${BUILD_PATH}
   test -d ${STAGE_PATH}/lib || mkdir -p ${STAGE_PATH}/lib
   test -d ${STAGE_PATH}/Frameworks || mkdir -p ${STAGE_PATH}/Frameworks
@@ -585,8 +585,8 @@ function download_file() {
       try mkdir -p ${BUILD_PATH}/${module}
     fi
 
-    if [ ! -d "${PACKAGES_PATH}/${module}" ]; then
-      try mkdir -p "${PACKAGES_PATH}/${module}"
+    if [ ! -d "${SOURCE_PACKAGES_PATH}/${module}" ]; then
+      try mkdir -p "${SOURCE_PACKAGES_PATH}/${module}"
     fi
 
     if [[ -z ${url} ]]; then
@@ -598,7 +598,7 @@ function download_file() {
     marker_filename=".mark-${filename}"
     do_download=1
 
-    cd "${PACKAGES_PATH}/${module}"
+    cd "${SOURCE_PACKAGES_PATH}/${module}"
 
     # check if the file is already present
     if [ -f ${filename} ]; then
@@ -657,7 +657,7 @@ function download_file() {
 
     if [ ! -d "${directory}" ]; then
       # decompress
-      pfilename=${PACKAGES_PATH}/${module}/${filename}
+      pfilename=${SOURCE_PACKAGES_PATH}/${module}/${filename}
       info "Extract ${pfilename}"
       case ${pfilename} in
         *.tar.gz|*.tar.xz|*.tgz|*.tar.lz )

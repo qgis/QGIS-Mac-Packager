@@ -11,6 +11,7 @@ env:
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
+  SOURCE_PACKAGES_PATH: ${{ github.workspace }}/.packages
 
 jobs:
   mac_os_build:
@@ -25,20 +26,16 @@ jobs:
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "QGIS_PRIVATE_SDKS_PATH=$GITHUB_WORKSPACE/qgis-private-sdks" >> $GITHUB_ENV
           sudo -E mkdir -p ${BUILD_PATH}
-          sudo -E mkdir -p ${PACKAGES_PATH}
+          sudo -E mkdir -p ${SOURCE_PACKAGES_PATH}
 
       - name: Cache packages
         id: cache-packages
         uses: pat-s/always-upload-cache@v2.1.5
         with:
-          path: restore-packages
+          path: ${{ env.SOURCE_PACKAGES_PATH }}
           key: cache-packages-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
           restore-keys: |
             cache-packages-qgis-deps-
-
-      - name: Restore Packages
-        if: steps.cache-packages.outputs.cache-hit == 'true'
-        run: sudo mv ${{ github.workspace }}/restore-packages/ ${{ env.PACKAGES_PATH }}
 
       - name: Fetch QGIS private SDKs
         uses: actions/checkout@v2
@@ -91,10 +88,6 @@ jobs:
         timeout-minutes: 30
         with:
           limit-access-to-actor: true
-
-      - name: Backup packages
-        if: always()
-        run: cp -r ${PACKAGES_PATH} ${{ github.workspace }}/restore-packages
 
       - name: create package
         run: |
