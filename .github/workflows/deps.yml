@@ -9,6 +9,7 @@ on:
 
 env:
   QGIS_DEPS_RELEASE_VERSION: "dev"
+  APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
 
 jobs:
   mac_os_build:
@@ -91,8 +92,8 @@ jobs:
 
       - uses: Apple-Actions/import-codesign-certs@v1
         with:
-          p12-file-base64: ${{ secrets.IOS_CERTIFICATES_FILE_BASE64 }}
-          p12-password: ${{ secrets.IOS_CERTIFICATES_PASSWORD }}
+          p12-file-base64: ${{ secrets.APPLE_CERTIFICATES_FILE_BASE64 }}
+          p12-password: ${{ secrets.APPLE_CERTIFICATES_PASSWORD }}
 
       - name: signing deps
         run: |
@@ -103,10 +104,10 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Qt
-          path: ${{ env.QT_PACKAGE_PATH }}
+          path: qt-${{ env.VERSION_QT }}.tar.gz
 
       - name: upload QGIS deps
         uses: actions/upload-artifact@v2
         with:
           name: qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
-          path: ${{ env.QGIS_DEPS_PACKAGE_PATH }}
+          path: qgis-deps-${{ env.QGIS_DEPS_SDK_VERSION }}.tar.gz

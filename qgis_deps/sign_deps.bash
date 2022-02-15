@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 PWD=`pwd`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
@@ -18,18 +20,8 @@ source ${CONFIG_FILE}
 
 PATH_TO_SIGN=${STAGE_PATH}
 
-if [ ! -f "$SIGN_FILE" ]; then
-  error "identity file $SIGN_FILE missing"
-fi
-
-IDENTITY=$(cat $SIGN_FILE)
-
-if [ ${#IDENTITY} -ne 40 ]; then
-  error "SIGN FILE $SIGN_FILE invalid. key must have 40 chars" ;
-fi
-
-if [ ! -f "$KEYCHAIN_FILE" ]; then
-  error "keychain file $KEYCHAIN_FILE missing"
+if [ ${#APPLE_CODE_SIGN_IDENTITY} -ne 40 ]; then
+  error "SIGN IDENTITY invalid. key must have 40 chars" ;
 fi
 
 echo "Cleaning tmp files"
@@ -65,7 +57,7 @@ i=0
 for LIB in $TO_SIGN; do
   ((i=i+1))
   echo "($i/$total) signing => $LIB"
-  sem -j+0 "codesign --force -s $IDENTITY --keychain $KEYCHAIN_FILE $LIB"
+  sem -j+0 "codesign --force -s ${APPLE_CODE_SIGN_IDENTITY} $LIB"
 done
 sem --wait
 
