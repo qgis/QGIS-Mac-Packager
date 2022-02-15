@@ -27,12 +27,17 @@ jobs:
           sudo -E mkdir -p ${BUILD_PATH}
 
       - name: Cache packages
+        id: cache-packages
         uses: pat-s/always-upload-cache@v2.1.5
         with:
-          path: ${{ env.PACKAGES_PATH }}
+          path: restore-packages
           key: cache-packages-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
           restore-keys: |
             cache-packages-qgis-deps-
+
+      - name: Restore Packages
+        if: steps.cache-packages.outputs.cache-hit == 'true'
+        run: sudo mv restore-packages ${{ env.PACKAGES_PATH }}
 
       - name: Fetch QGIS private SDKs
         uses: actions/checkout@v2

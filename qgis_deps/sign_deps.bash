@@ -28,12 +28,12 @@ echo "Cleaning tmp files"
 for i in *.swp *.orig *.pyc
 do
   info "Cleaning $i files"
-  find "$PATH_TO_SIGN" -type fl -name $i -exec rm -f {} +
+  find "$PATH_TO_SIGN" -type fl -name $i -exec rm -f {} + || true
 done
 for i in __pycache__
 do
   info "Cleaning $i dirs"
-  find "$PATH_TO_SIGN" -type dl -name "$i" -exec rm -rf {} +
+  find "$PATH_TO_SIGN" -type dl -name "$i" -exec rm -rf {} + || true
 done
 
 echo "Signing binaries in $PATH_TO_SIGN"
