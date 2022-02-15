@@ -25,6 +25,7 @@ jobs:
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "QGIS_PRIVATE_SDKS_PATH=$GITHUB_WORKSPACE/qgis-private-sdks" >> $GITHUB_ENV
           sudo -E mkdir -p ${BUILD_PATH}
+          sudo -E mkdir -p ${PACKAGES_PATH}
 
       - name: Cache packages
         id: cache-packages
@@ -37,7 +38,7 @@ jobs:
 
       - name: Restore Packages
         if: steps.cache-packages.outputs.cache-hit == 'true'
-        run: sudo mv restore-packages ${{ env.PACKAGES_PATH }}
+        run: sudo mv ${{ github.workspace }}/restore-packages ${{ env.PACKAGES_PATH }}
 
       - name: Fetch QGIS private SDKs
         uses: actions/checkout@v2
@@ -90,6 +91,10 @@ jobs:
         timeout-minutes: 30
         with:
           limit-access-to-actor: true
+
+      - name: Backup packages
+        if: always()
+        run: cp -r ${PACKAGES_PATH} ${{ github.workspace }}/restore-packages
 
       - name: create package
         run: |
