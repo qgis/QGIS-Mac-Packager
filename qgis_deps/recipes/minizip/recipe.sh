@@ -51,6 +51,7 @@ function build_minizip() {
   push_env
 
   try ${CMAKE} \
+    -DCMAKE_INSTALL_INCLUDEDIR=${STAGE_PATH}/include/minizip \
     -DBUILD_SHARED_LIBS=ON \
     -DZLIB_INCLUDE_DIR=$STAGE_PATH/include \
     -DZLIB_LIBRARY=$STAGE_PATH/lib/$LINK_zlib \

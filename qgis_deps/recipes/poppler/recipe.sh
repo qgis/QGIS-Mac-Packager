@@ -3,7 +3,7 @@
 DESC_poppler="PDF rendering library (based on the xpdf-3.0 code base)"
 
 # version of your package
-VERSION_poppler=0.90.1
+VERSION_poppler=22.02.0
 
 LINK_poppler=libpoppler.101.dylib
 LINK_poppler_cpp=libpoppler-cpp.0.dylib
@@ -11,6 +11,7 @@ LINK_poppler_qt5=libpoppler-qt5.1.dylib
 
 # dependencies of this recipe
 DEPS_poppler=(
+  poppler_data
   fontconfig
   freetype
   gettext
@@ -26,7 +27,7 @@ DEPS_poppler=(
 URL_poppler=https://poppler.freedesktop.org/poppler-${VERSION_poppler}.tar.xz
 
 # md5 of the package
-MD5_poppler=b80a82f14459d31d929db421b0e8cf05
+MD5_poppler=5f167d859b0ec3f416dbd929892c3c4d
 
 # default build path
 BUILD_poppler=$BUILD_PATH/poppler/$(get_directory $URL_poppler)
@@ -67,6 +68,7 @@ function build_poppler() {
     -DENABLE_CMS=lcms2 \
     -DENABLE_GLIB=OFF \
     -DENABLE_QT5=ON \
+    -DENABLE_QT6=OFF \
     -DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
     -DWITH_GObjectIntrospection=ON \
     $BUILD_poppler
