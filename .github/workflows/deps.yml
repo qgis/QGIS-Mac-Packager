@@ -38,7 +38,7 @@ jobs:
 
       - name: Restore Packages
         if: steps.cache-packages.outputs.cache-hit == 'true'
-        run: sudo mv ${{ github.workspace }}/restore-packages ${{ env.PACKAGES_PATH }}
+        run: sudo mv ${{ github.workspace }}/restore-packages/ ${{ env.PACKAGES_PATH }}
 
       - name: Fetch QGIS private SDKs
         uses: actions/checkout@v2
