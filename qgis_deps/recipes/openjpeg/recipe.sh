@@ -3,7 +3,7 @@
 DESC_openjpeg="Image manipulation library"
 
 # version of your package
-VERSION_openjpeg=2.3.1
+VERSION_openjpeg=2.4.0
 
 LINK_openjpeg=libopenjp2.7.dylib
 
@@ -18,7 +18,7 @@ DEPS_openjpeg=(
 URL_openjpeg=https://github.com/uclouvain/openjpeg/archive/v${VERSION_openjpeg}.tar.gz
 
 # md5 of the package
-MD5_openjpeg=3b9941dc7a52f0376694adb15a72903f
+MD5_openjpeg=4d388298335947367e91f1d100468af1
 
 # default build path
 BUILD_openjpeg=$BUILD_PATH/openjpeg/$(get_directory $URL_openjpeg)

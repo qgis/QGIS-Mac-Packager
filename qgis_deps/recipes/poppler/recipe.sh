@@ -65,12 +65,14 @@ function build_poppler() {
 
   try ${CMAKE} \
     -DBUILD_GTK_TESTS=OFF \
+    -DBUILD_CPP_TESTS=OFF \
+    -DENABLE_BOOST=OFF \
+    -DWITH_Cairo=OFF \
     -DENABLE_CMS=lcms2 \
     -DENABLE_GLIB=OFF \
     -DENABLE_QT5=ON \
     -DENABLE_QT6=OFF \
-    -DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
-    -DWITH_GObjectIntrospection=ON \
+    -DENABLE_GOBJECT_INTROSPECTION=ON \
     $BUILD_poppler
 
   check_file_configuration CMakeCache.txt
