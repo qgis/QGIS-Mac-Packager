@@ -46,14 +46,16 @@ DO_SET_X=0
 DEBUG=0
 
 # Load configuration
+QGIS_DEPS_RELEASE_VERSION=$1
 if [ -z ${QGIS_DEPS_RELEASE_VERSION} ]; then
-  error "QGIS_DEPS_RELEASE_VERSION variable should be set"
+  usage
+  exit 1
 fi
 CONFIG_FILE="config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
-echo $CONFIG_FILE
 if [[ ! -f "${CONFIG_FILE}" ]]; then
   error "invalid config file ${CONFIG_FILE}"
 fi
+shift
 source ${CONFIG_FILE}
 
 if [[ -z ${QGIS_DEPS_RELEASE_VERSION} ]]; then
@@ -413,8 +415,8 @@ function test_binary_output() {
 function usage() {
   echo "QGIS deps - distribute.sh"
   echo
-  echo "Usage:   ./distribute.sh [options]"
-  echo "To build whole package, run:   ./distribute.sh -mqgis_deps"
+  echo "Usage: ./distribute.sh deps_version [options]"
+  echo "To build whole package, run:   ./distribute.sh 0.x -mqgis_deps"
   echo
   echo "  -h                     Show this help"
   echo "  -c                     Run command in the build environment"

@@ -11,14 +11,16 @@ CURRENT_PWD=$(pwd)
 
 ####################
 # load configuration
+QGIS_DEPS_RELEASE_VERSION=$1
 if [ -z ${QGIS_DEPS_RELEASE_VERSION} ]; then
-  error "QGIS_DEPS_RELEASE_VERSION variable should be set"
+  error "first argument should be the version of the deps (use ./create_package.bash 0.x)"
+  exit 1
 fi
-CONFIG_FILE="../config/deps/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
-echo $CONFIG_FILE
+CONFIG_FILE="config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
 if [[ ! -f "${CONFIG_FILE}" ]]; then
   error "invalid config file ${CONFIG_FILE}"
 fi
+shift
 source ${CONFIG_FILE}
 
 if [[ -z ${QGIS_DEPS_RELEASE_VERSION_PATCH} ]] || [[ ${QGIS_DEPS_RELEASE_VERSION_PATCH} = dev ]]; then

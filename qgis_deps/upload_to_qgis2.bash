@@ -7,14 +7,14 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 ####################
 # load configuration
-if (( $# < 1 )); then
-    echo "upload_to_qgis2: ${0} <path/to>/config/<my>.conf ..."
-    exit 1
-fi
-CONFIG_FILE=${1}
-if [ ! -f "${CONFIG_FILE}" ]; then
-  echo "invalid config file (1st argument) ${CONFIG_FILE}"
+QGIS_DEPS_RELEASE_VERSION=$1
+if [ -z ${QGIS_DEPS_RELEASE_VERSION} ]; then
+  error "first argument should be the version of the deps (use ./upload_to_qgis2.bash 0.x)"
   exit 1
+fi
+CONFIG_FILE="config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
+if [[ ! -f "${CONFIG_FILE}" ]]; then
+  error "invalid config file ${CONFIG_FILE}"
 fi
 shift
 source ${CONFIG_FILE}

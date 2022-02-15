@@ -69,7 +69,7 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh -mgdal
+          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mgettext
 
       - name: Last build log
         if: ${{ failure() }}
@@ -87,7 +87,7 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo -E ./create_package.bash
+          sudo -E ./create_package.bash ${{ env.QGIS_DEPS_RELEASE_VERSION }}
 
       - uses: Apple-Actions/import-codesign-certs@v1
         with:
@@ -97,7 +97,7 @@ jobs:
       - name: signing deps
         run: |
           cd qgis_deps
-          sudo -E ./sign_deps.bash
+          sudo -E ./sign_deps.bash ${{ env.QGIS_DEPS_RELEASE_VERSION }}
 
       - name: upload Qt archive
         uses: actions/upload-artifact@v2

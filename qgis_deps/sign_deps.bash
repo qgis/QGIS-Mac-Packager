@@ -3,15 +3,17 @@
 PWD=`pwd`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-# Load configuration
+# load configuration
+QGIS_DEPS_RELEASE_VERSION=$1
 if [ -z ${QGIS_DEPS_RELEASE_VERSION} ]; then
-  error "QGIS_DEPS_RELEASE_VERSION variable should be set"
+  error "first argument should be the version of the deps (use ./sign_deps.bash 0.x)"
+  exit 1
 fi
-CONFIG_FILE="../config/deps/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
-echo $CONFIG_FILE
+CONFIG_FILE="config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf"
 if [[ ! -f "${CONFIG_FILE}" ]]; then
   error "invalid config file ${CONFIG_FILE}"
 fi
+shift
 source ${CONFIG_FILE}
 
 PATH_TO_SIGN=${STAGE_PATH}
