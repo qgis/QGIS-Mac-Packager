@@ -786,8 +786,7 @@ function run_build() {
       set -e
       # https://stackoverflow.com/a/363239/1548052
       ${fn} 2>&1 | tee ${BUILD_PATH}/last-build.log
-      # https://stackoverflow.com/a/11337109/1548052
-      #stdbuf --output=L ${fn} tee ${BUILD_PATH}/last-build.log
+      gsed -i "1s;^;Building ${module}\n;" ${BUILD_PATH}/last-build.log
       set +e
       touch "${MARKER_FN}"
     else
@@ -921,5 +920,5 @@ fold_push create_config_file
 run_create_config_file
 fold_pop
 info create deps config file
-cp ${QGIS_DEPS_CONFIG_FILE} ${STAGE_PATH}/qeps-${QGIS_DEPS_VERSION}.conf
+cp ${ROOT_PATH}/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf ${STAGE_PATH}/qeps-${QGIS_DEPS_VERSION}.conf
 info "All done !"

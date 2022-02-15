@@ -7,11 +7,11 @@ VERSION_libicu=70.1
 
 VERSION_libicu_major=${VERSION_libicu//\.d+/}
 
-LINK_libicudata=libicudata.$VERSION_libicu_major.dylib
-LINK_libicuuc=libicuuc.$VERSION_libicu_major.dylib
-LINK_libicui18n=libicui18n.$VERSION_libicu_major.dylib
-LINK_libicuio=libicuio.$VERSION_libicu_major.dylib
-LINK_libicutu=libicutu.$VERSION_libicu_major.dylib
+LINK_libicudata=libicudata.${VERSION_libicu}.dylib
+LINK_libicuuc=libicuuc.${VERSION_libicu}.dylib
+LINK_libicui18n=libicui18n.${VERSION_libicu}.dylib
+LINK_libicuio=libicuio.${VERSION_libicu}.dylib
+LINK_libicutu=libicutu.${VERSION_libicu}.dylib
 
 # dependencies of this recipe
 DEPS_libicu=(python)
@@ -57,29 +57,39 @@ function build_libicu() {
   cd $BUILD_PATH/libicu/build-$ARCH/icu4c/source
   push_env
 
-  PYTHON=python3 ./runConfigureICU MacOSX --prefix=${STAGE_PATH} \
-   --disable-samples \
-   --disable-extras \
-   --disable-layout \
-   --disable-tests \
+  #export LDFLAGS="$LDFLAGS -Wl,-export_dynamic"
+  info $LDFLAGS
 
+  PYTHON=python3 ./runConfigureICU MacOSX --prefix=${STAGE_PATH} --enable-rpath \
+    --disable-samples \
+    --disable-extras \
+    --disable-layout \
+    --disable-tests \
+    --with-data-packaging=library
+
+#--disable-tests --disable-samples
 
   check_file_configuration config.status
   $MAKESMP
-  $MAKESMP install
+  $MAKE install
+
+  # not sure why, but the original file seems corrupted after installtion
+  cp ${BUILD_PATH}/libicu/build-x86_64/icu4c/source/lib/libicudata.${VERSION_libicu}.dylib ${STAGE_PATH}/lib/libicudata.${VERSION_libicu}.dylib
 
   targets=(
-    libicudata.$VERSION_libicu_major.dylib
-    libicui18n.$VERSION_libicu_major.dylib
-    libicuio.$VERSION_libicu_major.dylib
-    libicutu.$VERSION_libicu_major.dylib
-    libicuuc.$VERSION_libicu_major.dylib
+    libicudata.${VERSION_libicu}.dylib
+    libicui18n.${VERSION_libicu}.dylib
+    libicuio.${VERSION_libicu}.dylib
+    libicutu.${VERSION_libicu}.dylib
+    libicuuc.${VERSION_libicu}.dylib
   )
   for i in ${targets[*]}
   do
+    info install_name_tool -id $STAGE_PATH/lib/$i $STAGE_PATH/lib/$i
     try install_name_tool -id $STAGE_PATH/lib/$i $STAGE_PATH/lib/$i
     for j in ${targets[*]}
     do
+      info install_name_tool -change $j $STAGE_PATH/lib/$j $STAGE_PATH/lib/$i
       try install_name_tool -change $j $STAGE_PATH/lib/$j $STAGE_PATH/lib/$i
     done
   done
