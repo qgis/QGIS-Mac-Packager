@@ -69,7 +69,7 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mgettext
+          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mzlib
 
       - name: Last build log
         if: ${{ failure() }}
@@ -84,7 +84,7 @@ jobs:
         with:
           limit-access-to-actor: true
 
-      - name: build deps
+      - name: create package
         run: |
           cd qgis_deps
           sudo -E ./create_package.bash ${{ env.QGIS_DEPS_RELEASE_VERSION }}

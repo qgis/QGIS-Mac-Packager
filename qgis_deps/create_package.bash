@@ -23,14 +23,6 @@ fi
 shift
 source ${CONFIG_FILE}
 
-if [[ -z ${QGIS_DEPS_RELEASE_VERSION_PATCH} ]] || [[ ${QGIS_DEPS_RELEASE_VERSION_PATCH} = dev ]]; then
-  error "QGIS_DEPS_RELEASE_VERSION_PATCH should be set in ${CONFIG_FILE}"
-fi
-if [[ ${QGIS_DEPS_RELEASE_VERSION} = dev ]]; then
-  error "QGIS_DEPS_RELEASE_VERSION should be set in ${CONFIG_FILE} (cannot be 'dev')"
-fi
-
-
 if [ ! -d ${ROOT_OUT_PATH} ]; then
   error "The root output directory '${ROOT_OUT_PATH}' not found."
 fi

@@ -19,6 +19,13 @@ fi
 shift
 source ${CONFIG_FILE}
 
+if [[ -z ${QGIS_DEPS_RELEASE_VERSION_PATCH} ]] || [[ ${QGIS_DEPS_RELEASE_VERSION_PATCH} = dev ]]; then
+  error "QGIS_DEPS_RELEASE_VERSION_PATCH should be set in ${CONFIG_FILE}"
+fi
+if [[ ${QGIS_DEPS_RELEASE_VERSION} = dev ]]; then
+  error "QGIS_DEPS_RELEASE_VERSION should be set in ${CONFIG_FILE} (cannot be 'dev')"
+fi
+
 INSTALL_SCRIPT=${ROOT_OUT_PATH}/install_qgis_deps-${QGIS_DEPS_SDK_VERSION}.bash
 
 if [ ! -f ${QT_PACKAGE_PATH} ] || [ ! -f ${QGIS_DEPS_PACKAGE_PATH} ] || [ ! -f ${INSTALL_SCRIPT} ] ; then

@@ -67,8 +67,6 @@ function build_libicu() {
     --disable-tests \
     --with-data-packaging=library
 
-#--disable-tests --disable-samples
-
   check_file_configuration config.status
   $MAKESMP
   $MAKE install
