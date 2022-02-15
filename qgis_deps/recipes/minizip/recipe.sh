@@ -2,21 +2,23 @@
 
 DESC_minizip="zip manipulation library written in C"
 
-source $RECIPES_PATH/zlib/recipe.sh
-
 # version of your package
-VERSION_minizip=3.0.4
+source $RECIPES_PATH/libkml/recipe.sh
+source $RECIPES_PATH/zlib/recipe.sh
+VERSION_minizip=1.1
 
 LINK_libminizip=libminizip.dylib
 
 # dependencies of this recipe
-DEPS_minizip=(zlib zstd)
+DEPS_minizip=(
+ zlib
+)
 
 # url of the package
-URL_minizip=https://github.com/zlib-ng/minizip-ng/archive/refs/tags/${VERSION_minizip}.tar.gz
+URL_minizip=http://sourceforge.net/projects/libkml-files/files/${VERSION_libkml}/minizip.tar.gz
 
 # md5 of the package
-MD5_minizip=0e7102ec06a69895a26c491c6fcca983
+MD5_minizip=d5f74eff74e03e497ea60b2c43623416
 
 # default build path
 BUILD_minizip=$BUILD_PATH/minizip/$(get_directory $URL_minizip)
@@ -51,8 +53,6 @@ function build_minizip() {
   push_env
 
   try ${CMAKE} \
-    -DCMAKE_INSTALL_INCLUDEDIR=${STAGE_PATH}/include/minizip \
-    -DBUILD_SHARED_LIBS=ON \
     -DZLIB_INCLUDE_DIR=$STAGE_PATH/include \
     -DZLIB_LIBRARY=$STAGE_PATH/lib/$LINK_zlib \
     $BUILD_minizip
