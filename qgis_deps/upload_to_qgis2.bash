@@ -5,9 +5,9 @@ set -e
 PWD=`pwd`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-QT_PACKAGE_PATH=${QT_PACKAGE_PATH:-qt-${VERSION_QT}.tar.gz}
-QGIS_DEPS_PACKAGE_PATH=${QGIS_DEPS_PACKAGE_PATH:-qgis-deps-${QGIS_DEPS_SDK_VERSION}.tar.gz}
-INSTALL_SCRIPT=${INSTALL_SCRIPT:-install_qgis_deps-${QGIS_DEPS_SDK_VERSION}.bash}
+QT_PACKAGE_PATH=${QT_PACKAGE_PATH:-${PACKAGES_OUTPUT}/qt-${VERSION_QT}.tar.gz}
+QGIS_DEPS_PACKAGE_PATH=${QGIS_DEPS_PACKAGE_PATH:-${PACKAGES_OUTPUT}/qgis-deps-${QGIS_DEPS_SDK_VERSION}.tar.gz}
+INSTALL_SCRIPT=${INSTALL_SCRIPT:-${PACKAGES_OUTPUT}/install_qgis_deps-${QGIS_DEPS_SDK_VERSION}.bash}
 
 ####################
 # load configuration
