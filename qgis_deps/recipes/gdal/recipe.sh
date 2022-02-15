@@ -79,6 +79,9 @@ function prebuild_gdal() {
     return
   fi
 
+  # https://github.com/OSGeo/gdal/commit/cbcfe2c8c5507ea00ef7371029ff94d0bf6f4a77
+  try patch --verbose --forward -p1 < ${RECIPE_gdal}/patches/poppler.patch
+
   patch_configure_file configure
 
   touch .patched
@@ -179,6 +182,7 @@ function build_gdal() {
   info $PKG_CONFIG_PATH
 
   try ${CONFIGURE} \
+    --with-cpp14 \
     --with-ecw=no \
     --with-mrsid=no \
     --with-lerc=${STAGE_PATH} \

@@ -74,7 +74,7 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mprotobuf
+          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mqgis_deps
 
       - name: Last build log
         if: ${{ failure() }}
