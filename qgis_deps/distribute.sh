@@ -766,7 +766,7 @@ function run_build() {
     # postbuild
     fn2=$(echo postbuild_${module})
     debug "Call ${fn2}"
-    ${fn2}
+    ${fn2} 2>&1 | tee -a ${BUILD_PATH}/last-build.log
 
     fold_pop
   done
