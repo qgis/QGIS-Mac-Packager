@@ -26,10 +26,8 @@ RECIPE_unixodbc=$RECIPES_PATH/unixodbc
 # (you can apply patch etc here.)
 function prebuild_unixodbc() {
   cd $BUILD_unixodbc
-  try rsync -a $BUILD_unixodbc/ ${BUILD_PATH}/unixodbc/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_unixodbc/ ${BUILD_PATH}/unixodbc/build-${ARCH}
 
 }
 

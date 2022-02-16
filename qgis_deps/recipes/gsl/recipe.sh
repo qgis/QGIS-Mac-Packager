@@ -27,10 +27,8 @@ RECIPE_gsl=$RECIPES_PATH/gsl
 # (you can apply patch etc here.)
 function prebuild_gsl() {
   cd $BUILD_gsl
-  try rsync -a $BUILD_gsl/ ${BUILD_PATH}/gsl/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_gsl/ ${BUILD_PATH}/gsl/build-${ARCH}
 
 }
 

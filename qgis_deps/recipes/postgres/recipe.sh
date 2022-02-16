@@ -26,10 +26,8 @@ RECIPE_postgres=$RECIPES_PATH/postgres
 # (you can apply patch etc here.)
 function prebuild_postgres() {
   cd $BUILD_postgres
-  try rsync -a $BUILD_postgres/ ${BUILD_PATH}/postgres/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_postgres/ ${BUILD_PATH}/postgres/build-${ARCH}
 
 }
 

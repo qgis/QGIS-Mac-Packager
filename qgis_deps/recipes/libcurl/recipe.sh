@@ -26,10 +26,8 @@ RECIPE_libcurl=$RECIPES_PATH/libcurl
 # (you can apply patch etc here.)
 function prebuild_libcurl() {
   cd $BUILD_libcurl
-  try rsync -a $BUILD_libcurl/ ${BUILD_PATH}/libcurl/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_libcurl/ ${BUILD_PATH}/libcurl/build-${ARCH}
 
 }
 

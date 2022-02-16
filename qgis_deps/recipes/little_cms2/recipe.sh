@@ -25,13 +25,10 @@ RECIPE_little_cms2=$RECIPES_PATH/little_cms2
 # (you can apply patch etc here.)
 function prebuild_little_cms2() {
   cd $BUILD_little_cms2
-  try rsync -a $BUILD_little_cms2/ ${BUILD_PATH}/little_cms2/build-${ARCH}
-
-
   try patch --verbose --forward -p1 < ${RECIPE_little_cms2}/patches/cms2.patch
 
   patch_configure_file configure
-
+  try rsync -a $BUILD_little_cms2/ ${BUILD_PATH}/little_cms2/build-${ARCH}
 }
 
 function shouldbuild_little_cms2() {
@@ -40,8 +37,6 @@ function shouldbuild_little_cms2() {
     DO_BUILD=0
   fi
 }
-
-
 
 # function called after all the compile have been done
 function postbuild_little_cms2() {

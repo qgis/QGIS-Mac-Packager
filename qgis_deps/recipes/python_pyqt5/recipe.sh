@@ -48,8 +48,6 @@ function fix_python_pyqt5_paths() {
 function prebuild_python_pyqt5() {
   try mkdir -p $BUILD_python_pyqt5
   cd $BUILD_python_pyqt5
-  try rsync -a $BUILD_python_pyqt5/ ${BUILD_PATH}/python_pyqt5/build-${ARCH}
-
 
   # this is needed
   # so the autodetection of modules to build
@@ -57,6 +55,7 @@ function prebuild_python_pyqt5() {
   MOD_DIR=$STAGE_PATH/mkspecs/modules
   try ${SED} "s;pro_lines.extend(target_config.qmake_variables);pro_lines.extend(target_config.qmake_variables)\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkit.pri)\")\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkitwidgets.pri)\");g" configure.py
 
+  try rsync -a $BUILD_python_pyqt5/ ${BUILD_PATH}/python_pyqt5/build-${ARCH}
 }
 
 function shouldbuild_python_pyqt5() {

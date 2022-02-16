@@ -75,9 +75,8 @@ install_default_packages() {
 function prebuild_python() {
   cd $BUILD_python
 
-
   patch_configure_file configure
-
+  try rsync -a $BUILD_python/ $BUILD_PATH/python/build-$ARCH/
 }
 
 function shouldbuild_python() {
@@ -88,7 +87,6 @@ function shouldbuild_python() {
 }
 
 function install_python() {
-  try rsync -a $BUILD_python/ $BUILD_PATH/python/build-$ARCH/
   try cd $BUILD_PATH/python/build-$ARCH
 
   push_env

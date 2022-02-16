@@ -27,13 +27,12 @@ RECIPE_python_opencv=$RECIPES_PATH/python_opencv
 function prebuild_python_opencv() {
   mkdir -p $BUILD_python_opencv
   cd $BUILD_python_opencv
-  try rsync -a $BUILD_python_opencv/ ${BUILD_PATH}/python_opencv/build-${ARCH}
-
-
 
   cd ..
   # it has opencv,... submodules, so we cannot take it simply from the git release archive.
   git clone --recursive --depth 1 --branch $GIT_TAG_python_opencv https://github.com/skvark/opencv-python.git
+
+  try rsync -a $BUILD_PATH/python_opencv/opencv-python/ $BUILD_PATH/python_opencv/build-$ARCH
 }
 
 function shouldbuild_python_opencv() {

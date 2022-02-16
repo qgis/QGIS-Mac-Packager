@@ -24,10 +24,8 @@ RECIPE_bison=$RECIPES_PATH/bison
 # (you can apply patch etc here.)
 function prebuild_bison() {
   cd $BUILD_bison
-  try rsync -a $BUILD_bison/ ${BUILD_PATH}/bison/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_bison/ ${BUILD_PATH}/bison/build-${ARCH}
 
 }
 

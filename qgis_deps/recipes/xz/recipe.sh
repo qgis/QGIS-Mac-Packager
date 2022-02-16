@@ -26,10 +26,8 @@ RECIPE_xz=$RECIPES_PATH/xz
 # (you can apply patch etc here.)
 function prebuild_xz() {
   cd $BUILD_xz
-  try rsync -a $BUILD_xz/ ${BUILD_PATH}/xz/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_xz/ ${BUILD_PATH}/xz/build-${ARCH}
 
 }
 

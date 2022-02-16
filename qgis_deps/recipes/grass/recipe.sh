@@ -29,8 +29,6 @@ RECIPE_grass=$RECIPES_PATH/grass
 # (you can apply patch etc here.)
 function prebuild_grass() {
   cd $BUILD_grass
-  try rsync -a $BUILD_grass/ ${BUILD_PATH}/grass/build-${ARCH}
-
 
   # Usage of cc instead of clang
   patch_configure_file configure
@@ -48,6 +46,7 @@ function prebuild_grass() {
   # missing space in gpde Makefile
   try ${SED} "s;EXTRA_LIBS=\$(GISLIB);EXTRA_LIBS = \$(GISLIB);g" lib/gpde/Makefile
 
+  try rsync -a $BUILD_grass/ ${BUILD_PATH}/grass/build-${ARCH}
 }
 
 function shouldbuild_grass() {

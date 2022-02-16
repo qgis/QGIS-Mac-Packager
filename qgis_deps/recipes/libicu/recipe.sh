@@ -34,10 +34,8 @@ RECIPE_libicu=$RECIPES_PATH/libicu
 # (you can apply patch etc here.)
 function prebuild_libicu() {
   cd $BUILD_libicu/icu4c/source
-  try rsync -a $BUILD_libicu/ ${BUILD_PATH}/libicu/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_libicu/ ${BUILD_PATH}/libicu/build-${ARCH}
 
 }
 

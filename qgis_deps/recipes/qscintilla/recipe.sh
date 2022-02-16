@@ -28,8 +28,6 @@ RECIPE_qscintilla=$RECIPES_PATH/qscintilla
 # (you can apply patch etc here.)
 function prebuild_qscintilla() {
   cd $BUILD_qscintilla/Qt4Qt5
-  try rsync -a $BUILD_qscintilla/ ${BUILD_PATH}/qscintilla/build-${ARCH}
-
 
   # Install in stage path
   try ${SED} "s;\$\$\[QT_INSTALL_LIBS\];$STAGE_PATH/lib;g" qscintilla.pro
@@ -41,6 +39,7 @@ function prebuild_qscintilla() {
   try ${SED} "s;\$\$\[QT_INSTALL_LIBS\];$STAGE_PATH/lib;g" features/qscintilla2.prf
   try ${SED} "s;\$\$\[QT_INSTALL_HEADERS\];$STAGE_PATH/include;g" features/qscintilla2.prf
 
+  try rsync -a $BUILD_qscintilla/ ${BUILD_PATH}/qscintilla/build-${ARCH}
 }
 
 function shouldbuild_qscintilla() {

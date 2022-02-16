@@ -11,7 +11,8 @@ env:
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
-  SOURCE_PACKAGES_PATH: ${{ github.workspace }}/.packages
+  SOURCE_PACKAGES_PATH: ${{ github.workspace }}/deps/.packages
+  DEPS_BUILD_PATH: ${{ github.workspace }}/deps/build
 
 jobs:
   mac_os_build:
@@ -32,10 +33,10 @@ jobs:
         id: cache-packages
         uses: pat-s/always-upload-cache@v2.1.5
         with:
-          path: ${{ env.SOURCE_PACKAGES_PATH }}
-          key: cache-packages-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
+          path: ${{ github.workspace }}/deps
+          key: cache-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
           restore-keys: |
-            cache-packages-qgis-deps-
+            cache--qgis-deps-
 
       - name: Fetch QGIS private SDKs
         uses: actions/checkout@v2

@@ -26,10 +26,8 @@ RECIPE_jpeg=$RECIPES_PATH/jpeg
 # (you can apply patch etc here.)
 function prebuild_jpeg() {
   cd $BUILD_jpeg
-  try rsync -a $BUILD_jpeg/ ${BUILD_PATH}/jpeg/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_jpeg/ ${BUILD_PATH}/jpeg/build-${ARCH}
 
 }
 

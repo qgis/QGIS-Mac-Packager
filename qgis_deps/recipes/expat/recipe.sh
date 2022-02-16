@@ -25,10 +25,8 @@ RECIPE_expat=$RECIPES_PATH/expat
 # (you can apply patch etc here.)
 function prebuild_expat() {
   cd $BUILD_expat
-  try rsync -a $BUILD_expat/ ${BUILD_PATH}/expat/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_expat/ ${BUILD_PATH}/expat/build-${ARCH}
 
 }
 

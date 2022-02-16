@@ -25,10 +25,8 @@ RECIPE_freetype=$RECIPES_PATH/freetype
 # (you can apply patch etc here.)
 function prebuild_freetype() {
   cd $BUILD_freetype
-  try rsync -a $BUILD_freetype/ ${BUILD_PATH}/freetype/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_freetype/ ${BUILD_PATH}/freetype/build-${ARCH}
 
 }
 

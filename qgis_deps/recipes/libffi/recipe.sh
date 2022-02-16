@@ -25,9 +25,8 @@ RECIPE_libffi=$RECIPES_PATH/libffi
 # (you can apply patch etc here.)
 function prebuild_libffi() {
   cd $BUILD_libffi
-  try rsync -a $BUILD_libffi/ ${BUILD_PATH}/libffi/build-${ARCH}
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_libffi/ ${BUILD_PATH}/libffi/build-${ARCH}
 }
 
 function shouldbuild_libffi() {

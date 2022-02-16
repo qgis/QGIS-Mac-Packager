@@ -25,10 +25,8 @@ RECIPE_flex=$RECIPES_PATH/flex
 # (you can apply patch etc here.)
 function prebuild_flex() {
   cd $BUILD_flex
-  try rsync -a $BUILD_flex/ ${BUILD_PATH}/flex/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_flex/ ${BUILD_PATH}/flex/build-${ARCH}
 
 }
 

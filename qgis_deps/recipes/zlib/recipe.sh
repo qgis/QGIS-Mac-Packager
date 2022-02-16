@@ -25,10 +25,8 @@ RECIPE_zlib=$RECIPES_PATH/zlib
 # (you can apply patch etc here.)
 function prebuild_zlib() {
   cd $BUILD_zlib
-  try rsync -a $BUILD_zlib/ ${BUILD_PATH}/zlib/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_zlib/ ${BUILD_PATH}/zlib/build-${ARCH}
 
 }
 

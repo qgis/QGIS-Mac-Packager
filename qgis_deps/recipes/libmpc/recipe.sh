@@ -25,10 +25,8 @@ RECIPE_libmpc=$RECIPES_PATH/libmpc
 # (you can apply patch etc here.)
 function prebuild_libmpc() {
   cd $BUILD_libmpc
-  try rsync -a $BUILD_libmpc/ ${BUILD_PATH}/libmpc/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_libmpc/ ${BUILD_PATH}/libmpc/build-${ARCH}
 
 }
 

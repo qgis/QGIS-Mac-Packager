@@ -30,11 +30,6 @@ RECIPE_gcc=$RECIPES_PATH/gcc
 function prebuild_gcc() {
   cd $BUILD_gcc
   try rsync -a $BUILD_gcc/ ${BUILD_PATH}/gcc/build-${ARCH}
-  try rsync -a $BUILD_gcc/ ${BUILD_PATH}/gcc/build-${ARCH}
-
-
-  # patch_configure_file configure
-
 }
 
 function shouldbuild_gcc() {
@@ -44,7 +39,6 @@ function shouldbuild_gcc() {
 }
 
 function build_gcc() {
- try rsync -a $BUILD_gcc/ $BUILD_PATH/gcc/build-$ARCH/
  try cd $BUILD_PATH/gcc/build-$ARCH
  push_env
 

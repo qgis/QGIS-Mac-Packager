@@ -26,8 +26,7 @@ RECIPE_libisl=$RECIPES_PATH/libisl
 function prebuild_libisl() {
   cd $BUILD_libisl
 
-  patch_configure_file configure
-  try rsync -a $BUILD_libisl/ $BUILD_PATH/libisl/build-$ARCH/
+  try rsync  -a $BUILD_libisl/ $BUILD_PATH/libisl/build-$ARCH/
 }
 
 function shouldbuild_libisl() {

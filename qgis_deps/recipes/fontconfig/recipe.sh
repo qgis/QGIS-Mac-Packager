@@ -27,10 +27,8 @@ RECIPE_fontconfig=$RECIPES_PATH/fontconfig
 # (you can apply patch etc here.)
 function prebuild_fontconfig() {
   cd $BUILD_fontconfig
-  try rsync -a $BUILD_fontconfig/ ${BUILD_PATH}/fontconfig/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_fontconfig/ ${BUILD_PATH}/fontconfig/build-${ARCH}
 
 }
 

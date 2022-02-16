@@ -28,10 +28,8 @@ RECIPE_pcre2=$RECIPES_PATH/pcre2
 # (you can apply patch etc here.)
 function prebuild_pcre2() {
   cd $BUILD_pcre2
-  try rsync -a $BUILD_pcre2/ ${BUILD_PATH}/pcre2/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_pcre2/ ${BUILD_PATH}/pcre2/build-${ARCH}
 
 }
 

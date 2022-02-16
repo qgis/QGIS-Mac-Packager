@@ -27,10 +27,8 @@ RECIPE_freetds=$RECIPES_PATH/freetds
 # (you can apply patch etc here.)
 function prebuild_freetds() {
   cd $BUILD_freetds
-  try rsync -a $BUILD_freetds/ ${BUILD_PATH}/freetds/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_freetds/ ${BUILD_PATH}/freetds/build-${ARCH}
 
 }
 

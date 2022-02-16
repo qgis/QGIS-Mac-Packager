@@ -25,8 +25,8 @@ RECIPE_gmp=$RECIPES_PATH/gmp
 # (you can apply patch etc here.)
 function prebuild_gmp() {
   cd $BUILD_gmp
-  patch_configure_file configure
-  try rsync -a $BUILD_gmp/ ${BUILD_PATH}/gmp/build-${ARCH}
+    patch_configure_file configure
+  try rsync   -a $BUILD_gmp/ ${BUILD_PATH}/gmp/build-${ARCH}
 }
 
 function shouldbuild_gmp() {

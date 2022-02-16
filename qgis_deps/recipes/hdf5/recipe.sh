@@ -31,10 +31,8 @@ RECIPE_hdf5=$RECIPES_PATH/hdf5
 # (you can apply patch etc here.)
 function prebuild_hdf5() {
   cd $BUILD_hdf5
-  try rsync -a $BUILD_hdf5/ ${BUILD_PATH}/hdf5/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_hdf5/ ${BUILD_PATH}/hdf5/build-${ARCH}
 
 }
 

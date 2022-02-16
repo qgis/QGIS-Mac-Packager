@@ -28,10 +28,8 @@ RECIPE_saga=$RECIPES_PATH/saga
 # (you can apply patch etc here.)
 function prebuild_saga() {
   cd $BUILD_saga
-  try rsync -a $BUILD_saga/ ${BUILD_PATH}/saga/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_saga/ ${BUILD_PATH}/saga/build-${ARCH}
 
 }
 

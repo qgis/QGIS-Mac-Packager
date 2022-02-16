@@ -27,10 +27,8 @@ RECIPE_webp=$RECIPES_PATH/webp
 # (you can apply patch etc here.)
 function prebuild_webp() {
   cd $BUILD_webp
-  try rsync -a $BUILD_webp/ ${BUILD_PATH}/webp/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_webp/ ${BUILD_PATH}/webp/build-${ARCH}
 
 }
 

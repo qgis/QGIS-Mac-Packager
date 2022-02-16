@@ -26,8 +26,8 @@ RECIPE_freexl=$RECIPES_PATH/freexl
 function prebuild_freexl() {
   cd $BUILD_freexl
 
-  patch_configure_file configure
-  try rsync -a $BUILD_freexl/ $BUILD_PATH/freexl/build-$ARCH/
+    patch_configure_file configure
+  try rsync   -a $BUILD_freexl/ $BUILD_PATH/freexl/build-$ARCH/
 }
 
 function shouldbuild_freexl() {

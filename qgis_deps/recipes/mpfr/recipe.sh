@@ -25,10 +25,8 @@ RECIPE_mpfr=$RECIPES_PATH/mpfr
 # (you can apply patch etc here.)
 function prebuild_mpfr() {
   cd $BUILD_mpfr
-  try rsync -a $BUILD_mpfr/ ${BUILD_PATH}/mpfr/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_mpfr/ ${BUILD_PATH}/mpfr/build-${ARCH}
 
 }
 

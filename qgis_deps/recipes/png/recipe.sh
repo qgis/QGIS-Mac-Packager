@@ -26,10 +26,8 @@ RECIPE_png=$RECIPES_PATH/png
 # (you can apply patch etc here.)
 function prebuild_png() {
   cd $BUILD_png
-  try rsync -a $BUILD_png/ ${BUILD_PATH}/png/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_png/ ${BUILD_PATH}/png/build-${ARCH}
 
 }
 

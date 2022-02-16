@@ -25,10 +25,8 @@ RECIPE_gettext=$RECIPES_PATH/gettext
 # (you can apply patch etc here.)
 function prebuild_gettext() {
   cd $BUILD_gettext
-  try rsync -a $BUILD_gettext/ ${BUILD_PATH}/gettext/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_gettext/ ${BUILD_PATH}/gettext/build-${ARCH}
 
 }
 

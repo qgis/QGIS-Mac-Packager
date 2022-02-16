@@ -25,8 +25,6 @@ RECIPE_qwt=$RECIPES_PATH/qwt
 # (you can apply patch etc here.)
 function prebuild_qwt() {
   cd $BUILD_qwt
-  try rsync -a $BUILD_qwt/ ${BUILD_PATH}/qwt/build-${ARCH}
-
 
   # Install in stage path
   try ${SED} "s;QWT_INSTALL_PREFIX.*=.*;QWT_INSTALL_PREFIX=$STAGE_PATH;g" qwtconfig.pri
@@ -34,6 +32,7 @@ function prebuild_qwt() {
   # Install Qt plugin in `lib/qt/plugins/designer`, not `plugins/designer`
   try ${SED} "s;= \$\${QWT_INSTALL_PREFIX}/plugins/designer;=$STAGE_PATH/lib/qt/plugins/designer;g" qwtconfig.pri
 
+  try rsync -a $BUILD_qwt/ ${BUILD_PATH}/qwt/build-${ARCH}
 }
 
 function shouldbuild_qwt() {

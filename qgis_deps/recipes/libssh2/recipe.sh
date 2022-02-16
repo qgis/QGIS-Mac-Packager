@@ -27,10 +27,8 @@ RECIPE_libssh2=$RECIPES_PATH/libssh2
 # (you can apply patch etc here.)
 function prebuild_libssh2() {
   cd $BUILD_libssh2
-  try rsync -a $BUILD_libssh2/ ${BUILD_PATH}/libssh2/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_libssh2/ ${BUILD_PATH}/libssh2/build-${ARCH}
 
 }
 

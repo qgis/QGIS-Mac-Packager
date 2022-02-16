@@ -26,8 +26,8 @@ RECIPE_wxmac=$RECIPES_PATH/wxmac
 # (you can apply patch etc here.)
 function prebuild_wxmac() {
   cd $BUILD_wxmac
-  patch_configure_file configure
-  try rsync -a $BUILD_wxmac/ ${BUILD_PATH}/wxmac/build-${ARCH}
+    patch_configure_file configure
+  try rsync   -a $BUILD_wxmac/ ${BUILD_PATH}/wxmac/build-${ARCH}
 }
 
 function shouldbuild_wxmac() {

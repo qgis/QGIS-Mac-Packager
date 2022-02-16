@@ -25,10 +25,8 @@ RECIPE_spatialite=$RECIPES_PATH/spatialite
 # (you can apply patch etc here.)
 function prebuild_spatialite() {
   cd $BUILD_spatialite
-  try rsync -a $BUILD_spatialite/ ${BUILD_PATH}/spatialite/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_spatialite/ ${BUILD_PATH}/spatialite/build-${ARCH}
 
 }
 

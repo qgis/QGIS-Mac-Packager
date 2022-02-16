@@ -25,10 +25,8 @@ RECIPE_libxml2=$RECIPES_PATH/libxml2
 # (you can apply patch etc here.)
 function prebuild_libxml2() {
   cd $BUILD_libxml2
-  try rsync -a $BUILD_libxml2/ ${BUILD_PATH}/libxml2/build-${ARCH}
-
-
-  patch_configure_file configure
+    patch_configure_file configure
+  try rsync  -a $BUILD_libxml2/ ${BUILD_PATH}/libxml2/build-${ARCH}
 
 }
 
