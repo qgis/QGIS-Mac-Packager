@@ -556,6 +556,7 @@ function download_file() {
     module=${1}
     url=${2}
     md5=${3}
+    check_recipe=${4}
 
     if [ ! -d "${BUILD_PATH}/${module}" ]; then
       try mkdir -p ${BUILD_PATH}/${module}
@@ -589,7 +590,7 @@ function download_file() {
           do_download=0
         else
           # invalid download, remove the file
-          error "Module ${module} have invalid md5, redownload."
+          error "Module ${module} has invalid md5, redownload."
           rm ${filename}
         fi
       else
@@ -618,7 +619,7 @@ function download_file() {
 
     source_directory=$(get_directory ${filename})
 
-    if [[ "$(recipe_has_changed "${module}" recipe)" == "1" ]]; then
+    if [[ ${check_recipe} -eq 1 ]] && [[ "$(recipe_has_changed "${module}" recipe)" == "1" ]]; then
       info "Recipe has changed, removing the existing source and build directories"
       rm -rf ${BUILD_PATH}/${module}/${source_directory}
       rm -rf ${BUILD_PATH}/${module}/build-${ARCH}
@@ -711,7 +712,7 @@ function run_get_packages() {
     fi
 
     debug "Download package for ${module}"
-    download_file ${module} ${url} ${md5}
+    download_file ${module} ${url} ${md5} 1
 
     fold_pop
   done
