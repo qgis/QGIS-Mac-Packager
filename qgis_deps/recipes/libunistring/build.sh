@@ -3,6 +3,8 @@ function build_libunistring() {
   push_env
 
   try ${CONFIGURE} \
+    --enable-shared=yes \
+    --enable-static=no \
     --disable-dependency-tracking \
     --disable-silent-rules
 

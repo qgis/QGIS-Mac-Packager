@@ -622,9 +622,9 @@ function download_file() {
       info "Recipe has changed, removing the existing source and build directories"
       rm -rf ${BUILD_PATH}/${module}/${source_directory}
       rm -rf ${BUILD_PATH}/${module}/build-${ARCH}
-      if [[ -z ${DO_CLEAN_BUILD_FROM_MODULE} ]]; then
-        info "From this module, perform clean build"
-        DO_CLEAN_BUILD_FROM_MODULE=${module}
+      if [[ -z ${FORCE_BUILD_FROM_MODULE} ]]; then
+        info "From this module, re-build all"
+        FORCE_BUILD_FROM_MODULE=${module}
       fi
     fi
 
@@ -743,14 +743,14 @@ function run_build() {
       fi
     fi
 
-    if [[ "${DO_CLEAN_BUILD_FROM_MODULE}" == "${module}" ]]; then
+    if [[ "${FORCE_BUILD_FROM_MODULE}" == "${module}" ]]; then
       DO_CLEAN_BUILD=1
     fi
 
     # if the module should be build, or if the marker is not present,
     # do the build
+    fn="build_${module}"
     if [[ "${DO_CLEAN_BUILD}" == "1" ]] ||  [[ "${DO_BUILD}" == "1" ]]; then
-      fn="build_${module}"
       debug "Call ${fn}"
       rm -f ${BUILD_PATH}/${module}/.build
       source ${RECIPES_PATH}/${module}/build.sh

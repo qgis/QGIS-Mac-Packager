@@ -8,6 +8,7 @@ on:
     - '.github/workflows/deps.yml'
 
 env:
+  MODULE: spatialite
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
@@ -24,11 +25,12 @@ jobs:
           source qgis_deps/config/deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}.conf
           echo "BUILD_PATH=${BUILD_PATH}" >> $GITHUB_ENV
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
+          echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
           echo "QGIS_PRIVATE_SDKS_PATH=$GITHUB_WORKSPACE/qgis-private-sdks" >> $GITHUB_ENV
           mkdir -p ${BUILD_PATH}
           sudo mkdir -p ${ROOT_OUT_PATH}
 
-      - name: Cache packages
+      - name: Cache build
         id: cache-packages
         uses: pat-s/always-upload-cache@v2.1.5
         with:
@@ -54,7 +56,7 @@ jobs:
         uses: actions/cache@v1  # not v2!
         with:
           path: ${{ github.workspace }}/Qt
-          key: ${{ runner.os }}-QtCache
+          key: cache-Qt-${{ env.VERSION_QT }}
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
@@ -73,10 +75,10 @@ jobs:
       - name: install brew deps
         run: ./scripts/install_brew_dev_packages.bash
 
-      - name: build deps
+      - name: build deps ${{ env.MODULE }}
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mspatialite
+          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -m${{ env.MODULE }}
         timeout-minutes: 350
 
       - name: Last build log

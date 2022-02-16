@@ -3,6 +3,8 @@ function build_spatialite() {
   push_env
 
   try ${CONFIGURE} \
+    --enable-shared=yes \
+    --enable-static=no \
     --enable-geocallbacks \
     --disable-dependency-tracking
 
