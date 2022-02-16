@@ -77,19 +77,13 @@ jobs:
         run: |
           cd qgis_deps
           sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mspatialite
+        timeout-minutes: 350
 
       - name: Last build log
         if: ${{ failure() }}
         run: |
           cat ${BUILD_PATH}/last-build.log
           exit 1
-
-      - name: Setup tmate session
-        if: ${{ failure() }}
-        uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 30
-        with:
-          limit-access-to-actor: true
 
       - name: create package
         run: |
