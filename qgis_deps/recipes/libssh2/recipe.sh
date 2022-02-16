@@ -27,15 +27,11 @@ RECIPE_libssh2=$RECIPES_PATH/libssh2
 # (you can apply patch etc here.)
 function prebuild_libssh2() {
   cd $BUILD_libssh2
+  try rsync -a $BUILD_libssh2/ ${BUILD_PATH}/libssh2/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_libssh2() {
@@ -44,27 +40,7 @@ function shouldbuild_libssh2() {
   fi
 }
 
-# function called to build the source code
-function build_libssh2() {
-  try rsync -a $BUILD_libssh2/ $BUILD_PATH/libssh2/build-$ARCH/
-  try cd $BUILD_PATH/libssh2/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-      --disable-debug \
-      --disable-dependency-tracking \
-      --disable-silent-rules \
-      --disable-examples-build \
-      --with-openssl \
-      --with-libz \
-      --with-libssl-prefix=${STAGE_PATH}
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libssh2() {

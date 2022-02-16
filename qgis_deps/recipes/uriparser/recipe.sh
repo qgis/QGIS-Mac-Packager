@@ -27,12 +27,7 @@ RECIPE_uriparser=$RECIPES_PATH/uriparser
 function prebuild_uriparser() {
   cd $BUILD_uriparser
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_uriparser() {
@@ -42,26 +37,7 @@ function shouldbuild_uriparser() {
   fi
 }
 
-# function called to build the source code
-function build_uriparser() {
-  try mkdir -p $BUILD_PATH/uriparser/build-$ARCH
-  try cd $BUILD_PATH/uriparser/build-$ARCH
-  push_env
 
-  try ${CMAKE} \
-    -DURIPARSER_BUILD_DOCS=OFF \
-    -DURIPARSER_BUILD_TESTS=OFF \
-    $BUILD_uriparser
-
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA
-  try $NINJA install
-
-  install_name_tool -id $STAGE_PATH/lib/$LINK_liburiparser $STAGE_PATH/lib/$LINK_liburiparser
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_uriparser() {

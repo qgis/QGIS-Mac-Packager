@@ -25,13 +25,9 @@ RECIPE_protobuf=$RECIPES_PATH/protobuf
 # (you can apply patch etc here.)
 function prebuild_protobuf() {
   cd $BUILD_protobuf
+  try rsync -a $BUILD_protobuf/ ${BUILD_PATH}/protobuf/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_protobuf() {
@@ -41,28 +37,7 @@ function shouldbuild_protobuf() {
   fi
 }
 
-# function called to build the source code
-function build_protobuf() {
-  try rsync -a $BUILD_protobuf/ $BUILD_PATH/protobuf/build-$ARCH/
-  try cd $BUILD_PATH/protobuf/build-$ARCH
-  push_env
 
-  export CXXFLAGS="$CXXFLAGS -DNDEBUG"
-
-  try ./autogen.sh
-  patch_configure_file configure
-  try ${CONFIGURE} \
-    --enable-static \
-    --disable-debug \
-    --disable-dependency-tracking \
-    --with-zlib
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_protobuf() {

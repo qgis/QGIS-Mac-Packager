@@ -25,15 +25,11 @@ RECIPE_spatialite=$RECIPES_PATH/spatialite
 # (you can apply patch etc here.)
 function prebuild_spatialite() {
   cd $BUILD_spatialite
+  try rsync -a $BUILD_spatialite/ ${BUILD_PATH}/spatialite/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_spatialite() {
@@ -43,22 +39,7 @@ function shouldbuild_spatialite() {
   fi
 }
 
-# function called to build the source code
-function build_spatialite() {
-  try rsync -a $BUILD_spatialite/ $BUILD_PATH/spatialite/build-$ARCH/
-  try cd $BUILD_PATH/spatialite/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-    --enable-geocallbacks \
-    --disable-dependency-tracking
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_spatialite() {

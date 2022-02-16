@@ -26,12 +26,7 @@ RECIPE_proj_data=$RECIPES_PATH/proj_data
 function prebuild_proj_data() {
   cd $BUILD_proj_data
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_proj_data() {
@@ -40,26 +35,7 @@ function shouldbuild_proj_data() {
   fi
 }
 
-# function called to build the source code
-function build_proj_data() {
-  try mkdir -p $BUILD_PATH/proj_data/build-$ARCH
-  try cd $BUILD_PATH/proj_data/build-$ARCH
 
-  push_env
-
-  try $CMAKE $BUILD_proj_data .
-
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA dist
-
-  mkdir -p install
-  cd install
-  try tar -zxf ../proj-data-${VERSION_proj_data_major}.tar.gz
-  try cp -R * $STAGE_PATH/share/proj/
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_proj_data() {

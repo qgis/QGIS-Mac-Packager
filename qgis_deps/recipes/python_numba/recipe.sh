@@ -24,13 +24,7 @@ RECIPE_python_numba=$RECIPES_PATH/python_numba
 # (you can apply patch etc here.)
 function prebuild_python_numba() {
   cd $BUILD_python_numba
-
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
-  touch .patched
+  try rsync -a $BUILD_python_numba/ $BUILD_PATH/python_numba/build-$ARCH/
 }
 
 function shouldbuild_python_numba() {
@@ -40,16 +34,7 @@ function shouldbuild_python_numba() {
   fi
 }
 
-# function called to build the source code
-function build_python_numba() {
-  try rsync -a $BUILD_python_numba/ $BUILD_PATH/python_numba/build-$ARCH/
-  try cd $BUILD_PATH/python_numba/build-$ARCH
-  push_env
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_numba() {

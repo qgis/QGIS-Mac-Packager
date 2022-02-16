@@ -34,15 +34,11 @@ RECIPE_libicu=$RECIPES_PATH/libicu
 # (you can apply patch etc here.)
 function prebuild_libicu() {
   cd $BUILD_libicu/icu4c/source
+  try rsync -a $BUILD_libicu/ ${BUILD_PATH}/libicu/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_libicu() {
@@ -51,46 +47,7 @@ function shouldbuild_libicu() {
   fi
 }
 
-# function called to build the source code
-function build_libicu() {
-  try rsync -a $BUILD_libicu/ $BUILD_PATH/libicu/build-$ARCH/
-  try cd $BUILD_PATH/libicu/build-$ARCH/icu4c/source
-  push_env
 
-  try ./runConfigureICU MacOSX --prefix=${STAGE_PATH} --enable-rpath \
-    --disable-samples \
-    --disable-extras \
-    --disable-layout \
-    --disable-tests \
-    --with-data-packaging=library
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKE install
-
-  # not sure why, but the original file seems corrupted after installtion
-  cp ${BUILD_PATH}/libicu/build-x86_64/icu4c/source/lib/libicudata.${VERSION_libicu}.dylib ${STAGE_PATH}/lib/libicudata.${VERSION_libicu}.dylib
-
-  targets=(
-    libicudata.${VERSION_libicu}.dylib
-    libicui18n.${VERSION_libicu}.dylib
-    libicuio.${VERSION_libicu}.dylib
-    libicutu.${VERSION_libicu}.dylib
-    libicuuc.${VERSION_libicu}.dylib
-  )
-  for i in ${targets[*]}
-  do
-    info install_name_tool -id $STAGE_PATH/lib/$i $STAGE_PATH/lib/$i
-    try install_name_tool -id $STAGE_PATH/lib/$i $STAGE_PATH/lib/$i
-    for j in ${targets[*]}
-    do
-      info install_name_tool -change $j $STAGE_PATH/lib/$j $STAGE_PATH/lib/$i
-      try install_name_tool -change $j $STAGE_PATH/lib/$j $STAGE_PATH/lib/$i
-    done
-  done
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libicu() {

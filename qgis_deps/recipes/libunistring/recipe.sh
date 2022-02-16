@@ -26,15 +26,8 @@ RECIPE_libunistring=$RECIPES_PATH/libunistring
 # (you can apply patch etc here.)
 function prebuild_libunistring() {
   cd $BUILD_libunistring
-
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
   patch_configure_file configure
-
-  touch .patched
+  try rsync -a $BUILD_libunistring/ ${BUILD_PATH}/libunistring/build-${ARCH}
 }
 
 function shouldbuild_libunistring() {
@@ -43,22 +36,7 @@ function shouldbuild_libunistring() {
   fi
 }
 
-# function called to build the source code
-function build_libunistring() {
-  try rsync -a $BUILD_libunistring/ $BUILD_PATH/libunistring/build-$ARCH/
-  try cd $BUILD_PATH/libunistring/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-    --disable-dependency-tracking \
-    --disable-silent-rules
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libunistring() {

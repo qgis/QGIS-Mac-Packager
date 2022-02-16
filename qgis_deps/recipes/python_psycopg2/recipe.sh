@@ -26,12 +26,7 @@ function prebuild_python_psycopg2() {
   try mkdir -p $BUILD_python_psycopg2
   cd $BUILD_python_psycopg2
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_psycopg2() {
@@ -41,15 +36,7 @@ function shouldbuild_python_psycopg2() {
   fi
 }
 
-# function called to build the source code
-function build_python_psycopg2() {
-  try cd $BUILD_python_psycopg2
-  push_env
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP_NO_BINARY psycopg2==${VERSION_python_psycopg2}
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_psycopg2() {

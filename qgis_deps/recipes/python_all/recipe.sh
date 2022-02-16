@@ -56,10 +56,7 @@ function shouldbuild_python_all() {
   :
 }
 
-# function called to build the source code
-function build_python_all() {
-  rm -f ${STAGE_PATH}/bin/cmake
-}
+
 
 # function called after all the compile have been done
 function postbuild_python_all() {

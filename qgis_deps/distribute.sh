@@ -46,7 +46,7 @@ DO_SET_X=0
 DEBUG=0
 
 # Load configuration
-QGIS_DEPS_RELEASE_VERSION=$1
+QGIS_DEPS_RELEASE_VERSION=${1}
 if [ -z ${QGIS_DEPS_RELEASE_VERSION} ]; then
   usage
   exit 1
@@ -482,15 +482,6 @@ function run_source_modules() {
     module=${needed[0]}
     unset needed[0]
     needed=( ${needed[@]} )
-
-    # is a version is specified ?
-    items=( ${module//==/ } )
-    module=${items[0]}
-    version=${items[1]}
-    if [ ! -z "${version}" ]; then
-      info "Specific version detected for ${module}: ${version}"
-      eval "VERSION_${module}=${version}"
-    fi
   done
 
   needed=(${MODULES})
@@ -510,11 +501,6 @@ function run_source_modules() {
     unset needed[0]
     needed=( ${needed[@]} )
 
-    # split the version if exist
-    items=( ${module//==/ } )
-    module=${items[0]}
-    version=${items[1]}
-
     # check if the module have already been declared
     in_array ${module} "${processed[@]}"
     if [ $? -ne 255 ]; then
@@ -533,18 +519,11 @@ function run_source_modules() {
     fi
     source ${RECIPES_PATH}/${module}/recipe.sh
 
-    # if a version has been specified by the user, the md5 will not
-    # correspond at all. so deactivate it.
-    if [ ! -z "${version}" ]; then
-      debug "Deactivate MD5 test for ${module}, due to specific version"
-      eval "MD5_${module}="
-    fi
-
     # append current module deps to the needed
-    deps=$(echo \$"{DEPS_${module}[@]}")
-    eval deps=($deps)
-    optional_deps=$(echo \$"{DEPS_OPTIONAL_${module}[@]}")
-    eval optional_deps=(${optional_deps})
+    deps="DEPS_${module}[@]"
+    deps=${!deps}
+    optional_deps="DEPS_OPTIONAL_${module}[@]"
+    optional_deps=${!optional_deps}
     if [ ${#deps[*]} -gt 0 ]; then
       debug "Module ${module} depend on" ${deps[@]}
       needed=( ${needed[@]} ${deps[@]} )
@@ -573,7 +552,19 @@ function run_source_modules() {
     fi
   done
   info "Unused modules: ${UNUSED_MODULES[@]}"
+}
 
+function recipe_has_changed(){
+  module=${1}
+  file=${2}
+  current_recipe_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/${file}.sh | cut -d\  -f1)
+  if [[ -f ${BUILD_PATH}/${module}/.${2} ]]; then
+    stored_recipe_sum=$(cat ${BUILD_PATH}/${module}/.${2})
+    if [[ "${current_recipe_sum}" == "${stored_recipe_sum}" ]]; then
+      echo 0
+    fi
+  fi
+  echo 1
 }
 
 function download_file() {
@@ -608,7 +599,7 @@ function download_file() {
       elif [ -n "${md5}" ]; then
         # check if the md5 is correct
         current_md5=$(${MD5SUM} ${filename} | cut -d\  -f1)
-        if [ "X${current_md5}" == "X${md5}" ]; then
+        if [ "${current_md5}" == "${md5}" ]; then
           # correct, no need to download
           do_download=0
         else
@@ -618,16 +609,6 @@ function download_file() {
         fi
       else
         do_download=0
-      fi
-    fi
-
-    # check if the file HEAD in case of, only if there is no MD5 to check.
-    check_headers=0
-    if [ -z "${md5}" ]; then
-      if [ "X${DO_CLEAN_BUILD}" == "X1" ]; then
-        check_headers=1
-      elif [ ! -f ${filename} ]; then
-        check_headers=1
       fi
     fi
 
@@ -642,20 +623,29 @@ function download_file() {
     fi
 
     # check md5
-    if [ -n "${md5}" ]; then
+    if [[ -n "${md5}" ]]; then
       current_md5=$(${MD5SUM} ${filename} | cut -d\  -f1)
-      if [ "X${current_md5}" != "X${md5}" ]; then
+      if [[ "${current_md5}" != "${md5}" ]]; then
         error "File ${filename} md5 check failed (got ${current_md5} instead of ${md5})."
-        error "Ensure the file is correctly downloaded, and update MD5S_${module}"
         exit -1
+      fi
+    fi
+
+    source_directory=$(get_directory ${filename})
+
+    if [[ "$(recipe_has_changed "${module}" recipe)" == "1" ]]; then
+      info "Recipe has changed, removing the existing source and build directories"
+      rm -rf ${BUILD_PATH}/${module}/${source_directory}
+      rm -rf ${BUILD_PATH}/${module}/build-${ARCH}
+      if [[ -z ${DO_CLEAN_BUILD_FROM_MODULE} ]]; then
+        info "From this module, perform clean build"
+        DO_CLEAN_BUILD_FROM_MODULE=${module}
       fi
     fi
 
     # if already decompress, forget it
     cd ${BUILD_PATH}/${module}
-    directory=$(get_directory ${filename})
-
-    if [ ! -d "${directory}" ]; then
+    if [ ! -d "${source_directory}" ]; then
       # decompress
       pfilename=${SOURCE_PACKAGES_PATH}/${module}/${filename}
       info "Extract ${pfilename}"
@@ -663,25 +653,32 @@ function download_file() {
         *.tar.gz|*.tar.xz|*.tgz|*.tar.lz )
           try tar xzf ${pfilename}
           root_directory=$(basename $(try tar tzf ${pfilename}|head -n1))
-          if [ "X${root_directory}" != "X${directory}" ]; then
-            mv ${root_directory} ${directory}
+          if [[ "${root_directory}" != "${source_directory}" ]]; then
+            mv ${root_directory} ${source_directory}
           fi
           ;;
         *.tar.bz2|*.tbz2 )
           try tar xjf ${pfilename}
           root_directory=$(basename $(try tar tjf ${pfilename}|head -n1))
-          if [ "X${root_directory}" != "X${directory}" ]; then
-            mv ${root_directory} ${directory}
+          if [[ "${root_directory}" != "${source_directory}" ]]; then
+            mv ${root_directory} ${source_directory}
           fi
           ;;
         *.zip )
           try unzip ${pfilename}
           root_directory=$(basename $(try unzip -l ${pfilename}|sed -n 5p|awk '{print ${4}}'))
-          if [ "X${root_directory}" != "X${directory}" ]; then
-            mv ${root_directory} ${directory}
+          if [[ "${root_directory}" != "${source_directory}" ]]; then
+            mv ${root_directory} ${source_directory}
           fi
           ;;
       esac
+
+      # run prebuild + patch
+      fn="prebuild_${module}"
+      debug "Call ${fn}"
+      ${fn}
+      recipe_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/recipe.sh | cut -d\  -f1)
+      echo "${recipe_sum}" > ${BUILD_PATH}/${module}/.recipe
     fi
 }
 
@@ -696,11 +693,12 @@ function run_get_packages() {
 
     # download dependencies for this module
     # check if there is not an overload from environment
-    module_dir=$(eval "echo \$QGISDEPS_${module}_DIR")
-    if [ "${module_dir}" ]
-    then
-      debug "\${QGISDEPS_}${module}_DIR is not empty, linking ${module_dir} dir instead of downloading"
-      directory=$(eval "echo \$BUILD_${module}")
+    module_dir="QGISDEPS_${module}_DIR"
+    module_dir=${!module_dir}
+    if [ "${module_dir}" ]; then
+      debug "QGISDEPS_${module}_DIR is not empty, linking ${module_dir} dir instead of downloading"
+      directory="BUILD_${module}"
+      directory=${!directory}
       if [ -e ${directory} ]; then
         try rm -rf "${directory}"
       fi
@@ -734,21 +732,6 @@ function run_get_packages() {
   done
 }
 
-function run_prebuild() {
-  info "Run prebuild"
-  cd ${BUILD_PATH}
-  modules_arr=(${MODULES})
-  nmod=${#modules_arr[@]}
-  for (( j=0; j<nmod; j++ )); do
-    module="${modules_arr[$j]}"
-    fold_push "prebuild ${module} ($((j+1))/${nmod})"
-    fn=$(echo prebuild_${module})
-    debug "Call ${fn}"
-    ${fn}
-    fold_pop
-  done
-}
-
 function run_build() {
   info "Run build"
 
@@ -762,35 +745,35 @@ function run_build() {
     module="${modules_arr[$j]}"
     fold_push "building ${module} ($((j+1))/${nmod})"
 
-    fn="build_${module}"
-    shouldbuildfn="shouldbuild_${module}"
-    MARKER_FN="${BUILD_PATH}/.mark-${module}"
-
-    # if the module should be updated, then remove the marker.
-    in_array ${module} "${modules_update[@]}"
-    if [ $? -ne 255 ]; then
+    if [[ "$(recipe_has_changed "${module}" build)" == "1" ]]; then
+      DO_BUILD=1
+    elif [[ $(in_array ${module} "${modules_update[@]}") -ne 255 ]]; then
       debug "${module} detected to be updated"
-      rm -f "${MARKER_FN}"
+      DO_BUILD=1
+    else
+      DO_BUILD=1
+      shouldbuildfn="shouldbuild_${module}"
+      if [[ "$(type -t ${shouldbuildfn})" == "function" ]]; then
+        ${shouldbuildfn}
+      fi
     fi
 
-    # if shouldbuild_${module} exist, call it to see if the module want to be
-    # built again
-    DO_BUILD=1
-    if [ "$(type -t ${shouldbuildfn})" == "function" ]; then
-      ${shouldbuildfn}
+    if [[ "${DO_CLEAN_BUILD_FROM_MODULE}" == "${module}" ]]; then
+      DO_CLEAN_BUILD=1
     fi
 
     # if the module should be build, or if the marker is not present,
     # do the build
-    if [ "X${DO_BUILD}" == "X1" ] || [ ! -f "${MARKER_FN}" ]; then
+    if [[ "${DO_CLEAN_BUILD}" == "1" ]] ||  [[ "${DO_BUILD}" == "1" ]]; then
+      fn="build_${module}"
       debug "Call ${fn}"
-      rm -f "${MARKER_FN}"
-      set -e
+      rm -f ${BUILD_PATH}/${module}/.build
+      source ${RECIPES_PATH}/${module}/build.sh
       # https://stackoverflow.com/a/363239/1548052
       ${fn} 2>&1 | tee ${BUILD_PATH}/last-build.log
       gsed -i "1s;^;Building ${module}\n;" ${BUILD_PATH}/last-build.log
-      set +e
-      touch "${MARKER_FN}"
+      build_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/build.sh | cut -d\  -f1)
+      echo "${build_sum}" > ${BUILD_PATH}/${module}/.build
     else
       debug "Skipped ${fn}"
     fi
@@ -911,9 +894,6 @@ run_source_modules
 fold_pop
 fold_push download
 run_get_packages
-fold_pop
-fold_push prebuild
-run_prebuild
 fold_pop
 fold_push build
 run_build

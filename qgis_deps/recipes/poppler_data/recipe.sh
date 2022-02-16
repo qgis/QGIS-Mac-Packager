@@ -25,12 +25,7 @@ RECIPE_poppler_data=${RECIPES_PATH}/poppler_data
 function prebuild_poppler_data() {
   cd ${BUILD_poppler_data}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_poppler_data() {
@@ -40,14 +35,7 @@ function shouldbuild_poppler_data() {
   fi
 }
 
-# function called to build the source code
-function build_poppler_data() {
-  rsync -a ${BUILD_poppler_data}/ ${BUILD_PATH}/poppler_data/build-${ARCH}/
-  cd ${BUILD_PATH}/poppler_data/build-${ARCH}
-  push_env
-  ${MAKESMP} install prefix=${STAGE_PATH}
-  pop_env
-}
+
 
 # function called after all the compile have been done
 function postbuild_poppler_data() {

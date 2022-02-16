@@ -26,13 +26,9 @@ RECIPE_python_gdal=$RECIPES_PATH/python_gdal
 # (you can apply patch etc here.)
 function prebuild_python_gdal() {
   cd $BUILD_python_gdal
+  try rsync -a $BUILD_python_gdal/ ${BUILD_PATH}/python_gdal/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_gdal() {
@@ -42,19 +38,7 @@ function shouldbuild_python_gdal() {
   fi
 }
 
-# function called to build the source code
-function build_python_gdal() {
-  try rsync -a $BUILD_python_gdal/ $BUILD_PATH/python_gdal/build-$ARCH/
-  try cd $BUILD_PATH/python_gdal/build-$ARCH
-  push_env
 
-  cd swig/python
-  try ${SED} "s;gdal_config=../../apps/gdal-config;gdal_config=$STAGE_PATH/bin/gdal-config;g" setup.cfg
-  try $PYTHON setup.py build
-  try $PYTHON setup.py install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_gdal() {

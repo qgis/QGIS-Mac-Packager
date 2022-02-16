@@ -25,15 +25,9 @@ RECIPE_libffi=$RECIPES_PATH/libffi
 # (you can apply patch etc here.)
 function prebuild_libffi() {
   cd $BUILD_libffi
-
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
+  try rsync -a $BUILD_libffi/ ${BUILD_PATH}/libffi/build-${ARCH}
 
   patch_configure_file configure
-
-  touch .patched
 }
 
 function shouldbuild_libffi() {
@@ -43,23 +37,7 @@ function shouldbuild_libffi() {
   fi
 }
 
-# function called to build the source code
-function build_libffi() {
-  try rsync -a $BUILD_libffi/ $BUILD_PATH/libffi/build-$ARCH/
-  try cd $BUILD_PATH/libffi/build-$ARCH
-  push_env
 
-
-  try ${CONFIGURE} \
-    --disable-debug \
-    --enable-static=no
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKE install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libffi() {

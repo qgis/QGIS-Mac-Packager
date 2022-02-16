@@ -26,13 +26,9 @@ RECIPE_libtasn1=$RECIPES_PATH/libtasn1
 # (you can apply patch etc here.)
 function prebuild_libtasn1() {
   cd $BUILD_libtasn1
+  try rsync -a $BUILD_libtasn1/ ${BUILD_PATH}/libtasn1/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_libtasn1() {
@@ -42,27 +38,7 @@ function shouldbuild_libtasn1() {
   fi
 }
 
-# function called to build the source code
-function build_libtasn1() {
-  try rsync -a $BUILD_libtasn1/ $BUILD_PATH/libtasn1/build-$ARCH/
-  try cd $BUILD_PATH/libtasn1/build-$ARCH
-  push_env
 
-  export CFLAGS="$CFLAGS -O2 -DPIC"
-
-  patch_configure_file configure
-
-  export PKG_CONFIG=${PKG_CONFIG_PATH}
-
-  try ${CONFIGURE} --disable-static --disable-doc
-
-  check_file_configuration config.status
-
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libtasn1() {

@@ -28,10 +28,6 @@ RECIPE_python_llvmlite=$RECIPES_PATH/python_llvmlite
 function prebuild_python_llvmlite() {
   cd $BUILD_python_llvmlite
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   download_file \
     python_llvmlite \
@@ -50,7 +46,6 @@ function prebuild_python_llvmlite() {
   try patch -p1 -i 0001-Revert-Limit-size-of-non-GlobalValue-name.patch
 
   cd $BUILD_python_llvmlite
-  touch .patched
 }
 
 function shouldbuild_python_llvmlite() {
@@ -60,56 +55,7 @@ function shouldbuild_python_llvmlite() {
   fi
 }
 
-# function called to build the source code
-function build_python_llvmlite() {
-  # build llvm
-  try mkdir -p $BUILD_PATH/python_llvmlite/build-$ARCH-llvm/
-  try cd $BUILD_PATH/python_llvmlite/build-$ARCH-llvm/
 
-  push_env
-  # chmod +x $BUILD_python_llvmlite/conda-recipes/llvmdev/build.sh
-  # try $BUILD_python_llvmlite/conda-recipes/llvmdev/build.sh
-
-  try ${CMAKE} \
-    -DLLVM_ENABLE_ASSERTIONS:BOOL=ON \
-    -DLINK_POLLY_INTO_TOOLS:BOOL=ON \
-    -DLLVM_ENABLE_LIBXML2:BOOL=OFF \
-    -DHAVE_TERMINFO_CURSES=OFF \
-    -DHAVE_TERMINFO_NCURSES=OFF \
-    -DHAVE_TERMINFO_NCURSESW=OFF \
-    -DHAVE_TERMINFO_TERMINFO=OFF \
-    -DHAVE_TERMINFO_TINFO=OFF \
-    -DHAVE_TERMIOS_H=OFF \
-    -DCLANG_ENABLE_LIBXML=OFF \
-    -DLIBOMP_INSTALL_ALIASES=OFF \
-    -DLLVM_ENABLE_RTTI=OFF \
-    -DLLVM_TARGETS_TO_BUILD="host;AMDGPU;NVPTX" \
-    -DLLVM_INCLUDE_UTILS=ON \
-    -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD=WebAssembly \
-    -DLLVM_INCLUDE_TESTS=OFF \
-    -DLLVM_INCLUDE_DOCS=OFF \
-    -DLLVM_INCLUDE_EXAMPLES=OFF \
-    $BUILD_llvm
-
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA
-  try $NINJA install
-
-  pop_env
-
-  # build python
-  try rsync -a $BUILD_python_llvmlite/ $BUILD_PATH/python_llvmlite/build-$ARCH/
-  try cd $BUILD_PATH/python_llvmlite/build-$ARCH
-
-  push_env
-
-  export LLVM_CONFIG=$STAGE_PATH/bin/llvm-config
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
-  unset LLVM_CONFIG
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_llvmlite() {

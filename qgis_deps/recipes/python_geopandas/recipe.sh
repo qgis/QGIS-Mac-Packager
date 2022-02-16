@@ -35,13 +35,9 @@ RECIPE_python_geopandas=$RECIPES_PATH/python_geopandas
 # (you can apply patch etc here.)
 function prebuild_python_geopandas() {
   cd $BUILD_python_geopandas
+  try rsync -a $BUILD_python_geopandas/ ${BUILD_PATH}/python_geopandas/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_geopandas() {
@@ -52,16 +48,7 @@ function shouldbuild_python_geopandas() {
   fi
 }
 
-# function called to build the source code
-function build_python_geopandas() {
-  try rsync -a $BUILD_python_geopandas/ $BUILD_PATH/python_geopandas/build-$ARCH/
-  try cd $BUILD_PATH/python_geopandas/build-$ARCH
-  push_env
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_geopandas() {

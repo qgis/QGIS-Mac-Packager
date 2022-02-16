@@ -26,15 +26,11 @@ RECIPE_postgres=$RECIPES_PATH/postgres
 # (you can apply patch etc here.)
 function prebuild_postgres() {
   cd $BUILD_postgres
+  try rsync -a $BUILD_postgres/ ${BUILD_PATH}/postgres/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_postgres() {
@@ -44,29 +40,7 @@ function shouldbuild_postgres() {
   fi
 }
 
-# function called to build the source code
-function build_postgres() {
-  try rsync -a $BUILD_postgres/ $BUILD_PATH/postgres/build-$ARCH/
-  try cd $BUILD_PATH/postgres/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-    --disable-debug \
-    --enable-rpath \
-    --with-openssl \
-    --enable-static=no
-
-  check_file_configuration config.status
-  try $MAKESMP
-
-  # client only install
-  try $MAKE -C src/bin install
-  try $MAKE -C src/include install
-  try $MAKE -C src/interfaces install
-  try $MAKE -C doc install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_postgres() {

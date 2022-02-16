@@ -28,11 +28,8 @@ RECIPE_qscintilla=$RECIPES_PATH/qscintilla
 # (you can apply patch etc here.)
 function prebuild_qscintilla() {
   cd $BUILD_qscintilla/Qt4Qt5
+  try rsync -a $BUILD_qscintilla/ ${BUILD_PATH}/qscintilla/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   # Install in stage path
   try ${SED} "s;\$\$\[QT_INSTALL_LIBS\];$STAGE_PATH/lib;g" qscintilla.pro
@@ -44,7 +41,6 @@ function prebuild_qscintilla() {
   try ${SED} "s;\$\$\[QT_INSTALL_LIBS\];$STAGE_PATH/lib;g" features/qscintilla2.prf
   try ${SED} "s;\$\$\[QT_INSTALL_HEADERS\];$STAGE_PATH/include;g" features/qscintilla2.prf
 
-  touch .patched
 }
 
 function shouldbuild_qscintilla() {
@@ -54,20 +50,7 @@ function shouldbuild_qscintilla() {
   fi
 }
 
-# function called to build the source code
-function build_qscintilla() {
-  try rsync -a $BUILD_qscintilla/ $BUILD_PATH/qscintilla/build-$ARCH/
-  try cd $BUILD_PATH/qscintilla/build-$ARCH
-  push_env
 
-  cd Qt4Qt5
-  try ${QMAKE} qscintilla.pro
-
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_qscintilla() {

@@ -31,12 +31,7 @@ RECIPE_minizip=$RECIPES_PATH/minizip
 function prebuild_minizip() {
   cd $BUILD_minizip
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_minizip() {
@@ -46,26 +41,7 @@ function shouldbuild_minizip() {
   fi
 }
 
-# function called to build the source code
-function build_minizip() {
-  try mkdir -p $BUILD_PATH/minizip/build-$ARCH
-  try cd $BUILD_PATH/minizip/build-$ARCH
-  push_env
 
-  try ${CMAKE} \
-    -DZLIB_INCLUDE_DIR=$STAGE_PATH/include \
-    -DZLIB_LIBRARY=$STAGE_PATH/lib/$LINK_zlib \
-    $BUILD_minizip
-
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA
-  try $NINJA install
-
-  install_name_tool -id $STAGE_PATH/lib/$LINK_libminizip $STAGE_PATH/lib/$LINK_libminizip
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_minizip() {

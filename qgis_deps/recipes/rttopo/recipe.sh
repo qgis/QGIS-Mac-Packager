@@ -25,15 +25,7 @@ RECIPE_rttopo=$RECIPES_PATH/rttopo
 # (you can apply patch etc here.)
 function prebuild_rttopo() {
   cd $BUILD_rttopo
-
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
-
-
-  touch .patched
+  try rsync -a $BUILD_rttopo/ ${BUILD_PATH}/rttopo/build-${ARCH}
 }
 
 function shouldbuild_rttopo() {
@@ -43,25 +35,7 @@ function shouldbuild_rttopo() {
   fi
 }
 
-# function called to build the source code
-function build_rttopo() {
-  try rsync -a $BUILD_rttopo/ $BUILD_PATH/rttopo/build-$ARCH/
-  try cd $BUILD_PATH/rttopo/build-$ARCH
-  push_env
 
-  try ./autogen.sh
-  patch_configure_file configure
-
-  try ${CONFIGURE} \
-    --enable-geocallbacks \
-    --disable-dependency-tracking
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_rttopo() {

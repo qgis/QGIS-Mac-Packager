@@ -24,13 +24,7 @@ RECIPE_python_pandas=$RECIPES_PATH/python_pandas
 # (you can apply patch etc here.)
 function prebuild_python_pandas() {
   cd $BUILD_python_pandas
-
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
-  touch .patched
+  try rsync -a $BUILD_python_pandas/ ${BUILD_PATH}/python_pandas/build-${ARCH}
 }
 
 function shouldbuild_python_pandas() {
@@ -40,16 +34,7 @@ function shouldbuild_python_pandas() {
   fi
 }
 
-# function called to build the source code
-function build_python_pandas() {
-  try rsync -a $BUILD_python_pandas/ $BUILD_PATH/python_pandas/build-$ARCH/
-  try cd $BUILD_PATH/python_pandas/build-$ARCH
-  push_env
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_pandas() {

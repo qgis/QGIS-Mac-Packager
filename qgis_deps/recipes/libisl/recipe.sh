@@ -26,12 +26,8 @@ RECIPE_libisl=$RECIPES_PATH/libisl
 function prebuild_libisl() {
   cd $BUILD_libisl
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
-  touch .patched
+  patch_configure_file configure
+  try rsync -a $BUILD_libisl/ $BUILD_PATH/libisl/build-$ARCH/
 }
 
 function shouldbuild_libisl() {
@@ -41,21 +37,7 @@ function shouldbuild_libisl() {
   fi
 }
 
-# function called to build the source code
-function build_libisl() {
-  try rsync -a $BUILD_libisl/ $BUILD_PATH/libisl/build-$ARCH/
-  try cd $BUILD_PATH/libisl/build-$ARCH
-  push_env
 
-  patch_configure_file configure
-  try ${CONFIGURE} --disable-debug --disable-dependency-tracking
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libisl() {

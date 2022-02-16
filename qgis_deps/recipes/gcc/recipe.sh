@@ -29,15 +29,12 @@ RECIPE_gcc=$RECIPES_PATH/gcc
 # (you can apply patch etc here.)
 function prebuild_gcc() {
   cd $BUILD_gcc
+  try rsync -a $BUILD_gcc/ ${BUILD_PATH}/gcc/build-${ARCH}
+  try rsync -a $BUILD_gcc/ ${BUILD_PATH}/gcc/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   # patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_gcc() {

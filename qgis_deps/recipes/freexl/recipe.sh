@@ -26,14 +26,8 @@ RECIPE_freexl=$RECIPES_PATH/freexl
 function prebuild_freexl() {
   cd $BUILD_freexl
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
   patch_configure_file configure
-
-  touch .patched
+  try rsync -a $BUILD_freexl/ $BUILD_PATH/freexl/build-$ARCH/
 }
 
 function shouldbuild_freexl() {
@@ -43,20 +37,7 @@ function shouldbuild_freexl() {
   fi
 }
 
-# function called to build the source code
-function build_freexl() {
-  try rsync -a $BUILD_freexl/ $BUILD_PATH/freexl/build-$ARCH/
-  try cd $BUILD_PATH/freexl/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} --disable-debug
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_freexl() {

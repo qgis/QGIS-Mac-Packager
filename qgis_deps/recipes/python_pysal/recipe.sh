@@ -40,12 +40,7 @@ function prebuild_python_pysal() {
   try mkdir -p $BUILD_python_pysal
   cd $BUILD_python_pysal
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_pysal() {
@@ -56,16 +51,7 @@ function shouldbuild_python_pysal() {
   fi
 }
 
-# function called to build the source code
-function build_python_pysal() {
-  try cd $BUILD_python_pysal
-  push_env
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP_NO_BINARY libpysal==${VERSION_python_libpysal}
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP_NO_BINARY pysal==${VERSION_python_pysal}
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_pysal() {

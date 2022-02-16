@@ -25,13 +25,9 @@ RECIPE_python_fiona=$RECIPES_PATH/python_fiona
 # (you can apply patch etc here.)
 function prebuild_python_fiona() {
   cd $BUILD_python_fiona
+  try rsync -a $BUILD_python_fiona/ ${BUILD_PATH}/python_fiona/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_fiona() {
@@ -41,18 +37,7 @@ function shouldbuild_python_fiona() {
   fi
 }
 
-# function called to build the source code
-function build_python_fiona() {
-  try rsync -a $BUILD_python_fiona/ $BUILD_PATH/python_fiona/build-$ARCH/
-  try cd $BUILD_PATH/python_fiona/build-$ARCH
-  push_env
 
-  export GDAL_CONFIG=$STAGE_PATH/bin/gdal-config
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
-  unset GDAL_CONFIG
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_fiona() {

@@ -24,13 +24,9 @@ RECIPE_python_pillow=$RECIPES_PATH/python_pillow
 # (you can apply patch etc here.)
 function prebuild_python_pillow() {
   cd $BUILD_python_pillow
+  try rsync -a $BUILD_python_pillow/ ${BUILD_PATH}/python_pillow/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_pillow() {
@@ -40,24 +36,7 @@ function shouldbuild_python_pillow() {
   fi
 }
 
-# function called to build the source code
-function build_python_pillow() {
-  try rsync -a $BUILD_python_pillow/ $BUILD_PATH/python_pillow/build-$ARCH/
-  try cd $BUILD_PATH/python_pillow/build-$ARCH
-  push_env
 
-  # unfortunately they named the file Zip.h, clashing with the lzip library
-  # see https://github.com/python-pillow/Pillow/pull/4812
-  try mv src/libImaging/Zip.h src/libImaging/Zip2.h
-  try ${SED} "s;Zip.h;Zip2.h;g" src/libImaging/ZipDecode.c
-  try ${SED} "s;Zip.h;Zip2.h;g" src/libImaging/ZipEncode.c
-  try ${SED} "s;Zip.h;Zip2.h;g" src/decode.c
-  try ${SED} "s;Zip.h;Zip2.h;g" src/encode.c
-
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_pillow() {

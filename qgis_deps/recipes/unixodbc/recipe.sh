@@ -26,15 +26,11 @@ RECIPE_unixodbc=$RECIPES_PATH/unixodbc
 # (you can apply patch etc here.)
 function prebuild_unixodbc() {
   cd $BUILD_unixodbc
+  try rsync -a $BUILD_unixodbc/ ${BUILD_PATH}/unixodbc/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_unixodbc() {
@@ -44,27 +40,7 @@ function shouldbuild_unixodbc() {
   fi
 }
 
-# function called to build the source code
-function build_unixodbc() {
-  try rsync -a $BUILD_unixodbc/ $BUILD_PATH/unixodbc/build-$ARCH/
-  try cd $BUILD_PATH/unixodbc/build-$ARCH
-  push_env
 
-  # includedir must be specific, since posgresql has
-  # also similar include file names
-  try ./configure \
-    --prefix=$STAGE_PATH/unixodbc \
-    --sysconfdir=$STAGE_PATH/unixodbc/etc \
-    --disable-debug \
-    --disable-dependency-tracking \
-    --enable-gui=no
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_unixodbc() {

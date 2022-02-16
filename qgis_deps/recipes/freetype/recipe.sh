@@ -25,15 +25,11 @@ RECIPE_freetype=$RECIPES_PATH/freetype
 # (you can apply patch etc here.)
 function prebuild_freetype() {
   cd $BUILD_freetype
+  try rsync -a $BUILD_freetype/ ${BUILD_PATH}/freetype/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_freetype() {
@@ -43,21 +39,7 @@ function shouldbuild_freetype() {
   fi
 }
 
-# function called to build the source code
-function build_freetype() {
-  try rsync -a $BUILD_freetype/ $BUILD_PATH/freetype/build-$ARCH/
-  try cd $BUILD_PATH/freetype/build-$ARCH
 
-  push_env
-
-  try ${CONFIGURE} --disable-debug --without-harfbuzz
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_freetype() {

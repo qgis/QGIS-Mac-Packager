@@ -28,16 +28,11 @@ RECIPE_spatialindex=$RECIPES_PATH/spatialindex
 function prebuild_spatialindex() {
   cd $BUILD_spatialindex
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   # remove in release 1.9.4
   # see https://github.com/libspatialindex/libspatialindex/commit/387a5a07d4f7ab6d94d9f3aaf728f5cc81b2d944
   try patch --verbose --forward -p1 < $RECIPE_spatialindex/patches/temporaryfile.patch
 
-  touch .patched
 }
 
 function shouldbuild_spatialindex() {
@@ -47,25 +42,7 @@ function shouldbuild_spatialindex() {
   fi
 }
 
-# function called to build the source code
-function build_spatialindex() {
-  try mkdir -p $BUILD_PATH/spatialindex/build-$ARCH
-  try cd $BUILD_PATH/spatialindex/build-$ARCH
 
-  push_env
-
-  try $CMAKE $BUILD_spatialindex .
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA
-  try $NINJA install
-
-  try install_name_tool -id ${STAGE_PATH}/lib/$LINK_spatialindex ${STAGE_PATH}/lib/$LINK_spatialindex
-  try install_name_tool -delete_rpath $BUILD_PATH/spatialindex/build-$ARCH/bin ${STAGE_PATH}/lib/$LINK_spatialindex_c
-  try install_name_tool -change @rpath/$LINK_spatialindex ${STAGE_PATH}/lib/$LINK_spatialindex ${STAGE_PATH}/lib/$LINK_spatialindex_c
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_spatialindex() {

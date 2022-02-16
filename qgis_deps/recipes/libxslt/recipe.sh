@@ -26,13 +26,7 @@ RECIPE_libxslt=$RECIPES_PATH/libxslt
 # (you can apply patch etc here.)
 function prebuild_libxslt() {
   cd $BUILD_libxslt
-
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
-  touch .patched
+  try rsync -a $BUILD_libxslt/ ${BUILD_PATH}/libxslt/build-${ARCH}
 }
 
 function shouldbuild_libxslt() {
@@ -42,26 +36,7 @@ function shouldbuild_libxslt() {
   fi
 }
 
-# function called to build the source code
-function build_libxslt() {
-  try rsync -a $BUILD_libxslt/ $BUILD_PATH/libxslt/build-$ARCH/
-  try cd $BUILD_PATH/libxslt/build-$ARCH
-  push_env
 
-  patch_configure_file configure
-
-  try ${CONFIGURE} \
-    --enable-silent-rules \
-    --with-debugger=off \
-    --disable-dependency-tracking \
-    --without-python
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libxslt() {

@@ -27,13 +27,9 @@ RECIPE_python_opencv=$RECIPES_PATH/python_opencv
 function prebuild_python_opencv() {
   mkdir -p $BUILD_python_opencv
   cd $BUILD_python_opencv
+  try rsync -a $BUILD_python_opencv/ ${BUILD_PATH}/python_opencv/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 
   cd ..
   # it has opencv,... submodules, so we cannot take it simply from the git release archive.
@@ -47,34 +43,7 @@ function shouldbuild_python_opencv() {
   fi
 }
 
-# function called to build the source code
-function build_python_opencv() {
-  try rsync -a $BUILD_PATH/python_opencv/opencv-python/ $BUILD_PATH/python_opencv/build-$ARCH/
-  try cd $BUILD_PATH/python_opencv/build-$ARCH
-  push_env
 
-  export CMAKE_ARGS=""
-  export CMAKE_ARGS="-DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64"
-  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
-  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=FALSE"
-  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_MACOSX_RPATH=FALSE"
-  export CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_PROTOBUF=FALSE"
-  export CMAKE_ARGS="${CMAKE_ARGS} -DPROTOBUF_UPDATE_FILES=TRUE"
-  export CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_ZLIB=FALSE"
-  export CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_TIFF=FALSE"
-  export CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_JPEG=FALSE"
-  export CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_PNG=FALSE"
-  export CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_WEBP=FALSE"
-  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET"
-  export CMAKE_ARGS="${CMAKE_ARGS} -GNinja -DCMAKE_MAKE_PROGRAM=$NINJA"
-
-  export ENABLE_CONTRIB=1
-  try $PYTHON setup.py install
-
-  unset ENABLE_CONTRIB
-  unset CMAKE_ARGS
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_opencv() {

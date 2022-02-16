@@ -25,13 +25,9 @@ RECIPE_python_rasterio=$RECIPES_PATH/python_rasterio
 # (you can apply patch etc here.)
 function prebuild_python_rasterio() {
   cd $BUILD_python_rasterio
+  try rsync -a $BUILD_python_rasterio/ ${BUILD_PATH}/python_rasterio/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_rasterio() {
@@ -41,20 +37,7 @@ function shouldbuild_python_rasterio() {
   fi
 }
 
-# function called to build the source code
-function build_python_rasterio() {
-  try rsync -a $BUILD_python_rasterio/ $BUILD_PATH/python_rasterio/build-$ARCH/
-  try cd $BUILD_PATH/python_rasterio/build-$ARCH
-  push_env
 
-  export PROJ_DIR=${STAGE_PATH}
-  export PROJ_LIBDIR=${STAGE_PATH}
-  export PROJ_INCDIR=${STAGE_PATH}
-
-  try $PYTHON setup.py install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_rasterio() {

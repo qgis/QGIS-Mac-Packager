@@ -26,12 +26,7 @@ RECIPE_xerces=$RECIPES_PATH/xerces
 function prebuild_xerces() {
   cd $BUILD_xerces
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_xerces() {
@@ -41,23 +36,7 @@ function shouldbuild_xerces() {
   fi
 }
 
-# function called to build the source code
-function build_xerces() {
-  try mkdir -p $BUILD_PATH/xerces/build-$ARCH
-  try cd $BUILD_PATH/xerces/build-$ARCH
-  push_env
 
-  try $CMAKE $BUILD_xerces .
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA
-  try $NINJA install
-
-  install_name_tool -id $STAGE_PATH/lib/$LINK_libxerces_c $STAGE_PATH/lib/$LINK_libxerces_c
-  try install_name_tool -change $BUILD_PATH/xerces/build-$ARCH/src/$LINK_libxerces_c $STAGE_PATH/lib/$LINK_libxerces_c $STAGE_PATH/bin/CreateDOMDocument
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_xerces() {

@@ -26,12 +26,7 @@ function prebuild_python_owslib() {
   try mkdir -p $BUILD_python_owslib
   cd $BUILD_python_owslib
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_owslib() {
@@ -41,15 +36,7 @@ function shouldbuild_python_owslib() {
   fi
 }
 
-# function called to build the source code
-function build_python_owslib() {
-  try cd $BUILD_python_owslib
-  push_env
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP_NO_BINARY owslib==${VERSION_python_owslib}
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_owslib() {

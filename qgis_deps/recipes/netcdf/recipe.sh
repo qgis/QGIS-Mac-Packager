@@ -26,12 +26,7 @@ RECIPE_netcdf=$RECIPES_PATH/netcdf
 function prebuild_netcdf() {
   cd $BUILD_netcdf
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_netcdf() {
@@ -41,22 +36,7 @@ function shouldbuild_netcdf() {
   fi
 }
 
-# function called to build the source code
-function build_netcdf() {
-  try mkdir -p $BUILD_PATH/netcdf/build-$ARCH
-  try cd $BUILD_PATH/netcdf/build-$ARCH
-  push_env
 
-  try ${CMAKE} $BUILD_netcdf
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA
-  try $NINJA install
-
-  try install_name_tool -id $STAGE_PATH/lib/$LINK_netcdf $STAGE_PATH/lib/$LINK_netcdf
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_netcdf() {

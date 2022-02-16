@@ -27,12 +27,7 @@ function prebuild_python_pymssql() {
   mkdir -p $BUILD_python_pymssql
   cd $BUILD_python_pymssql
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_pymssql() {
@@ -42,15 +37,7 @@ function shouldbuild_python_pymssql() {
   fi
 }
 
-# function called to build the source code
-function build_python_pymssql() {
-  try cd $BUILD_python_pymssql
-  push_env
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP_NO_BINARY pymssql==${VERSION_python_pymssql}
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_pymssql() {

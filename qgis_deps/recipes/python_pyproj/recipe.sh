@@ -26,13 +26,7 @@ RECIPE_python_pyproj=$RECIPES_PATH/python_pyproj
 # (you can apply patch etc here.)
 function prebuild_python_pyproj() {
   cd $BUILD_python_pyproj
-
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
-  touch .patched
+  try rsync -a $BUILD_python_pyproj/ $BUILD_PATH/python_pyproj/build-$ARCH/
 }
 
 function shouldbuild_python_pyproj() {
@@ -42,20 +36,6 @@ function shouldbuild_python_pyproj() {
   fi
 }
 
-# function called to build the source code
-function build_python_pyproj() {
-  try rsync -a $BUILD_python_pyproj/ $BUILD_PATH/python_pyproj/build-$ARCH/
-  try cd $BUILD_PATH/python_pyproj/build-$ARCH
-  push_env
-
-  export PROJ_DIR=${STAGE_PATH}
-  export PROJ_LIBDIR=${STAGE_PATH}
-  export PROJ_INCDIR=${STAGE_PATH}
-
-  try $PYTHON setup.py install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_pyproj() {

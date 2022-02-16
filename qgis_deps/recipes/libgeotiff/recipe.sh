@@ -25,12 +25,7 @@ RECIPE_libgeotiff=$RECIPES_PATH/libgeotiff
 function prebuild_libgeotiff() {
   cd $BUILD_libgeotiff
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 # function called before build_libgeotiff
@@ -42,22 +37,7 @@ function shouldbuild_libgeotiff() {
   fi
 }
 
-# function called to build the source code
-function build_libgeotiff() {
-  try mkdir -p $BUILD_PATH/libgeotiff/build-$ARCH
-  try cd $BUILD_PATH/libgeotiff/build-$ARCH
 
-  push_env
-
-  # TODO why this is only static library!??
-  try $CMAKE $BUILD_libgeotiff .
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA
-  try $NINJA install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libgeotiff() {

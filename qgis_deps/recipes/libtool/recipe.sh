@@ -26,14 +26,8 @@ RECIPE_libtool=$RECIPES_PATH/libtool
 function prebuild_libtool() {
   cd $BUILD_libtool
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
   patch_configure_file configure
-
-  touch .patched
+  try rsync -a $BUILD_libtool/ $BUILD_PATH/libtool/build-$ARCH/
 }
 
 function shouldbuild_libtool() {
@@ -43,23 +37,7 @@ function shouldbuild_libtool() {
   fi
 }
 
-# function called to build the source code
-function build_libtool() {
-  try rsync -a $BUILD_libtool/ $BUILD_PATH/libtool/build-$ARCH/
-  try cd $BUILD_PATH/libtool/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-    --disable-debug \
-    --program-prefix=g \
-    --enable-ltdl-install
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libtool() {

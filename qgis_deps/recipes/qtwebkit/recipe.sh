@@ -25,10 +25,6 @@ RECIPE_qtwebkit=$RECIPES_PATH/qtwebkit
 function prebuild_qtwebkit() {
   cd $BUILD_qtwebkit
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   #https://github.com/qtwebkit/qtwebkit/pull/1012/files
   try patch --verbose --forward -p1 < $RECIPE_qtwebkit/patches/bison37.patch
@@ -36,7 +32,6 @@ function prebuild_qtwebkit() {
   # Ambiguous Handle (also in MacPorts.h)
   try ${SED} 's;isReachableFromOpaqueRoots(Handle<JSC::Unknown>;isReachableFromOpaqueRoots(JSC::Handle<JSC::Unknown>;g' Source/JavaScriptCore/jsc.cpp
 
-  touch .patched
 }
 
 function shouldbuild_qtwebkit() {
@@ -46,30 +41,7 @@ function shouldbuild_qtwebkit() {
   fi
 }
 
-# function called to build the source code
-function build_qtwebkit() {
-  try mkdir -p $BUILD_PATH/qtwebkit/build-$ARCH
-  try cd $BUILD_PATH/qtwebkit/build-$ARCH
-  push_env
 
-  try ${CMAKE} \
-    -DPORT=Qt \
-    -DENABLE_TOOLS=FALSE \
-    -DENABLE_API_TESTS=FALSE \
-    -DSHOULD_INSTALL_JS_SHELL=FALSE \
-    -DUSE_LIBHYPHEN=OFF \
-    -DMACOS_USE_SYSTEM_ICU=OFF \
-    -DMACOS_FORCE_SYSTEM_XML_LIBRARIES=OFF \
-    -DQT_INSTALL_PREFIX=$QT_BASE/clang_64 \
-    $BUILD_qtwebkit
-
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA
-  try $NINJA install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_qtwebkit() {

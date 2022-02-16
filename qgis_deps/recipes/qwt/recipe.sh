@@ -25,11 +25,8 @@ RECIPE_qwt=$RECIPES_PATH/qwt
 # (you can apply patch etc here.)
 function prebuild_qwt() {
   cd $BUILD_qwt
+  try rsync -a $BUILD_qwt/ ${BUILD_PATH}/qwt/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   # Install in stage path
   try ${SED} "s;QWT_INSTALL_PREFIX.*=.*;QWT_INSTALL_PREFIX=$STAGE_PATH;g" qwtconfig.pri
@@ -37,7 +34,6 @@ function prebuild_qwt() {
   # Install Qt plugin in `lib/qt/plugins/designer`, not `plugins/designer`
   try ${SED} "s;= \$\${QWT_INSTALL_PREFIX}/plugins/designer;=$STAGE_PATH/lib/qt/plugins/designer;g" qwtconfig.pri
 
-  touch .patched
 }
 
 function shouldbuild_qwt() {
@@ -47,21 +43,7 @@ function shouldbuild_qwt() {
   fi
 }
 
-# function called to build the source code
-function build_qwt() {
-  try rsync -a $BUILD_qwt/ $BUILD_PATH/qwt/build-$ARCH/
-  try cd $BUILD_PATH/qwt/build-$ARCH
-  push_env
 
-  try ${QMAKE}
-
-  try $MAKESMP
-  try $MAKESMP install
-
-  install_name_tool -id "@rpath/qwt.framework/qwt" ${STAGE_PATH}/lib/qwt.framework/qwt
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_qwt() {

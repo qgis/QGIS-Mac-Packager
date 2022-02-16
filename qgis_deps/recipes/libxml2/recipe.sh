@@ -25,15 +25,11 @@ RECIPE_libxml2=$RECIPES_PATH/libxml2
 # (you can apply patch etc here.)
 function prebuild_libxml2() {
   cd $BUILD_libxml2
+  try rsync -a $BUILD_libxml2/ ${BUILD_PATH}/libxml2/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_libxml2() {
@@ -43,28 +39,7 @@ function shouldbuild_libxml2() {
   fi
 }
 
-# function called to build the source code
-function build_libxml2() {
-  try rsync -a $BUILD_libxml2/ $BUILD_PATH/libxml2/build-$ARCH/
-  try cd $BUILD_PATH/libxml2/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-    --disable-debug \
-    --without-lzma \
-    --without-python \
-    --with-history
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  if [ ! -e $STAGE_PATH/include/libxml ]; then
-    mk_sym_link $STAGE_PATH/include ./libxml2/libxml libxml
-  fi
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libxml2() {

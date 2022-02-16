@@ -25,15 +25,8 @@ RECIPE_gmp=$RECIPES_PATH/gmp
 # (you can apply patch etc here.)
 function prebuild_gmp() {
   cd $BUILD_gmp
-
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
   patch_configure_file configure
-
-  touch .patched
+  try rsync -a $BUILD_gmp/ ${BUILD_PATH}/gmp/build-${ARCH}
 }
 
 function shouldbuild_gmp() {
@@ -43,22 +36,7 @@ function shouldbuild_gmp() {
   fi
 }
 
-# function called to build the source code
-function build_gmp() {
-  try rsync -a $BUILD_gmp/ $BUILD_PATH/gmp/build-$ARCH/
-  try cd $BUILD_PATH/gmp/build-$ARCH
-  push_env
 
-  export CFLAGS="$CFLAGS -fno-stack-check"
-
-  try ${CONFIGURE} --enable-cxx --with-pic
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_gmp() {

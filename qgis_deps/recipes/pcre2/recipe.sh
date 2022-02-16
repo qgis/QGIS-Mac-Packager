@@ -28,15 +28,11 @@ RECIPE_pcre2=$RECIPES_PATH/pcre2
 # (you can apply patch etc here.)
 function prebuild_pcre2() {
   cd $BUILD_pcre2
+  try rsync -a $BUILD_pcre2/ ${BUILD_PATH}/pcre2/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_pcre2() {
@@ -46,26 +42,7 @@ function shouldbuild_pcre2() {
   fi
 }
 
-# function called to build the source code
-function build_pcre2() {
-  try rsync -a $BUILD_pcre2/ $BUILD_PATH/pcre2/build-$ARCH/
-  try cd $BUILD_PATH/pcre2/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-      --disable-dependency-tracking \
-      --enable-pcre2-8 \
-      --enable-pcre2-16 \
-      --enable-pcre2-32 \
-      --enable-pcre2grep-libz \
-      --enable-pcre2grep-libbz2
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_pcre2() {

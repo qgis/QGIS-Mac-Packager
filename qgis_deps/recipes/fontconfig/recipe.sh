@@ -27,15 +27,11 @@ RECIPE_fontconfig=$RECIPES_PATH/fontconfig
 # (you can apply patch etc here.)
 function prebuild_fontconfig() {
   cd $BUILD_fontconfig
+  try rsync -a $BUILD_fontconfig/ ${BUILD_PATH}/fontconfig/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 # function called before build_fontconfig
@@ -47,30 +43,7 @@ function shouldbuild_fontconfig() {
   fi
 }
 
-# function called to build the source code
-function build_fontconfig() {
-  try rsync -a $BUILD_fontconfig/ $BUILD_PATH/fontconfig/build-$ARCH/
-  try cd $BUILD_PATH/fontconfig/build-$ARCH
 
-  push_env
-
-  export LIBTOOLIZE="glibtoolize"
-  export GETTEXTIZE="ggettextize"
-  export AUTOPOINT="gautopoint"
-
-  try ${CONFIGURE}
-
-  check_file_configuration config.status
-
-  try $MAKESMP
-  try $MAKE install
-
-  unset LIBTOOLIZE
-  unset GETTEXTIZE
-  unset AUTOPOINT
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_fontconfig() {

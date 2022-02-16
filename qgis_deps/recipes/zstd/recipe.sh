@@ -25,13 +25,9 @@ RECIPE_zstd=$RECIPES_PATH/zstd
 # (you can apply patch etc here.)
 function prebuild_zstd() {
   cd $BUILD_zstd
+  try rsync -a $BUILD_zstd/ ${BUILD_PATH}/zstd/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_zstd() {
@@ -41,16 +37,7 @@ function shouldbuild_zstd() {
   fi
 }
 
-# function called to build the source code
-function build_zstd() {
-  try rsync -a $BUILD_zstd/ $BUILD_PATH/zstd/build-$ARCH/
-  try cd $BUILD_PATH/zstd/build-$ARCH
-  push_env
 
-  try $MAKE install PREFIX=$STAGE_PATH
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_zstd() {

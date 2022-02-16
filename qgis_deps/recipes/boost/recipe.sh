@@ -4,13 +4,13 @@ DESC_boost="Collection of portable C++ source libraries"
 
 # version of your package
 # version required by MySQL
-VERSION_boost=1.78.0
+VERSION_boost=1.13.0
 
 # dependencies of this recipe
 DEPS_boost=(zlib python libicu)
 
 # url of the package
-URL_boost=https://boostorg.jfrog.io/artifactory/main/release/${VERSION_boost}/source/boost_${VERSION_boost//./_}.tar.bz2
+URL_boost=https://github.com/boostorg/boost/archive/refs/tags/boost-${VERSION_boost}.tar.gz
 
 # from github it does not contain submodules in the build subdir
 # URL_boost=https://github.com/boostorg/boost/archive/boost-${VERSION_boost}.tar.gz
@@ -28,13 +28,9 @@ RECIPE_boost=$RECIPES_PATH/boost
 # (you can apply patch etc here.)
 function prebuild_boost() {
   cd $BUILD_boost
+  try rsync -a $BUILD_boost/ ${BUILD_PATH}/boost/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_boost() {
@@ -45,41 +41,7 @@ function shouldbuild_boost() {
   fi
 }
 
-# function called to build the source code
-function build_boost() {
-  try rsync -a $BUILD_boost/ $BUILD_PATH/boost/build-$ARCH/
-  try cd $BUILD_PATH/boost/build-$ARCH
-  push_env
 
-  try ./bootstrap.sh \
-    --prefix="${STAGE_PATH}" \
-    --with-toolset=clang \
-    --with-icu="${STAGE_PATH}" \
-    --with-python="$PYTHON" \
-    --with-python-root="$PYTHON" \
-    --with-python-version="$VERSION_major_python"
-
-  try ./b2 -q \
-    variant=release \
-    address-model="64" \
-    architecture="arm" \
-    binary-format="mach-o" \
-    debug-symbols=off \
-    threading=multi \
-    runtime-link=shared \
-    link=static,shared \
-    toolset=clang \
-    include="${STAGE_PATH}/include" \
-    python="$VERSION_major_python" \
-    cxxflags="${CXXFLAGS}" \
-    linkflags="-L$${STAGE_PATH}/lib" \
-    --layout=system \
-    --with-python \
-    -j"${CORES}" \
-    install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_boost() {

@@ -29,12 +29,7 @@ RECIPE_brotli=$RECIPES_PATH/brotli
 function prebuild_brotli() {
   cd $BUILD_brotli
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_brotli() {
@@ -43,31 +38,7 @@ function shouldbuild_brotli() {
   fi
 }
 
-# function called to build the source code
-function build_brotli() {
-  try mkdir -p $BUILD_PATH/brotli/build-$ARCH
-  try cd $BUILD_PATH/brotli/build-$ARCH
 
-  push_env
-
-  try $CMAKE \
-  $BUILD_brotli .
-
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA
-  try $NINJA install
-
-  try install_name_tool -id $STAGE_PATH/lib/$LINK_libbrotlicommon $STAGE_PATH/lib/$LINK_libbrotlicommon
-  try install_name_tool -change $BUILD_PATH/brotli/build-$ARCH/$LINK_libbrotlidec $STAGE_PATH/lib/$LINK_libbrotlidec $STAGE_PATH/lib/$LINK_libbrotlicommon
-  try install_name_tool -change $BUILD_PATH/brotli/build-$ARCH/$LINK_libbrotlicommon $STAGE_PATH/lib/$LINK_libbrotlicommon $STAGE_PATH/lib/$LINK_libbrotlicommon
-
-  try install_name_tool -id $STAGE_PATH/lib/$LINK_libbrotlidec $STAGE_PATH/lib/$LINK_libbrotlidec
-  try install_name_tool -change $BUILD_PATH/brotli/build-$ARCH/$LINK_libbrotlidec $STAGE_PATH/lib/$LINK_libbrotlidec $STAGE_PATH/lib/$LINK_libbrotlidec
-  try install_name_tool -change $BUILD_PATH/brotli/build-$ARCH/$LINK_libbrotlicommon $STAGE_PATH/lib/$LINK_libbrotlicommon $STAGE_PATH/lib/$LINK_libbrotlidec
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_brotli() {

@@ -26,15 +26,11 @@ RECIPE_xz=$RECIPES_PATH/xz
 # (you can apply patch etc here.)
 function prebuild_xz() {
   cd $BUILD_xz
+  try rsync -a $BUILD_xz/ ${BUILD_PATH}/xz/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_xz() {
@@ -44,21 +40,7 @@ function shouldbuild_xz() {
   fi
 }
 
-# function called to build the source code
-function build_xz() {
-  try rsync -a $BUILD_xz/ $BUILD_PATH/xz/build-$ARCH/
-  try cd $BUILD_PATH/xz/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} --disable-debug
-
-  check_file_configuration config.status
-
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_xz() {

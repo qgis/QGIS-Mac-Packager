@@ -74,17 +74,10 @@ LINK_gdal_mrsid_raster=gdal_MrSID.dylib
 function prebuild_gdal() {
   cd ${BUILD_gdal}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
   # https://github.com/OSGeo/gdal/commit/cbcfe2c8c5507ea00ef7371029ff94d0bf6f4a77
   try patch --verbose --forward -p1 < ${RECIPE_gdal}/patches/poppler.patch
 
   patch_configure_file configure
-
-  touch .patched
 }
 
 function shouldbuild_gdal() {
@@ -164,67 +157,7 @@ function build_mrsid() {
   fi
 }
 
-# function called to build the source code
-function build_gdal() {
-  try rsync -a ${BUILD_gdal}/ ${BUILD_PATH}/gdal/build-${ARCH}/
-  try cd ${BUILD_PATH}/gdal/build-${ARCH}
-  push_env
 
-  try mkdir -p ${GDAL_NOFOSS_PLUGINS_DIR}
-  try mkdir -p ${GDAL_PLUGINS_DIR}
-
-  # add unixodbc
-  export CFLAGS="${CFLAGS} -I${STAGE_PATH}/unixodbc/include"
-  export LDFLAGS="${LDFLAGS} -L${STAGE_PATH}/unixodbc/lib"
-  export CXXFLAGS="${CFLAGS}"
-
-  info $PKG_CONFIG
-  info $PKG_CONFIG_PATH
-
-  try ${CONFIGURE} \
-    --with-cpp14 \
-    --with-ecw=no \
-    --with-mrsid=no \
-    --with-lerc=${STAGE_PATH} \
-    --disable-debug \
-    --enable-driver-gpkg \
-    --enable-driver-mbtiles \
-    --enable-driver-gml \
-    --enable-driver-mvt \
-    --enable-driver-xlsx \
-    --enable-driver-mssqlspatial \
-    --with-odbc=yes \
-    --with-liblzma=${STAGE_PATH} \
-    --with-zstd=${STAGE_PATH} \
-    --with-libtiff=${STAGE_PATH} \
-    --with-geotiff=${STAGE_PATH} \
-    --with-jpeg=${STAGE_PATH} \
-    --with-hdf5=${STAGE_PATH} \
-    --with-netcdf=${STAGE_PATH} \
-    --with-png=${STAGE_PATH} \
-    --with-spatialite=${STAGE_PATH} \
-    --with-sqlite3=${STAGE_PATH} \
-    --with-freexl=${STAGE_PATH} \
-    --with-libkml=${STAGE_PATH} \
-    --with-xerces=${STAGE_PATH} \
-    --with-xerces-inc=${STAGE_PATH}/include \
-    --with-xerces-lib="-lxerces-c" \
-    --with-expat=${STAGE_PATH} \
-    --with-expat-inc=${STAGE_PATH}/include \
-    --with-expat-lib="-lexpat" \
-    --with-poppler=${STAGE_PATH} \
-    --with-pcre2
-
-  check_file_configuration config.status
-
-  try ${MAKESMP}
-  try ${MAKESMP} install
-
-  build_ecw
-  build_mrsid
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_gdal() {

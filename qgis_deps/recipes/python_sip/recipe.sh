@@ -27,13 +27,9 @@ RECIPE_python_sip=$RECIPES_PATH/python_sip
 function prebuild_python_sip() {
   try mkdir -p $BUILD_python_sip
   cd $BUILD_python_sip
+  try rsync -a $BUILD_python_sip/ ${BUILD_PATH}/python_sip/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_sip() {
@@ -42,31 +38,7 @@ function shouldbuild_python_sip() {
    fi
 }
 
-# function called to build the source code
-function build_python_sip() {
-  try rsync -a $BUILD_python_sip/ $BUILD_PATH/python_sip/build-$ARCH/
-  try cd $BUILD_PATH/python_sip/build-$ARCH
 
-  push_env
-
-  try $PYTHON ./configure.py \
-    --sipdir=$STAGE_PATH/share/sip \
-    --bindir=$STAGE_PATH/bin \
-    --deployment-target=$MACOSX_DEPLOYMENT_TARGET \
-    --destdir=$QGIS_SITE_PACKAGES_PATH \
-    --incdir=$STAGE_PATH/include \
-    --sip-module=PyQt5.sip
-
-  try $MAKESMP
-  try $MAKE install
-  try $MAKE clean
-
-
-  # default directory for sip files
-  mkdir -p ${STAGE_PATH}/share/sip
-
-  pop_env
-}
 
 function postbuild_python_sip() {
    # if ! python_package_installed sip ${VERSION_python_sip} sipconfig; then

@@ -28,15 +28,11 @@ RECIPE_saga=$RECIPES_PATH/saga
 # (you can apply patch etc here.)
 function prebuild_saga() {
   cd $BUILD_saga
+  try rsync -a $BUILD_saga/ ${BUILD_PATH}/saga/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_saga() {
@@ -46,29 +42,7 @@ function shouldbuild_saga() {
   fi
 }
 
-# function called to build the source code
-function build_saga() {
-  try rsync -a $BUILD_saga/ $BUILD_PATH/saga/build-$ARCH/
-  try cd $BUILD_PATH/saga/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-    --disable-debug \
-    --disable-dependency-tracking \
-    --disable-openmp \
-    --disable-libfire \
-    --enable-shared \
-    --disable-gui \
-    --disable-odbc \
-    --with-postgresql=$STAGE_PATH/bin/pg_config
-
-  check_file_configuration config.status
-
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_saga() {

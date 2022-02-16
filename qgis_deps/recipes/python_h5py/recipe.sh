@@ -27,12 +27,7 @@ function prebuild_python_h5py() {
   mkdir -p $BUILD_python_h5py
   cd $BUILD_python_h5py
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_h5py() {
@@ -42,15 +37,7 @@ function shouldbuild_python_h5py() {
   fi
 }
 
-# function called to build the source code
-function build_python_h5py() {
-  try cd $BUILD_python_h5py
-  push_env
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP_NO_BINARY h5py==${VERSION_python_h5py}
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_h5py() {

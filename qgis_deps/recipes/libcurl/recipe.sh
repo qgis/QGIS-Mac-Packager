@@ -26,15 +26,11 @@ RECIPE_libcurl=$RECIPES_PATH/libcurl
 # (you can apply patch etc here.)
 function prebuild_libcurl() {
   cd $BUILD_libcurl
+  try rsync -a $BUILD_libcurl/ ${BUILD_PATH}/libcurl/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_libcurl() {
@@ -43,36 +39,7 @@ function shouldbuild_libcurl() {
   fi
 }
 
-# function called to build the source code
-function build_libcurl() {
-  try rsync -a $BUILD_libcurl/ $BUILD_PATH/libcurl/build-$ARCH/
-  try cd $BUILD_PATH/libcurl/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-    --disable-dependency-tracking \
-    --disable-silent-rules \
-    --with-ssl=${STAGE_PATH} \
-    --without-ca-bundle \
-    --without-ca-path \
-    --with-ca-fallback \
-    --with-secure-transport \
-    --with-default-ssl-backend=openssl \
-    --without-libpsl \
-    --without-gssapi \
-    --without-libmetalink \
-    --without-nghttp2 \
-    --without-brotli \
-    --without-librtmp \
-    --with-libssh2 \
-    --without-libidn2 \
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libcurl() {

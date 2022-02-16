@@ -25,15 +25,11 @@ RECIPE_gettext=$RECIPES_PATH/gettext
 # (you can apply patch etc here.)
 function prebuild_gettext() {
   cd $BUILD_gettext
+  try rsync -a $BUILD_gettext/ ${BUILD_PATH}/gettext/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_gettext() {
@@ -43,24 +39,7 @@ function shouldbuild_gettext() {
   fi
 }
 
-# function called to build the source code
-function build_gettext() {
-  try rsync -a $BUILD_gettext/ $BUILD_PATH/gettext/build-$ARCH/
-  try cd $BUILD_PATH/gettext/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-    --disable-debug \
-    --disable-static \
-    --disable-java \
-    --program-prefix=g
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_gettext() {

@@ -75,14 +75,9 @@ install_default_packages() {
 function prebuild_python() {
   cd $BUILD_python
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_python() {
@@ -139,12 +134,7 @@ function install_python() {
   pop_env
 }
 
-# function called to build the source code
-function build_python() {
-  download_default_packages
-  install_python
-  install_default_packages
-}
+
 
 # function called after all the compile have been done
 function postbuild_python() {

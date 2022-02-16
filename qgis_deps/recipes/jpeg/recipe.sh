@@ -26,15 +26,11 @@ RECIPE_jpeg=$RECIPES_PATH/jpeg
 # (you can apply patch etc here.)
 function prebuild_jpeg() {
   cd $BUILD_jpeg
+  try rsync -a $BUILD_jpeg/ ${BUILD_PATH}/jpeg/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_jpeg() {
@@ -44,22 +40,7 @@ function shouldbuild_jpeg() {
   fi
 }
 
-# function called to build the source code
-function build_jpeg() {
-  try rsync -a $BUILD_jpeg/ $BUILD_PATH/jpeg/build-$ARCH/
-  try cd $BUILD_PATH/jpeg/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-    --disable-debug
-
-  check_file_configuration config.status
-
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_jpeg() {

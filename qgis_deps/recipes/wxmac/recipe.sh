@@ -26,15 +26,8 @@ RECIPE_wxmac=$RECIPES_PATH/wxmac
 # (you can apply patch etc here.)
 function prebuild_wxmac() {
   cd $BUILD_wxmac
-
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
   patch_configure_file configure
-
-  touch .patched
+  try rsync -a $BUILD_wxmac/ ${BUILD_PATH}/wxmac/build-${ARCH}
 }
 
 function shouldbuild_wxmac() {
@@ -44,40 +37,7 @@ function shouldbuild_wxmac() {
   fi
 }
 
-# function called to build the source code
-function build_wxmac() {
-  try rsync -a $BUILD_wxmac/ $BUILD_PATH/wxmac/build-$ARCH/
-  try cd $BUILD_PATH/wxmac/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-     --enable-clipboard \
-     --enable-controls \
-     --enable-dataviewctrl \
-     --enable-display \
-     --enable-dnd \
-     --enable-graphics_ctx \
-     --enable-std_string \
-     --enable-svg \
-     --enable-unicode \
-     --with-expat \
-     --with-libjpeg \
-     --with-libpng \
-     --with-libtiff \
-     --with-opengl \
-     --with-osx_cocoa \
-     --with-zlib \
-     --disable-precomp-headers \
-     --disable-monolithic \
-     --with-macosx-version-min=${MACOSX_DEPLOYMENT_TARGET}
-
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_wxmac() {

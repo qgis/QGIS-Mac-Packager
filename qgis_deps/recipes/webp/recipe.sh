@@ -27,15 +27,11 @@ RECIPE_webp=$RECIPES_PATH/webp
 # (you can apply patch etc here.)
 function prebuild_webp() {
   cd $BUILD_webp
+  try rsync -a $BUILD_webp/ ${BUILD_PATH}/webp/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_webp() {
@@ -45,21 +41,7 @@ function shouldbuild_webp() {
   fi
 }
 
-# function called to build the source code
-function build_webp() {
-  try rsync -a $BUILD_webp/ $BUILD_PATH/webp/build-$ARCH/
-  try cd $BUILD_PATH/webp/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-    --disable-debug
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_webp() {

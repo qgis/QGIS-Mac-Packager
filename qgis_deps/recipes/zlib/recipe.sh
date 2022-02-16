@@ -25,15 +25,11 @@ RECIPE_zlib=$RECIPES_PATH/zlib
 # (you can apply patch etc here.)
 function prebuild_zlib() {
   cd $BUILD_zlib
+  try rsync -a $BUILD_zlib/ ${BUILD_PATH}/zlib/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_zlib() {
@@ -43,21 +39,7 @@ function shouldbuild_zlib() {
   fi
 }
 
-# function called to build the source code
-function build_zlib() {
-  try rsync -a $BUILD_zlib/ $BUILD_PATH/zlib/build-$ARCH/
-  try cd $BUILD_PATH/zlib/build-$ARCH
-  push_env
 
-  try ${CONFIGURE}
-
-  check_file_configuration config.status
-
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_zlib() {

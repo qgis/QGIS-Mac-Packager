@@ -25,15 +25,11 @@ RECIPE_expat=$RECIPES_PATH/expat
 # (you can apply patch etc here.)
 function prebuild_expat() {
   cd $BUILD_expat
+  try rsync -a $BUILD_expat/ ${BUILD_PATH}/expat/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_expat() {
@@ -43,20 +39,7 @@ function shouldbuild_expat() {
   fi
 }
 
-# function called to build the source code
-function build_expat() {
-  try rsync -a $BUILD_expat/ $BUILD_PATH/expat/build-$ARCH/
-  try cd $BUILD_PATH/expat/build-$ARCH
-  push_env
 
-  try ${CONFIGURE}
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_expat() {

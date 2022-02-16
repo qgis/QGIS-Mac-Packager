@@ -25,15 +25,11 @@ RECIPE_libmpc=$RECIPES_PATH/libmpc
 # (you can apply patch etc here.)
 function prebuild_libmpc() {
   cd $BUILD_libmpc
+  try rsync -a $BUILD_libmpc/ ${BUILD_PATH}/libmpc/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_libmpc() {
@@ -43,23 +39,7 @@ function shouldbuild_libmpc() {
   fi
 }
 
-# function called to build the source code
-function build_libmpc() {
-  try rsync -a $BUILD_libmpc/ $BUILD_PATH/libmpc/build-$ARCH/
-  try cd $BUILD_PATH/libmpc/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} \
-      --disable-dependency-tracking \
-      --with-gmp=$STAGE_PATH \
-      --with-mpfr=$STAGE_PATH
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libmpc() {

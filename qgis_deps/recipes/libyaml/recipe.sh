@@ -26,13 +26,7 @@ RECIPE_libyaml=$RECIPES_PATH/libyaml
 # (you can apply patch etc here.)
 function prebuild_libyaml() {
   cd $BUILD_libyaml
-
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
-
-  touch .patched
+  try rsync -a $BUILD_libyaml/ ${BUILD_PATH}/libyaml/build-${ARCH}
 }
 
 function shouldbuild_libyaml() {
@@ -42,22 +36,7 @@ function shouldbuild_libyaml() {
   fi
 }
 
-# function called to build the source code
-function build_libyaml() {
-  try rsync -a $BUILD_libyaml/ $BUILD_PATH/libyaml/build-$ARCH/
-  try cd $BUILD_PATH/libyaml/build-$ARCH
-  push_env
 
-  try ./bootstrap
-  patch_configure_file configure
-  try ${CONFIGURE} --disable-dependency-tracking
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libyaml() {

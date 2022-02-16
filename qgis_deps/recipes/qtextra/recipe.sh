@@ -28,13 +28,9 @@ RECIPE_qtextra=$RECIPES_PATH/qtextra
 # (you can apply patch etc here.)
 function prebuild_qtextra() {
   cd $BUILD_qtextra
+  try rsync -a $BUILD_qtextra/ ${BUILD_PATH}/qtextra/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_qtextra() {
@@ -44,36 +40,7 @@ function shouldbuild_qtextra() {
   fi
 }
 
-# function called to build the source code
-function build_qtextra() {
-  try rsync -a $BUILD_qtextra/ $BUILD_PATH/qtextra/build-$ARCH/
-  try cd $BUILD_PATH/qtextra/build-$ARCH
-  push_env
 
-  # Check https://doc.qt.io/qt-5/sql-driver.html for available drivers
-  # sqlite3 is already shipped with Qt
-  # note that the plugins will not be useful in developer mode (building QGIS)
-  # , since they are not in <QT>/clang_64/plugins directory.
-  # make a symbolic link if you want to use it in the dev mode
-  try mkdir -p ${STAGE_PATH}/qt5/plugins/sqldrivers
-
-  cd src/plugins/sqldrivers/
-  try ${SED} 's;-liodbc;-lodbc;g' configure.json
-  rm -f config.cache
-
-  try ${QMAKE} -- \
-    ODBC_PREFIX=$STAGE_PATH/unixodbc \
-    PSQL_INCDIR=$STAGE_PATH/include \
-    PSQL_LIBDIR=$STAGE_PATH/lib
-
-  try $MAKE sub-odbc
-  try cp plugins/sqldrivers/libqsqlodbc.dylib ${STAGE_PATH}/qt5/plugins/sqldrivers/
-
-  try $MAKESMP sub-psql
-  try cp plugins/sqldrivers/libqsqlpsql.dylib ${STAGE_PATH}/qt5/plugins/sqldrivers/
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_qtextra() {

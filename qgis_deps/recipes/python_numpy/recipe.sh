@@ -24,13 +24,9 @@ RECIPE_python_numpy=$RECIPES_PATH/python_numpy
 # (you can apply patch etc here.)
 function prebuild_python_numpy() {
   cd $BUILD_python_numpy
+  try rsync -a $BUILD_python_numpy/ ${BUILD_PATH}/python_numpy/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_numpy() {
@@ -40,28 +36,7 @@ function shouldbuild_python_numpy() {
   fi
 }
 
-# function called to build the source code
-function build_python_numpy() {
-  try rsync -a $BUILD_python_numpy/ $BUILD_PATH/python_numpy/build-$ARCH/
-  try cd $BUILD_PATH/python_numpy/build-$ARCH
-  push_env
 
-  export OPENBLAS=$STAGE_PATH/lib
-  export BLAS=None
-  export LAPACK=None
-  export ATLAS=None
-  export ACCELERATE=None
-
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
-
-  unset OPENBLAS
-  unset BLAS
-  unset LAPACK
-  unset ATLAS
-  unset ACCELERATE
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_numpy() {

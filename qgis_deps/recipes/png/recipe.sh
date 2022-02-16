@@ -26,15 +26,11 @@ RECIPE_png=$RECIPES_PATH/png
 # (you can apply patch etc here.)
 function prebuild_png() {
   cd $BUILD_png
+  try rsync -a $BUILD_png/ ${BUILD_PATH}/png/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_png() {
@@ -44,20 +40,7 @@ function shouldbuild_png() {
   fi
 }
 
-# function called to build the source code
-function build_png() {
-  try rsync -a $BUILD_png/ $BUILD_PATH/png/build-$ARCH/
-  try cd $BUILD_PATH/png/build-$ARCH
-  push_env
 
-  try ${CONFIGURE} --disable-debug
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_png() {

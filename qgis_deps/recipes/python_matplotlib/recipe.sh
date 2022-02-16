@@ -24,13 +24,9 @@ RECIPE_python_matplotlib=$RECIPES_PATH/python_matplotlib
 # (you can apply patch etc here.)
 function prebuild_python_matplotlib() {
   cd $BUILD_python_matplotlib
+  try rsync -a $BUILD_python_matplotlib/ ${BUILD_PATH}/python_matplotlib/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_matplotlib() {
@@ -40,23 +36,7 @@ function shouldbuild_python_matplotlib() {
   fi
 }
 
-# function called to build the source code
-function build_python_matplotlib() {
-  try rsync -a $BUILD_python_matplotlib/ $BUILD_PATH/python_matplotlib/build-$ARCH/
-  try cd $BUILD_PATH/python_matplotlib/build-$ARCH
-  push_env
 
-  CFLAGS="$CFLAGS -I$STAGE_PATH/include/freetype2"
-  CPPFLAGS="$CPPFLAGS -I$STAGE_PATH/include/freetype2"
-
-  try cp $RECIPE_python_matplotlib/setup.cfg $BUILD_PATH/python_matplotlib/build-$ARCH/
-
-  export PKG_CONFIG=$STAGE_PATH/lib/pkgconfig
-  try $PYTHON setup.py install
-  unset PKG_CONFIG
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_matplotlib() {

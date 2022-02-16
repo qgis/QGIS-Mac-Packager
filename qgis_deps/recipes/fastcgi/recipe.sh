@@ -25,13 +25,9 @@ RECIPE_fastcgi=$RECIPES_PATH/fastcgi
 # (you can apply patch etc here.)
 function prebuild_fastcgi() {
   cd $BUILD_fastcgi
+  try rsync -a $BUILD_fastcgi/ ${BUILD_PATH}/fastcgi/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_fastcgi() {
@@ -41,22 +37,7 @@ function shouldbuild_fastcgi() {
   fi
 }
 
-# function called to build the source code
-function build_fastcgi() {
-  try rsync -a $BUILD_fastcgi/ $BUILD_PATH/fastcgi/build-$ARCH/
-  try cd $BUILD_PATH/fastcgi/build-$ARCH
-  push_env
 
-  try ./autogen.sh
-  patch_configure_file configure
-  try ${CONFIGURE} --disable-debug --disable-dependency-tracking
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_fastcgi() {

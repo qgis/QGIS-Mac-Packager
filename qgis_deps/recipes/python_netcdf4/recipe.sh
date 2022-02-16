@@ -23,13 +23,9 @@ BUILD_python_netcdf4=$BUILD_PATH/python_netcdf4/$(get_directory $URL_python_netc
 function prebuild_python_netcdf4() {
   mkdir -p $BUILD_python_netcdf4
   cd $BUILD_python_netcdf4
+  try rsync -a $BUILD_python_netcdf4/ ${BUILD_PATH}/python_netcdf4/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_netcdf4() {
@@ -39,25 +35,7 @@ function shouldbuild_python_netcdf4() {
   fi
 }
 
-# function called to build the source code
-function build_python_netcdf4() {
-  try rsync -a $BUILD_python_netcdf4/ $BUILD_PATH/python_netcdf4/build-$ARCH/
-  try cd $BUILD_PATH/python_netcdf4/build-$ARCH
 
-  push_env
-
-  export HDF5_DIR=$STAGE_PATH
-  export NETCDF4_DIR=$STAGE_PATH
-  export CURL_DIR=$STAGE_PATH
-
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
-
-  unset HDF5_DIR
-  unset NETCDF4_DIR
-  unset CURL_DIR
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_netcdf4() {

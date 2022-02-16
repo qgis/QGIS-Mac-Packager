@@ -24,13 +24,9 @@ RECIPE_python_scikit_learn=$RECIPES_PATH/python_scikit_learn
 # (you can apply patch etc here.)
 function prebuild_python_scikit_learn() {
   cd $BUILD_python_scikit_learn
+  try rsync -a $BUILD_python_scikit_learn/ ${BUILD_PATH}/python_scikit_learn/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_python_scikit_learn() {
@@ -40,16 +36,7 @@ function shouldbuild_python_scikit_learn() {
   fi
 }
 
-# function called to build the source code
-function build_python_scikit_learn() {
-  try rsync -a $BUILD_python_scikit_learn/ $BUILD_PATH/python_scikit_learn/build-$ARCH/
-  try cd $BUILD_PATH/python_scikit_learn/build-$ARCH
-  push_env
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_python_scikit_learn() {

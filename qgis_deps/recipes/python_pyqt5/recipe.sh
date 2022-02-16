@@ -48,11 +48,8 @@ function fix_python_pyqt5_paths() {
 function prebuild_python_pyqt5() {
   try mkdir -p $BUILD_python_pyqt5
   cd $BUILD_python_pyqt5
+  try rsync -a $BUILD_python_pyqt5/ ${BUILD_PATH}/python_pyqt5/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   # this is needed
   # so the autodetection of modules to build
@@ -60,7 +57,6 @@ function prebuild_python_pyqt5() {
   MOD_DIR=$STAGE_PATH/mkspecs/modules
   try ${SED} "s;pro_lines.extend(target_config.qmake_variables);pro_lines.extend(target_config.qmake_variables)\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkit.pri)\")\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkitwidgets.pri)\");g" configure.py
 
-  touch .patched
 }
 
 function shouldbuild_python_pyqt5() {
@@ -69,36 +65,7 @@ function shouldbuild_python_pyqt5() {
   fi
 }
 
-# function called to build the source code
-function build_python_pyqt5() {
-  try rsync -a $BUILD_python_pyqt5/ $BUILD_PATH/python_pyqt5/build-$ARCH/
-  try cd $BUILD_PATH/python_pyqt5/build-$ARCH
 
-  push_env
-
-  try $PYTHON ./configure.py \
-    --confirm-license \
-    --stubsdir=$QGIS_SITE_PACKAGES_PATH/PyQt5 \
-    --sipdir=$STAGE_PATH/share/sip/PyQt5 \
-    --bindir=$STAGE_PATH/bin \
-    --sip-incdir=$STAGE_PATH/include \
-    --destdir=$QGIS_SITE_PACKAGES_PATH \
-    --disable=QAxContainer \
-    --disable=QtX11Extras \
-    --disable=QtWinExtras \
-    --disable=Enginio \
-    --designer-plugindir=$STAGE_PATH/share/plugins \
-    --qml-plugindir=$STAGE_PATH/share/plugins \
-    --verbose
-
-  try $MAKESMP
-  try $MAKE install
-  try $MAKE clean
-
-  fix_python_pyqt5_paths
-
-  pop_env
-}
 
 function postbuild_python_pyqt5() {
    if ! python_package_installed_verbose PyQt5.QtCore; then

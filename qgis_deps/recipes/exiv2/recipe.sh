@@ -26,12 +26,7 @@ RECIPE_exiv2=$RECIPES_PATH/exiv2
 function prebuild_exiv2() {
   cd $BUILD_exiv2
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_exiv2() {
@@ -41,20 +36,7 @@ function shouldbuild_exiv2() {
   fi
 }
 
-# function called to build the source code
-function build_exiv2() {
-  try mkdir -p $BUILD_PATH/exiv2/build-$ARCH
-  try cd $BUILD_PATH/exiv2/build-$ARCH
-  push_env
 
-  try ${CMAKE} $BUILD_exiv2
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA
-  try $NINJA install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_exiv2() {

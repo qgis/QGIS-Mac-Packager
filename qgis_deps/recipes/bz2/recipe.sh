@@ -26,13 +26,9 @@ RECIPE_bz2=$RECIPES_PATH/bz2
 # (you can apply patch etc here.)
 function prebuild_bz2() {
   cd $BUILD_bz2
+  try rsync -a $BUILD_bz2/ ${BUILD_PATH}/bz2/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_bz2() {
@@ -42,26 +38,7 @@ function shouldbuild_bz2() {
   fi
 }
 
-# function called to build the source code
-function build_bz2() {
-  try rsync -a $BUILD_bz2/ $BUILD_PATH/bz2/build-$ARCH/
-  try cd $BUILD_PATH/bz2/build-$ARCH
-  push_env
 
-  try $MAKESMP PREFIX=$STAGE_PATH
-  try $MAKE install PREFIX=$STAGE_PATH
-
-  try ${SED} "s;-shared -Wl,-soname -Wl,libbz2.so.$VERSION_bz2_major -o libbz2.so.$VERSION_bz2;-dynamiclib -install_name libbz2.$VERSION_bz2_major.dylib -current_version $VERSION_bz2 -compatibility_version $VERSION_bz2_major -o libbz2.$VERSION_bz2.dylib;g" Makefile-libbz2_so
-  try ${SED} "s;libbz2.so.$VERSION_bz2;libbz2.$VERSION_bz2.dylib;g" Makefile-libbz2_so
-  try ${SED} "s;libbz2.so.$VERSION_bz2_major;libbz2.$VERSION_bz2_major.dylib;g" Makefile-libbz2_so
-
-  try $MAKESMP PREFIX=$STAGE_PATH -f Makefile-libbz2_so
-  ln -s libbz2.$VERSION_bz2_major.dylib libbz2.dylib
-  try cp -av libbz2.*dylib $STAGE_PATH/lib/
-  try install_name_tool -id $STAGE_PATH/lib/libbz2.$VERSION_bz2_major.dylib $STAGE_PATH/lib/libbz2.$VERSION_bz2_major.dylib
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_bz2() {

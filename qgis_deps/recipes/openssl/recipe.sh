@@ -30,15 +30,11 @@ RECIPE_openssl=$RECIPES_PATH/openssl
 # (you can apply patch etc here.)
 function prebuild_openssl() {
   cd $BUILD_openssl
+  try rsync -a $BUILD_openssl/ ${BUILD_PATH}/openssl/build-${ARCH}
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
   patch_configure_file configure
 
-  touch .patched
 }
 
 function shouldbuild_openssl() {
@@ -48,33 +44,7 @@ function shouldbuild_openssl() {
   fi
 }
 
-# function called to build the source code
-function build_openssl() {
-  try rsync -a $BUILD_openssl/ $BUILD_PATH/openssl/build-$ARCH/
-  try cd $BUILD_PATH/openssl/build-$ARCH
-  push_env
 
-  # This could interfere with how we expect OpenSSL to build.
-  unset OPENSSL_LOCAL_CONFIG_DIR
-
-  # SSLv2 died with 1.1.0, so no-ssl2 no longer required.
-  # SSLv3 & zlib are off by default with 1.1.0 but this may not
-  # be obvious to everyone, so explicitly state it for now to
-  # help debug inevitable breakage.
-  try perl ./Configure \
-    --prefix=$STAGE_PATH \
-    --openssldir=$STAGE_PATH \
-    darwin64-${ARCH}-cc enable-ec_nistp_64_gcc_128 \
-    no-ssl3 \
-    no-ssl3-method \
-    no-zlib \
-
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_openssl() {

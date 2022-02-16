@@ -27,12 +27,7 @@ RECIPE_libomp=$RECIPES_PATH/libomp
 function prebuild_libomp() {
   cd $BUILD_libomp
 
-  # check marker
-  if [ -f .patched ]; then
-    return
-  fi
 
-  touch .patched
 }
 
 function shouldbuild_libomp() {
@@ -41,25 +36,7 @@ function shouldbuild_libomp() {
   fi
 }
 
-# function called to build the source code
-function build_libomp() {
-  try mkdir -p $BUILD_PATH/libomp/build-$ARCH
-  try cd $BUILD_PATH/libomp/build-$ARCH
 
-  push_env
-
-  try $CMAKE \
-    -DLIBOMP_INSTALL_ALIASES=OFF \
-    $BUILD_libomp .
-  check_file_configuration CMakeCache.txt
-
-  try $NINJA
-  try $NINJA install
-
-  install_name_tool -id ${STAGE_PATH}/lib/${LINK_libomp} ${STAGE_PATH}/lib/${LINK_libomp}
-
-  pop_env
-}
 
 # function called after all the compile have been done
 function postbuild_libomp() {

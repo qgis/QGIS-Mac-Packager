@@ -61,10 +61,7 @@ function shouldbuild_qgis_deps() {
    : # noop
 }
 
-# function called to build the source code
-function build_qgis_deps() {
-  : # noop
-}
+
 
 # function called after all the compile have been done
 function postbuild_qgis_deps() {
