@@ -536,7 +536,7 @@ function run_source_modules() {
       UNUSED_MODULES+=("${mod}")
     fi
   done
-  info "Unused modules: ${UNUSED_MODULES[@]}"
+  debug "Unused modules: ${UNUSED_MODULES[@]}"
 }
 
 function recipe_has_changed(){

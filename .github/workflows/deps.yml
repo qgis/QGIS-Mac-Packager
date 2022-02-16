@@ -76,7 +76,7 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mflex
+          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mzlib
 
       - name: Last build log
         if: ${{ failure() }}
@@ -92,7 +92,7 @@ jobs:
           limit-access-to-actor: true
 
       - name: change rights to allow caching
-        run: chown -R 1001:1001 ${{ env.BUILD_PATH }}
+        run: sudo chown -R 1001:1001 ${{ env.BUILD_PATH }}
 
       - name: create package
         run: |

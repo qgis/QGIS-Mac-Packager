@@ -13,6 +13,7 @@ function build_hdf5() {
     # enable-parallel ??? MPI Support
 
   check_file_configuration config.status
+
   try $MAKESMP
   try $MAKESMP install
 
