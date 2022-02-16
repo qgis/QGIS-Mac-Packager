@@ -17,7 +17,7 @@ function build_pdal() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA_INSTALL
+  try $NINJA install
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libpdalcpp $STAGE_PATH/lib/$LINK_libpdalcpp
   try install_name_tool -change $BUILD_PATH/pdal/build-$ARCH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdalcpp

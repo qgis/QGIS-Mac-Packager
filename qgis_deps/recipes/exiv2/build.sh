@@ -7,7 +7,7 @@ function build_exiv2() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA_INSTALL
+  try $NINJA install
 
   pop_env
 }

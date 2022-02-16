@@ -15,9 +15,7 @@ function pop_env() {
   export CC=${OLD_CC}
   export CXX=${OLD_CXX}
   export MAKESMP=${OLD_MAKESMP}
-  export MAKESMP_INSTALL=${OLD_MAKESMP_INSTALL}
   export NINJA=${OLD_NINJA}
-  export NINJA_INSTALL=${OLD_NINJA_INSTALL}
   export MAKE=${OLD_MAKE}
   export LD=${OLD_LD}
   export CMAKE=${OLD_CMAKE}
@@ -243,13 +241,11 @@ function push_env() {
 
     # export some tools
     export MAKESMP="/usr/bin/make -j${CORES}"
-    export MAKESMP_INSTALL="${INSTALL_WITH_SUDO} ${MAKESMP} install"
     export MAKE="/usr/bin/make"
     export CONFIGURE="./configure --prefix=${STAGE_PATH}"
     export CC="/usr/bin/clang"
     export CXX="/usr/bin/clang++"
     export NINJA="/usr/local/bin/ninja"
-    export NINJA_INSTALL="${INSTALL_WITH_SUDO} /usr/local/bin/ninja install"
     export LD="/usr/bin/ld"
     export PKG_CONFIG_PATH=${STAGE_PATH}/lib/pkgconfig
 
@@ -819,7 +815,6 @@ function usage() {
   echo "  -d 'mod1 mod2'         Shows the list of modules to build, including dependencies"
   echo "  -f                     Clean build"
   echo "  -x                     display expanded values (execute 'set -x')"
-  echo "  -s                     run install command with sudo"
   echo
   echo "For developers:"
   echo "  -u 'mod1 mod2'         Modules to update (if already compiled)"
@@ -835,9 +830,6 @@ while getopts ":hlfxc:d:m:u:" opt; do
       ;;
     l)
       list_modules
-      ;;
-    s)
-      INSTALL_WITH_SUDO="sudo "
       ;;
     g)
       DEBUG=1
@@ -904,5 +896,5 @@ fold_push create_config_file
 run_create_config_file
 fold_pop
 info create deps config file
-cp ${ROOT_PATH}/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf ${STAGE_PATH}/qeps-${QGIS_DEPS_VERSION}.conf
+cp ${ROOT_PATH}/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf ${STAGE_PATH}/qeps-${QGIS_DEPS_RELEASE_VERSION}.conf
 info "All done !"

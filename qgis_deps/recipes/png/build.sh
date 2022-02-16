@@ -6,7 +6,7 @@ function build_png() {
 
   check_file_configuration config.status
   try $MAKESMP
-  try $MAKESMP_INSTALL
+  try $MAKESMP install
 
   pop_env
 }

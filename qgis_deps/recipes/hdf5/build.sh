@@ -14,7 +14,7 @@ function build_hdf5() {
 
   check_file_configuration config.status
   try $MAKESMP
-  try $MAKESMP_INSTALL
+  try $MAKESMP install
 
   pop_env
 }

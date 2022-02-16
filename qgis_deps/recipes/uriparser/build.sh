@@ -11,7 +11,7 @@ function build_uriparser() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA_INSTALL
+  try $NINJA install
 
   install_name_tool -id $STAGE_PATH/lib/$LINK_liburiparser $STAGE_PATH/lib/$LINK_liburiparser
 

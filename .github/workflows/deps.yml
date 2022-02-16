@@ -11,7 +11,7 @@ env:
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
-  DEPS_BUILD_PATH: ${{ github.workspace }}/deps/build
+  DEPS_BUILD_PATH: ${{ github.workspace }}/build
 
 jobs:
   mac_os_build:
@@ -32,7 +32,7 @@ jobs:
         id: cache-packages
         uses: pat-s/always-upload-cache@v2.1.5
         with:
-          path: ${{ github.workspace }}/deps
+          path: ${{ env.BUILD_PATH }}
           key: cache-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
           restore-keys: |
             cache-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
@@ -76,7 +76,7 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mflex
+          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mflex
 
       - name: Last build log
         if: ${{ failure() }}
@@ -90,6 +90,9 @@ jobs:
         timeout-minutes: 30
         with:
           limit-access-to-actor: true
+
+      - name: change rights to allow caching
+        run: chown -R 1001:1001 ${{ env.BUILD_PATH }}
 
       - name: create package
         run: |

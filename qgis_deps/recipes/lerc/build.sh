@@ -9,7 +9,7 @@ function build_lerc() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA_INSTALL
+  try $NINJA install
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_liblerc $STAGE_PATH/lib/$LINK_liblerc
 

@@ -7,7 +7,7 @@ function build_libkml() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA_INSTALL
+  try $NINJA install
 
   for i in \
     $LINK_libkmlbase \

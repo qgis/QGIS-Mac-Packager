@@ -6,7 +6,7 @@ function build_qscintilla() {
   try ${QMAKE} qscintilla.pro
 
   try $MAKESMP
-  try $MAKESMP_INSTALL
+  try $MAKESMP install
 
   pop_env
 }

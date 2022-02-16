@@ -10,7 +10,7 @@ function build_brotli() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA_INSTALL
+  try $NINJA install
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libbrotlicommon $STAGE_PATH/lib/$LINK_libbrotlicommon
   try install_name_tool -change $BUILD_PATH/brotli/build-$ARCH/$LINK_libbrotlidec $STAGE_PATH/lib/$LINK_libbrotlidec $STAGE_PATH/lib/$LINK_libbrotlicommon
