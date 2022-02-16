@@ -13,7 +13,7 @@ function build_qtkeychain() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA install
+  try $NINJA_INSTALL
 
   pop_env
 }

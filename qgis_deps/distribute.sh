@@ -15,7 +15,9 @@ function pop_env() {
   export CC=${OLD_CC}
   export CXX=${OLD_CXX}
   export MAKESMP=${OLD_MAKESMP}
+  export MAKESMP_INSTALL=${OLD_MAKESMP_INSTALL}
   export NINJA=${OLD_NINJA}
+  export NINJA_INSTALL=${OLD_NINJA_INSTALL}
   export MAKE=${OLD_MAKE}
   export LD=${OLD_LD}
   export CMAKE=${OLD_CMAKE}
@@ -89,6 +91,8 @@ if [ -d ${ROOT_OUT_PATH} ]; then
 else
    error "The root output directory '${ROOT_OUT_PATH}' not found."
 fi
+
+SOURCE_PACKAGES_PATH=${BUILD_PATH}/.packages
 
 # override error function to use pop_env
 function error() {
@@ -193,6 +197,7 @@ function push_env() {
     export OLD_CC=${CC}
     export OLD_CXX=${CXX}
     export OLD_MAKESMP=${MAKESMP}
+    export OLD_MAKESMP_INSTALL=${MAKESMP_INSTALL}
     export OLD_MAKE=${MAKE}
     export OLD_LD=${LD}
     export OLD_CMAKE=${CMAKE}
@@ -208,6 +213,7 @@ function push_env() {
     export OLD_PIP=${PIP}
     export OLD_QSPEC=${QSPEC}
     export OLD_NINJA=${NINJA}
+    export OLD_NINJA_INSTALL=${NINJA_INSTALL}
     export OLD_PKG_CONFIG_PATH=${PKG_CONFIG_PATH}
 
     ###################
@@ -237,11 +243,13 @@ function push_env() {
 
     # export some tools
     export MAKESMP="/usr/bin/make -j${CORES}"
+    export MAKESMP_INSTALL="${INSTALL_WITH_SUDO} ${MAKESMP} install"
     export MAKE="/usr/bin/make"
     export CONFIGURE="./configure --prefix=${STAGE_PATH}"
     export CC="/usr/bin/clang"
     export CXX="/usr/bin/clang++"
     export NINJA="/usr/local/bin/ninja"
+    export NINJA_INSTALL="${INSTALL_WITH_SUDO} /usr/local/bin/ninja install"
     export LD="/usr/bin/ld"
     export PKG_CONFIG_PATH=${STAGE_PATH}/lib/pkgconfig
 
@@ -411,26 +419,6 @@ function test_binary_output() {
   fi
 }
 
-
-function usage() {
-  echo "QGIS deps - distribute.sh"
-  echo
-  echo "Usage: ./distribute.sh deps_version [options]"
-  echo "To build whole package, run:   ./distribute.sh 0.x -mqgis_deps"
-  echo
-  echo "  -h                     Show this help"
-  echo "  -c                     Run command in the build environment"
-  echo "  -l                     Show a list of available modules"
-  echo "  -m 'mod1 mod2'         Modules to build"
-  echo "  -d 'mod1 mod2'         Shos the list of modules to build, including dependencies"
-  echo "  -f                     Clean build"
-  echo "  -x                     display expanded values (execute 'set -x')"
-  echo
-  echo "For developers:"
-  echo "  -u 'mod1 mod2'         Modules to update (if already compiled)"
-  echo
-  exit 0
-}
 
 function run_prepare()
 {
@@ -818,8 +806,29 @@ function list_modules() {
   exit 0
 }
 
+function usage() {
+  echo "QGIS deps - distribute.sh"
+  echo
+  echo "Usage: ./distribute.sh deps_version [options]"
+  echo "To build whole package, run:   ./distribute.sh 0.x -mqgis_deps"
+  echo
+  echo "  -h                     Show this help"
+  echo "  -c                     Run command in the build environment"
+  echo "  -l                     Show a list of available modules"
+  echo "  -m 'mod1 mod2'         Modules to build"
+  echo "  -d 'mod1 mod2'         Shows the list of modules to build, including dependencies"
+  echo "  -f                     Clean build"
+  echo "  -x                     display expanded values (execute 'set -x')"
+  echo "  -s                     run install command with sudo"
+  echo
+  echo "For developers:"
+  echo "  -u 'mod1 mod2'         Modules to update (if already compiled)"
+  echo
+  exit 0
+}
+
 # Do the build
-while getopts ":hBvlfxic:d:m:u:s:g" opt; do
+while getopts ":hlfxc:d:m:u:" opt; do
   case ${opt} in
     h)
       usage
@@ -828,15 +837,7 @@ while getopts ":hBvlfxic:d:m:u:s:g" opt; do
       list_modules
       ;;
     s)
-      run_prepare
-      run_source_modules
-      push_env
-      bash
-      pop_env
-      exit 0
-      ;;
-    i)
-      INSTALL=1
+      INSTALL_WITH_SUDO="sudo "
       ;;
     g)
       DEBUG=1

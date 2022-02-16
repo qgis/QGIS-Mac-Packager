@@ -8,7 +8,7 @@ function build_openjpeg() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA install
+  try $NINJA_INSTALL
 
   install_name_tool -id $STAGE_PATH/lib/$LINK_openjpeg $STAGE_PATH/lib/$LINK_openjpeg
 

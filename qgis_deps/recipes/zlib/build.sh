@@ -7,7 +7,7 @@ function build_zlib() {
   check_file_configuration config.status
 
   try $MAKESMP
-  try $MAKESMP install
+  try $MAKESMP_INSTALL
 
   pop_env
 }

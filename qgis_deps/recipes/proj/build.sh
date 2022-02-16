@@ -15,7 +15,7 @@ function build_proj() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA install
+  try $NINJA_INSTALL
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libproj $STAGE_PATH/lib/$LINK_libproj
   try install_name_tool -change $BUILD_PATH/proj/build-$ARCH/lib/$LINK_libproj $STAGE_PATH/lib/$LINK_libproj $STAGE_PATH/bin/proj

@@ -7,7 +7,7 @@ function build_laszip() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA install
+  try $NINJA_INSTALL
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_liblaszip_api $STAGE_PATH/lib/$LINK_liblaszip_api
   try install_name_tool -id $STAGE_PATH/lib/$LINK_liblaszip $STAGE_PATH/lib/$LINK_liblaszip

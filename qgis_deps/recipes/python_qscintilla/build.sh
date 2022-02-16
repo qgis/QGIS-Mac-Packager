@@ -24,7 +24,7 @@ function build_python_qscintilla() {
     --verbose
 
   try $MAKESMP
-  try $MAKE install
+  try $MAKESMP_INSTALL
   try $MAKE clean
 
   install_name_tool -add_rpath "${STAGE_PATH}/lib" $QGIS_SITE_PACKAGES_PATH/PyQt5/Qsci.so

@@ -15,7 +15,7 @@ function build_libtiff() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA install
+  try $NINJA_INSTALL
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff
   try install_name_tool -change $BUILD_PATH/libtiff/build-$ARCH/libtiff/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff

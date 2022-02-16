@@ -10,7 +10,7 @@ function build_libxml2() {
 
   check_file_configuration config.status
   try $MAKESMP
-  try $MAKESMP install
+  try $MAKESMP_INSTALL
 
   if [ ! -e $STAGE_PATH/include/libxml ]; then
     mk_sym_link $STAGE_PATH/include ./libxml2/libxml libxml

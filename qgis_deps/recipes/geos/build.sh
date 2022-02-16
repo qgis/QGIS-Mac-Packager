@@ -7,7 +7,7 @@ function build_geos() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA install
+  try $NINJA_INSTALL
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libgeos $STAGE_PATH/lib/$LINK_libgeos
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libgeos_c $STAGE_PATH/lib/$LINK_libgeos_c

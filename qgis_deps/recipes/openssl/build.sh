@@ -19,7 +19,7 @@ function build_openssl() {
 
   check_file_configuration config.status
   try $MAKESMP
-  try $MAKESMP install
+  try $MAKESMP_INSTALL
 
   pop_env
 }

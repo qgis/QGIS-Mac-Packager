@@ -20,7 +20,7 @@ function build_gcc() {
   check_file_configuration config.status
 
   try $MAKESMP "BOOT_LDFLAGS=-Wl,-headerpad_max_install_names"
-  try $MAKESMP install
+  try $MAKESMP_INSTALL
 
   cd $STAGE_PATH/bin
   ln -s gfortran-$VERSION_gcc_major gfortran

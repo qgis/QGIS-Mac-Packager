@@ -37,7 +37,7 @@ function build_mysql() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA install
+  try $NINJA_INSTALL
 
   try rm -rf $STAGE_PATH/mysql-test
   try rm -f $STAGE_PATH/LICENCE

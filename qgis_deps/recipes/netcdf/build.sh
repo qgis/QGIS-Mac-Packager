@@ -7,7 +7,7 @@ function build_netcdf() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA install
+  try $NINJA_INSTALL
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_netcdf $STAGE_PATH/lib/$LINK_netcdf
 

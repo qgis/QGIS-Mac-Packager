@@ -22,7 +22,7 @@ function build_poppler() {
   check_file_configuration CMakeCache.txt
 
   try $NINJA
-  try $NINJA install
+  try $NINJA_INSTALL
 
   install_name_tool -id $STAGE_PATH/lib/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler
   install_name_tool -id $STAGE_PATH/lib/$LINK_poppler_cpp $STAGE_PATH/lib/$LINK_poppler_cpp

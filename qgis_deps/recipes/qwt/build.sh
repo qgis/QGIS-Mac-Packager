@@ -5,7 +5,7 @@ function build_qwt() {
   try ${QMAKE}
 
   try $MAKESMP
-  try $MAKESMP install
+  try $MAKESMP_INSTALL
 
   install_name_tool -id "@rpath/qwt.framework/qwt" ${STAGE_PATH}/lib/qwt.framework/qwt
 

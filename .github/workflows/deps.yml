@@ -11,7 +11,6 @@ env:
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
-  SOURCE_PACKAGES_PATH: ${{ github.workspace }}/deps/.packages
   DEPS_BUILD_PATH: ${{ github.workspace }}/deps/build
 
 jobs:
@@ -27,7 +26,6 @@ jobs:
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "QGIS_PRIVATE_SDKS_PATH=$GITHUB_WORKSPACE/qgis-private-sdks" >> $GITHUB_ENV
           sudo mkdir -p ${BUILD_PATH}
-          sudo mkdir -p ${SOURCE_PACKAGES_PATH}
           sudo mkdir -p ${ROOT_OUT_PATH}
 
       - name: Cache packages
@@ -78,7 +76,7 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mflex
+          ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mflex
 
       - name: Last build log
         if: ${{ failure() }}
@@ -106,7 +104,7 @@ jobs:
       - name: signing deps
         run: |
           cd qgis_deps
-          sudo -E ./sign_deps.bash ${{ env.QGIS_DEPS_RELEASE_VERSION }}
+          # sudo -E ./sign_deps.bash ${{ env.QGIS_DEPS_RELEASE_VERSION }}
 
       - name: upload Qt archive
         uses: actions/upload-artifact@v2

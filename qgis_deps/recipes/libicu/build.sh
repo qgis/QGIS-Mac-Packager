@@ -11,7 +11,7 @@ function build_libicu() {
 
   check_file_configuration config.status
   try $MAKESMP
-  try $MAKE install
+  try $MAKESMP_INSTALL
 
   # not sure why, but the original file seems corrupted after installtion
   cp ${BUILD_PATH}/libicu/build-x86_64/icu4c/source/lib/libicudata.${VERSION_libicu}.dylib ${STAGE_PATH}/lib/libicudata.${VERSION_libicu}.dylib
