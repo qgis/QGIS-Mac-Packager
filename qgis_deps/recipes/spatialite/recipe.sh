@@ -25,9 +25,8 @@ RECIPE_spatialite=$RECIPES_PATH/spatialite
 # (you can apply patch etc here.)
 function prebuild_spatialite() {
   cd $BUILD_spatialite
-    patch_configure_file configure
-  try rsync  -a $BUILD_spatialite/ ${BUILD_PATH}/spatialite/build-${ARCH}
-
+  patch_configure_file configure
+  try rsync -a $BUILD_spatialite/ ${BUILD_PATH}/spatialite/build-${ARCH}
 }
 
 function shouldbuild_spatialite() {
@@ -36,8 +35,6 @@ function shouldbuild_spatialite() {
     DO_BUILD=0
   fi
 }
-
-
 
 # function called after all the compile have been done
 function postbuild_spatialite() {

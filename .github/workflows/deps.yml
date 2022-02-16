@@ -44,7 +44,7 @@ jobs:
         with:
           repository: qgis/qgis-private-sdks
           path: qgis-private-sdks
-          fetch-deps: 1
+          fetch-depth: 1
           token: ${{ secrets.GH_PAT }}
 
       - run: brew install python3
@@ -76,7 +76,7 @@ jobs:
       - name: build deps
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mlibcurl
+          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -mspatialite
 
       - name: Last build log
         if: ${{ failure() }}
@@ -90,9 +90,6 @@ jobs:
         timeout-minutes: 30
         with:
           limit-access-to-actor: true
-
-      #- name: change rights to allow caching
-      #  run: sudo chown -R 1001:1001 ${{ env.BUILD_PATH }}
 
       - name: create package
         run: |
