@@ -4,7 +4,7 @@ DESC_boost="Collection of portable C++ source libraries"
 
 # version of your package
 # version required by MySQL
-VERSION_boost=1.13.0
+VERSION_boost=1.73.0
 
 # dependencies of this recipe
 DEPS_boost=(zlib python libicu)

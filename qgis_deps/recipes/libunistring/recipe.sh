@@ -26,6 +26,7 @@ RECIPE_libunistring=$RECIPES_PATH/libunistring
 # (you can apply patch etc here.)
 function prebuild_libunistring() {
   cd $BUILD_libunistring
+  patch_configure_file configure
   try rsync -a $BUILD_libunistring/ $BUILD_PATH/libunistring/build-$ARCH/
 }
 

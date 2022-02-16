@@ -35,9 +35,10 @@ jobs:
         uses: pat-s/always-upload-cache@v2.1.5
         with:
           path: ${{ github.workspace }}/deps
-          key: cache-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}
+          key: cache-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
           restore-keys: |
-            cache--qgis-deps-
+            cache-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
+            cache-qgis-deps-
 
       - name: Fetch QGIS private SDKs
         uses: actions/checkout@v2
