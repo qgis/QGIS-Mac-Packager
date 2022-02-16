@@ -91,8 +91,8 @@ jobs:
         with:
           limit-access-to-actor: true
 
-      - name: change rights to allow caching
-        run: sudo chown -R 1001:1001 ${{ env.BUILD_PATH }}
+      #- name: change rights to allow caching
+      #  run: sudo chown -R 1001:1001 ${{ env.BUILD_PATH }}
 
       - name: create package
         run: |
