@@ -26,8 +26,9 @@ jobs:
           echo "BUILD_PATH=${BUILD_PATH}" >> $GITHUB_ENV
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "QGIS_PRIVATE_SDKS_PATH=$GITHUB_WORKSPACE/qgis-private-sdks" >> $GITHUB_ENV
-          sudo -E mkdir -p ${BUILD_PATH}
-          sudo -E mkdir -p ${SOURCE_PACKAGES_PATH}
+          sudo mkdir -p ${BUILD_PATH}
+          sudo mkdir -p ${SOURCE_PACKAGES_PATH}
+          sudo mkdir -p ${ROOT_OUT_PATH}
 
       - name: Cache packages
         id: cache-packages
