@@ -466,11 +466,13 @@ function in_array() {
   i=0
   for key in $@; do
     if [ ${term} == ${key} ]; then
-      return ${i}
+      echo ${i}
+      return
     fi
     i=$((${i} + 1))
   done
-  return 255
+  echo -1
+  return
 }
 
 function run_source_modules() {
@@ -502,8 +504,7 @@ function run_source_modules() {
     needed=( ${needed[@]} )
 
     # check if the module have already been declared
-    in_array ${module} "${processed[@]}"
-    if [ $? -ne 255 ]; then
+    if [[ $(in_array ${module} "${processed[@]}") -ne -1 ]]; then
       debug "Ignored ${module}, already processed"
       continue;
     fi
@@ -645,7 +646,7 @@ function download_file() {
 
     # if already decompress, forget it
     cd ${BUILD_PATH}/${module}
-    if [ ! -d "${source_directory}" ]; then
+    if [[ ! -d "${source_directory}" ]]; then
       # decompress
       pfilename=${SOURCE_PACKAGES_PATH}/${module}/${filename}
       info "Extract ${pfilename}"
@@ -747,7 +748,7 @@ function run_build() {
 
     if [[ "$(recipe_has_changed "${module}" build)" == "1" ]]; then
       DO_BUILD=1
-    elif [[ $(in_array ${module} "${modules_update[@]}") -ne 255 ]]; then
+    elif [[ $(in_array ${module} "${modules_update[@]}") -ne -1 ]]; then
       debug "${module} detected to be updated"
       DO_BUILD=1
     else
