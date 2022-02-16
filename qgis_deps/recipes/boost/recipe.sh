@@ -16,7 +16,7 @@ URL_boost=https://github.com/boostorg/boost/archive/refs/tags/boost-${VERSION_bo
 # URL_boost=https://github.com/boostorg/boost/archive/boost-${VERSION_boost}.tar.gz
 
 # md5 of the package
-MD5_boost=db0112a3a37a3742326471d20f1a186a
+MD5_boost=9f9ec707dd839d4c0130cc15b311e1ee
 
 # default build path
 BUILD_boost=$BUILD_PATH/boost/$(get_directory $URL_boost)

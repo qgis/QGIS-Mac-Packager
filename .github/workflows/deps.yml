@@ -38,6 +38,7 @@ jobs:
           key: cache-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
           restore-keys: |
             cache-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
+            cache-qgis-deps-dev-
             cache-qgis-deps-
 
       - name: Fetch QGIS private SDKs
