@@ -8,7 +8,9 @@ function build_poppler() {
   try ${CMAKE} \
     -DBUILD_GTK_TESTS=OFF \
     -DBUILD_CPP_TESTS=OFF \
-    -DENABLE_BOOST=OFF \
+    -DENABLE_BOOST=ON \
+    -DBoost_DIR=${STAGE_PATH}/boost \
+    -DBoost_INCLUDE_DIR=${STAGE_PATH}/include \
     -DWITH_Cairo=OFF \
     -DWITH_NSS3=OFF \
     -DENABLE_CMS=lcms2 \
