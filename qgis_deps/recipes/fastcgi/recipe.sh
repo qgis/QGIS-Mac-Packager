@@ -26,8 +26,6 @@ RECIPE_fastcgi=$RECIPES_PATH/fastcgi
 function prebuild_fastcgi() {
   cd $BUILD_fastcgi
   try rsync -a $BUILD_fastcgi/ ${BUILD_PATH}/fastcgi/build-${ARCH}
-
-
 }
 
 function shouldbuild_fastcgi() {

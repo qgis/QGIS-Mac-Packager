@@ -574,6 +574,7 @@ function download_file() {
     fi
 
     filename=$(basename ${url})
+
     marker_filename=".mark-${filename}"
     do_download=1
 
@@ -639,10 +640,13 @@ function download_file() {
       info "Extract ${pfilename}"
       case ${pfilename} in
         *.tar.gz|*.tar.xz|*.tgz|*.tar.lz )
-          try tar xzf ${pfilename}
+          mkdir ${source_directory}
+          try tar xzf ${pfilename} -C ${source_directory}
           root_directory=$(basename $(try tar tzf ${pfilename}|head -n1))
-          if [[ "${root_directory}" != "${source_directory}" ]]; then
-            mv ${root_directory} ${source_directory}
+          info "${root_directory} ${source_directory}"
+          if [[ "${root_directory}" == "${source_directory}" ]]; then
+            mv ${root_directory}/${root_directory}/* ${source_directory}/
+            rmdir ${root_directory}/${root_directory}
           fi
           ;;
         *.tar.bz2|*.tbz2 )

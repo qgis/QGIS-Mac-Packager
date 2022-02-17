@@ -94,6 +94,8 @@ function build_gdal() {
     --enable-driver-xlsx \
     --enable-driver-mssqlspatial \
     --with-odbc=yes \
+    --with-heif=no \
+    --with-openexr=no \
     --with-liblzma=${STAGE_PATH} \
     --with-zstd=${STAGE_PATH} \
     --with-libtiff=${STAGE_PATH} \
@@ -113,9 +115,10 @@ function build_gdal() {
     --with-expat-inc=${STAGE_PATH}/include \
     --with-expat-lib="-lexpat" \
     --with-poppler=${STAGE_PATH} \
-    --with-pcre2
+    --with-pcre2 \
+    --without-libtool
 
-  check_file_configuration config.status
+  #check_file_configuration config.status
 
   try ${MAKESMP}
   try ${MAKESMP} install
