@@ -1,4 +1,6 @@
 builder/.*deps
+build/
+.certificates/
 
 .DS_Store
 
@@ -14,7 +16,6 @@ __pycache__/
 .idea
 .DS_Store
 .Python
-build/
 build-*/
 develop-eggs/
 dist/

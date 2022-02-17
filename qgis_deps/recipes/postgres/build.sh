@@ -5,8 +5,7 @@ function build_postgres() {
   try ${CONFIGURE} \
     --disable-debug \
     --enable-rpath \
-    --with-openssl \
-    --enable-static=no
+    --with-openssl
 
   check_file_configuration config.status
   try $MAKESMP

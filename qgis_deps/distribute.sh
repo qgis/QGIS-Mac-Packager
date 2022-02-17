@@ -3,6 +3,8 @@
 # set -x
 #set -e
 
+set -o pipefail
+
 source ../scripts/utils.sh
 
 function pop_env() {
@@ -757,6 +759,7 @@ function run_build() {
       source ${RECIPES_PATH}/${module}/build.sh
       # https://stackoverflow.com/a/363239/1548052
       ${fn} 2>&1 | tee ${BUILD_PATH}/last-build.log
+      [[ $? -ne 0 ]] && error "${module} build failed"
       gsed -i "1s;^;Building ${module}\n;" ${BUILD_PATH}/last-build.log
       build_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/build.sh | cut -d\  -f1)
       echo "${build_sum}" > ${BUILD_PATH}/${module}/.build
@@ -768,7 +771,7 @@ function run_build() {
     fn2=$(echo postbuild_${module})
     debug "Call ${fn2}"
     ${fn2} 2>&1 | tee -a ${BUILD_PATH}/last-build.log
-
+    [[ $? -ne 0 ]] && error "${module} postbuild failed"
     fold_pop
   done
 }

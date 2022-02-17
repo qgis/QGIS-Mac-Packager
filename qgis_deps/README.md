@@ -2,7 +2,7 @@ Prerequisities
 --------------
 
 1. XCode and xcode command line tools. Check by opening XCode and try to build hello world
-2. Install QT 5.x from the official Maintanance tool from https://www.qt.io/download. Qt for MacOS should be installed in location /opt/Qt/5.13.1 or similar
+2. Install QT 5.x from the official Maintanance tool from https://www.qt.io/download. Qt for MacOS should be installed in location /opt/Qt/5.15.2 or similar
 3. Cmake and other build tools. You can use homebrew (see scripts/install_brew_dev_packages) or other means
 
 Build QGIS-deps
@@ -11,9 +11,9 @@ Build QGIS-deps
 Note: if you want to just develop QGIS and not the qgis-deps package,
 skip this and go to build QGIS step
 
-1. Update config.conf (usually not needed)
-2. Run `./qgis_deps.bash`
-3. Enjoy
+1. Update config/qgis-deps-dev.conf (usually not needed)
+2. Run `./build-deps.bash`
+3. Take a break and cross your fingers
 
 Upload deps to qgis.org
 ------------------
@@ -22,9 +22,9 @@ Usually this is done on build server and it is not necessary for development of
 the qgis-deps pacakges
 
 1. Build QGIS-Deps
-2. Run `sign_deps.bash`
-3. Run `create_package.bash`
-4. Run `upload_to_qgis2.bash`
+2. Run `sign_deps.bash _DEPS_VERSION_`
+3. Run `create_package.bash _DEPS_VERSION_`
+4. Run `upload_to_qgis2.bash _DEPS_VERSION_`
 
 How to create patch file
 -----------------------

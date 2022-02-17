@@ -3,7 +3,7 @@
 DESC_postgres="Postgres database"
 
 # version of your package
-VERSION_postgres=14.1
+VERSION_postgres=14.2
 
 LINK_libpq=libpq.5.dylib
 
@@ -14,7 +14,7 @@ DEPS_postgres=(openssl)
 URL_postgres=https://ftp.postgresql.org/pub/source/v${VERSION_postgres}/postgresql-${VERSION_postgres}.tar.bz2
 
 # md5 of the package
-MD5_postgres=e301da0fdef1243f576818850d7cc165
+MD5_postgres=aae1ede6de233e2d44437d66bc1cd3b8
 
 # default build path
 BUILD_postgres=$BUILD_PATH/postgres/$(get_directory $URL_postgres)
@@ -26,9 +26,8 @@ RECIPE_postgres=$RECIPES_PATH/postgres
 # (you can apply patch etc here.)
 function prebuild_postgres() {
   cd $BUILD_postgres
-    patch_configure_file configure
+  patch_configure_file configure
   try rsync  -a $BUILD_postgres/ ${BUILD_PATH}/postgres/build-${ARCH}
-
 }
 
 function shouldbuild_postgres() {

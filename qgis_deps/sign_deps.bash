@@ -22,9 +22,15 @@ source ${CONFIG_FILE}
 
 PATH_TO_SIGN=${STAGE_PATH}
 
-if [ ${#APPLE_CODE_SIGN_IDENTITY} -ne 40 ]; then
-  error "SIGN IDENTITY invalid. key must have 40 chars" ;
-fi
+APPLE_CODE_SIGN_IDENTITY={APPLE_CODE_SIGN_IDENTITY:-"Developer ID Application: Open Source Geospatial Foundation"}
+
+# if [[ -z ${APPLE_CODE_SIGN_IDENTITY} ]]; then
+#   APPLE_CODE_SIGN_IDENTITY=$(cat ${DIR}/../.certificates/sign_identity.txt)
+# fi
+#
+# if [ ${#APPLE_CODE_SIGN_IDENTITY} -ne 40 ]; then
+#   error "SIGN IDENTITY invalid. key must have 40 chars" ;
+# fi
 
 echo "Cleaning tmp files"
 for i in *.swp *.orig *.pyc

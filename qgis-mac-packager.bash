@@ -3,28 +3,45 @@
 set -eo pipefail
 
 PWD=$(pwd)
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-if (( $# < 5 )); then
-    echo "usage: $0 package_name config_file major minor patch"
-    echo "example: ./$0 /path/to/qgis_nightly_master_20200717_024956.dmg config/nightly.conf 3 18 0"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+source "${DIR}/../scripts/utils.sh"
+
+function usage() {
+    echo "usage: ${0} QGIS_VERSION CONFIG_NAME PACKAGE_NAME"
+    echo "example: ./${0} nightly 3.18.3 /path/to/qgis_nightly_master_20200717_024956.dmg"
+    exit 0
+}
+
+####################
+# load configuration
+if (( $# < 3 )); then
+    usge
     exit 1
 fi
 
-PACKAGE=$1
-CONFIG_FILE=$2
-export QGIS_MAJOR_VERSION=$3
-export QGIS_MINOR_VERSION=$4
-export QGIS_PATCH_VERSION=$5
-
-echo "qgis-mac-packager.bash QGIS $QGIS_MAJOR_VERSION.$QGIS_MINOR_VERSION.$QGIS_PATCH_VERSION"
-
-echo "Checking config file $CONFIG_FILE"
-if [ ! -f "$CONFIG_FILE" ]; then
-  echo "invalid config file (1st argument) $CONFIG_FILE"
+QGIS_VERSION=${1}
+if [[ ${QGIS_VERSION} =~ (\d+){3} ]]; then
+  QGIS_MAJOR_VERSION=$(echo ${STR} | cut -d. -f1)
+  QGIS_MINOR_VERSION=$(echo ${STR} | cut -d. -f2)
+  QGIS_PATCH_VERSION=$(echo ${STR} | cut -d. -f3)
+else
+  error "QGIS version '${QGIS_VERSION}' is invalid"
 fi
-shift
-source $CONFIG_FILE
+
+QGIS_RELEASE_CONFIG=${2}
+if [[ -z "${QGIS_RELEASE_CONFIG}" ]]; then
+  usage
+  exit 1
+fi
+CONFIG_FILE="${DIR}/../config/${QGIS_RELEASE_CONFIG}.conf"
+if [[ ! -f "${CONFIG_FILE}" ]]; then
+  error "config file ${CONFIG_FILE} does not exist"
+fi
+source ${CONFIG_FILE}
+
+
 
 echo "Verifying the QGIS repo is cloned locally in $QGIS_SOURCE_DIR"
 if [ ! -f "$QGIS_SOURCE_DIR/INSTALL.md" ]; then
