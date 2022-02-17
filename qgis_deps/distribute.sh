@@ -60,6 +60,9 @@ fi
 shift
 source ${CONFIG_FILE}
 
+SOURCE_PACKAGES_PATH=${SOURCE_PACKAGES_PATH:-${ROOT_OUT_PATH}/.packages}
+
+
 if [[ -z ${QGIS_DEPS_RELEASE_VERSION} ]]; then
   error "you need at QGIS_DEPS_RELEASE_VERSION in config.conf"
 fi
@@ -91,8 +94,6 @@ if [ -d ${ROOT_OUT_PATH} ]; then
 else
    error "The root output directory '${ROOT_OUT_PATH}' not found."
 fi
-
-SOURCE_PACKAGES_PATH=${BUILD_PATH}/.packages
 
 # override error function to use pop_env
 function error() {

@@ -12,7 +12,8 @@ env:
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
-  DEPS_BUILD_PATH: ${{ github.workspace }}/build
+  BUILD_PATH: ${{ github.workspace }}/deps/build
+  SOURCE_PACKAGES_PATH: ${{ github.workspace }}/deps/.packages
 
 jobs:
   mac_os_build:
@@ -28,18 +29,29 @@ jobs:
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
           echo "QGIS_PRIVATE_SDKS_PATH=$GITHUB_WORKSPACE/qgis-private-sdks" >> $GITHUB_ENV
           mkdir -p ${BUILD_PATH}
-          sudo mkdir -p ${ROOT_OUT_PATH}
+          mkdir -p ${SOURCE_PACKAGES_PATH}
 
       - name: Cache build
-        id: cache-packages
+        id: cache-build
         uses: pat-s/always-upload-cache@v2.1.5
         with:
           path: ${{ env.BUILD_PATH }}
-          key: cache-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
+          key: cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
           restore-keys: |
-            cache-qgis-deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
-            cache-qgis-deps-dev-
-            cache-qgis-deps-
+            cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
+            cache-qgis-deps-build-dev-
+            cache-qgis-deps-build-
+
+      - name: Cache packages
+        id: cache-packages
+        uses: pat-s/always-upload-cache@v2.1.5
+        with:
+          path: ${{ env.SOURCE_PACKAGES_PATH }}
+          key: cache-qgis-deps-packages-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            cache-qgis-deps-packages-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
+            cache-qgis-deps-packages-dev-
+            cache-qgis-deps-packages-
 
       - name: Fetch QGIS private SDKs
         uses: actions/checkout@v2
@@ -78,7 +90,7 @@ jobs:
       - name: build deps ${{ env.MODULE }}
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -m${{ env.MODULE }}
+          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -f -m${{ env.MODULE }}
         timeout-minutes: 350
 
       - name: Last build log
