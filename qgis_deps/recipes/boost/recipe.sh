@@ -11,9 +11,9 @@ DEPS_boost=(zlib python libicu)
 
 # url of the package
 URL_boost=https://sourceforge.net/projects/boost/files/boost/${VERSION_boost}/boost_${VERSION_boost//./_}.tar.bz2
-
 # from github it does not contain submodules in the build subdir
 # URL_boost=https://github.com/boostorg/boost/archive/boost-${VERSION_boost}.tar.gz
+
 
 # md5 of the package
 MD5_boost=9273c8c4576423562bbe84574b07b2bd
@@ -28,9 +28,9 @@ RECIPE_boost=$RECIPES_PATH/boost
 # (you can apply patch etc here.)
 function prebuild_boost() {
   cd $BUILD_boost
+  # https://github.com/boostorg/python/pull/344
+  try patch --verbose --forward -p1 < ${RECIPE_boost}/patches/python310.patch
   try rsync -a $BUILD_boost/ ${BUILD_PATH}/boost/build-${ARCH}
-
-
 }
 
 function shouldbuild_boost() {
@@ -40,8 +40,6 @@ function shouldbuild_boost() {
     DO_BUILD=0
   fi
 }
-
-
 
 # function called after all the compile have been done
 function postbuild_boost() {
