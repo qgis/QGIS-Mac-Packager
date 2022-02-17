@@ -74,6 +74,8 @@ LINK_gdal_mrsid_raster=gdal_MrSID.dylib
 function prebuild_gdal() {
   cd ${BUILD_gdal}
 
+  try rsync -a $BUILD_gdal/ $BUILD_PATH/gdal/build-$ARCH/
+
   # https://github.com/OSGeo/gdal/commit/cbcfe2c8c5507ea00ef7371029ff94d0bf6f4a77
   try patch --verbose --forward -p1 < ${RECIPE_gdal}/patches/poppler.patch
 

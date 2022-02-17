@@ -558,7 +558,7 @@ function download_file() {
     module=${1}
     url=${2}
     md5=${3}
-    check_recipe=${4}
+    do_prebuild=${4}
 
     if [ ! -d "${BUILD_PATH}/${module}" ]; then
       try mkdir -p ${BUILD_PATH}/${module}
@@ -570,7 +570,7 @@ function download_file() {
 
     if [[ -z ${url} ]]; then
       debug "No package for ${module}"
-      continue
+      return
     fi
 
     filename=$(basename ${url})
@@ -593,7 +593,7 @@ function download_file() {
         else
           # invalid download, remove the file
           error "Module ${module} has invalid md5, redownload."
-          rm ${filename}
+          rm "${filename}"
         fi
       else
         do_download=0
@@ -615,16 +615,16 @@ function download_file() {
       current_md5=$(${MD5SUM} ${filename} | cut -d\  -f1)
       if [[ "${current_md5}" != "${md5}" ]]; then
         error "File ${filename} md5 check failed (got ${current_md5} instead of ${md5})."
-        exit -1
       fi
     fi
 
     source_directory=$(get_directory ${filename})
+    build_directory=${BUILD_PATH}/${module}/build-${ARCH}
 
-    if [[ ${check_recipe} -eq 1 ]] && [[ "$(recipe_has_changed "${module}" recipe)" == "1" ]]; then
+    if [[ ${do_prebuild} -eq 1 ]] && [[ "$(recipe_has_changed "${module}" recipe)" == "1" ]]; then
       info "Recipe has changed, removing the existing source and build directories"
       rm -rf ${BUILD_PATH}/${module}/${source_directory}
-      rm -rf ${BUILD_PATH}/${module}/build-${ARCH}
+      rm -rf ${build_directory}
       if [[ -z ${FORCE_BUILD_FROM_MODULE} ]]; then
         info "From this module, re-build all"
         FORCE_BUILD_FROM_MODULE=${module}
