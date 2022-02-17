@@ -3,7 +3,11 @@ function build_libkml() {
   try cd $BUILD_PATH/libkml/build-$ARCH
   push_env
 
-  try ${CMAKE} $BUILD_libkml
+  try ${CMAKE} \
+    -DBoost_DIR=${STAGE_PATH}/boost \
+    -DBoost_INCLUDE_DIR=${STAGE_PATH}/include \
+    $BUILD_libkml
+
   check_file_configuration CMakeCache.txt
 
   try $NINJA
