@@ -640,13 +640,10 @@ function download_file() {
       info "Extract ${pfilename}"
       case ${pfilename} in
         *.tar.gz|*.tar.xz|*.tgz|*.tar.lz )
-          mkdir ${source_directory}
-          try tar xzf ${pfilename} -C ${source_directory}
+          try tar xzf ${pfilename}
           root_directory=$(basename $(try tar tzf ${pfilename}|head -n1))
-          info "${root_directory} ${source_directory}"
-          if [[ "${root_directory}" == "${source_directory}" ]]; then
-            mv ${root_directory}/${root_directory}/* ${source_directory}/
-            rmdir ${root_directory}/${root_directory}
+          if [[ "${root_directory}" != "${source_directory}" ]]; then
+            mv ${root_directory} ${source_directory}
           fi
           ;;
         *.tar.bz2|*.tbz2 )

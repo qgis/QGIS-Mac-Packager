@@ -26,7 +26,7 @@ RECIPE_libtool=$RECIPES_PATH/libtool
 function prebuild_libtool() {
   cd $BUILD_libtool
 
-    patch_configure_file configure
+  patch_configure_file configure
   try rsync   -a $BUILD_libtool/ $BUILD_PATH/libtool/build-$ARCH/
 }
 
