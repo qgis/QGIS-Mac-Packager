@@ -92,5 +92,5 @@ jobs:
           echo "Building QGIS ${CI_RELEASE} version ${MAJOR}.${MINOR}.${PATCH}"
           
           cd ${PACKAGER_DIR}
-          ./qgis-mac-package.bash ${CI_RELEASE} ${MAJOR}.${MINOR}.${PATCH} ${CI_RELEASE}.dmg
+          ./qgis-mac-packager.bash ${CI_RELEASE} ${MAJOR}.${MINOR}.${PATCH} ${CI_RELEASE}.dmg
 
