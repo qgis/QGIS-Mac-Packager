@@ -1,0 +1,80 @@
+name: 🍏 MacOS Dev
+on:
+  workflow_dispatch:
+  push:
+    paths:
+    - 'config/**'
+    - 'qgis_build/**'
+    - '.github/workflows/qgis.yml'
+
+env:
+  CI_QT_VERSION: 5.15.2 # need in sync with CI_CONFIG's version
+  CI_DEPS_VERSION: 0.8.0 # need in sync with CI_CONFIG's version
+  CI_RELEASE: nightly
+  CCACHE_DIR: /Users/runner/work/ccache
+  CI_BASEDIR: /Users/runner/work/builds/nightly
+
+
+jobs:
+  mac_os_build:
+    if: github.repository == 'qgis/QGIS-Mac-Packager'
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}
+          path: builds/${CI_RELEASE}/QGIS-Mac-Packager
+
+      - uses: actions/checkout@v2
+        with:
+          repository: qgis/QGIS
+          path: builds/${CI_RELEASE}/QGIS
+
+      - name: Prepare build cache for branch/tag
+        uses: pat-s/always-upload-cache@v2.1.5
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          # The branch or tag ref that triggered the workflow run. For branches this in the format refs/heads/<branch_name>, and for tags it is refs/tags/<tag_name>
+          key: build-mac-ccache-${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            build-mac-ccache-${{ github.ref }}-
+            build-mac-ccache-refs/heads/master-
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          dir: ${{ github.workspace }}
+          cached: ${{ steps.cache-qt.outputs.cache-hit }}
+          version: '5.15.2'
+          host: 'mac'
+          target: 'desktop'
+
+      - name: move Qt to /opt
+        run: |
+          sudo mkdir -p /opt/Qt
+          sudo mv ${{ github.workspace }}/Qt /opt
+
+      - name: Download qgis-deps
+        if: steps.cache-deps.outputs.cache-hit == 'true'
+        run: |
+          sudo mkdir -p /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
+          cd /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
+          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partaa
+          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partab
+          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partac
+          cat qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.part* > tar xzvf -
+          ls /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
+          ls /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}/stage
+
+      - name: Install ccache
+        run: |
+          mkdir -p ${CCACHE_DIR}
+          brew install ccache
+          ccache --set-config=max_size=2.0G
+          ccache -s
+
+      - name: Run pkg
+        run: |
+          cd builds/${CI_RELEASE}/QGIS-Mac-Packager
+          ./scripts/run_pkg config/${CI_RELEASE}.conf
+

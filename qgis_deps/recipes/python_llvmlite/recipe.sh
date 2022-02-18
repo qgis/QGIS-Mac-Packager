@@ -19,31 +19,32 @@ MD5_python_llvmlite=2ffb8cfa38d25343415a83180682e1bf
 MD5_llvm=31eb9ce73dd2a0f8dcab8319fb03f8fc
 
 # default build path
-BUILD_python_llvmlite=${DEPS_BUILD_PATH}/python_llvmlite/$(get_directory $URL_python_llvmlite)
-BUILD_llvm=${DEPS_BUILD_PATH}/python_llvmlite/llvm-$VERSION_llvm.src
+BUILD_python_llvmlite=${DEPS_BUILD_PATH}/python_llvmlite/$(get_directory ${URL_python_llvmlite})
+BUILD_llvm=${DEPS_BUILD_PATH}/python_llvmlite/llvm-${VERSION_llvm}.src
 
 # default recipe path
-RECIPE_python_llvmlite=$RECIPES_PATH/python_llvmlite
+RECIPE_python_llvmlite=${RECIPES_PATH}/python_llvmlite
 
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_python_llvmlite() {
-  cd $BUILD_python_llvmlite
+  cd ${BUILD_python_llvmlite}
 
+  rm -rf ${BUILD_llvm}
   download_file python_llvmlite ${URL_llvm} ${MD5_llvm} 0
 
-  try cp $BUILD_python_llvmlite/conda-recipes/llvm-lto-static.patch $BUILD_llvm/
-  try cp $BUILD_python_llvmlite/conda-recipes/partial-testing.patch $BUILD_llvm/
-  try cp $BUILD_python_llvmlite/conda-recipes/intel-D47188-svml-VF.patch $BUILD_llvm/
-  try cp $BUILD_python_llvmlite/conda-recipes/0001-Revert-Limit-size-of-non-GlobalValue-name.patch $BUILD_llvm/
+  try cp ${BUILD_python_llvmlite}/conda-recipes/llvm-lto-static.patch ${BUILD_llvm}/
+  try cp ${BUILD_python_llvmlite}/conda-recipes/partial-testing.patch ${BUILD_llvm}/
+  try cp ${BUILD_python_llvmlite}/conda-recipes/intel-D47188-svml-VF.patch ${BUILD_llvm}/
+  try cp ${BUILD_python_llvmlite}/conda-recipes/0001-Revert-Limit-size-of-non-GlobalValue-name.patch ${BUILD_llvm}/
 
-  cd $BUILD_llvm/
+  cd ${BUILD_llvm}/
   try patch -p1 -i llvm-lto-static.patch
   try patch -p1 -i partial-testing.patch
   try patch -p1 -i intel-D47188-svml-VF.patch
   try patch -p1 -i 0001-Revert-Limit-size-of-non-GlobalValue-name.patch
 
-  cd $BUILD_python_llvmlite
+  cd ${BUILD_python_llvmlite}
 }
 
 function shouldbuild_python_llvmlite() {

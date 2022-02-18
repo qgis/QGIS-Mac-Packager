@@ -664,11 +664,13 @@ function download_file() {
       esac
 
       # run prebuild + patch
-      fn="prebuild_${module}"
-      debug "Call ${fn}"
-      ${fn}
-      recipe_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/recipe.sh | cut -d\  -f1)
-      echo "${recipe_sum}" > ${DEPS_BUILD_PATH}/${module}/.recipe
+      if [[ ${do_prebuild} -eq 1 ]]; then
+        fn="prebuild_${module}"
+        debug "Call ${fn}"
+        ${fn}
+        recipe_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/recipe.sh | cut -d\  -f1)
+        echo "${recipe_sum}" > ${DEPS_BUILD_PATH}/${module}/.recipe
+      fi
     fi
 }
 

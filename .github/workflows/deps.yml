@@ -3,7 +3,6 @@ on:
   workflow_dispatch:
   push:
     paths:
-    - 'config/deps/**'
     - 'qgis_deps/**'
     - '.github/workflows/deps.yml'
 
