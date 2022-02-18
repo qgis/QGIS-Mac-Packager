@@ -12,6 +12,7 @@ env:
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
   SOURCE_PACKAGES_PATH: ${{ github.workspace }}/deps/.packages
+  BUILD_CACHE_PATH: ${{ github.workspace }}/deps/build
 
 jobs:
   mac_os_build:
@@ -26,20 +27,23 @@ jobs:
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
           echo "QGIS_PRIVATE_SDKS_PATH=${GITHUB_WORKSPACE}/qgis-private-sdks" >> $GITHUB_ENV
-          # mkdir -p ${DEPS_BUILD_PATH}
           mkdir -p ${SOURCE_PACKAGES_PATH}
           sudo mkdir -p ${ROOT_OUT_PATH}
+          sudo mkdir -p ${DEPS_BUILD_PATH}
 
-#      - name: Cache build
-#        id: cache-build
-#        uses: pat-s/always-upload-cache@v2.1.5
-#        with:
-#          path: ${{ env.DEPS_BUILD_PATH }}
-#          key: cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
-#          restore-keys: |
-#            cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
-#            cache-qgis-deps-build-dev-
-#            cache-qgis-deps-build-
+      - name: Cache build
+        id: cache-build
+        uses: pat-s/always-upload-cache@v2.1.5
+        with:
+          path: ${{ env.BUILD_CACHE_PATH }}
+          key: cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
+            cache-qgis-deps-build-dev-
+            cache-qgis-deps-build-
+
+      - name: Move cache build
+        run: sudo mv ${{ env.BUILD_CACHE_PATH }} ${DEPS_BUILD_PATH}
 
       - name: Cache packages
         id: cache-packages
@@ -98,6 +102,9 @@ jobs:
         run: |
           cat ${DEPS_BUILD_PATH}/last-build.log
           exit 1
+
+      - name: Copy build to cache dir
+        run: sudo cp ${DEPS_BUILD_PATH} ${{ env.BUILD_CACHE_PATH }}
 
       - name: create package
         run: |
