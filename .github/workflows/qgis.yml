@@ -91,5 +91,6 @@ jobs:
           PATCH=$(sed -ne 's/[sS][eE][tT](CPACK_PACKAGE_VERSION_PATCH "\([0-9]*\)")/\1/p' ${QGIS_SOURCE_DIR}/CMakeLists.txt)
           echo "Building QGIS ${CI_RELEASE} version ${MAJOR}.${MINOR}.${PATCH}"
           
+          cd ${PACKAGER_DIR}
           ./qgis-mac-package.bash ${CI_RELEASE} ${MAJOR}.${MINOR}.${PATCH} ${CI_RELEASE}.dmg
 
