@@ -656,7 +656,7 @@ function download_file() {
           ;;
         *.zip )
           try unzip ${pfilename}
-          root_directory=$(basename $(try unzip -l ${pfilename}|sed -n 5p|awk '{print ${4}}'))
+          root_directory=$(basename $(try unzip -l ${pfilename}|sed -n 5p|awk '{print $4}'))
           if [[ "${root_directory}" != "${source_directory}" ]]; then
             mv ${root_directory} ${source_directory}
           fi
