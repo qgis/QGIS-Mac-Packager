@@ -26,7 +26,7 @@ jobs:
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
           echo "QGIS_PRIVATE_SDKS_PATH=${GITHUB_WORKSPACE}/qgis-private-sdks" >> $GITHUB_ENV
-          mkdir -p ${DEPS_BUILD_PATH}
+          # mkdir -p ${DEPS_BUILD_PATH}
           mkdir -p ${SOURCE_PACKAGES_PATH}
           sudo mkdir -p ${ROOT_OUT_PATH}
 
