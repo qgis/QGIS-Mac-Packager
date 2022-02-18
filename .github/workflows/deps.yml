@@ -64,9 +64,7 @@ jobs:
         run: |
           FILE="private-sdk.tar.gz"
           PARSER=". | map(select(.tag_name == \"${{ env.QGIS_PRIVATE_SDKS_VERSION }}\"))[0].assets | map(select(.name == \"$FILE\"))[0].id"
-          ASSET_ID=$(curl -H "Authorization: token ${{ secrets.GH_PAT }}" \
-                          -H "Accept: application/vnd.github.v3.raw" \ 
-                          -s https://api.github.com/repos/qgis/qgis-private-sdks/releases | jq "${PARSER}")
+          ASSET_ID=$(curl -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github.v3.raw" -s https://api.github.com/repos/qgis/qgis-private-sdks/releases | jq "${PARSER}")
           echo "asset id: ${ASSET_ID}"
           wget -q --auth-no-challenge --header='Accept:application/octet-stream' https://${{ secrets.GH_PAT }}:@api.github.com/repos/qgis/qgis-private-sdks/releases/assets/${ASSET_ID} -O ${FILE}
           mkdir ${{ env.QGIS_PRIVATE_SDK_PATH }}
