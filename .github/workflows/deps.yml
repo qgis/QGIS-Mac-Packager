@@ -57,6 +57,7 @@ jobs:
         with:
           repository: qgis/qgis-private-sdks
           path: qgis-private-sdks
+          lfs: true
           fetch-depth: 1
           token: ${{ secrets.GH_PAT }}
 
