@@ -13,6 +13,8 @@ env:
   PACKAGES_OUTPUT: ${{ github.workspace }}
   SOURCE_PACKAGES_PATH: ${{ github.workspace }}/deps/.packages
   BUILD_CACHE_PATH: ${{ github.workspace }}/deps/build
+  QGIS_PRIVATE_SDKS_PATH: ${{ github.workspace }}/qgis-private-sdks
+
 
 jobs:
   mac_os_build:
@@ -27,7 +29,6 @@ jobs:
           echo "DEPS_BUILD_PATH=${DEPS_BUILD_PATH}" >> $GITHUB_ENV
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
-          echo "QGIS_PRIVATE_SDKS_PATH=${GITHUB_WORKSPACE}/qgis-private-sdks" >> $GITHUB_ENV
           mkdir -p ${SOURCE_PACKAGES_PATH}
           sudo mkdir -p ${ROOT_OUT_PATH}
           sudo mkdir -p ${DEPS_BUILD_PATH}
@@ -58,14 +59,19 @@ jobs:
             cache-qgis-deps-packages-dev-
             cache-qgis-deps-packages-
 
-      - name: Fetch QGIS private SDKs
-        uses: actions/checkout@v2
+      - name: Fetch QGIS private SDK
+        uses: dsaltares/fetch-gh-release-asset@master
         with:
-          repository: qgis/qgis-private-sdks
-          path: qgis-private-sdks
-          lfs: true
-          fetch-depth: 1
+          repo: qgis/qgis-private-sdks
+          version: latest
+          file: private-sdk.tar.gz
           token: ${{ secrets.GH_PAT }}
+
+      - name: Restore private SDK
+        run: |
+            mkdir ${{ env.QGIS_PRIVATE_SDKS_PATH }}
+            cd ${{ env.QGIS_PRIVATE_SDKS_PATH }}
+            tar xzf ../private-sdk.tar.gz
 
       - run: brew install python3
 
