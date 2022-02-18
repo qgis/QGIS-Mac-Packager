@@ -9,10 +9,10 @@ on:
 
 env:
   CI_RELEASE: nightly
-  CCACHE_DIR: /Users/runner/work/ccache
-  PACKAGER_DIR: /Users/runner/work/packager
-  QGIS_SOURCE_DIR: /Users/runner/work/QGIS
-  QGIS_BUILD_DIR: /Users/runner/work/build
+  CCACHE_DIR: ${{ github.workspace }}/ccache
+  PACKAGER_DIR: ${{ github.workspace }}/packager
+  QGIS_SOURCE_DIR: ${{ github.workspace }}/QGIS
+  QGIS_BUILD_DIR: ${{ github.workspace }}/build
 
 
 jobs:
