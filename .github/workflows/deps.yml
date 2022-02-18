@@ -23,6 +23,7 @@ jobs:
       - name: Set environment
         run: |
           source qgis_deps/config/deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}.conf
+          echo "ROOT_OUT_PATH=${ROOT_OUT_PATH}" >> $GITHUB_ENV
           echo "DEPS_BUILD_PATH=${DEPS_BUILD_PATH}" >> $GITHUB_ENV
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
@@ -43,7 +44,7 @@ jobs:
             cache-qgis-deps-build-
 
       - name: Move cache build
-        run: sudo mv ${{ env.BUILD_CACHE_PATH }} ${DEPS_BUILD_PATH}
+        run: sudo mv ${{ env.BUILD_CACHE_PATH }} ${ROOT_OUT_PATH}
 
       - name: Cache packages
         id: cache-packages
