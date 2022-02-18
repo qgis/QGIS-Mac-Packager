@@ -1,4 +1,4 @@
-name: Deps
+name: 🍏 Build deps
 on:
   workflow_dispatch:
   push:

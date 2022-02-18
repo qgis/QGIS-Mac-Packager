@@ -1,4 +1,4 @@
-name: 🍏 MacOS Dev
+name: 🍏 Build QGIS
 on:
   workflow_dispatch:
   push:
@@ -9,7 +9,7 @@ on:
 
 env:
   CI_QT_VERSION: 5.15.2 # need in sync with CI_CONFIG's version
-  CI_DEPS_VERSION: 0.8.0 # need in sync with CI_CONFIG's version
+  CI_DEPS_VERSION: 0.9.0 # need in sync with CI_CONFIG's version
   CI_RELEASE: nightly
   CCACHE_DIR: /Users/runner/work/ccache
   CI_BASEDIR: /Users/runner/work/builds/nightly
