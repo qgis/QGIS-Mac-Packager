@@ -61,14 +61,6 @@ jobs:
             cache-qgis-deps-packages-
 
       - name: Fetch QGIS private SDK
-        uses: dsaltares/fetch-gh-release-asset@master
-        with:
-          repo: qgis/qgis-private-sdks
-          version: latest
-          file: private-sdk.tar.gz
-          token: ${{ secrets.GH_PAT }}
-
-      - name: Restore private SDK
         run: |
           FILE="private-sdk.tar.gz"
           PARSER=". | map(select(.tag_name == \"${{ env.QGIS_PRIVATE_SDKS_VERSION }}\"))[0].assets | map(select(.name == \"$FILE\"))[0].id"
