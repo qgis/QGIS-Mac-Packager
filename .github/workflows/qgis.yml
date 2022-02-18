@@ -28,6 +28,7 @@ jobs:
           QGIS_DEPS_VERSION=$(echo ${QGIS_DEPS_SDK_VERSION} | sed -r 's/([0-9]+\.[0-9]+)\.[0-9]+$/\1/')
           QGIS_DEPS_PATH=/opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
           echo "QGIS_DEPS_VERSION=${QGIS_DEPS_VERSION}" >> $GITHUB_ENV
+          echo "QGIS_DEPS_SDK_VERSION=${QGIS_DEPS_SDK_VERSION}" >> $GITHUB_ENV
           echo "QGIS_DEPS_PATH=${QGIS_DEPS_PATH}" >> $GITHUB_ENV
           sudo mkdir -p ${QGIS_DEPS_PATH}
 
