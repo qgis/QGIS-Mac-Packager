@@ -39,6 +39,8 @@ else
 fi
 
 source ${CONFIG_FILE}
+source ${QGIS_DEPS_STAGE_PATH}/deps-${QGIS_DEPS_VERSION}.conf
+
 
 CC="/usr/bin/clang"
 CXX="/usr/bin/clang++"
