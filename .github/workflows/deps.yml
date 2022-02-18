@@ -11,7 +11,6 @@ env:
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
-  DEPS_BUILD_PATH: ${{ github.workspace }}/deps/build
   SOURCE_PACKAGES_PATH: ${{ github.workspace }}/deps/.packages
 
 jobs:
@@ -23,23 +22,24 @@ jobs:
       - name: Set environment
         run: |
           source qgis_deps/config/deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}.conf
+          echo "DEPS_BUILD_PATH=${DEPS_BUILD_PATH}" >> $GITHUB_ENV
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
-          echo "QGIS_PRIVATE_SDKS_PATH=$GITHUB_WORKSPACE/qgis-private-sdks" >> $GITHUB_ENV
+          echo "QGIS_PRIVATE_SDKS_PATH=${GITHUB_WORKSPACE}/qgis-private-sdks" >> $GITHUB_ENV
           mkdir -p ${DEPS_BUILD_PATH}
           mkdir -p ${SOURCE_PACKAGES_PATH}
           sudo mkdir -p ${ROOT_OUT_PATH}
 
-      - name: Cache build
-        id: cache-build
-        uses: pat-s/always-upload-cache@v2.1.5
-        with:
-          path: ${{ env.DEPS_BUILD_PATH }}
-          key: cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
-          restore-keys: |
-            cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
-            cache-qgis-deps-build-dev-
-            cache-qgis-deps-build-
+#      - name: Cache build
+#        id: cache-build
+#        uses: pat-s/always-upload-cache@v2.1.5
+#        with:
+#          path: ${{ env.DEPS_BUILD_PATH }}
+#          key: cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
+#          restore-keys: |
+#            cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
+#            cache-qgis-deps-build-dev-
+#            cache-qgis-deps-build-
 
       - name: Cache packages
         id: cache-packages

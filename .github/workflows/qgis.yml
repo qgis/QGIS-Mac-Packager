@@ -24,7 +24,7 @@ jobs:
 
       - name: Set environment
         run: |
-          source config/${{ env.CI_RELEASE }}.conf$
+          source config/${{ env.CI_RELEASE }}.conf
           QGIS_DEPS_PATH=/opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
           echo "QGIS_DEPS_VERSION=${QGIS_DEPS_VERSION}" >> $GITHUB_ENV
           echo "QGIS_DEPS_PATH=${QGIS_DEPS_PATH}" >> $GITHUB_ENV
