@@ -2,26 +2,43 @@
 
 set -euo pipefail
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+source "${DIR}/../scripts/utils.sh"
+
+function usage() {
+    echo "usage: ${0} QGIS_VERSION CONFIG_NAME PACKAGE"
+    echo "example: ./${0} nightly 3.18.3 PACKAGE"
+    exit 0
+}
+
+####################
 # load configuration
-if (( $# < 5 )); then
-    echo "qgis_package: $0 <path/to>/config/<my>.conf major minor patch package_file ..."
+if (( $# < 2 )); then
+    usge
     exit 1
 fi
 
-CONFIG_FILE=$1
-if [ ! -f "$CONFIG_FILE" ]; then
-  echo "invalid config file (1st argument) $CONFIG_FILE"
+QGIS_VERSION=${1}
+if [[ ${QGIS_VERSION} =~ (\d+){3} ]]; then
+  QGIS_MAJOR_VERSION=$(echo ${STR} | cut -d. -f1)
+  QGIS_MINOR_VERSION=$(echo ${STR} | cut -d. -f2)
+  QGIS_PATCH_VERSION=$(echo ${STR} | cut -d. -f3)
+else
+  error "QGIS version '${QGIS_VERSION}' is invalid"
+fi
+
+QGIS_RELEASE_CONFIG=${2}
+if [[ -z "${QGIS_RELEASE_CONFIG}" ]]; then
+  usage
   exit 1
 fi
-shift
-export QGIS_MAJOR_VERSION=$1
-shift
-export QGIS_MINOR_VERSION=$1
-shift
-export QGIS_PATCH_VERSION=$1
-shift
-source $CONFIG_FILE
-PACKAGE=$1
+CONFIG_FILE="${DIR}/../config/${QGIS_RELEASE_CONFIG}.conf"
+if [[ ! -f "${CONFIG_FILE}" ]]; then
+  error "config file ${CONFIG_FILE} does not exist"
+fi
+source ${CONFIG_FILE}
+PACKAGE=$3
 
 QGIS_APP="$BUNDLE_DIR/$QGIS_APP_NAME"
 if [ ! -d "$QGIS_APP" ]; then

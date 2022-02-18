@@ -5,7 +5,7 @@ DESC_qwt="Qt Widgets for Technical Applications"
 # version of your package
 VERSION_qwt=6.2.0
 
-VERSION_qwt_major=$(echo ${VERSION_proj_data} | gsed -r 's/([0-9]+)\..*$/\1/')
+VERSION_qwt_major=$(echo ${VERSION_qwt} | gsed -r 's/([0-9]+)\..*$/\1/')
 
 # dependencies of this recipe
 DEPS_qwt=()
