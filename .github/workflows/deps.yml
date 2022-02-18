@@ -44,6 +44,7 @@ jobs:
             cache-qgis-deps-build-
 
       - name: Move cache build
+        if: steps.cache-build.outputs.cache-hit == 'true'
         run: sudo mv ${{ env.BUILD_CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
 
       - name: Cache packages
