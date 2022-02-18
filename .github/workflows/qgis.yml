@@ -25,7 +25,19 @@ jobs:
           repository: ${{ github.repository }}
           path: builds/${CI_RELEASE}/QGIS-Mac-Packager
 
-      - uses: actions/checkout@v2
+      - name: Download qgis-deps
+        run: |
+          sudo mkdir -p /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
+          cd /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
+          wget https://github.com/qgis/QGIS-Mac-Packager/releases/download/qgis-deps-0.9.0/qgis-deps-0.9.0.tar.gz.partaa
+          wget https://github.com/qgis/QGIS-Mac-Packager/releases/download/qgis-deps-0.9.0/qgis-deps-0.9.0.tar.gz.partab
+          wget https://github.com/qgis/QGIS-Mac-Packager/releases/download/qgis-deps-0.9.0/qgis-deps-0.9.0.tar.gz.partac
+          cat qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.part* > tar xzvf -
+          ls /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
+          ls /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}/stage
+
+      - name: fetch QGIS
+        uses: actions/checkout@v2
         with:
           repository: qgis/QGIS
           path: builds/${CI_RELEASE}/QGIS
@@ -39,17 +51,6 @@ jobs:
           restore-keys: |
             build-mac-ccache-${{ github.ref }}-
             build-mac-ccache-refs/heads/master-
-
-      - name: Download qgis-deps
-        run: |
-          sudo mkdir -p /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
-          cd /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
-          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partaa
-          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partab
-          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partac
-          cat qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.part* > tar xzvf -
-          ls /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
-          ls /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}/stage
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
