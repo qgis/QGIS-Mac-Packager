@@ -30,16 +30,16 @@ CONFIG_FILE="${DIR}/config/${QGIS_RELEASE_CONFIG}.conf"
 if [[ ! -f "${CONFIG_FILE}" ]]; then
   error "config file ${CONFIG_FILE} does not exist"
 fi
-source ${CONFIG_FILE}
-
 QGIS_VERSION=${2}
 if [[ ${QGIS_VERSION} =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
-  QGIS_MAJOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f1)
-  QGIS_MINOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f2)
-  QGIS_PATCH_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f3)
+  export QGIS_MAJOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f1)
+  export QGIS_MINOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f2)
+  export QGIS_PATCH_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f3)
 else
   error "QGIS version '${QGIS_VERSION}' is invalid"
 fi
+
+source ${CONFIG_FILE}
 
 source ${QGIS_DEPS_STAGE_PATH}/deps-${QGIS_DEPS_VERSION}.conf
 
@@ -58,14 +58,14 @@ if [ ! -d "${QGIS_DEPS_STAGE_PATH}" ]; then
   error "missing QGIS-DEPS in ${QGIS_DEPS_STAGE_PATH}, install version ${QGIS_DEPS_SDK_VERSION} from ${QGIS_DOWNLOAD_ROOT_URL}/deps/"
 fi
 
-echo "Building QGIS"
-try ${DIR}/qgis_build/qgis_build.bash "${QGIS_RELEASE_CONFIG}" ${QGIS_VERSION}
+echo "Building QGIS ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}"
+try ${DIR}/qgis_build/qgis_build.bash ${QGIS_RELEASE_CONFIG} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
 
 echo "Bundle QGIS"
-try ${DIR}/qgis_bundle/qgis_bundle.bash "${QGIS_RELEASE_CONFIG}" ${QGIS_VERSION}
+try ${DIR}/qgis_bundle/qgis_bundle.bash ${QGIS_RELEASE_CONFIG} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
 
 echo "Package QGIS to ${PACKAGE}"
-try ${DIR}/qgis_package/qgis_package.bash "${QGIS_RELEASE_CONFIG}" ${QGIS_VERSION} "${PACKAGE}"
+try ${DIR}/qgis_package/qgis_package.bash ${QGIS_RELEASE_CONFIG} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION} "${PACKAGE}"
 
 echo "All done (qgis-mac-packager.bash)"
 cd "${PWD}"
