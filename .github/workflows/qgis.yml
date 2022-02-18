@@ -29,13 +29,15 @@ jobs:
       - name: Set environment
         run: |
           source ${PACKAGER_DIR}/config/${RELEASE}.conf
-          QGIS_DEPS_VERSION=$(echo ${QGIS_DEPS_SDK_VERSION} | sed -r 's/([0-9]+\.[0-9]+)\.[0-9]+$/\1/')
           QGIS_DEPS_PATH=/opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
           echo "QGIS_DEPS_VERSION=${QGIS_DEPS_VERSION}" >> $GITHUB_ENV
-          echo "QGIS_DEPS_SDK_VERSION=${QGIS_DEPS_SDK_VERSION}" >> $GITHUB_ENV
-          echo "QGIS_DEPS_PATH=${QGIS_DEPS_PATH}" >> $GITHUB_ENV
           echo "QGIS_DEPS_PATH=${QGIS_DEPS_PATH}" >> $GITHUB_ENV
           sudo mkdir -p ${QGIS_DEPS_PATH}
+          
+          PARSER=". | map(select(.tag_name | startswith(\"qgis-deps-${QGIS_DEPS_VERSION}\")).tag_name) | max"
+          QGIS_DEPS_SDK_VERSION=$(curl -H "Accept: application/vnd.github.v3.raw" -s https://api.github.com/repos/qgis/qgis-Mac-Packager/releases | jq "${PARSER}")
+          echo "Latest deps release for ${QGIS_DEPS_VERSION}: ${QGIS_DEPS_SDK_VERSION}
+          echo "QGIS_DEPS_SDK_VERSION=${QGIS_DEPS_SDK_VERSION}" >> $GITHUB_ENV
 
       - name: Download qgis-deps
         run: |
