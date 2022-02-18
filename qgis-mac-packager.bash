@@ -6,7 +6,7 @@ PWD=$(pwd)
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-source "${DIR}/../scripts/utils.sh"
+source "${DIR}/scripts/utils.sh"
 
 function usage() {
     echo "usage: ${0} QGIS_VERSION CONFIG_NAME PACKAGE_NAME"

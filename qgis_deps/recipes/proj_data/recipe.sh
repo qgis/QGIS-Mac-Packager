@@ -12,10 +12,10 @@ VERSION_proj_data_major=$(echo ${VERSION_proj_data} | gsed -r 's/([0-9]+\.[0-9]+
 DEPS_proj_data=(proj)
 
 # url of the package
-URL_proj_data=https://github.com/OSGeo/PROJ-data/releases/download/${VERSION_proj_data}/proj-data-${VERSION_proj_data_major}.tar.gz
+URL_proj_data=https://github.com/OSGeo/PROJ-data/archive/refs/tags/${VERSION_proj_data}.zip
 
 # md5 of the package
-MD5_proj_data=13bce71678cb0aa09c27219a30050fda
+MD5_proj_data=dcd10f7e12d81ac38a837970e3af3c64
 
 # default build path
 BUILD_proj_data=${DEPS_BUILD_PATH}/proj_data/$(get_directory $URL_proj_data)
@@ -27,8 +27,6 @@ RECIPE_proj_data=$RECIPES_PATH/proj_data
 # (you can apply patch etc here.)
 function prebuild_proj_data() {
   cd $BUILD_proj_data
-
-
 }
 
 function shouldbuild_proj_data() {

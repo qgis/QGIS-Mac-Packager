@@ -6,6 +6,7 @@ on:
     - 'config/**'
     - 'qgis_build/**'
     - '.github/workflows/qgis.yml'
+    - 'qgis-mac-packager.bash'
 
 env:
   CI_RELEASE: nightly
