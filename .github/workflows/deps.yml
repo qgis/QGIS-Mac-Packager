@@ -14,7 +14,7 @@ env:
   SOURCE_PACKAGES_PATH: ${{ github.workspace }}/deps/.packages
   BUILD_CACHE_PATH: ${{ github.workspace }}/deps/build
   QGIS_PRIVATE_SDK_PATH: ${{ github.workspace }}/qgis-private-sdks
-  QGIS_PRIVATE_SDK_VERSION: 0.10
+  QGIS_PRIVATE_SDK_VERSION: "0.10"
 
 
 jobs:
