@@ -7,7 +7,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source "${DIR}/../scripts/utils.sh"
 
 function usage() {
-    echo "usage: ${0} QGIS_VERSION CONFIG_NAME PACKAGE"
+    echo "usage: ${0} CONFIG_NAME QGIS_VERSION PACKAGE"
     echo "example: ./${0} nightly 3.18.3 PACKAGE"
     exit 0
 }
@@ -19,16 +19,7 @@ if (( $# < 2 )); then
     exit 1
 fi
 
-QGIS_VERSION=${1}
-if [[ ${QGIS_VERSION} =~ (\d+){3} ]]; then
-  QGIS_MAJOR_VERSION=$(echo ${STR} | cut -d. -f1)
-  QGIS_MINOR_VERSION=$(echo ${STR} | cut -d. -f2)
-  QGIS_PATCH_VERSION=$(echo ${STR} | cut -d. -f3)
-else
-  error "QGIS version '${QGIS_VERSION}' is invalid"
-fi
-
-QGIS_RELEASE_CONFIG=${2}
+QGIS_RELEASE_CONFIG=${1}
 if [[ -z "${QGIS_RELEASE_CONFIG}" ]]; then
   usage
   exit 1
@@ -38,6 +29,15 @@ if [[ ! -f "${CONFIG_FILE}" ]]; then
   error "config file ${CONFIG_FILE} does not exist"
 fi
 source ${CONFIG_FILE}
+
+QGIS_VERSION=${2}
+if [[ ${QGIS_VERSION} =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
+  QGIS_MAJOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f1)
+  QGIS_MINOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f2)
+  QGIS_PATCH_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f3)
+else
+  error "QGIS version '${QGIS_VERSION}' is invalid"
+fi
 PACKAGE=$3
 
 QGIS_APP="$BUNDLE_DIR/$QGIS_APP_NAME"

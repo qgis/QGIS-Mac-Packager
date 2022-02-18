@@ -21,31 +21,31 @@ if (( $# < 3 )); then
     exit 1
 fi
 
-QGIS_VERSION=${1}
-if [[ ${QGIS_VERSION} =~ (\d+){3} ]]; then
-  QGIS_MAJOR_VERSION=$(echo ${STR} | cut -d. -f1)
-  QGIS_MINOR_VERSION=$(echo ${STR} | cut -d. -f2)
-  QGIS_PATCH_VERSION=$(echo ${STR} | cut -d. -f3)
-else
-  error "QGIS version '${QGIS_VERSION}' is invalid"
-fi
-
-QGIS_RELEASE_CONFIG=${2}
+QGIS_RELEASE_CONFIG=${1}
 if [[ -z "${QGIS_RELEASE_CONFIG}" ]]; then
   usage
   exit 1
 fi
-CONFIG_FILE="${DIR}/../config/${QGIS_RELEASE_CONFIG}.conf"
+CONFIG_FILE="${DIR}/config/${QGIS_RELEASE_CONFIG}.conf"
 if [[ ! -f "${CONFIG_FILE}" ]]; then
   error "config file ${CONFIG_FILE} does not exist"
 fi
 source ${CONFIG_FILE}
 
+QGIS_VERSION=${2}
+if [[ ${QGIS_VERSION} =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
+  QGIS_MAJOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f1)
+  QGIS_MINOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f2)
+  QGIS_PATCH_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f3)
+else
+  error "QGIS version '${QGIS_VERSION}' is invalid"
+fi
 
+source ${QGIS_DEPS_STAGE_PATH}/deps-${QGIS_DEPS_VERSION}.conf
 
 echo "Verifying the QGIS repo is cloned locally in ${QGIS_SOURCE_DIR}"
 if [ ! -f "${QGIS_SOURCE_DIR}/INSTALL.md" ]; then
-  error "missing ${QGIS_SOURCE_DIR}/INSTALL.md"
+  error "missing QGIS source dir at ${QGIS_SOURCE_DIR}"
 fi
 
 echo "Verifying the Qt package installation"
@@ -59,13 +59,13 @@ if [ ! -d "${QGIS_DEPS_STAGE_PATH}" ]; then
 fi
 
 echo "Building QGIS"
-${DIR}/qgis_build/qgis_build.bash "${CONFIG_FILE}" ${QGIS_MAJOR_VERSION} ${QGIS_MINOR_VERSION} ${QGIS_PATCH_VERSION}
+try ${DIR}/qgis_build/qgis_build.bash "${QGIS_RELEASE_CONFIG}" ${QGIS_VERSION}
 
 echo "Bundle QGIS"
-${DIR}/qgis_bundle/qgis_bundle.bash "${CONFIG_FILE}" ${QGIS_MAJOR_VERSION} ${QGIS_MINOR_VERSION} ${QGIS_PATCH_VERSION}
+try ${DIR}/qgis_bundle/qgis_bundle.bash "${QGIS_RELEASE_CONFIG}" ${QGIS_VERSION}
 
 echo "Package QGIS to ${PACKAGE}"
-${DIR}/qgis_package/qgis_package.bash "${CONFIG_FILE}" ${QGIS_MAJOR_VERSION} ${QGIS_MINOR_VERSION} ${QGIS_PATCH_VERSION} "${PACKAGE}"
+try ${DIR}/qgis_package/qgis_package.bash "${QGIS_RELEASE_CONFIG}" ${QGIS_VERSION} "${PACKAGE}"
 
 echo "All done (qgis-mac-packager.bash)"
 cd "${PWD}"

@@ -16,20 +16,11 @@ function usage() {
 ####################
 # load configuration
 if (( $# < 2 )); then
-    usge
+    usage
     exit 1
 fi
 
-QGIS_VERSION=${1}
-if [[ ${QGIS_VERSION} =~ (\d+){3} ]]; then
-  QGIS_MAJOR_VERSION=$(echo ${STR} | cut -d. -f1)
-  QGIS_MINOR_VERSION=$(echo ${STR} | cut -d. -f2)
-  QGIS_PATCH_VERSION=$(echo ${STR} | cut -d. -f3)
-else
-  error "QGIS version '${QGIS_VERSION}' is invalid"
-fi
-
-QGIS_RELEASE_CONFIG=${2}
+QGIS_RELEASE_CONFIG=${1}
 if [[ -z "${QGIS_RELEASE_CONFIG}" ]]; then
   usage
   exit 1
@@ -40,7 +31,14 @@ if [[ ! -f "${CONFIG_FILE}" ]]; then
 fi
 source ${CONFIG_FILE}
 
-
+QGIS_VERSION=${2}
+if [[ ${QGIS_VERSION} =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
+  QGIS_MAJOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f1)
+  QGIS_MINOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f2)
+  QGIS_PATCH_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f3)
+else
+  error "QGIS version '${QGIS_VERSION}' is invalid"
+fi
 CC="/usr/bin/clang"
 CXX="/usr/bin/clang++"
 

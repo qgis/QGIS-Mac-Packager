@@ -9,12 +9,12 @@ on:
     - 'qgis-mac-packager.bash'
 
 env:
-  CI_RELEASE: nightly
+  RELEASE: nightly
   CCACHE_DIR: ${{ github.workspace }}/ccache
+  BASE_DIR: ${{ github.workspace }}
   PACKAGER_DIR: ${{ github.workspace }}/packager
   QGIS_SOURCE_DIR: ${{ github.workspace }}/QGIS
   QGIS_BUILD_DIR: ${{ github.workspace }}/build
-
 
 jobs:
   mac_os_build:
@@ -28,11 +28,12 @@ jobs:
 
       - name: Set environment
         run: |
-          source ${PACKAGER_DIR}/config/${CI_RELEASE}.conf
+          source ${PACKAGER_DIR}/config/${RELEASE}.conf
           QGIS_DEPS_VERSION=$(echo ${QGIS_DEPS_SDK_VERSION} | sed -r 's/([0-9]+\.[0-9]+)\.[0-9]+$/\1/')
           QGIS_DEPS_PATH=/opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
           echo "QGIS_DEPS_VERSION=${QGIS_DEPS_VERSION}" >> $GITHUB_ENV
           echo "QGIS_DEPS_SDK_VERSION=${QGIS_DEPS_SDK_VERSION}" >> $GITHUB_ENV
+          echo "QGIS_DEPS_PATH=${QGIS_DEPS_PATH}" >> $GITHUB_ENV
           echo "QGIS_DEPS_PATH=${QGIS_DEPS_PATH}" >> $GITHUB_ENV
           sudo mkdir -p ${QGIS_DEPS_PATH}
 
@@ -43,9 +44,9 @@ jobs:
           wget -q https://github.com/qgis/QGIS-Mac-Packager/releases/download/qgis-deps-${QGIS_DEPS_SDK_VERSION}/qgis-deps-${QGIS_DEPS_SDK_VERSION}.tar.gz.partac
           cd ${QGIS_DEPS_PATH}
           cat ${GITHUB_WORKSPACE}/qgis-deps-${QGIS_DEPS_SDK_VERSION}.tar.gz.part* | sudo tar xzf -
-          ls
           source ${QGIS_DEPS_PATH}/deps-${QGIS_DEPS_VERSION}.conf
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
+          echo "QT_BASE=${QT_BASE}" >> $GITHUB_ENV
 
       - name: fetch QGIS
         uses: actions/checkout@v2
@@ -90,8 +91,8 @@ jobs:
           MAJOR=$(sed -ne 's/[sS][eE][tT](CPACK_PACKAGE_VERSION_MAJOR "\([0-9]*\)")/\1/p' ${QGIS_SOURCE_DIR}/CMakeLists.txt)
           MINOR=$(sed -ne 's/[sS][eE][tT](CPACK_PACKAGE_VERSION_MINOR "\([0-9]*\)")/\1/p' ${QGIS_SOURCE_DIR}/CMakeLists.txt)
           PATCH=$(sed -ne 's/[sS][eE][tT](CPACK_PACKAGE_VERSION_PATCH "\([0-9]*\)")/\1/p' ${QGIS_SOURCE_DIR}/CMakeLists.txt)
-          echo "Building QGIS ${CI_RELEASE} version ${MAJOR}.${MINOR}.${PATCH}"
+          echo "Building QGIS ${RELEASE} version ${MAJOR}.${MINOR}.${PATCH}"
           
           cd ${PACKAGER_DIR}
-          ./qgis-mac-packager.bash ${MAJOR}.${MINOR}.${PATCH} ${CI_RELEASE} ${CI_RELEASE}.dmg
+          ./qgis-mac-packager.bash ${RELEASE} ${MAJOR}.${MINOR}.${PATCH} ${RELEASE}.dmg
 

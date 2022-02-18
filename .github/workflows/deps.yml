@@ -97,19 +97,19 @@ jobs:
       - name: install brew deps
         run: ./scripts/install_brew_dev_packages.bash
 
-      - name: build deps ${{ env.MODULE }}
+      - name: build qgis_deps
         run: |
           cd qgis_deps
           sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -f -m${{ env.MODULE }}
         timeout-minutes: 350
 
-      - name: Last build log
+      - name: last build log
         if: ${{ failure() }}
         run: |
           cat ${DEPS_BUILD_PATH}/last-build.log
           exit 1
 
-      - name: Copy build to cache dir
+      - name: copy build to cache dir
         run: sudo cp ${DEPS_BUILD_PATH} ${{ env.BUILD_CACHE_PATH }}
 
       - name: create package
