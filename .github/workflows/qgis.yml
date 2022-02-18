@@ -40,6 +40,17 @@ jobs:
             build-mac-ccache-${{ github.ref }}-
             build-mac-ccache-refs/heads/master-
 
+      - name: Download qgis-deps
+        run: |
+          sudo mkdir -p /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
+          cd /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
+          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partaa
+          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partab
+          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partac
+          cat qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.part* > tar xzvf -
+          ls /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
+          ls /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}/stage
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
@@ -53,18 +64,6 @@ jobs:
         run: |
           sudo mkdir -p /opt/Qt
           sudo mv ${{ github.workspace }}/Qt /opt
-
-      - name: Download qgis-deps
-        if: steps.cache-deps.outputs.cache-hit == 'true'
-        run: |
-          sudo mkdir -p /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
-          cd /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
-          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partaa
-          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partab
-          wget https://qgis.org/downloads/macos/deps/qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.partac
-          cat qgis-deps-${QGIS_DEPS_VERSION}.tar.gz.part* > tar xzvf -
-          ls /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}
-          ls /opt/QGIS/qgis-deps-${QGIS_DEPS_VERSION}/stage
 
       - name: Install ccache
         run: |
