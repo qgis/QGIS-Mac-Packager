@@ -25,7 +25,7 @@ RECIPE_libisl=$RECIPES_PATH/libisl
 # (you can apply patch etc here.)
 function prebuild_libisl() {
   cd $BUILD_libisl
-
+  patch_configure_file configure
   try rsync  -a $BUILD_libisl/ ${DEPS_BUILD_PATH}/libisl/build-$ARCH/
 }
 
