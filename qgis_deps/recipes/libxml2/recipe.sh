@@ -16,7 +16,7 @@ URL_libxml2=http://xmlsoft.org/sources/libxml2-${VERSION_libxml2}.tar.gz
 MD5_libxml2=10942a1dc23137a8aa07f0639cbfece5
 
 # default build path
-BUILD_libxml2=$BUILD_PATH/libxml2/$(get_directory $URL_libxml2)
+BUILD_libxml2=${DEPS_BUILD_PATH}/libxml2/$(get_directory $URL_libxml2)
 
 # default recipe path
 RECIPE_libxml2=$RECIPES_PATH/libxml2
@@ -26,7 +26,7 @@ RECIPE_libxml2=$RECIPES_PATH/libxml2
 function prebuild_libxml2() {
   cd $BUILD_libxml2
     patch_configure_file configure
-  try rsync  -a $BUILD_libxml2/ ${BUILD_PATH}/libxml2/build-${ARCH}
+  try rsync  -a $BUILD_libxml2/ ${DEPS_BUILD_PATH}/libxml2/build-${ARCH}
 
 }
 

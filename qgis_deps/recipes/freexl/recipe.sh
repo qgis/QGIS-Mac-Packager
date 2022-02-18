@@ -16,7 +16,7 @@ URL_freexl=https://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-${VERSION_fre
 MD5_freexl=d3d2df0d2ad7713038ce99024738172a
 
 # default build path
-BUILD_freexl=$BUILD_PATH/freexl/$(get_directory $URL_freexl)
+BUILD_freexl=${DEPS_BUILD_PATH}/freexl/$(get_directory $URL_freexl)
 
 # default recipe path
 RECIPE_freexl=$RECIPES_PATH/freexl
@@ -27,7 +27,7 @@ function prebuild_freexl() {
   cd $BUILD_freexl
 
     patch_configure_file configure
-  try rsync   -a $BUILD_freexl/ $BUILD_PATH/freexl/build-$ARCH/
+  try rsync   -a $BUILD_freexl/ ${DEPS_BUILD_PATH}/freexl/build-$ARCH/
 }
 
 function shouldbuild_freexl() {

@@ -18,7 +18,7 @@ URL_gsl=https://ftp.gnu.org/gnu/gsl/gsl-${VERSION_gsl}.tar.gz
 MD5_gsl=bda73a3dd5ff2f30b5956764399db6e7
 
 # default build path
-BUILD_gsl=$BUILD_PATH/gsl/$(get_directory $URL_gsl)
+BUILD_gsl=${DEPS_BUILD_PATH}/gsl/$(get_directory $URL_gsl)
 
 # default recipe path
 RECIPE_gsl=$RECIPES_PATH/gsl
@@ -28,7 +28,7 @@ RECIPE_gsl=$RECIPES_PATH/gsl
 function prebuild_gsl() {
   cd $BUILD_gsl
     patch_configure_file configure
-  try rsync  -a $BUILD_gsl/ ${BUILD_PATH}/gsl/build-${ARCH}
+  try rsync  -a $BUILD_gsl/ ${DEPS_BUILD_PATH}/gsl/build-${ARCH}
 
 }
 

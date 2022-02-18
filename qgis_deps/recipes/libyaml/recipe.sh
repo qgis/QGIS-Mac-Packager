@@ -17,7 +17,7 @@ URL_libyaml=https://github.com/yaml/libyaml/archive/${VERSION_libyaml}.tar.gz
 MD5_libyaml=163fc1e22153d3e2cebfe5cbb43a1769
 
 # default build path
-BUILD_libyaml=$BUILD_PATH/libyaml/$(get_directory $URL_libyaml)
+BUILD_libyaml=${DEPS_BUILD_PATH}/libyaml/$(get_directory $URL_libyaml)
 
 # default recipe path
 RECIPE_libyaml=$RECIPES_PATH/libyaml
@@ -26,7 +26,7 @@ RECIPE_libyaml=$RECIPES_PATH/libyaml
 # (you can apply patch etc here.)
 function prebuild_libyaml() {
   cd $BUILD_libyaml
-  try rsync -a $BUILD_libyaml/ ${BUILD_PATH}/libyaml/build-${ARCH}
+  try rsync -a $BUILD_libyaml/ ${DEPS_BUILD_PATH}/libyaml/build-${ARCH}
 }
 
 function shouldbuild_libyaml() {

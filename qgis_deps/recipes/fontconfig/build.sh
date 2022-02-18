@@ -1,5 +1,5 @@
 function build_fontconfig() {
-  try cd $BUILD_PATH/fontconfig/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/fontconfig/build-$ARCH
 
   push_env
 

@@ -16,7 +16,7 @@ URL_python_pymssql=
 MD5_python_pymssql=
 
 # default build path
-BUILD_python_pymssql=$BUILD_PATH/python_pymssql/v${VERSION_python_pymssql}
+BUILD_python_pymssql=${DEPS_BUILD_PATH}/python_pymssql/v${VERSION_python_pymssql}
 
 # default recipe path
 RECIPE_python_pymssql=$RECIPES_PATH/python_pymssql

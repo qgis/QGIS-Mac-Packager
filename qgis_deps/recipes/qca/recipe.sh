@@ -16,7 +16,7 @@ URL_qca=https://github.com/KDE/qca/archive/v${VERSION_qca}.tar.gz
 MD5_qca=96c4769d51140e03087266cf705c2b86
 
 # default build path
-BUILD_qca=$BUILD_PATH/qca/$(get_directory $URL_qca)
+BUILD_qca=${DEPS_BUILD_PATH}/qca/$(get_directory $URL_qca)
 
 # default recipe path
 RECIPE_qca=$RECIPES_PATH/qca

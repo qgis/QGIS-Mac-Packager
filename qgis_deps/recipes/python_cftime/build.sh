@@ -1,5 +1,5 @@
 function build_python_cftime() {
-  try cd $BUILD_PATH/python_cftime/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_cftime/build-$ARCH
 
   push_env
 

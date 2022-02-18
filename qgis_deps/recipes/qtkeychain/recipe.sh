@@ -17,7 +17,7 @@ URL_qtkeychain=https://github.com/frankosterfeld/qtkeychain/archive/v${VERSION_q
 MD5_qtkeychain=474f172b42017872dd50eec6c9981fed
 
 # default build path
-BUILD_qtkeychain=$BUILD_PATH/qtkeychain/$(get_directory $URL_qtkeychain)
+BUILD_qtkeychain=${DEPS_BUILD_PATH}/qtkeychain/$(get_directory $URL_qtkeychain)
 
 # default recipe path
 RECIPE_qtkeychain=$RECIPES_PATH/qtkeychain

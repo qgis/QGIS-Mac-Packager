@@ -18,7 +18,7 @@ URL_libssh2=https://libssh2.org/download/libssh2-$VERSION_libssh2.tar.gz
 MD5_libssh2=1beefafe8963982adc84b408b2959927
 
 # default build path
-BUILD_libssh2=$BUILD_PATH/libssh2/$(get_directory $URL_libssh2)
+BUILD_libssh2=${DEPS_BUILD_PATH}/libssh2/$(get_directory $URL_libssh2)
 
 # default recipe path
 RECIPE_libssh2=$RECIPES_PATH/libssh2
@@ -28,7 +28,7 @@ RECIPE_libssh2=$RECIPES_PATH/libssh2
 function prebuild_libssh2() {
   cd $BUILD_libssh2
     patch_configure_file configure
-  try rsync  -a $BUILD_libssh2/ ${BUILD_PATH}/libssh2/build-${ARCH}
+  try rsync  -a $BUILD_libssh2/ ${DEPS_BUILD_PATH}/libssh2/build-${ARCH}
 
 }
 

@@ -1,5 +1,5 @@
 function build_freetype() {
-  try cd $BUILD_PATH/freetype/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/freetype/build-$ARCH
 
   push_env
 

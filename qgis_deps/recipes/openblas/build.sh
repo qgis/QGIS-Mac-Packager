@@ -1,5 +1,5 @@
 function build_openblas() {
-  try cd $BUILD_PATH/openblas/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/openblas/build-$ARCH
 
   push_env
 

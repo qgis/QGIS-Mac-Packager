@@ -17,7 +17,7 @@ URL_libzip=https://github.com/nih-at/libzip/archive/v${VERSION_libzip}.tar.gz
 MD5_libzip=866fc2fbfc86615fd6cfca9b0a52accf
 
 # default build path
-BUILD_libzip=$BUILD_PATH/libzip/$(get_directory $URL_libzip)
+BUILD_libzip=${DEPS_BUILD_PATH}/libzip/$(get_directory $URL_libzip)
 
 # default recipe path
 RECIPE_libzip=$RECIPES_PATH/libzip

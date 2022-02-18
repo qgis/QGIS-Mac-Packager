@@ -17,7 +17,7 @@ URL_libunistring=https://ftp.gnu.org/gnu/libunistring/libunistring-$VERSION_libu
 MD5_libunistring=db08bb384e81968957f997ec9808926e
 
 # default build path
-BUILD_libunistring=$BUILD_PATH/libunistring/$(get_directory $URL_libunistring)
+BUILD_libunistring=${DEPS_BUILD_PATH}/libunistring/$(get_directory $URL_libunistring)
 
 # default recipe path
 RECIPE_libunistring=$RECIPES_PATH/libunistring
@@ -27,7 +27,7 @@ RECIPE_libunistring=$RECIPES_PATH/libunistring
 function prebuild_libunistring() {
   cd $BUILD_libunistring
   patch_configure_file configure
-  try rsync -a $BUILD_libunistring/ $BUILD_PATH/libunistring/build-$ARCH/
+  try rsync -a $BUILD_libunistring/ ${DEPS_BUILD_PATH}/libunistring/build-$ARCH/
 }
 
 function shouldbuild_libunistring() {

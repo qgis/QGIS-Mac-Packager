@@ -19,7 +19,7 @@ URL_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${
 MD5_qscintilla=c31d77e1fcc218ed3f27458fa80d4dc9
 
 # default build path
-BUILD_qscintilla=$BUILD_PATH/qscintilla/$(get_directory $URL_qscintilla)
+BUILD_qscintilla=${DEPS_BUILD_PATH}/qscintilla/$(get_directory $URL_qscintilla)
 
 # default recipe path
 RECIPE_qscintilla=$RECIPES_PATH/qscintilla
@@ -39,7 +39,7 @@ function prebuild_qscintilla() {
   try ${SED} "s;\$\$\[QT_INSTALL_LIBS\];$STAGE_PATH/lib;g" features/qscintilla2.prf
   try ${SED} "s;\$\$\[QT_INSTALL_HEADERS\];$STAGE_PATH/include;g" features/qscintilla2.prf
 
-  try rsync -a $BUILD_qscintilla/ ${BUILD_PATH}/qscintilla/build-${ARCH}
+  try rsync -a $BUILD_qscintilla/ ${DEPS_BUILD_PATH}/qscintilla/build-${ARCH}
 }
 
 function shouldbuild_qscintilla() {

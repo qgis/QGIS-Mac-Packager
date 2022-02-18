@@ -1,5 +1,5 @@
 function build_python_fiona() {
-  try cd $BUILD_PATH/python_fiona/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_fiona/build-$ARCH
   push_env
 
   export GDAL_CONFIG=$STAGE_PATH/bin/gdal-config

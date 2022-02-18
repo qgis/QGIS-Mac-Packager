@@ -1,5 +1,5 @@
 function build_python_pyproj() {
-  try cd $BUILD_PATH/python_pyproj/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_pyproj/build-$ARCH
   push_env
 
   export PROJ_DIR=${STAGE_PATH}

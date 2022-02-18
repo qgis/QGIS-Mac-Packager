@@ -1,5 +1,5 @@
 function build_sqlite() {
-  try cd $BUILD_PATH/sqlite/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/sqlite/build-$ARCH
   push_env
 
   export CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_COLUMN_METADATA=1"

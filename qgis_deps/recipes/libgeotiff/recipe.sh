@@ -15,7 +15,7 @@ URL_libgeotiff=https://github.com/OSGeo/libgeotiff/releases/download/${VERSION_l
 MD5_libgeotiff=e57b69098d70a008ddfc65b675cbfcf4
 
 # default build path
-BUILD_libgeotiff=$BUILD_PATH/libgeotiff/$(get_directory $URL_libgeotiff)
+BUILD_libgeotiff=${DEPS_BUILD_PATH}/libgeotiff/$(get_directory $URL_libgeotiff)
 
 # default recipe path
 RECIPE_libgeotiff=$RECIPES_PATH/libgeotiff

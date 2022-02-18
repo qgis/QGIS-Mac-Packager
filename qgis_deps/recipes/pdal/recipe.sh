@@ -29,7 +29,7 @@ URL_pdal=https://github.com/PDAL/PDAL/releases/download/${VERSION_pdal}/PDAL-${V
 MD5_pdal=1c899546211df92029df3ed884d1d560
 
 # default build path
-BUILD_pdal=$BUILD_PATH/pdal/$(get_directory $URL_pdal)
+BUILD_pdal=${DEPS_BUILD_PATH}/pdal/$(get_directory $URL_pdal)
 
 # default recipe path
 RECIPE_pdal=$RECIPES_PATH/pdal

@@ -17,7 +17,7 @@ URL_libxslt=https://github.com/GNOME/libxslt/archive/refs/tags/v${VERSION_libxsl
 MD5_libxslt=98d74d5fe8d4084eab8f089edb232e28
 
 # default build path
-BUILD_libxslt=$BUILD_PATH/libxslt/$(get_directory $URL_libxslt)
+BUILD_libxslt=${DEPS_BUILD_PATH}/libxslt/$(get_directory $URL_libxslt)
 
 # default recipe path
 RECIPE_libxslt=$RECIPES_PATH/libxslt
@@ -26,7 +26,7 @@ RECIPE_libxslt=$RECIPES_PATH/libxslt
 # (you can apply patch etc here.)
 function prebuild_libxslt() {
   cd $BUILD_libxslt
-  try rsync -a $BUILD_libxslt/ ${BUILD_PATH}/libxslt/build-${ARCH}
+  try rsync -a $BUILD_libxslt/ ${DEPS_BUILD_PATH}/libxslt/build-${ARCH}
 }
 
 function shouldbuild_libxslt() {

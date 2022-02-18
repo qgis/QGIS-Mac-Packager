@@ -17,7 +17,7 @@ URL_python_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScint
 MD5_python_qscintilla=c31d77e1fcc218ed3f27458fa80d4dc9
 
 # default build path
-BUILD_python_qscintilla=$BUILD_PATH/python_qscintilla/$(get_directory $URL_python_qscintilla)
+BUILD_python_qscintilla=${DEPS_BUILD_PATH}/python_qscintilla/$(get_directory $URL_python_qscintilla)
 
 # default recipe path
 RECIPE_python_qscintilla=$RECIPES_PATH/python_qscintilla
@@ -26,7 +26,7 @@ RECIPE_python_qscintilla=$RECIPES_PATH/python_qscintilla
 # (you can apply patch etc here.)
 function prebuild_python_qscintilla() {
   cd $BUILD_python_qscintilla
-  try rsync -a $BUILD_python_qscintilla/ ${BUILD_PATH}/python_qscintilla/build-${ARCH}
+  try rsync -a $BUILD_python_qscintilla/ ${DEPS_BUILD_PATH}/python_qscintilla/build-${ARCH}
 
 
   # without QtWidgets it cannot compile with

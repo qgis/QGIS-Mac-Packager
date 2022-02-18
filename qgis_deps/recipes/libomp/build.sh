@@ -1,6 +1,6 @@
 function build_libomp() {
-  try mkdir -p $BUILD_PATH/libomp/build-$ARCH
-  try cd $BUILD_PATH/libomp/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/libomp/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libomp/build-$ARCH
 
   push_env
 

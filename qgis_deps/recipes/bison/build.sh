@@ -1,5 +1,5 @@
 function build_bison() {
-  try cd $BUILD_PATH/bison/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/bison/build-$ARCH
   push_env
 
   try ${CONFIGURE} --disable-dependency-tracking

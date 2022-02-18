@@ -16,7 +16,7 @@ URL_freetype=https://download.savannah.gnu.org/releases/freetype/freetype-$VERSI
 MD5_freetype=b1cb620e4c875cd4d1bfa04945400945
 
 # default build path
-BUILD_freetype=$BUILD_PATH/freetype/$(get_directory $URL_freetype)
+BUILD_freetype=${DEPS_BUILD_PATH}/freetype/$(get_directory $URL_freetype)
 
 # default recipe path
 RECIPE_freetype=$RECIPES_PATH/freetype
@@ -26,7 +26,7 @@ RECIPE_freetype=$RECIPES_PATH/freetype
 function prebuild_freetype() {
   cd $BUILD_freetype
     patch_configure_file configure
-  try rsync  -a $BUILD_freetype/ ${BUILD_PATH}/freetype/build-${ARCH}
+  try rsync  -a $BUILD_freetype/ ${DEPS_BUILD_PATH}/freetype/build-${ARCH}
 
 }
 

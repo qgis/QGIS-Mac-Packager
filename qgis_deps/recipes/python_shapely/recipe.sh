@@ -15,7 +15,7 @@ URL_python_shapely=
 MD5_python_shapely=
 
 # default build path
-BUILD_python_shapely=$BUILD_PATH/python_shapely/v${VERSION_python_shapely}
+BUILD_python_shapely=${DEPS_BUILD_PATH}/python_shapely/v${VERSION_python_shapely}
 
 # default recipe path
 RECIPE_python_shapely=$RECIPES_PATH/python_shapely

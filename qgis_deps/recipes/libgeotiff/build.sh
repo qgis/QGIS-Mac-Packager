@@ -1,6 +1,6 @@
 function build_libgeotiff() {
-  try mkdir -p $BUILD_PATH/libgeotiff/build-$ARCH
-  try cd $BUILD_PATH/libgeotiff/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/libgeotiff/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libgeotiff/build-$ARCH
 
   push_env
 

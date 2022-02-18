@@ -18,7 +18,7 @@ URL_libtiff=http://download.osgeo.org/libtiff/tiff-${VERSION_libtiff}.tar.gz
 MD5_libtiff=0a2e4744d1426a8fc8211c0cdbc3a1b3
 
 # default build path
-BUILD_libtiff=$BUILD_PATH/libtiff/$(get_directory $URL_libtiff)
+BUILD_libtiff=${DEPS_BUILD_PATH}/libtiff/$(get_directory $URL_libtiff)
 
 # default recipe path
 RECIPE_libtiff=$RECIPES_PATH/libtiff

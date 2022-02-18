@@ -1,6 +1,6 @@
 function build_exiv2() {
-  try mkdir -p $BUILD_PATH/exiv2/build-$ARCH
-  try cd $BUILD_PATH/exiv2/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/exiv2/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/exiv2/build-$ARCH
   push_env
 
   try ${CMAKE} $BUILD_exiv2

@@ -20,7 +20,7 @@ URL_sqlite=https://sqlite.org/2022/sqlite-autoconf-${URL_sqlite_BASE}.tar.gz
 MD5_sqlite=683cc5312ee74e71079c14d24b7a6d27
 
 # default build path
-BUILD_sqlite=$BUILD_PATH/sqlite/$(get_directory $URL_sqlite)
+BUILD_sqlite=${DEPS_BUILD_PATH}/sqlite/$(get_directory $URL_sqlite)
 
 # default recipe path
 RECIPE_sqlite=$RECIPES_PATH/sqlite
@@ -30,7 +30,7 @@ RECIPE_sqlite=$RECIPES_PATH/sqlite
 function prebuild_sqlite() {
   cd $BUILD_sqlite
     patch_configure_file configure
-  try rsync  -a $BUILD_sqlite/ ${BUILD_PATH}/sqlite/build-${ARCH}
+  try rsync  -a $BUILD_sqlite/ ${DEPS_BUILD_PATH}/sqlite/build-${ARCH}
 
 }
 

@@ -16,7 +16,7 @@ URL_xerces=https://dlcdn.apache.org//xerces/c/3/sources/xerces-c-${VERSION_xerce
 MD5_xerces=a5fa4d920fce31c9ca3bfef241644494
 
 # default build path
-BUILD_xerces=$BUILD_PATH/xerces/$(get_directory $URL_xerces)
+BUILD_xerces=${DEPS_BUILD_PATH}/xerces/$(get_directory $URL_xerces)
 
 # default recipe path
 RECIPE_xerces=$RECIPES_PATH/xerces

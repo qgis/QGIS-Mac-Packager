@@ -1,5 +1,5 @@
 function build_rttopo() {
-  try cd $BUILD_PATH/rttopo/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/rttopo/build-$ARCH
   push_env
 
   try ./autogen.sh

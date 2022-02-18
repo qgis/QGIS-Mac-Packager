@@ -29,7 +29,7 @@ URL_python_pysal=
 MD5_python_pysal=
 
 # default build path
-BUILD_python_pysal=$BUILD_PATH/python_pysal/v${VERSION_python_pysal}
+BUILD_python_pysal=${DEPS_BUILD_PATH}/python_pysal/v${VERSION_python_pysal}
 
 # default recipe path
 RECIPE_python_pysal=$RECIPES_PATH/python_pysal

@@ -1,5 +1,5 @@
 function build_libffi() {
-  try cd $BUILD_PATH/libffi/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libffi/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

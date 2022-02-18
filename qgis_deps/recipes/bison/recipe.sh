@@ -15,7 +15,7 @@ URL_bison=https://ftp.gnu.org/gnu/bison/bison-${VERSION_bison}.tar.xz
 MD5_bison=c28f119f405a2304ff0a7ccdcc629713
 
 # default build path
-BUILD_bison=$BUILD_PATH/bison/$(get_directory $URL_bison)
+BUILD_bison=${DEPS_BUILD_PATH}/bison/$(get_directory $URL_bison)
 
 # default recipe path
 RECIPE_bison=$RECIPES_PATH/bison
@@ -25,7 +25,7 @@ RECIPE_bison=$RECIPES_PATH/bison
 function prebuild_bison() {
   cd $BUILD_bison
     patch_configure_file configure
-  try rsync  -a $BUILD_bison/ ${BUILD_PATH}/bison/build-${ARCH}
+  try rsync  -a $BUILD_bison/ ${DEPS_BUILD_PATH}/bison/build-${ARCH}
 
 }
 

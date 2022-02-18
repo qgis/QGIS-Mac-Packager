@@ -16,7 +16,7 @@ URL_python_fiona=https://github.com/Toblerity/Fiona/archive/${VERSION_python_fio
 MD5_python_fiona=e82f8edfe95280339bea2cf9738a81f6
 
 # default build path
-BUILD_python_fiona=$BUILD_PATH/python_fiona/$(get_directory $URL_python_fiona)
+BUILD_python_fiona=${DEPS_BUILD_PATH}/python_fiona/$(get_directory $URL_python_fiona)
 
 # default recipe path
 RECIPE_python_fiona=$RECIPES_PATH/python_fiona
@@ -25,7 +25,7 @@ RECIPE_python_fiona=$RECIPES_PATH/python_fiona
 # (you can apply patch etc here.)
 function prebuild_python_fiona() {
   cd $BUILD_python_fiona
-  try rsync -a $BUILD_python_fiona/ ${BUILD_PATH}/python_fiona/build-${ARCH}
+  try rsync -a $BUILD_python_fiona/ ${DEPS_BUILD_PATH}/python_fiona/build-${ARCH}
 
 
 }

@@ -1,5 +1,5 @@
 function build_gcc() {
- try cd $BUILD_PATH/gcc/build-$ARCH
+ try cd ${DEPS_BUILD_PATH}/gcc/build-$ARCH
  push_env
 
  unset LD

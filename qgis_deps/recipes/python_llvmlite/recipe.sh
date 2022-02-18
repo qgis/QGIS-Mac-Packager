@@ -19,8 +19,8 @@ MD5_python_llvmlite=2ffb8cfa38d25343415a83180682e1bf
 MD5_llvm=31eb9ce73dd2a0f8dcab8319fb03f8fc
 
 # default build path
-BUILD_python_llvmlite=$BUILD_PATH/python_llvmlite/$(get_directory $URL_python_llvmlite)
-BUILD_llvm=$BUILD_PATH/python_llvmlite/llvm-$VERSION_llvm.src
+BUILD_python_llvmlite=${DEPS_BUILD_PATH}/python_llvmlite/$(get_directory $URL_python_llvmlite)
+BUILD_llvm=${DEPS_BUILD_PATH}/python_llvmlite/llvm-$VERSION_llvm.src
 
 # default recipe path
 RECIPE_python_llvmlite=$RECIPES_PATH/python_llvmlite

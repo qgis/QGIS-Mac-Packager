@@ -15,7 +15,7 @@ URL_python_pandas=https://github.com/pandas-dev/pandas/archive/refs/tags/v${VERS
 MD5_python_pandas=413a3efbd23832d48517b3091ff44800
 
 # default build path
-BUILD_python_pandas=$BUILD_PATH/python_pandas/$(get_directory $URL_python_pandas)
+BUILD_python_pandas=${DEPS_BUILD_PATH}/python_pandas/$(get_directory $URL_python_pandas)
 
 # default recipe path
 RECIPE_python_pandas=$RECIPES_PATH/python_pandas
@@ -24,7 +24,7 @@ RECIPE_python_pandas=$RECIPES_PATH/python_pandas
 # (you can apply patch etc here.)
 function prebuild_python_pandas() {
   cd $BUILD_python_pandas
-  try rsync -a $BUILD_python_pandas/ ${BUILD_PATH}/python_pandas/build-${ARCH}
+  try rsync -a $BUILD_python_pandas/ ${DEPS_BUILD_PATH}/python_pandas/build-${ARCH}
 }
 
 function shouldbuild_python_pandas() {

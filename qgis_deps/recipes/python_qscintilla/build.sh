@@ -1,5 +1,5 @@
 function build_python_qscintilla() {
-  try cd $BUILD_PATH/python_qscintilla/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_qscintilla/build-$ARCH
   push_env
 
   # build python

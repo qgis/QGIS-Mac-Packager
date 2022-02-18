@@ -17,7 +17,7 @@ URL_jpeg=https://www.ijg.org/files/jpegsrc.v${VERSION_jpeg}.tar.gz
 MD5_jpeg=2489f1597b046425f5fcd3cf2df7d85f
 
 # default build path
-BUILD_jpeg=$BUILD_PATH/jpeg/$(get_directory $URL_jpeg)
+BUILD_jpeg=${DEPS_BUILD_PATH}/jpeg/$(get_directory $URL_jpeg)
 
 # default recipe path
 RECIPE_jpeg=$RECIPES_PATH/jpeg
@@ -27,7 +27,7 @@ RECIPE_jpeg=$RECIPES_PATH/jpeg
 function prebuild_jpeg() {
   cd $BUILD_jpeg
     patch_configure_file configure
-  try rsync  -a $BUILD_jpeg/ ${BUILD_PATH}/jpeg/build-${ARCH}
+  try rsync  -a $BUILD_jpeg/ ${DEPS_BUILD_PATH}/jpeg/build-${ARCH}
 
 }
 

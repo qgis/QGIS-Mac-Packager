@@ -17,7 +17,7 @@ URL_unixodbc=http://www.unixodbc.org/unixODBC-${VERSION_unixodbc}.tar.gz
 MD5_unixodbc=06f76e034bb41df5233554abe961a16f
 
 # default build path
-BUILD_unixodbc=$BUILD_PATH/unixodbc/$(get_directory $URL_unixodbc)
+BUILD_unixodbc=${DEPS_BUILD_PATH}/unixodbc/$(get_directory $URL_unixodbc)
 
 # default recipe path
 RECIPE_unixodbc=$RECIPES_PATH/unixodbc
@@ -27,7 +27,7 @@ RECIPE_unixodbc=$RECIPES_PATH/unixodbc
 function prebuild_unixodbc() {
   cd $BUILD_unixodbc
     patch_configure_file configure
-  try rsync  -a $BUILD_unixodbc/ ${BUILD_PATH}/unixodbc/build-${ARCH}
+  try rsync  -a $BUILD_unixodbc/ ${DEPS_BUILD_PATH}/unixodbc/build-${ARCH}
 
 }
 

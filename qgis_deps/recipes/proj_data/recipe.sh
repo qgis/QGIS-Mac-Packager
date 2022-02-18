@@ -18,7 +18,7 @@ URL_proj_data=https://github.com/OSGeo/PROJ-data/releases/download/${VERSION_pro
 MD5_proj_data=13bce71678cb0aa09c27219a30050fda
 
 # default build path
-BUILD_proj_data=$BUILD_PATH/proj_data/$(get_directory $URL_proj_data)
+BUILD_proj_data=${DEPS_BUILD_PATH}/proj_data/$(get_directory $URL_proj_data)
 
 # default recipe path
 RECIPE_proj_data=$RECIPES_PATH/proj_data

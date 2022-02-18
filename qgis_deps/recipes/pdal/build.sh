@@ -1,6 +1,6 @@
 function build_pdal() {
-  try mkdir -p $BUILD_PATH/pdal/build-$ARCH
-  try cd $BUILD_PATH/pdal/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/pdal/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/pdal/build-$ARCH
   push_env
 
   try ${CMAKE} \
@@ -20,16 +20,16 @@ function build_pdal() {
   try $NINJA install
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libpdalcpp $STAGE_PATH/lib/$LINK_libpdalcpp
-  try install_name_tool -change $BUILD_PATH/pdal/build-$ARCH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdalcpp
+  try install_name_tool -change ${DEPS_BUILD_PATH}/pdal/build-$ARCH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdalcpp
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libpdal_plugin_kernel_fauxplugin $STAGE_PATH/lib/$LINK_libpdal_plugin_kernel_fauxplugin
-  try install_name_tool -change $BUILD_PATH/pdal/build-$ARCH/lib/$LINK_libpdalcpp $STAGE_PATH/lib/$LINK_libpdalcpp $STAGE_PATH/lib/$LINK_libpdal_plugin_kernel_fauxplugin
-  try install_name_tool -change $BUILD_PATH/pdal/build-$ARCH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_plugin_kernel_fauxplugin
+  try install_name_tool -change ${DEPS_BUILD_PATH}/pdal/build-$ARCH/lib/$LINK_libpdalcpp $STAGE_PATH/lib/$LINK_libpdalcpp $STAGE_PATH/lib/$LINK_libpdal_plugin_kernel_fauxplugin
+  try install_name_tool -change ${DEPS_BUILD_PATH}/pdal/build-$ARCH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_plugin_kernel_fauxplugin
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_util
 
-  try install_name_tool -change $BUILD_PATH/pdal/build-$ARCH/lib/$LINK_libpdalcpp $STAGE_PATH/lib/$LINK_libpdalcpp $STAGE_PATH/bin/pdal
-  try install_name_tool -change $BUILD_PATH/pdal/build-$ARCH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_util $STAGE_PATH/bin/pdal
+  try install_name_tool -change ${DEPS_BUILD_PATH}/pdal/build-$ARCH/lib/$LINK_libpdalcpp $STAGE_PATH/lib/$LINK_libpdalcpp $STAGE_PATH/bin/pdal
+  try install_name_tool -change ${DEPS_BUILD_PATH}/pdal/build-$ARCH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_util $STAGE_PATH/bin/pdal
 
   pop_env
 }

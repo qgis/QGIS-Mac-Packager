@@ -15,7 +15,7 @@ URL_python_pyqt5=https://files.pythonhosted.org/packages/8e/a4/d5e4bf99dd50134c8
 MD5_python_pyqt5=8082ab8fd83d2cd6572bc446e08855e0
 
 # default build path
-BUILD_python_pyqt5=$BUILD_PATH/python_pyqt5/$(get_directory $URL_python_pyqt5)
+BUILD_python_pyqt5=${DEPS_BUILD_PATH}/python_pyqt5/$(get_directory $URL_python_pyqt5)
 
 # default recipe path
 RECIPE_python_pyqt5=$RECIPES_PATH/python_pyqt5
@@ -55,7 +55,7 @@ function prebuild_python_pyqt5() {
   MOD_DIR=$STAGE_PATH/mkspecs/modules
   try ${SED} "s;pro_lines.extend(target_config.qmake_variables);pro_lines.extend(target_config.qmake_variables)\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkit.pri)\")\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkitwidgets.pri)\");g" configure.py
 
-  try rsync -a $BUILD_python_pyqt5/ ${BUILD_PATH}/python_pyqt5/build-${ARCH}
+  try rsync -a $BUILD_python_pyqt5/ ${DEPS_BUILD_PATH}/python_pyqt5/build-${ARCH}
 }
 
 function shouldbuild_python_pyqt5() {

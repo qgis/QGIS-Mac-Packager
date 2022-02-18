@@ -26,7 +26,7 @@ URL_python_geopandas=https://github.com/geopandas/geopandas/archive/v$VERSION_py
 MD5_python_geopandas=dc241fdd62012c3b5ae0e990ba20df26
 
 # default build path
-BUILD_python_geopandas=$BUILD_PATH/python_geopandas/$(get_directory $URL_python_geopandas)
+BUILD_python_geopandas=${DEPS_BUILD_PATH}/python_geopandas/$(get_directory $URL_python_geopandas)
 
 # default recipe path
 RECIPE_python_geopandas=$RECIPES_PATH/python_geopandas
@@ -35,7 +35,7 @@ RECIPE_python_geopandas=$RECIPES_PATH/python_geopandas
 # (you can apply patch etc here.)
 function prebuild_python_geopandas() {
   cd $BUILD_python_geopandas
-  try rsync -a $BUILD_python_geopandas/ ${BUILD_PATH}/python_geopandas/build-${ARCH}
+  try rsync -a $BUILD_python_geopandas/ ${DEPS_BUILD_PATH}/python_geopandas/build-${ARCH}
 
 
 }

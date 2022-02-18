@@ -17,7 +17,7 @@ URL_uriparser=https://github.com/uriparser/uriparser/archive/uriparser-$VERSION_
 MD5_uriparser=6f0d823f9a0ab0e5b1eb768bfaf56373
 
 # default build path
-BUILD_uriparser=$BUILD_PATH/uriparser/$(get_directory $URL_uriparser)
+BUILD_uriparser=${DEPS_BUILD_PATH}/uriparser/$(get_directory $URL_uriparser)
 
 # default recipe path
 RECIPE_uriparser=$RECIPES_PATH/uriparser

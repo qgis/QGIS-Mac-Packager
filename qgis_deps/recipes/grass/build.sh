@@ -1,5 +1,5 @@
 function build_grass() {
-  try cd $BUILD_PATH/grass/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/grass/build-$ARCH
   push_env
 
   # No DEBUG symbols!

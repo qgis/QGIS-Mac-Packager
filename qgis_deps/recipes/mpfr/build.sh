@@ -1,5 +1,5 @@
 function build_mpfr() {
-  try cd $BUILD_PATH/mpfr/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/mpfr/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

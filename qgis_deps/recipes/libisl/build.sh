@@ -1,5 +1,5 @@
 function build_libisl() {
-  try cd $BUILD_PATH/libisl/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libisl/build-$ARCH
   push_env
 
   try ${CONFIGURE} --disable-debug --disable-dependency-tracking

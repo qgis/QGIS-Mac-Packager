@@ -30,7 +30,7 @@ URL_poppler=https://poppler.freedesktop.org/poppler-${VERSION_poppler}.tar.xz
 MD5_poppler=5f167d859b0ec3f416dbd929892c3c4d
 
 # default build path
-BUILD_poppler=$BUILD_PATH/poppler/$(get_directory $URL_poppler)
+BUILD_poppler=${DEPS_BUILD_PATH}/poppler/$(get_directory $URL_poppler)
 
 # default recipe path
 RECIPE_poppler=$RECIPES_PATH/poppler

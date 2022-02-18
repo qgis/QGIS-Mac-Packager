@@ -16,7 +16,7 @@ URL_python_rtree=https://github.com/Toblerity/rtree/archive/${VERSION_python_rtr
 MD5_python_rtree=eec976e7bd2d8e44ab71cf4c0d7eca9f
 
 # default build path
-BUILD_python_rtree=$BUILD_PATH/python_rtree/$(get_directory $URL_python_rtree)
+BUILD_python_rtree=${DEPS_BUILD_PATH}/python_rtree/$(get_directory $URL_python_rtree)
 
 # default recipe path
 RECIPE_python_rtree=$RECIPES_PATH/python_rtree
@@ -25,7 +25,7 @@ RECIPE_python_rtree=$RECIPES_PATH/python_rtree
 # (you can apply patch etc here.)
 function prebuild_python_rtree() {
   cd $BUILD_python_rtree
-  try rsync -a $BUILD_python_rtree/ ${BUILD_PATH}/python_rtree/build-${ARCH}
+  try rsync -a $BUILD_python_rtree/ ${DEPS_BUILD_PATH}/python_rtree/build-${ARCH}
 
 
 }

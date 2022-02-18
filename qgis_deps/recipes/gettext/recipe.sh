@@ -16,7 +16,7 @@ URL_gettext=https://ftp.gnu.org/pub/gnu/gettext/gettext-$VERSION_gettext.tar.gz
 MD5_gettext=28b1cd4c94a74428723ed966c38cf479
 
 # default build path
-BUILD_gettext=$BUILD_PATH/gettext/$(get_directory $URL_gettext)
+BUILD_gettext=${DEPS_BUILD_PATH}/gettext/$(get_directory $URL_gettext)
 
 # default recipe path
 RECIPE_gettext=$RECIPES_PATH/gettext
@@ -26,7 +26,7 @@ RECIPE_gettext=$RECIPES_PATH/gettext
 function prebuild_gettext() {
   cd $BUILD_gettext
     patch_configure_file configure
-  try rsync  -a $BUILD_gettext/ ${BUILD_PATH}/gettext/build-${ARCH}
+  try rsync  -a $BUILD_gettext/ ${DEPS_BUILD_PATH}/gettext/build-${ARCH}
 
 }
 

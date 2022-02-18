@@ -1,5 +1,5 @@
 function build_pcre2() {
-  try cd $BUILD_PATH/pcre2/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/pcre2/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

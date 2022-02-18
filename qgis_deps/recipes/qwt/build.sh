@@ -1,5 +1,5 @@
 function build_qwt() {
-  try cd $BUILD_PATH/qwt/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/qwt/build-$ARCH
   push_env
 
   try ${QMAKE}

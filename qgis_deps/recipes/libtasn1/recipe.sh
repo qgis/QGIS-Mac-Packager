@@ -17,7 +17,7 @@ URL_libtasn1=https://ftp.gnu.org/gnu/libtasn1/libtasn1-${VERSION_libtasn1}.tar.g
 MD5_libtasn1=8203e72a2c0390515410b2ea2c032f04
 
 # default build path
-BUILD_libtasn1=$BUILD_PATH/libtasn1/$(get_directory $URL_libtasn1)
+BUILD_libtasn1=${DEPS_BUILD_PATH}/libtasn1/$(get_directory $URL_libtasn1)
 
 # default recipe path
 RECIPE_libtasn1=$RECIPES_PATH/libtasn1
@@ -26,7 +26,7 @@ RECIPE_libtasn1=$RECIPES_PATH/libtasn1
 # (you can apply patch etc here.)
 function prebuild_libtasn1() {
   cd $BUILD_libtasn1
-  try rsync -a $BUILD_libtasn1/ ${BUILD_PATH}/libtasn1/build-${ARCH}
+  try rsync -a $BUILD_libtasn1/ ${DEPS_BUILD_PATH}/libtasn1/build-${ARCH}
 
 
 }

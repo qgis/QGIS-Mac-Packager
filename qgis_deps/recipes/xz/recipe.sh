@@ -17,7 +17,7 @@ URL_xz=https://downloads.sourceforge.net/project/lzmautils/xz-${VERSION_xz}.tar.
 MD5_xz=aa1621ec7013a19abab52a8aff04fe5b
 
 # default build path
-BUILD_xz=$BUILD_PATH/xz/$(get_directory $URL_xz)
+BUILD_xz=${DEPS_BUILD_PATH}/xz/$(get_directory $URL_xz)
 
 # default recipe path
 RECIPE_xz=$RECIPES_PATH/xz
@@ -27,7 +27,7 @@ RECIPE_xz=$RECIPES_PATH/xz
 function prebuild_xz() {
   cd $BUILD_xz
     patch_configure_file configure
-  try rsync  -a $BUILD_xz/ ${BUILD_PATH}/xz/build-${ARCH}
+  try rsync  -a $BUILD_xz/ ${DEPS_BUILD_PATH}/xz/build-${ARCH}
 
 }
 

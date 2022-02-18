@@ -19,7 +19,7 @@ URL_boost=https://sourceforge.net/projects/boost/files/boost/${VERSION_boost}/bo
 MD5_boost=9273c8c4576423562bbe84574b07b2bd
 
 # default build path
-BUILD_boost=$BUILD_PATH/boost/$(get_directory $URL_boost)
+BUILD_boost=${DEPS_BUILD_PATH}/boost/$(get_directory $URL_boost)
 
 # default recipe path
 RECIPE_boost=$RECIPES_PATH/boost
@@ -30,7 +30,7 @@ function prebuild_boost() {
   cd $BUILD_boost
   # https://github.com/boostorg/python/pull/344
   try patch --verbose --forward -p1 < ${RECIPE_boost}/patches/python310.patch
-  try rsync -a $BUILD_boost/ ${BUILD_PATH}/boost/build-${ARCH}
+  try rsync -a $BUILD_boost/ ${DEPS_BUILD_PATH}/boost/build-${ARCH}
 }
 
 function shouldbuild_boost() {

@@ -1,6 +1,6 @@
 function build_python_packages() {
-  try mkdir -p $BUILD_PATH/python_packages/build-$ARCH
-  try cd $BUILD_PATH/python_packages/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/python_packages/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_packages/build-$ARCH
 
   push_env
 

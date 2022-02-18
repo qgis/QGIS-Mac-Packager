@@ -1,6 +1,6 @@
 function build_libzip() {
-  try mkdir -p $BUILD_PATH/libzip/build-$ARCH
-  try cd $BUILD_PATH/libzip/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/libzip/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libzip/build-$ARCH
   push_env
 
   # see issue #38: with ENABLE_GNUTLS it requires nette library
@@ -16,7 +16,7 @@ function build_libzip() {
   try $NINJA install
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip
-  try install_name_tool -change $BUILD_PATH/libzip/build-$ARCH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/bin/ziptool
+  try install_name_tool -change ${DEPS_BUILD_PATH}/libzip/build-$ARCH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/bin/ziptool
 
   pop_env
 }

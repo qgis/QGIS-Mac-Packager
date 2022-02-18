@@ -1,6 +1,6 @@
 function build_lerc() {
-  try mkdir -p $BUILD_PATH/lerc/build-$ARCH
-  try cd $BUILD_PATH/lerc/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/lerc/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/lerc/build-$ARCH
 
   push_env
 

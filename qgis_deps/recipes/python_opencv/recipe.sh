@@ -17,7 +17,7 @@ URL_python_opencv=
 MD5_python_opencv=
 
 # default build path
-BUILD_python_opencv=$BUILD_PATH/python_opencv/${GIT_TAG_python_opencv}
+BUILD_python_opencv=${DEPS_BUILD_PATH}/python_opencv/${GIT_TAG_python_opencv}
 
 # default recipe path
 RECIPE_python_opencv=$RECIPES_PATH/python_opencv
@@ -32,7 +32,7 @@ function prebuild_python_opencv() {
   # it has opencv,... submodules, so we cannot take it simply from the git release archive.
   git clone --recursive --depth 1 --branch $GIT_TAG_python_opencv https://github.com/skvark/opencv-python.git
 
-  try rsync -a $BUILD_PATH/python_opencv/opencv-python/ $BUILD_PATH/python_opencv/build-$ARCH
+  try rsync -a ${DEPS_BUILD_PATH}/python_opencv/opencv-python/ ${DEPS_BUILD_PATH}/python_opencv/build-$ARCH
 }
 
 function shouldbuild_python_opencv() {

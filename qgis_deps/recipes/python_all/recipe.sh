@@ -41,7 +41,7 @@ URL_python_all=
 MD5_python_all=
 
 # default build path
-BUILD_python_all=$BUILD_PATH/python_all/python_all
+BUILD_python_all=${DEPS_BUILD_PATH}/python_all/python_all
 
 # default recipe path
 RECIPE_python_all=$RECIPES_PATH/python_all

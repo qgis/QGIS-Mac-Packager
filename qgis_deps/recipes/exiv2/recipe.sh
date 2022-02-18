@@ -16,7 +16,7 @@ URL_exiv2=https://github.com/Exiv2/exiv2/releases/download/v${VERSION_exiv2}/exi
 MD5_exiv2=65621b14626f562c05547176e943d0c2
 
 # default build path
-BUILD_exiv2=$BUILD_PATH/exiv2/$(get_directory $URL_exiv2)
+BUILD_exiv2=${DEPS_BUILD_PATH}/exiv2/$(get_directory $URL_exiv2)
 
 # default recipe path
 RECIPE_exiv2=$RECIPES_PATH/exiv2

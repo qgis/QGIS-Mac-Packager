@@ -16,7 +16,7 @@ URL_little_cms2=https://github.com/mm2/Little-CMS/releases/download/lcms2.13.1/l
 MD5_little_cms2=47a99e781b89c958a773e2012e81ae8c
 
 # default build path
-BUILD_little_cms2=$BUILD_PATH/little_cms2/$(get_directory $URL_little_cms2)
+BUILD_little_cms2=${DEPS_BUILD_PATH}/little_cms2/$(get_directory $URL_little_cms2)
 
 # default recipe path
 RECIPE_little_cms2=$RECIPES_PATH/little_cms2
@@ -28,7 +28,7 @@ function prebuild_little_cms2() {
   try patch --verbose --forward -p1 < ${RECIPE_little_cms2}/patches/cms2.patch
 
   patch_configure_file configure
-  try rsync -a $BUILD_little_cms2/ ${BUILD_PATH}/little_cms2/build-${ARCH}
+  try rsync -a $BUILD_little_cms2/ ${DEPS_BUILD_PATH}/little_cms2/build-${ARCH}
 }
 
 function shouldbuild_little_cms2() {

@@ -19,7 +19,7 @@ URL_brotli=https://github.com/google/brotli/archive/v${VERSION_brotli}.tar.gz
 MD5_brotli=c2274f0c7af8470ad514637c35bcee7d
 
 # default build path
-BUILD_brotli=$BUILD_PATH/brotli/$(get_directory $URL_brotli)
+BUILD_brotli=${DEPS_BUILD_PATH}/brotli/$(get_directory $URL_brotli)
 
 # default recipe path
 RECIPE_brotli=$RECIPES_PATH/brotli

@@ -15,7 +15,7 @@ URL_python_owslib=
 MD5_python_owslib=
 
 # default build path
-BUILD_python_owslib=$BUILD_PATH/python_owslib/v${VERSION_python_owslib}
+BUILD_python_owslib=${DEPS_BUILD_PATH}/python_owslib/v${VERSION_python_owslib}
 
 # default recipe path
 RECIPE_python_owslib=$RECIPES_PATH/python_owslib

@@ -15,7 +15,7 @@ URL_python_numba=https://github.com/numba/numba/archive/${VERSION_python_numba}.
 MD5_python_numba=0cfb6b45282f4d6b9793a17588de180b
 
 # default build path
-BUILD_python_numba=$BUILD_PATH/python_numba/$(get_directory $URL_python_numba)
+BUILD_python_numba=${DEPS_BUILD_PATH}/python_numba/$(get_directory $URL_python_numba)
 
 # default recipe path
 RECIPE_python_numba=$RECIPES_PATH/python_numba
@@ -24,7 +24,7 @@ RECIPE_python_numba=$RECIPES_PATH/python_numba
 # (you can apply patch etc here.)
 function prebuild_python_numba() {
   cd $BUILD_python_numba
-  try rsync -a $BUILD_python_numba/ $BUILD_PATH/python_numba/build-$ARCH/
+  try rsync -a $BUILD_python_numba/ ${DEPS_BUILD_PATH}/python_numba/build-$ARCH/
 }
 
 function shouldbuild_python_numba() {

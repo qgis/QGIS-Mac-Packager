@@ -1,5 +1,5 @@
 function build_gsl() {
-  try cd $BUILD_PATH/gsl/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/gsl/build-$ARCH
   push_env
 
   try ${CONFIGURE} --disable-debug

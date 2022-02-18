@@ -1,5 +1,5 @@
 function build_expat() {
-  try cd $BUILD_PATH/expat/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/expat/build-$ARCH
   push_env
 
   try ${CONFIGURE}

@@ -16,7 +16,7 @@ URL_netcdf=https://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-c-${VERSION_
 MD5_netcdf=9e1d7f13c2aef921c854d87037bcbd96
 
 # default build path
-BUILD_netcdf=$BUILD_PATH/netcdf/$(get_directory $URL_netcdf)
+BUILD_netcdf=${DEPS_BUILD_PATH}/netcdf/$(get_directory $URL_netcdf)
 
 # default recipe path
 RECIPE_netcdf=$RECIPES_PATH/netcdf

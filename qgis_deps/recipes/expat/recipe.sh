@@ -16,7 +16,7 @@ URL_expat=https://github.com/libexpat/libexpat/releases/download/R_${VERSION_exp
 MD5_expat=e0fe49a6b3480827c9455e4cfc799133
 
 # default build path
-BUILD_expat=$BUILD_PATH/expat/$(get_directory $URL_expat)
+BUILD_expat=${DEPS_BUILD_PATH}/expat/$(get_directory $URL_expat)
 
 # default recipe path
 RECIPE_expat=$RECIPES_PATH/expat
@@ -26,7 +26,7 @@ RECIPE_expat=$RECIPES_PATH/expat
 function prebuild_expat() {
   cd $BUILD_expat
     patch_configure_file configure
-  try rsync  -a $BUILD_expat/ ${BUILD_PATH}/expat/build-${ARCH}
+  try rsync  -a $BUILD_expat/ ${DEPS_BUILD_PATH}/expat/build-${ARCH}
 
 }
 

@@ -1,6 +1,6 @@
 function build_uriparser() {
-  try mkdir -p $BUILD_PATH/uriparser/build-$ARCH
-  try cd $BUILD_PATH/uriparser/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/uriparser/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/uriparser/build-$ARCH
   push_env
 
   try ${CMAKE} \

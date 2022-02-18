@@ -17,7 +17,7 @@ URL_fontconfig=https://www.freedesktop.org/software/fontconfig/release/fontconfi
 MD5_fontconfig=eda1551685c25c4588da39222142f063
 
 # default build path
-BUILD_fontconfig=$BUILD_PATH/fontconfig/$(get_directory $URL_fontconfig)
+BUILD_fontconfig=${DEPS_BUILD_PATH}/fontconfig/$(get_directory $URL_fontconfig)
 
 # default recipe path
 RECIPE_fontconfig=$RECIPES_PATH/fontconfig
@@ -28,7 +28,7 @@ RECIPE_fontconfig=$RECIPES_PATH/fontconfig
 function prebuild_fontconfig() {
   cd $BUILD_fontconfig
     patch_configure_file configure
-  try rsync  -a $BUILD_fontconfig/ ${BUILD_PATH}/fontconfig/build-${ARCH}
+  try rsync  -a $BUILD_fontconfig/ ${DEPS_BUILD_PATH}/fontconfig/build-${ARCH}
 
 }
 

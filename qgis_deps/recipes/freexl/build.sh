@@ -1,5 +1,5 @@
 function build_freexl() {
-  try cd $BUILD_PATH/freexl/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/freexl/build-$ARCH
   push_env
 
   try ${CONFIGURE} --disable-debug

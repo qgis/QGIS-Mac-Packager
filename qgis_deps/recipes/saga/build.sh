@@ -1,5 +1,5 @@
 function build_saga() {
-  try cd $BUILD_PATH/saga/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/saga/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

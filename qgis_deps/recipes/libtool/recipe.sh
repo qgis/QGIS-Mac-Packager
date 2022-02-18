@@ -16,7 +16,7 @@ URL_libtool=https://ftp.gnu.org/gnu/libtool/libtool-${VERSION_libtool}.tar.xz
 MD5_libtool=1bfb9b923f2c1339b4d2ce1807064aa5
 
 # default build path
-BUILD_libtool=$BUILD_PATH/libtool/$(get_directory $URL_libtool)
+BUILD_libtool=${DEPS_BUILD_PATH}/libtool/$(get_directory $URL_libtool)
 
 # default recipe path
 RECIPE_libtool=$RECIPES_PATH/libtool
@@ -27,7 +27,7 @@ function prebuild_libtool() {
   cd $BUILD_libtool
 
   patch_configure_file configure
-  try rsync   -a $BUILD_libtool/ $BUILD_PATH/libtool/build-$ARCH/
+  try rsync   -a $BUILD_libtool/ ${DEPS_BUILD_PATH}/libtool/build-$ARCH/
 }
 
 function shouldbuild_libtool() {

@@ -17,7 +17,7 @@ URL_python_gdal=${URL_gdal}
 MD5_python_gdal=${MD5_gdal}
 
 # default build path
-BUILD_python_gdal=$BUILD_PATH/python_gdal/$(get_directory $URL_python_gdal)
+BUILD_python_gdal=${DEPS_BUILD_PATH}/python_gdal/$(get_directory $URL_python_gdal)
 
 # default recipe path
 RECIPE_python_gdal=$RECIPES_PATH/python_gdal
@@ -26,7 +26,7 @@ RECIPE_python_gdal=$RECIPES_PATH/python_gdal
 # (you can apply patch etc here.)
 function prebuild_python_gdal() {
   cd $BUILD_python_gdal
-  try rsync -a $BUILD_python_gdal/ ${BUILD_PATH}/python_gdal/build-${ARCH}
+  try rsync -a $BUILD_python_gdal/ ${DEPS_BUILD_PATH}/python_gdal/build-${ARCH}
 
 
 }

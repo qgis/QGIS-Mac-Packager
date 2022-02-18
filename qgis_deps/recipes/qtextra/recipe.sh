@@ -19,7 +19,7 @@ URL_qtextra=https://github.com/qt/qtbase/archive/v${VERSION_qtextra}.tar.gz
 MD5_qtextra=8b6bcfa8eb124e7c36b824d04f7c068e
 
 # default build path
-BUILD_qtextra=$BUILD_PATH/qtextra/$(get_directory $URL_qtextra)
+BUILD_qtextra=${DEPS_BUILD_PATH}/qtextra/$(get_directory $URL_qtextra)
 
 # default recipe path
 RECIPE_qtextra=$RECIPES_PATH/qtextra
@@ -28,7 +28,7 @@ RECIPE_qtextra=$RECIPES_PATH/qtextra
 # (you can apply patch etc here.)
 function prebuild_qtextra() {
   cd $BUILD_qtextra
-  try rsync -a $BUILD_qtextra/ ${BUILD_PATH}/qtextra/build-${ARCH}
+  try rsync -a $BUILD_qtextra/ ${DEPS_BUILD_PATH}/qtextra/build-${ARCH}
 
 
 }

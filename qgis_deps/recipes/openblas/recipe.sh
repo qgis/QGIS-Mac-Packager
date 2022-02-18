@@ -19,7 +19,7 @@ URL_openblas=https://github.com/xianyi/OpenBLAS/archive/v$VERSION_openblas.tar.g
 MD5_openblas=4727a1333a380b67c8d7c7787a3d9c9a
 
 # default build path
-BUILD_openblas=$BUILD_PATH/openblas/$(get_directory $URL_openblas)
+BUILD_openblas=${DEPS_BUILD_PATH}/openblas/$(get_directory $URL_openblas)
 
 # default recipe path
 RECIPE_openblas=$RECIPES_PATH/openblas
@@ -28,7 +28,7 @@ RECIPE_openblas=$RECIPES_PATH/openblas
 # (you can apply patch etc here.)
 function prebuild_openblas() {
   cd $BUILD_openblas
-  try rsync -a $BUILD_openblas/ ${BUILD_PATH}/openblas/build-${ARCH}
+  try rsync -a $BUILD_openblas/ ${DEPS_BUILD_PATH}/openblas/build-${ARCH}
 
 
 }

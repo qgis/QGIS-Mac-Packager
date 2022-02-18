@@ -1,5 +1,5 @@
 function build_unixodbc() {
-  try cd $BUILD_PATH/unixodbc/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/unixodbc/build-$ARCH
   push_env
 
   # includedir must be specific, since posgresql has

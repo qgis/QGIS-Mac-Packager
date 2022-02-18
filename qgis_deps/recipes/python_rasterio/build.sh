@@ -1,5 +1,5 @@
 function build_python_rasterio() {
-  try cd $BUILD_PATH/python_rasterio/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_rasterio/build-$ARCH
   push_env
 
   export PROJ_DIR=${STAGE_PATH}

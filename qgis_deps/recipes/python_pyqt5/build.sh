@@ -1,5 +1,5 @@
 function build_python_pyqt5() {
-  try cd $BUILD_PATH/python_pyqt5/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_pyqt5/build-$ARCH
 
   push_env
 

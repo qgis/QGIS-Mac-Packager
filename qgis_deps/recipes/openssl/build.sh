@@ -1,5 +1,5 @@
 function build_openssl() {
-  try cd $BUILD_PATH/openssl/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/openssl/build-$ARCH
   push_env
 
   # This could interfere with how we expect OpenSSL to build.

@@ -1,5 +1,5 @@
 function build_python_pillow() {
-  try cd $BUILD_PATH/python_pillow/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_pillow/build-$ARCH
   push_env
 
   # unfortunately they named the file Zip.h, clashing with the lzip library

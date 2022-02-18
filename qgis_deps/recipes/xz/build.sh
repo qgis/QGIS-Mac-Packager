@@ -1,5 +1,5 @@
 function build_xz() {
-  try cd $BUILD_PATH/xz/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/xz/build-$ARCH
   push_env
 
   try ${CONFIGURE} --disable-debug

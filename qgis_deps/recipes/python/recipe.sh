@@ -16,7 +16,7 @@ URL_python=https://www.python.org/ftp/python/${VERSION_python}/Python-${VERSION_
 MD5_python=14e8c22458ed7779a1957b26cde01db9
 
 # default build path
-BUILD_python=$BUILD_PATH/python/$(get_directory $URL_python)
+BUILD_python=${DEPS_BUILD_PATH}/python/$(get_directory $URL_python)
 
 # default recipe path
 RECIPE_python=$RECIPES_PATH/python
@@ -48,7 +48,7 @@ install_default_packages() {
 
     info "Installing $NAME"
 
-    cd $BUILD_PATH/$NAME/$(get_directory $URL)
+    cd ${DEPS_BUILD_PATH}/$NAME/$(get_directory $URL)
     push_env
 
     # when building extensions in setup.py it
@@ -76,7 +76,7 @@ function prebuild_python() {
   cd $BUILD_python
 
   patch_configure_file configure
-  try rsync -a $BUILD_python/ $BUILD_PATH/python/build-$ARCH/
+  try rsync -a $BUILD_python/ ${DEPS_BUILD_PATH}/python/build-$ARCH/
 }
 
 function shouldbuild_python() {
@@ -87,7 +87,7 @@ function shouldbuild_python() {
 }
 
 function install_python() {
-  try cd $BUILD_PATH/python/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python/build-$ARCH
 
   push_env
 

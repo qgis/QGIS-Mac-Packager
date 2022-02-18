@@ -15,7 +15,7 @@ URL_python_matplotlib=https://github.com/matplotlib/matplotlib/archive/v$VERSION
 MD5_python_matplotlib=8a55bbf600206a512629e8c582e5eb4a
 
 # default build path
-BUILD_python_matplotlib=$BUILD_PATH/python_matplotlib/$(get_directory $URL_python_matplotlib)
+BUILD_python_matplotlib=${DEPS_BUILD_PATH}/python_matplotlib/$(get_directory $URL_python_matplotlib)
 
 # default recipe path
 RECIPE_python_matplotlib=$RECIPES_PATH/python_matplotlib
@@ -24,7 +24,7 @@ RECIPE_python_matplotlib=$RECIPES_PATH/python_matplotlib
 # (you can apply patch etc here.)
 function prebuild_python_matplotlib() {
   cd $BUILD_python_matplotlib
-  try rsync -a $BUILD_python_matplotlib/ ${BUILD_PATH}/python_matplotlib/build-${ARCH}
+  try rsync -a $BUILD_python_matplotlib/ ${DEPS_BUILD_PATH}/python_matplotlib/build-${ARCH}
 
 
 }

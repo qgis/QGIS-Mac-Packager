@@ -19,7 +19,7 @@ URL_pcre2=https://github.com/PhilipHazel/pcre2/releases/download/pcre2-${VERSION
 MD5_pcre2=4a765b1419c2e7a01263c3260abca87a
 
 # default build path
-BUILD_pcre2=$BUILD_PATH/pcre2/$(get_directory $URL_pcre2)
+BUILD_pcre2=${DEPS_BUILD_PATH}/pcre2/$(get_directory $URL_pcre2)
 
 # default recipe path
 RECIPE_pcre2=$RECIPES_PATH/pcre2
@@ -29,7 +29,7 @@ RECIPE_pcre2=$RECIPES_PATH/pcre2
 function prebuild_pcre2() {
   cd $BUILD_pcre2
     patch_configure_file configure
-  try rsync  -a $BUILD_pcre2/ ${BUILD_PATH}/pcre2/build-${ARCH}
+  try rsync  -a $BUILD_pcre2/ ${DEPS_BUILD_PATH}/pcre2/build-${ARCH}
 
 }
 

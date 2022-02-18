@@ -16,7 +16,7 @@ URL_flex=https://github.com/westes/flex/releases/download/v${VERSION_flex}/flex-
 MD5_flex=2882e3179748cc9f9c23ec593d6adc8d
 
 # default build path
-BUILD_flex=$BUILD_PATH/flex/$(get_directory $URL_flex)
+BUILD_flex=${DEPS_BUILD_PATH}/flex/$(get_directory $URL_flex)
 
 # default recipe path
 RECIPE_flex=$RECIPES_PATH/flex
@@ -26,7 +26,7 @@ RECIPE_flex=$RECIPES_PATH/flex
 function prebuild_flex() {
   cd $BUILD_flex
     patch_configure_file configure
-  try rsync  -a $BUILD_flex/ ${BUILD_PATH}/flex/build-${ARCH}
+  try rsync  -a $BUILD_flex/ ${DEPS_BUILD_PATH}/flex/build-${ARCH}
 
 }
 

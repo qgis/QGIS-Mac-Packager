@@ -1,5 +1,5 @@
 function build_gmp() {
-  try cd $BUILD_PATH/gmp/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/gmp/build-$ARCH
   push_env
 
   export CFLAGS="$CFLAGS -fno-stack-check"

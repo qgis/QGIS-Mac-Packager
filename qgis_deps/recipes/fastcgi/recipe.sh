@@ -16,7 +16,7 @@ URL_fastcgi=https://github.com/FastCGI-Archives/fcgi2/archive/${VERSION_fastcgi}
 MD5_fastcgi=146376d5c5c059b9184755db76505fab
 
 # default build path
-BUILD_fastcgi=$BUILD_PATH/fastcgi/$(get_directory $URL_fastcgi)
+BUILD_fastcgi=${DEPS_BUILD_PATH}/fastcgi/$(get_directory $URL_fastcgi)
 
 # default recipe path
 RECIPE_fastcgi=$RECIPES_PATH/fastcgi
@@ -25,7 +25,7 @@ RECIPE_fastcgi=$RECIPES_PATH/fastcgi
 # (you can apply patch etc here.)
 function prebuild_fastcgi() {
   cd $BUILD_fastcgi
-  try rsync -a $BUILD_fastcgi/ ${BUILD_PATH}/fastcgi/build-${ARCH}
+  try rsync -a $BUILD_fastcgi/ ${DEPS_BUILD_PATH}/fastcgi/build-${ARCH}
 }
 
 function shouldbuild_fastcgi() {

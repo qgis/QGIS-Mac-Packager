@@ -1,5 +1,5 @@
 function build_boost() {
-  try cd $BUILD_PATH/boost/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/boost/build-$ARCH
   push_env
 
   try ./bootstrap.sh \

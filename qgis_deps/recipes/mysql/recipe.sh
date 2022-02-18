@@ -16,7 +16,7 @@ URL_mysql=https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-boost-${VERSION_my
 MD5_mysql=362b8141ecaf425b803fe55292e2df98
 
 # default build path
-BUILD_mysql=$BUILD_PATH/mysql/$(get_directory $URL_mysql)
+BUILD_mysql=${DEPS_BUILD_PATH}/mysql/$(get_directory $URL_mysql)
 
 # default recipe path
 RECIPE_mysql=$RECIPES_PATH/mysql

@@ -18,7 +18,7 @@ URL_freetds=https://www.freetds.org/files/stable/freetds-${VERSION_freetds}.tar.
 MD5_freetds=5de473ef22bfcc6a415398a5a145c53b
 
 # default build path
-BUILD_freetds=$BUILD_PATH/freetds/$(get_directory $URL_freetds)
+BUILD_freetds=${DEPS_BUILD_PATH}/freetds/$(get_directory $URL_freetds)
 
 # default recipe path
 RECIPE_freetds=$RECIPES_PATH/freetds
@@ -28,7 +28,7 @@ RECIPE_freetds=$RECIPES_PATH/freetds
 function prebuild_freetds() {
   cd $BUILD_freetds
     patch_configure_file configure
-  try rsync  -a $BUILD_freetds/ ${BUILD_PATH}/freetds/build-${ARCH}
+  try rsync  -a $BUILD_freetds/ ${DEPS_BUILD_PATH}/freetds/build-${ARCH}
 
 }
 

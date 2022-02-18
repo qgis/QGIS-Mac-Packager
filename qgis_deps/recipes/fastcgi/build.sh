@@ -1,5 +1,5 @@
 function build_fastcgi() {
-  try cd $BUILD_PATH/fastcgi/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/fastcgi/build-$ARCH
   push_env
 
   try ./autogen.sh

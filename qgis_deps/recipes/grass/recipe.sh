@@ -20,7 +20,7 @@ URL_grass=https://github.com/OSGeo/grass/archive/${VERSION_grass_build}.tar.gz
 MD5_grass=915440060be87c3fa9bd22212aaeb55d
 
 # default build path
-BUILD_grass=$BUILD_PATH/grass/$(get_directory $URL_grass)
+BUILD_grass=${DEPS_BUILD_PATH}/grass/$(get_directory $URL_grass)
 
 # default recipe path
 RECIPE_grass=$RECIPES_PATH/grass
@@ -46,7 +46,7 @@ function prebuild_grass() {
   # missing space in gpde Makefile
   try ${SED} "s;EXTRA_LIBS=\$(GISLIB);EXTRA_LIBS = \$(GISLIB);g" lib/gpde/Makefile
 
-  try rsync -a $BUILD_grass/ ${BUILD_PATH}/grass/build-${ARCH}
+  try rsync -a $BUILD_grass/ ${DEPS_BUILD_PATH}/grass/build-${ARCH}
 }
 
 function shouldbuild_grass() {

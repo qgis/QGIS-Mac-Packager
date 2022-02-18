@@ -1,5 +1,5 @@
 function build_python_numpy() {
-  try cd $BUILD_PATH/python_numpy/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_numpy/build-$ARCH
   push_env
 
   export OPENBLAS=$STAGE_PATH/lib

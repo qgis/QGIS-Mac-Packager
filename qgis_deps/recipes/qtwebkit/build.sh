@@ -1,6 +1,6 @@
 function build_qtwebkit() {
-  try mkdir -p $BUILD_PATH/qtwebkit/build-$ARCH
-  try cd $BUILD_PATH/qtwebkit/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/qtwebkit/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/qtwebkit/build-$ARCH
   push_env
 
   try ${CMAKE} \

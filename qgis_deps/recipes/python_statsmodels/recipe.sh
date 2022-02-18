@@ -15,7 +15,7 @@ URL_python_statsmodels=https://github.com/statsmodels/statsmodels/archive/v${VER
 MD5_python_statsmodels=b808135f1955f741a24a1fa01cd90e16
 
 # default build path
-BUILD_python_statsmodels=$BUILD_PATH/python_statsmodels/$(get_directory $URL_python_statsmodels)
+BUILD_python_statsmodels=${DEPS_BUILD_PATH}/python_statsmodels/$(get_directory $URL_python_statsmodels)
 
 # default recipe path
 RECIPE_python_statsmodels=$RECIPES_PATH/python_statsmodels
@@ -24,7 +24,7 @@ RECIPE_python_statsmodels=$RECIPES_PATH/python_statsmodels
 # (you can apply patch etc here.)
 function prebuild_python_statsmodels() {
   cd $BUILD_python_statsmodels
-  try rsync -a $BUILD_python_statsmodels/ ${BUILD_PATH}/python_statsmodels/build-${ARCH}
+  try rsync -a $BUILD_python_statsmodels/ ${DEPS_BUILD_PATH}/python_statsmodels/build-${ARCH}
 
 
 }

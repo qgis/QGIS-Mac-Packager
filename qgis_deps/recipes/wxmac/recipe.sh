@@ -17,7 +17,7 @@ URL_wxmac=https://github.com/wxWidgets/wxWidgets/releases/download/v${VERSION_wx
 MD5_wxmac=8b2ac42364a02bb5f3df22e1b1a517e5
 
 # default build path
-BUILD_wxmac=$BUILD_PATH/wxmac/$(get_directory $URL_wxmac)
+BUILD_wxmac=${DEPS_BUILD_PATH}/wxmac/$(get_directory $URL_wxmac)
 
 # default recipe path
 RECIPE_wxmac=$RECIPES_PATH/wxmac
@@ -27,7 +27,7 @@ RECIPE_wxmac=$RECIPES_PATH/wxmac
 function prebuild_wxmac() {
   cd $BUILD_wxmac
     patch_configure_file configure
-  try rsync   -a $BUILD_wxmac/ ${BUILD_PATH}/wxmac/build-${ARCH}
+  try rsync   -a $BUILD_wxmac/ ${DEPS_BUILD_PATH}/wxmac/build-${ARCH}
 }
 
 function shouldbuild_wxmac() {

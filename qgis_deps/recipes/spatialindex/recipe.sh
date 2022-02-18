@@ -18,7 +18,7 @@ URL_spatialindex=https://github.com/libspatialindex/libspatialindex/releases/dow
 MD5_spatialindex=7233d2961d42402e9e8cc1471322ca22
 
 # default build path
-BUILD_spatialindex=$BUILD_PATH/spatialindex/$(get_directory $URL_spatialindex)
+BUILD_spatialindex=${DEPS_BUILD_PATH}/spatialindex/$(get_directory $URL_spatialindex)
 
 # default recipe path
 RECIPE_spatialindex=$RECIPES_PATH/spatialindex

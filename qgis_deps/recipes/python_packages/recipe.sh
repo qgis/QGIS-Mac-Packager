@@ -16,7 +16,7 @@ URL_python_packages=
 MD5_python_packages=
 
 # default build path
-BUILD_python_packages=$BUILD_PATH/python_packages/v${VERSION_python_packages}
+BUILD_python_packages=${DEPS_BUILD_PATH}/python_packages/v${VERSION_python_packages}
 
 # default recipe path
 RECIPE_python_packages=$RECIPES_PATH/python_packages

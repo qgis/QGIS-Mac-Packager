@@ -1,5 +1,5 @@
 function build_flex() {
-  try cd $BUILD_PATH/flex/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/flex/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

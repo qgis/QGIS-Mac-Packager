@@ -16,7 +16,7 @@ URL_zlib=https://zlib.net/zlib-${VERSION_zlib}.tar.gz
 MD5_zlib=1c9f62f0778697a09d36121ead88e08e
 
 # default build path
-BUILD_zlib=$BUILD_PATH/zlib/$(get_directory $URL_zlib)
+BUILD_zlib=${DEPS_BUILD_PATH}/zlib/$(get_directory $URL_zlib)
 
 # default recipe path
 RECIPE_zlib=$RECIPES_PATH/zlib
@@ -26,7 +26,7 @@ RECIPE_zlib=$RECIPES_PATH/zlib
 function prebuild_zlib() {
   cd $BUILD_zlib
     patch_configure_file configure
-  try rsync  -a $BUILD_zlib/ ${BUILD_PATH}/zlib/build-${ARCH}
+  try rsync  -a $BUILD_zlib/ ${DEPS_BUILD_PATH}/zlib/build-${ARCH}
 
 }
 

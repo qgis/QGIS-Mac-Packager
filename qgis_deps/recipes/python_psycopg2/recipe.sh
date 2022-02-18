@@ -15,7 +15,7 @@ URL_python_psycopg2=
 MD5_python_psycopg2=
 
 # default build path
-BUILD_python_psycopg2=$BUILD_PATH/python_psycopg2/v${VERSION_python_psycopg2}
+BUILD_python_psycopg2=${DEPS_BUILD_PATH}/python_psycopg2/v${VERSION_python_psycopg2}
 
 # default recipe path
 RECIPE_python_psycopg2=$RECIPES_PATH/python_psycopg2

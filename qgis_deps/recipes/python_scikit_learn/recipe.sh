@@ -15,7 +15,7 @@ URL_python_scikit_learn=https://github.com/scikit-learn/scikit-learn/archive/${V
 MD5_python_scikit_learn=f7f33cfdb020c4ff07e97f66a6085782
 
 # default build path
-BUILD_python_scikit_learn=$BUILD_PATH/python_scikit_learn/$(get_directory $URL_python_scikit_learn)
+BUILD_python_scikit_learn=${DEPS_BUILD_PATH}/python_scikit_learn/$(get_directory $URL_python_scikit_learn)
 
 # default recipe path
 RECIPE_python_scikit_learn=$RECIPES_PATH/python_scikit_learn
@@ -24,7 +24,7 @@ RECIPE_python_scikit_learn=$RECIPES_PATH/python_scikit_learn
 # (you can apply patch etc here.)
 function prebuild_python_scikit_learn() {
   cd $BUILD_python_scikit_learn
-  try rsync -a $BUILD_python_scikit_learn/ ${BUILD_PATH}/python_scikit_learn/build-${ARCH}
+  try rsync -a $BUILD_python_scikit_learn/ ${DEPS_BUILD_PATH}/python_scikit_learn/build-${ARCH}
 
 
 }

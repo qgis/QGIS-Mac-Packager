@@ -15,7 +15,7 @@ URL_python_numpy=https://github.com/numpy/numpy/archive/v${VERSION_python_numpy}
 MD5_python_numpy=a8414e2eebac83a4d5b6a945063c4fff
 
 # default build path
-BUILD_python_numpy=$BUILD_PATH/python_numpy/$(get_directory $URL_python_numpy)
+BUILD_python_numpy=${DEPS_BUILD_PATH}/python_numpy/$(get_directory $URL_python_numpy)
 
 # default recipe path
 RECIPE_python_numpy=$RECIPES_PATH/python_numpy
@@ -24,7 +24,7 @@ RECIPE_python_numpy=$RECIPES_PATH/python_numpy
 # (you can apply patch etc here.)
 function prebuild_python_numpy() {
   cd $BUILD_python_numpy
-  try rsync -a $BUILD_python_numpy/ ${BUILD_PATH}/python_numpy/build-${ARCH}
+  try rsync -a $BUILD_python_numpy/ ${DEPS_BUILD_PATH}/python_numpy/build-${ARCH}
 
 
 }

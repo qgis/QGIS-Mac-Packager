@@ -1,5 +1,5 @@
 function build_protobuf() {
-  try cd $BUILD_PATH/protobuf/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/protobuf/build-$ARCH
   push_env
 
   export CXXFLAGS="$CXXFLAGS -DNDEBUG"

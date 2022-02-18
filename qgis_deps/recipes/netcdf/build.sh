@@ -1,6 +1,6 @@
 function build_netcdf() {
-  try mkdir -p $BUILD_PATH/netcdf/build-$ARCH
-  try cd $BUILD_PATH/netcdf/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/netcdf/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/netcdf/build-$ARCH
   push_env
 
   try ${CMAKE} $BUILD_netcdf

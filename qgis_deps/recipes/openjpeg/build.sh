@@ -1,5 +1,5 @@
 function build_openjpeg() {
-  try cd $BUILD_PATH/openjpeg/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/openjpeg/build-$ARCH
   push_env
 
   try ${CMAKE} \

@@ -17,7 +17,7 @@ URL_postgres=https://ftp.postgresql.org/pub/source/v${VERSION_postgres}/postgres
 MD5_postgres=aae1ede6de233e2d44437d66bc1cd3b8
 
 # default build path
-BUILD_postgres=$BUILD_PATH/postgres/$(get_directory $URL_postgres)
+BUILD_postgres=${DEPS_BUILD_PATH}/postgres/$(get_directory $URL_postgres)
 
 # default recipe path
 RECIPE_postgres=$RECIPES_PATH/postgres
@@ -27,7 +27,7 @@ RECIPE_postgres=$RECIPES_PATH/postgres
 function prebuild_postgres() {
   cd $BUILD_postgres
   patch_configure_file configure
-  try rsync  -a $BUILD_postgres/ ${BUILD_PATH}/postgres/build-${ARCH}
+  try rsync  -a $BUILD_postgres/ ${DEPS_BUILD_PATH}/postgres/build-${ARCH}
 }
 
 function shouldbuild_postgres() {

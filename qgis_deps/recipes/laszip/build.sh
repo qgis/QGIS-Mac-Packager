@@ -1,6 +1,6 @@
 function build_laszip() {
-  try mkdir -p $BUILD_PATH/laszip/build-$ARCH
-  try cd $BUILD_PATH/laszip/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/laszip/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/laszip/build-$ARCH
   push_env
 
   try ${CMAKE} $BUILD_laszip

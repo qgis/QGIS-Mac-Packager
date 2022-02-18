@@ -1,5 +1,5 @@
 function build_libxml2() {
-  try cd $BUILD_PATH/libxml2/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libxml2/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

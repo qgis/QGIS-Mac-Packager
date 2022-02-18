@@ -16,7 +16,7 @@ URL_gmp=https://gmplib.org/download/gmp/gmp-$VERSION_gmp.tar.lz
 MD5_gmp=e3e08ac185842a882204ba3c37985127
 
 # default build path
-BUILD_gmp=$BUILD_PATH/gmp/$(get_directory $URL_gmp)
+BUILD_gmp=${DEPS_BUILD_PATH}/gmp/$(get_directory $URL_gmp)
 
 # default recipe path
 RECIPE_gmp=$RECIPES_PATH/gmp
@@ -26,7 +26,7 @@ RECIPE_gmp=$RECIPES_PATH/gmp
 function prebuild_gmp() {
   cd $BUILD_gmp
     patch_configure_file configure
-  try rsync   -a $BUILD_gmp/ ${BUILD_PATH}/gmp/build-${ARCH}
+  try rsync   -a $BUILD_gmp/ ${DEPS_BUILD_PATH}/gmp/build-${ARCH}
 }
 
 function shouldbuild_gmp() {

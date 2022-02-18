@@ -16,7 +16,7 @@ URL_python_h5py=
 MD5_python_h5py=
 
 # default build path
-BUILD_python_h5py=$BUILD_PATH/python_h5py/v${VERSION_python_h5py}
+BUILD_python_h5py=${DEPS_BUILD_PATH}/python_h5py/v${VERSION_python_h5py}
 
 # default recipe path
 RECIPE_python_h5py=$RECIPES_PATH/python_h5py

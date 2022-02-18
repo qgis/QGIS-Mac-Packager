@@ -1,5 +1,5 @@
 function build_webp() {
-  try cd $BUILD_PATH/webp/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/webp/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

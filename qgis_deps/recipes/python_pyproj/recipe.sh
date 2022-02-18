@@ -17,7 +17,7 @@ URL_python_pyproj=https://github.com/pyproj4/pyproj/archive/refs/tags/${VERSION_
 MD5_python_pyproj=dc548c8990e10bc52d012bae5a87030f
 
 # default build path
-BUILD_python_pyproj=$BUILD_PATH/python_pyproj/$(get_directory $URL_python_pyproj)
+BUILD_python_pyproj=${DEPS_BUILD_PATH}/python_pyproj/$(get_directory $URL_python_pyproj)
 
 # default recipe path
 RECIPE_python_pyproj=$RECIPES_PATH/python_pyproj
@@ -26,7 +26,7 @@ RECIPE_python_pyproj=$RECIPES_PATH/python_pyproj
 # (you can apply patch etc here.)
 function prebuild_python_pyproj() {
   cd $BUILD_python_pyproj
-  try rsync -a $BUILD_python_pyproj/ $BUILD_PATH/python_pyproj/build-$ARCH/
+  try rsync -a $BUILD_python_pyproj/ ${DEPS_BUILD_PATH}/python_pyproj/build-$ARCH/
 }
 
 function shouldbuild_python_pyproj() {

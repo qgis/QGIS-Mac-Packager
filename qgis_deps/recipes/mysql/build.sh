@@ -1,6 +1,6 @@
 function build_mysql() {
-  try mkdir -p $BUILD_PATH/mysql/build-$ARCH
-  try cd $BUILD_PATH/mysql/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/mysql/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/mysql/build-$ARCH
   try mkdir -p downloaded_boost
   push_env
 

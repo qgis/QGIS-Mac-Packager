@@ -22,7 +22,7 @@ URL_hdf5=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${VERSION_hdf5_majo
 MD5_hdf5=442469fbf43626006346e679c22cf10a
 
 # default build path
-BUILD_hdf5=$BUILD_PATH/hdf5/$(get_directory $URL_hdf5)
+BUILD_hdf5=${DEPS_BUILD_PATH}/hdf5/$(get_directory $URL_hdf5)
 
 # default recipe path
 RECIPE_hdf5=$RECIPES_PATH/hdf5
@@ -32,7 +32,7 @@ RECIPE_hdf5=$RECIPES_PATH/hdf5
 function prebuild_hdf5() {
   cd $BUILD_hdf5
   patch_configure_file configure
-  try rsync  -a $BUILD_hdf5/ ${BUILD_PATH}/hdf5/build-${ARCH}
+  try rsync  -a $BUILD_hdf5/ ${DEPS_BUILD_PATH}/hdf5/build-${ARCH}
 }
 
 function shouldbuild_hdf5() {

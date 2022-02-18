@@ -46,7 +46,7 @@ URL_qgis_deps=
 MD5_qgis_deps=
 
 # default build path
-BUILD_qgis_deps=$BUILD_PATH/qgis_deps/qgis_deps
+BUILD_qgis_deps=${DEPS_BUILD_PATH}/qgis_deps/qgis_deps
 
 # default recipe path
 RECIPE_qgis_deps=$RECIPES_PATH/qgis_deps

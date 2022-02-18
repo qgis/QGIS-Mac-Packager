@@ -1,5 +1,5 @@
 function build_python_sip() {
-  try cd $BUILD_PATH/python_sip/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_sip/build-$ARCH
 
   push_env
 

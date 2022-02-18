@@ -16,7 +16,7 @@ URL_python_rasterio=https://github.com/mapbox/rasterio/archive/$VERSION_python_r
 MD5_python_rasterio=fbfb53a7bc521c607d9aad7a4c35c930
 
 # default build path
-BUILD_python_rasterio=$BUILD_PATH/python_rasterio/$(get_directory $URL_python_rasterio)
+BUILD_python_rasterio=${DEPS_BUILD_PATH}/python_rasterio/$(get_directory $URL_python_rasterio)
 
 # default recipe path
 RECIPE_python_rasterio=$RECIPES_PATH/python_rasterio
@@ -25,7 +25,7 @@ RECIPE_python_rasterio=$RECIPES_PATH/python_rasterio
 # (you can apply patch etc here.)
 function prebuild_python_rasterio() {
   cd $BUILD_python_rasterio
-  try rsync -a $BUILD_python_rasterio/ ${BUILD_PATH}/python_rasterio/build-${ARCH}
+  try rsync -a $BUILD_python_rasterio/ ${DEPS_BUILD_PATH}/python_rasterio/build-${ARCH}
 
 
 }

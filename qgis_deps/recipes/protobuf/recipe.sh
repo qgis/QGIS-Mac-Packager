@@ -16,7 +16,7 @@ URL_protobuf=https://github.com/protocolbuffers/protobuf/releases/download/v${VE
 MD5_protobuf=ccedd5b7b09a9eda37e8654155baca5a
 
 # default build path
-BUILD_protobuf=$BUILD_PATH/protobuf/$(get_directory $URL_protobuf)
+BUILD_protobuf=${DEPS_BUILD_PATH}/protobuf/$(get_directory $URL_protobuf)
 
 # default recipe path
 RECIPE_protobuf=$RECIPES_PATH/protobuf
@@ -25,7 +25,7 @@ RECIPE_protobuf=$RECIPES_PATH/protobuf
 # (you can apply patch etc here.)
 function prebuild_protobuf() {
   cd $BUILD_protobuf
-  try rsync -a $BUILD_protobuf/ ${BUILD_PATH}/protobuf/build-${ARCH}
+  try rsync -a $BUILD_protobuf/ ${DEPS_BUILD_PATH}/protobuf/build-${ARCH}
 
 
 }

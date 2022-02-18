@@ -356,10 +356,10 @@ function check_linked_rpath() {
 
   # the binaries cannot contain reference to build path since this path is not present when
   # the deps are downloaded from the web
-  if otool -L ${1} | grep -q ${BUILD_PATH}
+  if otool -L ${1} | grep -q ${DEPS_BUILD_PATH}
   then
     otool -L ${1}
-    error "${1} contains ${BUILD_PATH} string <-- forgot to change install_name for the linked library?"
+    error "${1} contains ${DEPS_BUILD_PATH} string <-- forgot to change install_name for the linked library?"
   fi
 
   targets=(
@@ -429,7 +429,7 @@ function run_prepare()
   if [ ${DO_CLEAN_BUILD} -eq 1 ]; then
     info "Cleaning build"
     try rm -rf ${STAGE_PATH}
-    try rm -rf ${BUILD_PATH}
+    try rm -rf ${DEPS_BUILD_PATH}
   fi
 
   info "Distribution will be located at ${STAGE_PATH}"
@@ -442,7 +442,7 @@ function run_prepare()
 
   # create build directory if not found
   test -d ${SOURCE_PACKAGES_PATH} || mkdir -p ${SOURCE_PACKAGES_PATH}
-  test -d ${BUILD_PATH} || mkdir -p ${BUILD_PATH}
+  test -d ${DEPS_BUILD_PATH} || mkdir -p ${DEPS_BUILD_PATH}
   test -d ${STAGE_PATH}/lib || mkdir -p ${STAGE_PATH}/lib
   test -d ${STAGE_PATH}/Frameworks || mkdir -p ${STAGE_PATH}/Frameworks
 }
@@ -477,8 +477,8 @@ function run_source_modules() {
   declare -a processed
   processed=()
 
-  fn_deps=${BUILD_PATH}'/.deps'
-  fn_optional_deps=${BUILD_PATH}'/.optional-deps'
+  fn_deps=${DEPS_BUILD_PATH}'/.deps'
+  fn_optional_deps=${DEPS_BUILD_PATH}'/.optional-deps'
 
   > ${fn_deps}
   > ${fn_optional_deps}
@@ -546,8 +546,8 @@ function recipe_has_changed(){
   module=${1}
   file=${2}
   current_recipe_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/${file}.sh | cut -d\  -f1)
-  if [[ -f ${BUILD_PATH}/${module}/.${2} ]]; then
-    stored_recipe_sum=$(cat ${BUILD_PATH}/${module}/.${2})
+  if [[ -f ${DEPS_BUILD_PATH}/${module}/.${2} ]]; then
+    stored_recipe_sum=$(cat ${DEPS_BUILD_PATH}/${module}/.${2})
     if [[ "${current_recipe_sum}" == "${stored_recipe_sum}" ]]; then
       echo 0
     fi
@@ -561,8 +561,8 @@ function download_file() {
     md5=${3}
     do_prebuild=${4}
 
-    if [ ! -d "${BUILD_PATH}/${module}" ]; then
-      try mkdir -p ${BUILD_PATH}/${module}
+    if [ ! -d "${DEPS_BUILD_PATH}/${module}" ]; then
+      try mkdir -p ${DEPS_BUILD_PATH}/${module}
     fi
 
     if [ ! -d "${SOURCE_PACKAGES_PATH}/${module}" ]; then
@@ -621,11 +621,11 @@ function download_file() {
     fi
 
     source_directory=$(get_directory ${filename})
-    build_directory=${BUILD_PATH}/${module}/build-${ARCH}
+    build_directory=${DEPS_BUILD_PATH}/${module}/build-${ARCH}
 
     if [[ ${do_prebuild} -eq 1 ]] && [[ "$(recipe_has_changed "${module}" recipe)" == "1" ]]; then
       info "Recipe has changed, removing the existing source and build directories"
-      rm -rf ${BUILD_PATH}/${module}/${source_directory}
+      rm -rf ${DEPS_BUILD_PATH}/${module}/${source_directory}
       rm -rf ${build_directory}
       if [[ -z ${FORCE_BUILD_FROM_MODULE} ]]; then
         info "From this module, re-build all"
@@ -634,7 +634,7 @@ function download_file() {
     fi
 
     # if already decompress, forget it
-    cd ${BUILD_PATH}/${module}
+    cd ${DEPS_BUILD_PATH}/${module}
     if [[ ! -d "${source_directory}" ]]; then
       # decompress
       pfilename=${SOURCE_PACKAGES_PATH}/${module}/${filename}
@@ -668,7 +668,7 @@ function download_file() {
       debug "Call ${fn}"
       ${fn}
       recipe_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/recipe.sh | cut -d\  -f1)
-      echo "${recipe_sum}" > ${BUILD_PATH}/${module}/.recipe
+      echo "${recipe_sum}" > ${DEPS_BUILD_PATH}/${module}/.recipe
     fi
 }
 
@@ -727,7 +727,7 @@ function run_build() {
 
   modules_update=(${MODULES_UPDATE})
 
-  cd ${BUILD_PATH}
+  cd ${DEPS_BUILD_PATH}
 
   modules_arr=(${MODULES})
   nmod=${#modules_arr[@]}
@@ -757,14 +757,14 @@ function run_build() {
     fn="build_${module}"
     if [[ "${DO_CLEAN_BUILD}" == "1" ]] ||  [[ "${DO_BUILD}" == "1" ]]; then
       debug "Call ${fn}"
-      rm -f ${BUILD_PATH}/${module}/.build
+      rm -f ${DEPS_BUILD_PATH}/${module}/.build
       source ${RECIPES_PATH}/${module}/build.sh
       # https://stackoverflow.com/a/363239/1548052
-      ${fn} 2>&1 | tee ${BUILD_PATH}/last-build.log
+      ${fn} 2>&1 | tee ${DEPS_BUILD_PATH}/last-build.log
       [[ $? -ne 0 ]] && error "${module} build failed"
-      gsed -i "1s;^;Building ${module}\n;" ${BUILD_PATH}/last-build.log
+      gsed -i "1s;^;Building ${module}\n;" ${DEPS_BUILD_PATH}/last-build.log
       build_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/build.sh | cut -d\  -f1)
-      echo "${build_sum}" > ${BUILD_PATH}/${module}/.build
+      echo "${build_sum}" > ${DEPS_BUILD_PATH}/${module}/.build
     else
       debug "Skipped ${fn}"
     fi
@@ -772,7 +772,7 @@ function run_build() {
     # postbuild
     fn2=$(echo postbuild_${module})
     debug "Call ${fn2}"
-    ${fn2} 2>&1 | tee -a ${BUILD_PATH}/last-build.log
+    ${fn2} 2>&1 | tee -a ${DEPS_BUILD_PATH}/last-build.log
     [[ $? -ne 0 ]] && error "${module} postbuild failed"
     fold_pop
   done
@@ -793,7 +793,7 @@ function run_create_config_file() {
   append_to_config_file "export MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}"
   append_to_config_file "export QGIS_DEPS_SDK_VERSION=${QGIS_DEPS_SDK_VERSION}"
 
-  cd ${BUILD_PATH}
+  cd ${DEPS_BUILD_PATH}
   for module in ${MODULES}; do
     fn=$(echo add_config_info_${module})
     debug "Call ${fn}"

@@ -17,7 +17,7 @@ URL_bz2=https://sourceware.org/pub/bzip2/bzip2-${VERSION_bz2}.tar.gz
 MD5_bz2=67e051268d0c475ea773822f7500d0e5
 
 # default build path
-BUILD_bz2=$BUILD_PATH/bz2/$(get_directory $URL_bz2)
+BUILD_bz2=${DEPS_BUILD_PATH}/bz2/$(get_directory $URL_bz2)
 
 # default recipe path
 RECIPE_bz2=$RECIPES_PATH/bz2
@@ -26,7 +26,7 @@ RECIPE_bz2=$RECIPES_PATH/bz2
 # (you can apply patch etc here.)
 function prebuild_bz2() {
   cd $BUILD_bz2
-  try rsync -a $BUILD_bz2/ ${BUILD_PATH}/bz2/build-${ARCH}
+  try rsync -a $BUILD_bz2/ ${DEPS_BUILD_PATH}/bz2/build-${ARCH}
 
 
 }

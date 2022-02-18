@@ -1,5 +1,5 @@
 function build_libssh2() {
-  try cd $BUILD_PATH/libssh2/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libssh2/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

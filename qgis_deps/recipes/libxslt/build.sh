@@ -1,5 +1,5 @@
 function build_libxslt() {
-  try cd $BUILD_PATH/libxslt/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libxslt/build-$ARCH
   push_env
 
   patch_configure_file configure

@@ -1,5 +1,5 @@
 function build_spatialite() {
-  try cd $BUILD_PATH/spatialite/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/spatialite/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

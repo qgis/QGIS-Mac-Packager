@@ -1,5 +1,5 @@
 function build_libtasn1() {
-  try cd $BUILD_PATH/libtasn1/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libtasn1/build-$ARCH
   push_env
 
   patch_configure_file configure

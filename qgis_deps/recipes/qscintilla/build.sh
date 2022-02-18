@@ -1,5 +1,5 @@
 function build_qscintilla() {
-  try cd $BUILD_PATH/qscintilla/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/qscintilla/build-$ARCH
   push_env
 
   cd Qt4Qt5

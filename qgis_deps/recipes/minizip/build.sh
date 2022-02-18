@@ -1,6 +1,6 @@
 function build_minizip() {
-  try mkdir -p $BUILD_PATH/minizip/build-$ARCH
-  try cd $BUILD_PATH/minizip/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/minizip/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/minizip/build-$ARCH
   push_env
 
   try ${CMAKE} \

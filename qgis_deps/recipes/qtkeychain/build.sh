@@ -1,6 +1,6 @@
 function build_qtkeychain() {
-  try mkdir -p $BUILD_PATH/qtkeychain/build-$ARCH
-  try cd $BUILD_PATH/qtkeychain/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/qtkeychain/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/qtkeychain/build-$ARCH
   push_env
 
   try ${CMAKE} \

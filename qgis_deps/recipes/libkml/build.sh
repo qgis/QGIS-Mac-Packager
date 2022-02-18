@@ -1,6 +1,6 @@
 function build_libkml() {
-  try mkdir -p $BUILD_PATH/libkml/build-$ARCH
-  try cd $BUILD_PATH/libkml/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/libkml/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libkml/build-$ARCH
   push_env
 
   try ${CMAKE} \
@@ -30,7 +30,7 @@ function build_libkml() {
         $LINK_libkmlregionator \
         $LINK_libkmlxsd
     do
-      install_name_tool -change $BUILD_PATH/libkml/build-$ARCH/lib/$j $STAGE_PATH/lib/$j $STAGE_PATH/lib/$i
+      install_name_tool -change ${DEPS_BUILD_PATH}/libkml/build-$ARCH/lib/$j $STAGE_PATH/lib/$j $STAGE_PATH/lib/$i
     done
   done
 

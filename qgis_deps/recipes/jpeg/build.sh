@@ -1,5 +1,5 @@
 function build_jpeg() {
-  try cd $BUILD_PATH/jpeg/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/jpeg/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

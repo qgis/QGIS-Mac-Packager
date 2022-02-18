@@ -1,5 +1,5 @@
 function build_python_gdal() {
-  try cd $BUILD_PATH/python_gdal/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_gdal/build-$ARCH
   push_env
 
   cd swig/python

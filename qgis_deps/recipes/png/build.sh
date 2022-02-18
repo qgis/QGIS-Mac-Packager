@@ -1,5 +1,5 @@
 function build_png() {
-  try cd $BUILD_PATH/png/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/png/build-$ARCH
   push_env
 
   try ${CONFIGURE} --disable-debug

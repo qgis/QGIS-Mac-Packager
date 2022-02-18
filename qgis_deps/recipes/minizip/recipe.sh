@@ -21,7 +21,7 @@ URL_minizip=http://sourceforge.net/projects/libkml-files/files/${VERSION_libkml}
 MD5_minizip=d5f74eff74e03e497ea60b2c43623416
 
 # default build path
-BUILD_minizip=$BUILD_PATH/minizip/$(get_directory $URL_minizip)
+BUILD_minizip=${DEPS_BUILD_PATH}/minizip/$(get_directory $URL_minizip)
 
 # default recipe path
 RECIPE_minizip=$RECIPES_PATH/minizip

@@ -15,7 +15,7 @@ URL_python_patsy=https://github.com/pydata/patsy/archive/v${VERSION_python_patsy
 MD5_python_patsy=ff2bad29ac6d71ce265c4027b487fd63
 
 # default build path
-BUILD_python_patsy=$BUILD_PATH/python_patsy/$(get_directory $URL_python_patsy)
+BUILD_python_patsy=${DEPS_BUILD_PATH}/python_patsy/$(get_directory $URL_python_patsy)
 
 # default recipe path
 RECIPE_python_patsy=$RECIPES_PATH/python_patsy
@@ -24,7 +24,7 @@ RECIPE_python_patsy=$RECIPES_PATH/python_patsy
 # (you can apply patch etc here.)
 function prebuild_python_patsy() {
   cd $BUILD_python_patsy
-  try rsync -a $BUILD_python_patsy/ ${BUILD_PATH}/python_patsy/build-${ARCH}
+  try rsync -a $BUILD_python_patsy/ ${DEPS_BUILD_PATH}/python_patsy/build-${ARCH}
 
 
 }

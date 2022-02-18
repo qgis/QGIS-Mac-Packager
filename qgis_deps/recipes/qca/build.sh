@@ -1,6 +1,6 @@
 function build_qca() {
-  try mkdir -p $BUILD_PATH/qca/build-$ARCH
-  try cd $BUILD_PATH/qca/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/qca/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/qca/build-$ARCH
   push_env
 
   try ${CMAKE} \

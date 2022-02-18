@@ -16,14 +16,14 @@ URL_python_cftime=https://files.pythonhosted.org/packages/0b/e6/2508d15ffa91c512
 MD5_python_cftime=0952f5f0952bc606f73ddc5228d04d0e
 
 # default build path
-BUILD_python_cftime=$BUILD_PATH/python_cftime/$(get_directory $URL_python_cftime)
+BUILD_python_cftime=${DEPS_BUILD_PATH}/python_cftime/$(get_directory $URL_python_cftime)
 
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_python_cftime() {
   mkdir -p $BUILD_python_cftime
   cd $BUILD_python_cftime
-  try rsync -a $BUILD_python_cftime/ ${BUILD_PATH}/python_cftime/build-${ARCH}
+  try rsync -a $BUILD_python_cftime/ ${DEPS_BUILD_PATH}/python_cftime/build-${ARCH}
 
 
 }

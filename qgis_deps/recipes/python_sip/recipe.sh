@@ -17,7 +17,7 @@ URL_python_sip=https://www.riverbankcomputing.com/static/Downloads/sip/${VERSION
 MD5_python_sip=1891a7b71c72d83951d5851ae10b2f0c
 
 # default build path
-BUILD_python_sip=$BUILD_PATH/python_sip/$(get_directory $URL_python_sip)
+BUILD_python_sip=${DEPS_BUILD_PATH}/python_sip/$(get_directory $URL_python_sip)
 
 # default recipe path
 RECIPE_python_sip=$RECIPES_PATH/python_sip
@@ -27,7 +27,7 @@ RECIPE_python_sip=$RECIPES_PATH/python_sip
 function prebuild_python_sip() {
   try mkdir -p $BUILD_python_sip
   cd $BUILD_python_sip
-  try rsync -a $BUILD_python_sip/ ${BUILD_PATH}/python_sip/build-${ARCH}
+  try rsync -a $BUILD_python_sip/ ${DEPS_BUILD_PATH}/python_sip/build-${ARCH}
 
 
 }

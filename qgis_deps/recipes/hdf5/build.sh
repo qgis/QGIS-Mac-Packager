@@ -1,5 +1,5 @@
 function build_hdf5() {
-  try cd $BUILD_PATH/hdf5/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/hdf5/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

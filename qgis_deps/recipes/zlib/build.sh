@@ -1,5 +1,5 @@
 function build_zlib() {
-  try cd $BUILD_PATH/zlib/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/zlib/build-$ARCH
   push_env
 
   try ${CONFIGURE}

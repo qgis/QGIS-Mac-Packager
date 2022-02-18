@@ -16,7 +16,7 @@ URL_libmpc=https://ftp.gnu.org/gnu/mpc/mpc-$VERSION_libmpc.tar.gz
 MD5_libmpc=4125404e41e482ec68282a2e687f6c73
 
 # default build path
-BUILD_libmpc=$BUILD_PATH/libmpc/$(get_directory $URL_libmpc)
+BUILD_libmpc=${DEPS_BUILD_PATH}/libmpc/$(get_directory $URL_libmpc)
 
 # default recipe path
 RECIPE_libmpc=$RECIPES_PATH/libmpc
@@ -26,7 +26,7 @@ RECIPE_libmpc=$RECIPES_PATH/libmpc
 function prebuild_libmpc() {
   cd $BUILD_libmpc
     patch_configure_file configure
-  try rsync  -a $BUILD_libmpc/ ${BUILD_PATH}/libmpc/build-${ARCH}
+  try rsync  -a $BUILD_libmpc/ ${DEPS_BUILD_PATH}/libmpc/build-${ARCH}
 
 }
 

@@ -17,7 +17,7 @@ URL_libomp=https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSI
 MD5_libomp=464bbf25632f71b4c0cd23e7dd7ddad9
 
 # default build path
-BUILD_libomp=$BUILD_PATH/libomp/$(get_directory $URL_libomp)
+BUILD_libomp=${DEPS_BUILD_PATH}/libomp/$(get_directory $URL_libomp)
 
 # default recipe path
 RECIPE_libomp=$RECIPES_PATH/libomp

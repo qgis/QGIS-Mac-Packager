@@ -18,7 +18,7 @@ URL_geos=http://download.osgeo.org/geos/geos-${VERSION_geos}.tar.bz2
 MD5_geos=324258ae27b5d53cd90897435d97cc6a
 
 # default build path
-BUILD_geos=$BUILD_PATH/geos/$(get_directory $URL_geos)
+BUILD_geos=${DEPS_BUILD_PATH}/geos/$(get_directory $URL_geos)
 
 # default recipe path
 RECIPE_geos=$RECIPES_PATH/geos

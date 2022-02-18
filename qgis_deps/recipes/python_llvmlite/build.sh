@@ -1,7 +1,7 @@
 function build_python_llvmlite() {
   # build llvm
-  try mkdir -p $BUILD_PATH/python_llvmlite/build-$ARCH-llvm/
-  try cd $BUILD_PATH/python_llvmlite/build-$ARCH-llvm/
+  try mkdir -p ${DEPS_BUILD_PATH}/python_llvmlite/build-$ARCH-llvm/
+  try cd ${DEPS_BUILD_PATH}/python_llvmlite/build-$ARCH-llvm/
 
   push_env
   # chmod +x $BUILD_python_llvmlite/conda-recipes/llvmdev/build.sh
@@ -36,7 +36,7 @@ function build_python_llvmlite() {
   pop_env
 
   # build python
-  try cd $BUILD_PATH/python_llvmlite/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_llvmlite/build-$ARCH
 
   push_env
 

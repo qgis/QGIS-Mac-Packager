@@ -1,5 +1,5 @@
 function build_libunistring() {
-  try cd $BUILD_PATH/libunistring/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libunistring/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

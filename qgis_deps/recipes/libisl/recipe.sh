@@ -16,7 +16,7 @@ URL_libisl=https://libisl.sourceforge.io/isl-${VERSION_libisl}.tar.xz
 MD5_libisl=fae030f604a9537adc2502990a8ab4d1
 
 # default build path
-BUILD_libisl=$BUILD_PATH/libisl/$(get_directory $URL_libisl)
+BUILD_libisl=${DEPS_BUILD_PATH}/libisl/$(get_directory $URL_libisl)
 
 # default recipe path
 RECIPE_libisl=$RECIPES_PATH/libisl
@@ -26,7 +26,7 @@ RECIPE_libisl=$RECIPES_PATH/libisl
 function prebuild_libisl() {
   cd $BUILD_libisl
 
-  try rsync  -a $BUILD_libisl/ $BUILD_PATH/libisl/build-$ARCH/
+  try rsync  -a $BUILD_libisl/ ${DEPS_BUILD_PATH}/libisl/build-$ARCH/
 }
 
 function shouldbuild_libisl() {

@@ -1,5 +1,5 @@
 function build_bz2() {
-  try cd $BUILD_PATH/bz2/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/bz2/build-$ARCH
   push_env
 
   try $MAKESMP PREFIX=$STAGE_PATH

@@ -15,7 +15,7 @@ URL_qtwebkit=https://github.com/qt/qtwebkit/archive/v5.212.0-alpha4.tar.gz
 MD5_qtwebkit=22e442063e7d0362439934442e269ed2
 
 # default build path
-BUILD_qtwebkit=$BUILD_PATH/qtwebkit/$(get_directory $URL_qtwebkit)
+BUILD_qtwebkit=${DEPS_BUILD_PATH}/qtwebkit/$(get_directory $URL_qtwebkit)
 
 # default recipe path
 RECIPE_qtwebkit=$RECIPES_PATH/qtwebkit

@@ -21,7 +21,7 @@ URL_openjpeg=https://github.com/uclouvain/openjpeg/archive/v${VERSION_openjpeg}.
 MD5_openjpeg=4d388298335947367e91f1d100468af1
 
 # default build path
-BUILD_openjpeg=$BUILD_PATH/openjpeg/$(get_directory $URL_openjpeg)
+BUILD_openjpeg=${DEPS_BUILD_PATH}/openjpeg/$(get_directory $URL_openjpeg)
 
 # default recipe path
 RECIPE_openjpeg=$RECIPES_PATH/openjpeg
@@ -30,7 +30,7 @@ RECIPE_openjpeg=$RECIPES_PATH/openjpeg
 # (you can apply patch etc here.)
 function prebuild_openjpeg() {
   cd $BUILD_openjpeg
-  try rsync -a $BUILD_openjpeg/ ${BUILD_PATH}/openjpeg/build-${ARCH}
+  try rsync -a $BUILD_openjpeg/ ${DEPS_BUILD_PATH}/openjpeg/build-${ARCH}
 
 
 }

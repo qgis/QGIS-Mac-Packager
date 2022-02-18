@@ -18,7 +18,7 @@ URL_laszip=https://github.com/laszip/laszip/releases/download/${VERSION_laszip}/
 MD5_laszip=e07be9ba6247889a4ba0bda8535c77e3
 
 # default build path
-BUILD_laszip=$BUILD_PATH/laszip/$(get_directory $URL_laszip)
+BUILD_laszip=${DEPS_BUILD_PATH}/laszip/$(get_directory $URL_laszip)
 
 # default recipe path
 RECIPE_laszip=$RECIPES_PATH/laszip

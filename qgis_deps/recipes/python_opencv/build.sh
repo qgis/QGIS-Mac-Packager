@@ -1,5 +1,5 @@
 function build_python_opencv() {
-  try cd $BUILD_PATH/python_opencv/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_opencv/build-$ARCH
   push_env
 
   export CMAKE_ARGS=""

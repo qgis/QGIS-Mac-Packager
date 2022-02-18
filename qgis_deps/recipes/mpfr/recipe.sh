@@ -16,7 +16,7 @@ URL_mpfr=https://ftp.gnu.org/gnu/mpfr/mpfr-$VERSION_mpfr.tar.xz
 MD5_mpfr=bdd3d5efba9c17da8d83a35ec552baef
 
 # default build path
-BUILD_mpfr=$BUILD_PATH/mpfr/$(get_directory $URL_mpfr)
+BUILD_mpfr=${DEPS_BUILD_PATH}/mpfr/$(get_directory $URL_mpfr)
 
 # default recipe path
 RECIPE_mpfr=$RECIPES_PATH/mpfr
@@ -26,7 +26,7 @@ RECIPE_mpfr=$RECIPES_PATH/mpfr
 function prebuild_mpfr() {
   cd $BUILD_mpfr
     patch_configure_file configure
-  try rsync  -a $BUILD_mpfr/ ${BUILD_PATH}/mpfr/build-${ARCH}
+  try rsync  -a $BUILD_mpfr/ ${DEPS_BUILD_PATH}/mpfr/build-${ARCH}
 
 }
 

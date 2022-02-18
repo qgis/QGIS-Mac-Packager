@@ -1,5 +1,5 @@
 function build_libyaml() {
-  try cd $BUILD_PATH/libyaml/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libyaml/build-$ARCH
   push_env
 
   try ./bootstrap

@@ -25,7 +25,7 @@ URL_libicu=https://github.com/unicode-org/icu/archive/release-${VERSION_libicu//
 MD5_libicu=ebe2080640a063e9237cc41e80034d96
 
 # default build path
-BUILD_libicu=$BUILD_PATH/libicu/$(get_directory $URL_libicu)
+BUILD_libicu=${DEPS_BUILD_PATH}/libicu/$(get_directory $URL_libicu)
 
 # default recipe path
 RECIPE_libicu=$RECIPES_PATH/libicu
@@ -35,7 +35,7 @@ RECIPE_libicu=$RECIPES_PATH/libicu
 function prebuild_libicu() {
   cd $BUILD_libicu/icu4c/source
     patch_configure_file configure
-  try rsync  -a $BUILD_libicu/ ${BUILD_PATH}/libicu/build-${ARCH}
+  try rsync  -a $BUILD_libicu/ ${DEPS_BUILD_PATH}/libicu/build-${ARCH}
 
 }
 

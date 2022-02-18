@@ -1,5 +1,5 @@
 function build_ecw() {
-  try cd ${BUILD_PATH}/gdal/build-${ARCH}
+  try cd ${DEPS_BUILD_PATH}/gdal/build-${ARCH}
 
   if [[ "${WITH_ECW}" == "true" ]]; then
     info "building GDAL ECW driver to ${GDAL_NOFOSS_PLUGINS_DIR}"
@@ -26,7 +26,7 @@ function build_ecw() {
   fi
 }
 function build_mrsid() {
-  try cd ${BUILD_PATH}/gdal/build-${ARCH}
+  try cd ${DEPS_BUILD_PATH}/gdal/build-${ARCH}
 
   if [[ "${WITH_MRSID}" == "true" ]]; then
     if [ ! -d "${MRSID_SDK}" ]; then
@@ -67,7 +67,7 @@ function build_mrsid() {
   fi
 }
 function build_gdal() {
-  try cd ${BUILD_PATH}/gdal/build-${ARCH}
+  try cd ${DEPS_BUILD_PATH}/gdal/build-${ARCH}
   push_env
 
   try mkdir -p ${GDAL_NOFOSS_PLUGINS_DIR}

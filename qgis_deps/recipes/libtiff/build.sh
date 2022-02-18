@@ -1,6 +1,6 @@
 function build_libtiff() {
-  try mkdir -p $BUILD_PATH/libtiff/build-$ARCH
-  try cd $BUILD_PATH/libtiff/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/libtiff/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libtiff/build-$ARCH
 
   push_env
 
@@ -18,14 +18,14 @@ function build_libtiff() {
   try $NINJA install
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff
-  try install_name_tool -change $BUILD_PATH/libtiff/build-$ARCH/libtiff/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff
-  try install_name_tool -change $BUILD_PATH/libtiff/build-$ARCH/libtiff/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiff
+  try install_name_tool -change ${DEPS_BUILD_PATH}/libtiff/build-$ARCH/libtiff/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff
+  try install_name_tool -change ${DEPS_BUILD_PATH}/libtiff/build-$ARCH/libtiff/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiff
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiffxx
-  try install_name_tool -change $BUILD_PATH/libtiff/build-$ARCH/libtiff/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiffxx
-  try install_name_tool -change $BUILD_PATH/libtiff/build-$ARCH/libtiff/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiffxx
+  try install_name_tool -change ${DEPS_BUILD_PATH}/libtiff/build-$ARCH/libtiff/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiffxx
+  try install_name_tool -change ${DEPS_BUILD_PATH}/libtiff/build-$ARCH/libtiff/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiffxx $STAGE_PATH/lib/$LINK_libtiffxx
 
-  try install_name_tool -change $BUILD_PATH/libtiff/build-$ARCH/libtiff/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/bin/tiffsplit
+  try install_name_tool -change ${DEPS_BUILD_PATH}/libtiff/build-$ARCH/libtiff/$LINK_libtiff $STAGE_PATH/lib/$LINK_libtiff $STAGE_PATH/bin/tiffsplit
 
   pop_env
 }

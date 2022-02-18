@@ -17,7 +17,7 @@ URL_png=https://downloads.sourceforge.net/libpng/libpng-${VERSION_png}.tar.xz
 MD5_png=015e8e15db1eecde5f2eb9eb5b6e59e9
 
 # default build path
-BUILD_png=$BUILD_PATH/png/$(get_directory $URL_png)
+BUILD_png=${DEPS_BUILD_PATH}/png/$(get_directory $URL_png)
 
 # default recipe path
 RECIPE_png=$RECIPES_PATH/png
@@ -27,7 +27,7 @@ RECIPE_png=$RECIPES_PATH/png
 function prebuild_png() {
   cd $BUILD_png
     patch_configure_file configure
-  try rsync  -a $BUILD_png/ ${BUILD_PATH}/png/build-${ARCH}
+  try rsync  -a $BUILD_png/ ${DEPS_BUILD_PATH}/png/build-${ARCH}
 
 }
 

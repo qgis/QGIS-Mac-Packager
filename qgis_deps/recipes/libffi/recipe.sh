@@ -16,7 +16,7 @@ URL_libffi=https://github.com/libffi/libffi/releases/download/v${VERSION_libffi}
 MD5_libffi=294b921e6cf9ab0fbaea4b639f8fdbe8
 
 # default build path
-BUILD_libffi=$BUILD_PATH/libffi/$(get_directory $URL_libffi)
+BUILD_libffi=${DEPS_BUILD_PATH}/libffi/$(get_directory $URL_libffi)
 
 # default recipe path
 RECIPE_libffi=$RECIPES_PATH/libffi
@@ -26,7 +26,7 @@ RECIPE_libffi=$RECIPES_PATH/libffi
 function prebuild_libffi() {
   cd $BUILD_libffi
     patch_configure_file configure
-  try rsync  -a $BUILD_libffi/ ${BUILD_PATH}/libffi/build-${ARCH}
+  try rsync  -a $BUILD_libffi/ ${DEPS_BUILD_PATH}/libffi/build-${ARCH}
 }
 
 function shouldbuild_libffi() {

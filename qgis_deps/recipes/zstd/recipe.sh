@@ -16,7 +16,7 @@ URL_zstd=https://github.com/facebook/zstd/archive/v${VERSION_zstd}.tar.gz
 MD5_zstd=6dc24b78e32e7c99f80c9441e40ff8bc
 
 # default build path
-BUILD_zstd=$BUILD_PATH/zstd/$(get_directory $URL_zstd)
+BUILD_zstd=${DEPS_BUILD_PATH}/zstd/$(get_directory $URL_zstd)
 
 # default recipe path
 RECIPE_zstd=$RECIPES_PATH/zstd
@@ -25,7 +25,7 @@ RECIPE_zstd=$RECIPES_PATH/zstd
 # (you can apply patch etc here.)
 function prebuild_zstd() {
   cd $BUILD_zstd
-  try rsync -a $BUILD_zstd/ ${BUILD_PATH}/zstd/build-${ARCH}
+  try rsync -a $BUILD_zstd/ ${DEPS_BUILD_PATH}/zstd/build-${ARCH}
 
 
 }

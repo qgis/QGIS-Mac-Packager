@@ -15,7 +15,7 @@ URL_python_pillow=https://github.com/python-pillow/Pillow/archive/${VERSION_pyth
 MD5_python_pillow=756a9a00895f1b40e297110b8abc6895
 
 # default build path
-BUILD_python_pillow=$BUILD_PATH/python_pillow/$(get_directory $URL_python_pillow)
+BUILD_python_pillow=${DEPS_BUILD_PATH}/python_pillow/$(get_directory $URL_python_pillow)
 
 # default recipe path
 RECIPE_python_pillow=$RECIPES_PATH/python_pillow
@@ -24,7 +24,7 @@ RECIPE_python_pillow=$RECIPES_PATH/python_pillow
 # (you can apply patch etc here.)
 function prebuild_python_pillow() {
   cd $BUILD_python_pillow
-  try rsync -a $BUILD_python_pillow/ ${BUILD_PATH}/python_pillow/build-${ARCH}
+  try rsync -a $BUILD_python_pillow/ ${DEPS_BUILD_PATH}/python_pillow/build-${ARCH}
 
 
 }

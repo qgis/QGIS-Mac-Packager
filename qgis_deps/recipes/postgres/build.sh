@@ -1,5 +1,5 @@
 function build_postgres() {
-  try cd $BUILD_PATH/postgres/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/postgres/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

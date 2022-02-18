@@ -20,7 +20,7 @@ URL_gcc=https://ftp.gnu.org/gnu/gcc/gcc-${VERSION_gcc}/gcc-${VERSION_gcc}.tar.xz
 MD5_gcc=31c86f2ced76acac66992eeedce2fce2
 
 # default build path
-BUILD_gcc=$BUILD_PATH/gcc/$(get_directory $URL_gcc)
+BUILD_gcc=${DEPS_BUILD_PATH}/gcc/$(get_directory $URL_gcc)
 
 # default recipe path
 RECIPE_gcc=$RECIPES_PATH/gcc
@@ -29,7 +29,7 @@ RECIPE_gcc=$RECIPES_PATH/gcc
 # (you can apply patch etc here.)
 function prebuild_gcc() {
   cd $BUILD_gcc
-  try rsync -a $BUILD_gcc/ ${BUILD_PATH}/gcc/build-${ARCH}
+  try rsync -a $BUILD_gcc/ ${DEPS_BUILD_PATH}/gcc/build-${ARCH}
 }
 
 function shouldbuild_gcc() {
@@ -39,7 +39,7 @@ function shouldbuild_gcc() {
 }
 
 function build_gcc() {
- try cd $BUILD_PATH/gcc/build-$ARCH
+ try cd ${DEPS_BUILD_PATH}/gcc/build-$ARCH
  push_env
 
  unset LD

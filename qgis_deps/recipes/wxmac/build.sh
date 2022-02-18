@@ -1,5 +1,5 @@
 function build_wxmac() {
-  try cd $BUILD_PATH/wxmac/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/wxmac/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

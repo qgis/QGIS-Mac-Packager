@@ -1,5 +1,5 @@
 function build_libtool() {
-  try cd $BUILD_PATH/libtool/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libtool/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

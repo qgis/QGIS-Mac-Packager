@@ -27,7 +27,7 @@ URL_libkml=https://github.com/libkml/libkml/archive/refs/tags/${VERSION_libkml}.
 MD5_libkml=e663141e9ebd480538b25d226e1b2979
 
 # default build path
-BUILD_libkml=$BUILD_PATH/libkml/$(get_directory $URL_libkml)
+BUILD_libkml=${DEPS_BUILD_PATH}/libkml/$(get_directory $URL_libkml)
 
 # default recipe path
 RECIPE_libkml=$RECIPES_PATH/libkml

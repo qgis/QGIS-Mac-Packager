@@ -1,5 +1,5 @@
 function build_gettext() {
-  try cd $BUILD_PATH/gettext/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/gettext/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

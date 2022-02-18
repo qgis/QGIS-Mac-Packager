@@ -1,5 +1,5 @@
 function build_libcurl() {
-  try cd $BUILD_PATH/libcurl/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libcurl/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

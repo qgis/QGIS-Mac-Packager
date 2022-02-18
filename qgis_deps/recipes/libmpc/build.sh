@@ -1,5 +1,5 @@
 function build_libmpc() {
-  try cd $BUILD_PATH/libmpc/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/libmpc/build-$ARCH
   push_env
 
   try ${CONFIGURE} \

@@ -17,7 +17,7 @@ URL_libcurl=https://curl.haxx.se/download/curl-$VERSION_libcurl.tar.bz2
 MD5_libcurl=29472feb977cea2992ef9082c153698d
 
 # default build path
-BUILD_libcurl=$BUILD_PATH/libcurl/$(get_directory $URL_libcurl)
+BUILD_libcurl=${DEPS_BUILD_PATH}/libcurl/$(get_directory $URL_libcurl)
 
 # default recipe path
 RECIPE_libcurl=$RECIPES_PATH/libcurl
@@ -27,7 +27,7 @@ RECIPE_libcurl=$RECIPES_PATH/libcurl
 function prebuild_libcurl() {
   cd $BUILD_libcurl
     patch_configure_file configure
-  try rsync  -a $BUILD_libcurl/ ${BUILD_PATH}/libcurl/build-${ARCH}
+  try rsync  -a $BUILD_libcurl/ ${DEPS_BUILD_PATH}/libcurl/build-${ARCH}
 
 }
 

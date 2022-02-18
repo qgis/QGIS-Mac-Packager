@@ -21,7 +21,7 @@ URL_openssl=https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_${VERSI
 MD5_openssl=882525c88bd6bec13bfdd70a656b0951
 
 # default build path
-BUILD_openssl=$BUILD_PATH/openssl/$(get_directory $URL_openssl)
+BUILD_openssl=${DEPS_BUILD_PATH}/openssl/$(get_directory $URL_openssl)
 
 # default recipe path
 RECIPE_openssl=$RECIPES_PATH/openssl
@@ -31,7 +31,7 @@ RECIPE_openssl=$RECIPES_PATH/openssl
 function prebuild_openssl() {
   cd $BUILD_openssl
     patch_configure_file configure
-  try rsync  -a $BUILD_openssl/ ${BUILD_PATH}/openssl/build-${ARCH}
+  try rsync  -a $BUILD_openssl/ ${DEPS_BUILD_PATH}/openssl/build-${ARCH}
 
 }
 

@@ -1,5 +1,5 @@
 function build_freetds() {
-  try cd $BUILD_PATH/freetds/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/freetds/build-$ARCH
   push_env
 
   # add unixodbc

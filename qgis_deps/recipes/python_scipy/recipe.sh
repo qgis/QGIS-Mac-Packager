@@ -15,7 +15,7 @@ URL_python_scipy=https://github.com/scipy/scipy/archive/v${VERSION_python_scipy}
 MD5_python_scipy=d7653c3b9af520d97d93877469eec305
 
 # default build path
-BUILD_python_scipy=$BUILD_PATH/python_scipy/$(get_directory $URL_python_scipy)
+BUILD_python_scipy=${DEPS_BUILD_PATH}/python_scipy/$(get_directory $URL_python_scipy)
 
 # default recipe path
 RECIPE_python_scipy=$RECIPES_PATH/python_scipy
@@ -24,7 +24,7 @@ RECIPE_python_scipy=$RECIPES_PATH/python_scipy
 # (you can apply patch etc here.)
 function prebuild_python_scipy() {
   cd $BUILD_python_scipy
-  try rsync -a $BUILD_python_scipy/ ${BUILD_PATH}/python_scipy/build-${ARCH}
+  try rsync -a $BUILD_python_scipy/ ${DEPS_BUILD_PATH}/python_scipy/build-${ARCH}
 
 
 }

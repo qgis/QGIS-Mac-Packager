@@ -17,7 +17,7 @@ URL_lerc=https://github.com/Esri/lerc/archive/refs/tags/v$VERSION_lerc.tar.gz
 MD5_lerc=916567b67ca55ae037b826717b5940ec
 
 # default build path
-BUILD_lerc=$BUILD_PATH/lerc/$(get_directory $URL_lerc)
+BUILD_lerc=${DEPS_BUILD_PATH}/lerc/$(get_directory $URL_lerc)
 
 # default recipe path
 RECIPE_lerc=$RECIPES_PATH/lerc

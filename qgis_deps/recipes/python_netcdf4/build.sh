@@ -1,5 +1,5 @@
 function build_python_netcdf4() {
-  try cd $BUILD_PATH/python_netcdf4/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/python_netcdf4/build-$ARCH
 
   push_env
 

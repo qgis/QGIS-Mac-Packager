@@ -16,7 +16,7 @@ URL_rttopo=https://gitlab.com/rttopo/rttopo/-/archive/librttopo-$VERSION_rttopo/
 MD5_rttopo=3c92498ce25b7f086cc3cd0d8e7bafdd
 
 # default build path
-BUILD_rttopo=$BUILD_PATH/rttopo/$(get_directory $URL_rttopo)
+BUILD_rttopo=${DEPS_BUILD_PATH}/rttopo/$(get_directory $URL_rttopo)
 
 # default recipe path
 RECIPE_rttopo=$RECIPES_PATH/rttopo
@@ -25,7 +25,7 @@ RECIPE_rttopo=$RECIPES_PATH/rttopo
 # (you can apply patch etc here.)
 function prebuild_rttopo() {
   cd $BUILD_rttopo
-  try rsync -a $BUILD_rttopo/ ${BUILD_PATH}/rttopo/build-${ARCH}
+  try rsync -a $BUILD_rttopo/ ${DEPS_BUILD_PATH}/rttopo/build-${ARCH}
 }
 
 function shouldbuild_rttopo() {

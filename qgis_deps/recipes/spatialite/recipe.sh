@@ -16,7 +16,7 @@ URL_spatialite=https://www.gaia-gis.it/gaia-sins/libspatialite-${VERSION_spatial
 MD5_spatialite=5f4a961afbb95dcdc715b5d7f8590573
 
 # default build path
-BUILD_spatialite=$BUILD_PATH/spatialite/$(get_directory $URL_spatialite)
+BUILD_spatialite=${DEPS_BUILD_PATH}/spatialite/$(get_directory $URL_spatialite)
 
 # default recipe path
 RECIPE_spatialite=$RECIPES_PATH/spatialite
@@ -26,7 +26,7 @@ RECIPE_spatialite=$RECIPES_PATH/spatialite
 function prebuild_spatialite() {
   cd $BUILD_spatialite
   patch_configure_file configure
-  try rsync -a $BUILD_spatialite/ ${BUILD_PATH}/spatialite/build-${ARCH}
+  try rsync -a $BUILD_spatialite/ ${DEPS_BUILD_PATH}/spatialite/build-${ARCH}
 }
 
 function shouldbuild_spatialite() {

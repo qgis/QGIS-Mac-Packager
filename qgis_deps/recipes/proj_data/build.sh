@@ -1,6 +1,6 @@
 function build_proj_data() {
-  try mkdir -p $BUILD_PATH/proj_data/build-$ARCH
-  try cd $BUILD_PATH/proj_data/build-$ARCH
+  try mkdir -p ${DEPS_BUILD_PATH}/proj_data/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/proj_data/build-$ARCH
 
   push_env
 

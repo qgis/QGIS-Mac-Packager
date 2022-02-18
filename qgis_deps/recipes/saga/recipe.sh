@@ -19,7 +19,7 @@ URL_saga=https://downloads.sourceforge.net/project/saga-gis/SAGA%20-%207/SAGA%20
 MD5_saga=895345d820098fb0e1f671d67ce2e798
 
 # default build path
-BUILD_saga=$BUILD_PATH/saga/$(get_directory $URL_saga)
+BUILD_saga=${DEPS_BUILD_PATH}/saga/$(get_directory $URL_saga)
 
 # default recipe path
 RECIPE_saga=$RECIPES_PATH/saga
@@ -29,7 +29,7 @@ RECIPE_saga=$RECIPES_PATH/saga
 function prebuild_saga() {
   cd $BUILD_saga
     patch_configure_file configure
-  try rsync  -a $BUILD_saga/ ${BUILD_PATH}/saga/build-${ARCH}
+  try rsync  -a $BUILD_saga/ ${DEPS_BUILD_PATH}/saga/build-${ARCH}
 
 }
 

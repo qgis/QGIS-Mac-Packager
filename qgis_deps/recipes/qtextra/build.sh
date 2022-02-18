@@ -1,5 +1,5 @@
 function build_qtextra() {
-  try cd $BUILD_PATH/qtextra/build-$ARCH
+  try cd ${DEPS_BUILD_PATH}/qtextra/build-$ARCH
   push_env
 
   # Check https://doc.qt.io/qt-5/sql-driver.html for available drivers
