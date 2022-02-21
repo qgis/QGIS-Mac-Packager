@@ -904,5 +904,5 @@ fold_push create_config_file
 run_create_config_file
 fold_pop
 info create deps config file
-cp ${ROOT_PATH}/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf ${STAGE_PATH}/qeps-${QGIS_DEPS_RELEASE_VERSION}.conf
+cp ${ROOT_PATH}/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf ${STAGE_PATH}/qgis-qeps-${QGIS_DEPS_RELEASE_VERSION}.conf
 info "All done !"

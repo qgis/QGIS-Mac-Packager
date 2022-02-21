@@ -46,9 +46,11 @@ jobs:
           wget -q https://github.com/qgis/QGIS-Mac-Packager/releases/download/${QGIS_DEPS_SDK}/${QGIS_DEPS_SDK}.tar.gz.partac
           cd ${QGIS_DEPS_PATH}
           cat ${GITHUB_WORKSPACE}/${QGIS_DEPS_SDK}.tar.gz.part* | sudo tar xzf -
-          source ${QGIS_DEPS_PATH}/deps-${QGIS_DEPS_VERSION}.conf
+          source ${QGIS_DEPS_PATH}/qgis-deps-${QGIS_DEPS_VERSION}.conf || source ${QGIS_DEPS_PATH}/deps-${QGIS_DEPS_VERSION}.conf
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
           echo "QT_BASE=${QT_BASE}" >> $GITHUB_ENV
+          ls -l ${QGIS_DEPS_PATH}
+          ls -l ${QGIS_DEPS_PATH}/stage
 
       - name: fetch QGIS
         uses: actions/checkout@v2
