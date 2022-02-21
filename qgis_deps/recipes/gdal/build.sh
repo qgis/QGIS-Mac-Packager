@@ -11,15 +11,15 @@ function build_ecw() {
 
     SRC=$(find frmts/ecw -name *.cpp)
 
-    try ${CXX} -std=c++11 \
+    try ${CXX} -std=c++14 \
       -Iport -Igcore -Ifrmts -Iogr -DFRMT_ecw -DECWSDK_VERSION=55 -Ifrmts/ecw -DDO_NOT_USE_DEBUG_BOOL \
       -I${ECW_SDK}/include -I${ECW_SDK}/include/NCSEcw/API \
       -I${ECW_SDK}/include/NCSEcw/ECW -I${ECW_SDK}/include/NCSEcw/JP2 \
       ${SRC} \
       -dynamiclib \
       -install_name ${GDAL_NOFOSS_PLUGINS_DIR}/${LINK_gdal_ecw} \
-      -current_version ${LINK_libgdal_version} \
-      -compatibility_version ${LINK_libgdal_version}.0 \
+      -current_version ${VERSION_gdal} \
+      -compatibility_version ${VERSION_gdal} \
       -o ${GDAL_NOFOSS_PLUGINS_DIR}/${LINK_gdal_ecw} \
       -undefined dynamic_lookup \
       -L${ECW_SDK}/lib -lNCSEcw
@@ -37,14 +37,14 @@ function build_mrsid() {
     # LIDAR
     info "building GDAL MrSID Lidar driver to ${GDAL_NOFOSS_PLUGINS_DIR}"
     SRC=$(find frmts/mrsid_lidar -name *.c*)
-    try ${CXX} -std=c++11 \
+    try ${CXX} -std=c++14 \
        -Iport -Igcore -Ifrmts -Iogr -Ifrmts/mrsid_lidar \
       -I${MRSID_SDK}/Lidar_DSDK/include \
       ${SRC} \
       -dynamiclib \
       -install_name ${GDAL_NOFOSS_PLUGINS_DIR}/${LINK_gdal_mrsid_lidar} \
-      -current_version ${LINK_libgdal_version} \
-      -compatibility_version ${LINK_libgdal_version}.0 \
+      -current_version ${VERSION_gdal} \
+      -compatibility_version ${VERSION_gdal} \
       -o ${GDAL_NOFOSS_PLUGINS_DIR}/${LINK_gdal_mrsid_lidar} \
       -undefined dynamic_lookup \
       -L${MRSID_SDK}/Lidar_DSDK/lib -llti_lidar_dsdk
@@ -52,15 +52,15 @@ function build_mrsid() {
     # RASTER
     info "building GDAL MRSID driver to ${GDAL_NOFOSS_PLUGINS_DIR}"
     SRC=$(find frmts/mrsid -name *.c*)
-    try ${CXX} -std=c++11 \
+    try ${CXX} -std=c++14 \
       -DMRSID_J2K=1 \
       -Iport -Igcore -Ifrmts -Iogr -Ifrmts/mrsid -Ifrmts/gtiff/libgeotiff \
       -I${MRSID_SDK}/Raster_DSDK/include \
       ${SRC} \
       -dynamiclib \
       -install_name ${GDAL_NOFOSS_PLUGINS_DIR}/${LINK_gdal_mrsid_raster} \
-      -current_version ${LINK_libgdal_version} \
-      -compatibility_version ${LINK_libgdal_version}.0 \
+      -current_version ${VERSION_gdal} \
+      -compatibility_version ${VERSION_gdal} \
       -o ${GDAL_NOFOSS_PLUGINS_DIR}/${LINK_gdal_mrsid_raster} \
       -undefined dynamic_lookup \
       -L${MRSID_SDK}/Raster_DSDK/lib -lltidsdk
