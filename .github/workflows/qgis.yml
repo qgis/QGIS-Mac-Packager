@@ -36,7 +36,7 @@ jobs:
           
           PARSER=". | map(select(.tag_name | startswith(\"qgis-deps-${QGIS_DEPS_VERSION}\")).tag_name) | max"
           QGIS_DEPS_SDK_VERSION=$(curl -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github.v3.raw" -s https://api.github.com/repos/qgis/qgis-Mac-Packager/releases | jq "${PARSER}")
-          echo "Latest deps release for ${QGIS_DEPS_VERSION}: ${QGIS_DEPS_SDK_VERSION}
+          echo "Latest deps release for ${QGIS_DEPS_VERSION}: ${QGIS_DEPS_SDK_VERSION}"
           echo "QGIS_DEPS_SDK_VERSION=${QGIS_DEPS_SDK_VERSION}" >> $GITHUB_ENV
 
       - name: Download qgis-deps
