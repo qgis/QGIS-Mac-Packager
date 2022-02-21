@@ -9,8 +9,7 @@ VERSION_gdal=3.4.1
 source ${RECIPES_PATH}/netcdf/recipe.sh
 source ${RECIPES_PATH}/xerces/recipe.sh
 
-LINK_libgdal_version=30
-LINK_gdal=libgdal.${LINK_libgdal_version}.dylib
+LINK_gdal=libgdal.dylib.${VERSION_gdal}
 
 # dependencies of this recipe
 DEPS_gdal=(
