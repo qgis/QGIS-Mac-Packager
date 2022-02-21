@@ -46,7 +46,13 @@ jobs:
           wget -q https://github.com/qgis/QGIS-Mac-Packager/releases/download/${QGIS_DEPS_SDK}/${QGIS_DEPS_SDK}.tar.gz.partac
           cd ${QGIS_DEPS_PATH}
           cat ${GITHUB_WORKSPACE}/${QGIS_DEPS_SDK}.tar.gz.part* | sudo tar xzf -
-          source ${QGIS_DEPS_PATH}/qgis-deps-${QGIS_DEPS_VERSION}.conf || source ${QGIS_DEPS_PATH}/deps-${QGIS_DEPS_VERSION}.conf
+          if [[ -f ${QGIS_DEPS_PATH}/qgis-deps-${QGIS_DEPS_VERSION}.conf ]]; then
+            DEPS_CONF_FILE=${QGIS_DEPS_PATH}/qgis-deps-${QGIS_DEPS_VERSION}.conf
+          else
+            # TODO: remove
+            DEPS_CONF_FILE=${QGIS_DEPS_PATH}/deps-${QGIS_DEPS_VERSION}.conf
+          fi
+          source ${DEPS_CONF_FILE}
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
           echo "QT_BASE=${QT_BASE}" >> $GITHUB_ENV
           ls -l ${QGIS_DEPS_PATH}
