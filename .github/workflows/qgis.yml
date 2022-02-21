@@ -35,17 +35,17 @@ jobs:
           sudo mkdir -p ${QGIS_DEPS_PATH}
           
           PARSER=". | map(select(.tag_name | startswith(\"qgis-deps-${QGIS_DEPS_VERSION}\")).tag_name) | max"
-          QGIS_DEPS_SDK=$(curl -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github.v3.raw" -s https://api.github.com/repos/qgis/qgis-Mac-Packager/releases | jq "${PARSER}")
+          QGIS_DEPS_SDK=$(curl -H "Authorization: token ${{ secrets.GH_PAT }}" -H "Accept: application/vnd.github.v3.raw" -s https://api.github.com/repos/qgis/qgis-Mac-Packager/releases | jq -r "${PARSER}")
           echo "Latest deps release for ${QGIS_DEPS_VERSION}: ${QGIS_DEPS_SDK}"
           echo "QGIS_DEPS_SDK=${QGIS_DEPS_SDK}" >> $GITHUB_ENV
 
       - name: Download qgis-deps
         run: |
-          wget https://github.com/qgis/QGIS-Mac-Packager/releases/download/${QGIS_DEPS_SDK}/${QGIS_DEPS_SDK}.tar.gz.partaa
-          wget https://github.com/qgis/QGIS-Mac-Packager/releases/download/${QGIS_DEPS_SDK}/${QGIS_DEPS_SDK}.tar.gz.partab
-          wget https://github.com/qgis/QGIS-Mac-Packager/releases/download/${QGIS_DEPS_SDK}/${QGIS_DEPS_SDK}.tar.gz.partac
+          wget -q https://github.com/qgis/QGIS-Mac-Packager/releases/download/${QGIS_DEPS_SDK}/${QGIS_DEPS_SDK}.tar.gz.partaa
+          wget -q https://github.com/qgis/QGIS-Mac-Packager/releases/download/${QGIS_DEPS_SDK}/${QGIS_DEPS_SDK}.tar.gz.partab
+          wget -q https://github.com/qgis/QGIS-Mac-Packager/releases/download/${QGIS_DEPS_SDK}/${QGIS_DEPS_SDK}.tar.gz.partac
           cd ${QGIS_DEPS_PATH}
-          cat ${GITHUB_WORKSPACE}/qgis-deps-${QGIS_DEPS_SDK}.tar.gz.part* | sudo tar xzf -
+          cat ${GITHUB_WORKSPACE}/${QGIS_DEPS_SDK}.tar.gz.part* | sudo tar xzf -
           source ${QGIS_DEPS_PATH}/deps-${QGIS_DEPS_VERSION}.conf
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
           echo "QT_BASE=${QT_BASE}" >> $GITHUB_ENV
