@@ -120,3 +120,7 @@ jobs:
           cd ${PACKAGER_DIR}
           sudo -E ./qgis-mac-packager.bash ${RELEASE} ${MAJOR}.${MINOR}.${PATCH} ${RELEASE}.dmg
 
+      - name: debug
+        if: failure()
+        run: cat ${{ github.workspace }}/build/cmake.configure
+
