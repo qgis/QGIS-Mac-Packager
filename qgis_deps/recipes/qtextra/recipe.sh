@@ -2,21 +2,15 @@
 
 DESC_qtextra="Build of some extra QT plugins"
 
-# version of your package
-VERSION_qtextra=$VERSION_QT
 
 # full link version of the library
 LINK_libqsqlodbc=libqsqlodbc.dylib
 LINK_libqsqlpsql=libqsqlpsql.dylib
 
-# dependencies of this recipe
 DEPS_qtextra=(sqlite unixodbc postgres)
 
-# url of the package
-URL_qtextra=https://github.com/qt/qtbase/archive/v${VERSION_qtextra}.tar.gz
 
 # md5 of the package
-MD5_qtextra=8b6bcfa8eb124e7c36b824d04f7c068e
 
 # default build path
 BUILD_qtextra=${DEPS_BUILD_PATH}/qtextra/$(get_directory $URL_qtextra)

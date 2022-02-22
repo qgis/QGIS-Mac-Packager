@@ -2,18 +2,12 @@
 
 DESC_python_fiona="python fiona"
 
-# version of your package
 # keep in SYNC with proj receipt
-VERSION_python_fiona=1.8.13.post1
 
-# dependencies of this recipe
 DEPS_python_fiona=(python python_packages gdal python_gdal)
 
-# url of the package
-URL_python_fiona=https://github.com/Toblerity/Fiona/archive/${VERSION_python_fiona}.tar.gz
 
 # md5 of the package
-MD5_python_fiona=e82f8edfe95280339bea2cf9738a81f6
 
 # default build path
 BUILD_python_fiona=${DEPS_BUILD_PATH}/python_fiona/$(get_directory $URL_python_fiona)

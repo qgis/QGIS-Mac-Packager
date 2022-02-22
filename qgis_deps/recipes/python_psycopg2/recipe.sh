@@ -2,17 +2,11 @@
 
 DESC_python_psycopg2="Python-PostgreSQL Database Adapter"
 
-# version of your package
-VERSION_python_psycopg2=2.8.5
 
-# dependencies of this recipe
 DEPS_python_psycopg2=(python postgres python_packages python_scipy)
 
-# url of the package
-URL_python_psycopg2=
 
 # md5 of the package
-MD5_python_psycopg2=
 
 # default build path
 BUILD_python_psycopg2=${DEPS_BUILD_PATH}/python_psycopg2/v${VERSION_python_psycopg2}

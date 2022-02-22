@@ -2,20 +2,14 @@
 
 DESC_geos="Geometry Engine"
 
-# version of your package
-VERSION_geos=3.10.2
 
 LINK_libgeos_c=libgeos_c.1.dylib
 LINK_libgeos=libgeos.${VERSION_geos}.dylib
 
-# dependencies of this recipe
 DEPS_geos=()
 
-# url of the package
-URL_geos=http://download.osgeo.org/geos/geos-${VERSION_geos}.tar.bz2
 
 # md5 of the package
-MD5_geos=324258ae27b5d53cd90897435d97cc6a
 
 # default build path
 BUILD_geos=${DEPS_BUILD_PATH}/geos/$(get_directory $URL_geos)

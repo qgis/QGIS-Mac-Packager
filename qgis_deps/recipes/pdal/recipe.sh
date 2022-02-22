@@ -2,14 +2,11 @@
 
 DESC_pdal="Point data abstraction library"
 
-# version of your package
-VERSION_pdal=2.3.0
 
 LINK_libpdalcpp=libpdalcpp.13.dylib
 LINK_libpdal_plugin_kernel_fauxplugin=libpdal_plugin_kernel_fauxplugin.13.dylib
 LINK_libpdal_util=libpdal_util.13.dylib
 
-# dependencies of this recipe
 DEPS_pdal=(
   gdal
   libgeotiff
@@ -22,11 +19,8 @@ DEPS_pdal=(
   libcurl
 )
 
-# url of the package
-URL_pdal=https://github.com/PDAL/PDAL/releases/download/${VERSION_pdal}/PDAL-${VERSION_pdal}-src.tar.gz
 
 # md5 of the package
-MD5_pdal=1c899546211df92029df3ed884d1d560
 
 # default build path
 BUILD_pdal=${DEPS_BUILD_PATH}/pdal/$(get_directory $URL_pdal)

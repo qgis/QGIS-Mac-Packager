@@ -33,6 +33,7 @@ jobs:
           mkdir -p ${SOURCE_PACKAGES_PATH}
           sudo mkdir -p ${ROOT_OUT_PATH}
           sudo mkdir -p ${DEPS_BUILD_PATH}
+          echo "VERSIONS_CONF_MD5=$(md5 -r qgis_deps/versions.conf | cut -d\  -f1)" >> $GITHUB_ENV
 
       - name: Cache build
         id: cache-build
@@ -54,7 +55,7 @@ jobs:
         uses: pat-s/always-upload-cache@v2.1.5
         with:
           path: ${{ env.SOURCE_PACKAGES_PATH }}
-          key: cache-qgis-deps-packages-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
+          key: cache-qgis-deps-packages-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ env.VERSIONS_CONF_MD5 }}
           restore-keys: |
             cache-qgis-deps-packages-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
             cache-qgis-deps-packages-dev-

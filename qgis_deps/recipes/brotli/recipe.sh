@@ -2,21 +2,15 @@
 
 DESC_brotli="Generic-purpose lossless compression algorithm by Google"
 
-# version of your package
 VERSION_brotli_major=1
-VERSION_brotli=${VERSION_brotli_major}.0.9
 
 LINK_libbrotlicommon=libbrotlicommon.${VERSION_brotli_major}.dylib
 LINK_libbrotlidec=libbrotlidec.${VERSION_brotli_major}.dylib
 
-# dependencies of this recipe
 DEPS_brotli=()
 
-# url of the package
-URL_brotli=https://github.com/google/brotli/archive/v${VERSION_brotli}.tar.gz
 
 # md5 of the package
-MD5_brotli=c2274f0c7af8470ad514637c35bcee7d
 
 # default build path
 BUILD_brotli=${DEPS_BUILD_PATH}/brotli/$(get_directory $URL_brotli)

@@ -2,18 +2,12 @@
 
 DESC_libmpc="C library for the arithmetic of high precision complex numbers"
 
-# version of your package
-VERSION_libmpc=1.1.0
 LINK_libmpc=libmpc.3.dylib
 
-# dependencies of this recipe
 DEPS_libmpc=(gmp mpfr)
 
-# url of the package
-URL_libmpc=https://ftp.gnu.org/gnu/mpc/mpc-$VERSION_libmpc.tar.gz
 
 # md5 of the package
-MD5_libmpc=4125404e41e482ec68282a2e687f6c73
 
 # default build path
 BUILD_libmpc=${DEPS_BUILD_PATH}/libmpc/$(get_directory $URL_libmpc)

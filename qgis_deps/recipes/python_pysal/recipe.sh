@@ -2,12 +2,9 @@
 
 DESC_python_pysal="A library of spatial analysis functions."
 
-# version of your package
-VERSION_python_pysal=2.5.0
 VERSION_python_libpysal=4.5.1
 
 
-# dependencies of this recipe
 DEPS_python_pysal=(
   python
   python_scipy
@@ -22,11 +19,8 @@ DEPS_python_pysal=(
   python_rasterio
 )
 
-# url of the package
-URL_python_pysal=
 
 # md5 of the package
-MD5_python_pysal=
 
 # default build path
 BUILD_python_pysal=${DEPS_BUILD_PATH}/python_pysal/v${VERSION_python_pysal}

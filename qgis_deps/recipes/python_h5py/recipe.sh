@@ -2,18 +2,12 @@
 
 DESC_python_h5py="Python binding of HDF5"
 
-# version of your package
 # need to keep in sync with hdf5
-VERSION_python_h5py=2.10.0
 
-# dependencies of this recipe
 DEPS_python_h5py=(python hdf5 python_numpy python_packages)
 
-# url of the package
-URL_python_h5py=
 
 # md5 of the package
-MD5_python_h5py=
 
 # default build path
 BUILD_python_h5py=${DEPS_BUILD_PATH}/python_h5py/v${VERSION_python_h5py}

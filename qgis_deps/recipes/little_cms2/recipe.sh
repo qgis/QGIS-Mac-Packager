@@ -2,18 +2,12 @@
 
 DESC_little_cms2="Color management engine supporting ICC profiles"
 
-# version of your package
-VERSION_little_cms2=2.13.1
 LINK_little_cms2=liblcms2.2.dylib
 
-# dependencies of this recipe
 DEPS_little_cms2=(jpeg libtiff)
 
-# url of the package
-URL_little_cms2=https://github.com/mm2/Little-CMS/releases/download/lcms2.13.1/lcms2-${VERSION_little_cms2}.tar.gz
 
 # md5 of the package
-MD5_little_cms2=47a99e781b89c958a773e2012e81ae8c
 
 # default build path
 BUILD_little_cms2=${DEPS_BUILD_PATH}/little_cms2/$(get_directory $URL_little_cms2)

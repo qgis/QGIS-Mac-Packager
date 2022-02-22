@@ -2,20 +2,14 @@
 
 DESC_libssh2="SSH protocol"
 
-# version of your package
-VERSION_libssh2=1.9.0
 
 LINK_libssh2=libssh2.1.dylib
 
-# dependencies of this recipe
 DEPS_libssh2=(openssl zlib)
 
 
-# url of the package
-URL_libssh2=https://libssh2.org/download/libssh2-$VERSION_libssh2.tar.gz
 
 # md5 of the package
-MD5_libssh2=1beefafe8963982adc84b408b2959927
 
 # default build path
 BUILD_libssh2=${DEPS_BUILD_PATH}/libssh2/$(get_directory $URL_libssh2)

@@ -2,11 +2,8 @@
 
 DESC_python_geopandas="python geopandas"
 
-# version of your package
 # keep in SYNC with proj receipt
-VERSION_python_geopandas=0.8.1
 
-# dependencies of this recipe
 DEPS_python_geopandas=(
   python
   python_packages
@@ -19,11 +16,8 @@ DEPS_python_geopandas=(
   python_matplotlib
 )
 
-# url of the package
-URL_python_geopandas=https://github.com/geopandas/geopandas/archive/v$VERSION_python_geopandas.tar.gz
 
 # md5 of the package
-MD5_python_geopandas=dc241fdd62012c3b5ae0e990ba20df26
 
 # default build path
 BUILD_python_geopandas=${DEPS_BUILD_PATH}/python_geopandas/$(get_directory $URL_python_geopandas)

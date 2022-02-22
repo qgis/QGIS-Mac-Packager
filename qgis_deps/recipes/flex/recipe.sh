@@ -2,18 +2,12 @@
 
 DESC_flex="Fast Lexical Analyzer, generates Scanners (tokenizers)"
 
-# version of your package
-VERSION_flex=2.6.4
 LINK_flex_version=2
 
-# dependencies of this recipe
 DEPS_flex=( bison )
 
-# url of the package
-URL_flex=https://github.com/westes/flex/releases/download/v${VERSION_flex}/flex-${VERSION_flex}.tar.gz
 
 # md5 of the package
-MD5_flex=2882e3179748cc9f9c23ec593d6adc8d
 
 # default build path
 BUILD_flex=${DEPS_BUILD_PATH}/flex/$(get_directory $URL_flex)

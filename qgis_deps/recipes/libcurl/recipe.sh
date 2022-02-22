@@ -2,19 +2,13 @@
 
 DESC_libcurl="Get a file from an HTTP, HTTPS or FTP server"
 
-# version of your package
-VERSION_libcurl=7.75.0
 
 LINK_libcurl=libcurl.4.dylib
 
-# dependencies of this recipe
 DEPS_libcurl=(libtool openssl zstd zlib libssh2)
 
-# url of the package
-URL_libcurl=https://curl.haxx.se/download/curl-$VERSION_libcurl.tar.bz2
 
 # md5 of the package
-MD5_libcurl=29472feb977cea2992ef9082c153698d
 
 # default build path
 BUILD_libcurl=${DEPS_BUILD_PATH}/libcurl/$(get_directory $URL_libcurl)

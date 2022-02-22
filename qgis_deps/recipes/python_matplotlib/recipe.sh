@@ -2,17 +2,11 @@
 
 DESC_python_matplotlib="python matplotlib"
 
-# version of your package
-VERSION_python_matplotlib=3.3.0
 
-# dependencies of this recipe
 DEPS_python_matplotlib=(python python_packages python_numpy python_pillow fontconfig freetype)
 
-# url of the package
-URL_python_matplotlib=https://github.com/matplotlib/matplotlib/archive/v$VERSION_python_matplotlib.tar.gz
 
 # md5 of the package
-MD5_python_matplotlib=8a55bbf600206a512629e8c582e5eb4a
 
 # default build path
 BUILD_python_matplotlib=${DEPS_BUILD_PATH}/python_matplotlib/$(get_directory $URL_python_matplotlib)

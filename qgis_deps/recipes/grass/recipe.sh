@@ -2,22 +2,16 @@
 
 DESC_grass="Geographic Resources Analysis Support System"
 
-# version of your package
 VERSION_grass_major=7
 VERSION_grass_minor=8
-VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.6
 VERSION_grass_build=${VERSION_grass}RC2
 
-# dependencies of this recipe
 DEPS_grass=(python boost bison flex libtiff png  sqlite geos zlib wxmac zstd zlib xz netcdf proj gdal libgeotiff python_pyqt5 mysql postgres openssl )
 
 LINK_libgrass_version=26
 
-# url of the package
-URL_grass=https://github.com/OSGeo/grass/archive/${VERSION_grass_build}.tar.gz
 
 # md5 of the package
-MD5_grass=915440060be87c3fa9bd22212aaeb55d
 
 # default build path
 BUILD_grass=${DEPS_BUILD_PATH}/grass/$(get_directory $URL_grass)

@@ -2,19 +2,13 @@
 
 DESC_libyaml="YAML parser"
 
-# version of your package
-VERSION_libyaml=0.2.5
 
 LINK_libyaml=libyaml-0.2.dylib
 
-# dependencies of this recipe
 DEPS_libyaml=()
 
-# url of the package
-URL_libyaml=https://github.com/yaml/libyaml/archive/${VERSION_libyaml}.tar.gz
 
 # md5 of the package
-MD5_libyaml=163fc1e22153d3e2cebfe5cbb43a1769
 
 # default build path
 BUILD_libyaml=${DEPS_BUILD_PATH}/libyaml/$(get_directory $URL_libyaml)

@@ -2,9 +2,7 @@
 
 DESC_hdf5="File format designed to store large amounts of data"
 
-# version of your package
 VERSION_hdf5_major=1.12
-VERSION_hdf5=${VERSION_hdf5_major}.1
 
 LINK_libhdf5=libhdf5.200.dylib
 LINK_libhdf5_cpp=libhdf5_cpp.200.dylib
@@ -12,14 +10,10 @@ LINK_libhdf5_hl=libhdf5_hl.200.dylib
 LINK_libhdf5_hl_cpp=libhdf5_hl_cpp.200.dylib
 
 
-# dependencies of this recipe
 DEPS_hdf5=()
 
-# url of the package
-URL_hdf5=https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${VERSION_hdf5_major}/hdf5-${VERSION_hdf5}/src/hdf5-${VERSION_hdf5}.tar.bz2
 
 # md5 of the package
-MD5_hdf5=442469fbf43626006346e679c22cf10a
 
 # default build path
 BUILD_hdf5=${DEPS_BUILD_PATH}/hdf5/$(get_directory $URL_hdf5)

@@ -2,10 +2,7 @@
 
 DESC_python_all="python and all its site-packages"
 
-# version of your package
-VERSION_python_all=${QGIS_DEPS_RELEASE_VERSION}
 
-# dependencies of this recipe
 DEPS_python_all=(
     python
     python_packages
@@ -34,11 +31,8 @@ DEPS_python_all=(
     python_pandas
 )
 
-# url of the package
-URL_python_all=
 
 # md5 of the package
-MD5_python_all=
 
 # default build path
 BUILD_python_all=${DEPS_BUILD_PATH}/python_all/python_all

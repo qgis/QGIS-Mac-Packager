@@ -2,21 +2,15 @@
 
 DESC_qscintilla="Port to Qt of the Scintilla editing component"
 
-# version of your package
 # keep in SYNC with python_qscintilla receipt
-VERSION_qscintilla=2.11.5
 
 # full link version of the library
 LINK_libqscintilla2_qt5=libqscintilla2_qt5.15.dylib
 
-# dependencies of this recipe
 DEPS_qscintilla=()
 
-# url of the package
-URL_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${VERSION_qscintilla}/QScintilla-${VERSION_qscintilla}.tar.gz
 
 # md5 of the package
-MD5_qscintilla=c31d77e1fcc218ed3f27458fa80d4dc9
 
 # default build path
 BUILD_qscintilla=${DEPS_BUILD_PATH}/qscintilla/$(get_directory $URL_qscintilla)

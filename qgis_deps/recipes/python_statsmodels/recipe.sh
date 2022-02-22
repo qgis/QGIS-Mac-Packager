@@ -2,17 +2,11 @@
 
 DESC_python_statsmodels="python statsmodels"
 
-# version of your package
-VERSION_python_statsmodels=0.13.1
 
-# dependencies of this recipe
 DEPS_python_statsmodels=(python python_packages python_numpy python_scipy python_patsy python_pandas)
 
-# url of the package
-URL_python_statsmodels=https://github.com/statsmodels/statsmodels/archive/v${VERSION_python_statsmodels}.tar.gz
 
 # md5 of the package
-MD5_python_statsmodels=b808135f1955f741a24a1fa01cd90e16
 
 # default build path
 BUILD_python_statsmodels=${DEPS_BUILD_PATH}/python_statsmodels/$(get_directory $URL_python_statsmodels)

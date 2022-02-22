@@ -2,10 +2,7 @@
 
 DESC_qgis_deps="QGIS dependencies package"
 
-# version of your package
-VERSION_qgis_deps=${QGIS_DEPS_RELEASE_VERSION}
 
-# dependencies of this recipe
 DEPS_qgis_deps=(
     bison
     boost
@@ -39,11 +36,8 @@ DEPS_qgis_deps=(
     xz
 )
 
-# url of the package
-URL_qgis_deps=
 
 # md5 of the package
-MD5_qgis_deps=
 
 # default build path
 BUILD_qgis_deps=${DEPS_BUILD_PATH}/qgis_deps/qgis_deps

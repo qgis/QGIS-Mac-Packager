@@ -2,8 +2,6 @@
 
 DESC_libkml="This is Google's reference implementation of OGC KML 2.2"
 
-# version of your package
-VERSION_libkml=1.3.0
 LINK_libkmlbase=libkmlbase.1.dylib
 LINK_libkmlconvenience=libkmlconvenience.1.dylib
 LINK_libkmldom=libkmldom.1.dylib
@@ -11,7 +9,6 @@ LINK_libkmlengine=libkmlengine.1.dylib
 LINK_libkmlregionator=libkmlregionator.1.dylib
 LINK_libkmlxsd=libkmlxsd.1.dylib
 
-# dependencies of this recipe
 DEPS_libkml=(
   boost
   expat
@@ -20,11 +17,8 @@ DEPS_libkml=(
   uriparser
 )
 
-# url of the package
-URL_libkml=https://github.com/libkml/libkml/archive/refs/tags/${VERSION_libkml}.tar.gz
 
 # md5 of the package
-MD5_libkml=e663141e9ebd480538b25d226e1b2979
 
 # default build path
 BUILD_libkml=${DEPS_BUILD_PATH}/libkml/$(get_directory $URL_libkml)

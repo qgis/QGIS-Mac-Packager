@@ -2,14 +2,11 @@
 
 DESC_poppler="PDF rendering library (based on the xpdf-3.0 code base)"
 
-# version of your package
-VERSION_poppler=22.02.0
 
 LINK_poppler=libpoppler.118.dylib
 LINK_poppler_cpp=libpoppler-cpp.0.dylib
 LINK_poppler_qt5=libpoppler-qt5.1.dylib
 
-# dependencies of this recipe
 DEPS_poppler=(
   poppler_data
   fontconfig
@@ -23,11 +20,8 @@ DEPS_poppler=(
   libcurl
 )
 
-# url of the package
-URL_poppler=https://poppler.freedesktop.org/poppler-${VERSION_poppler}.tar.xz
 
 # md5 of the package
-MD5_poppler=5f167d859b0ec3f416dbd929892c3c4d
 
 # default build path
 BUILD_poppler=${DEPS_BUILD_PATH}/poppler/$(get_directory $URL_poppler)

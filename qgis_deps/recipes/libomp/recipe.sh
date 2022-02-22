@@ -2,19 +2,13 @@
 
 DESC_libomp="LLVM's OpenMP runtime library"
 
-# version of your package
-VERSION_libomp=10.0.0
 
 LINK_libomp=libomp.dylib
 
-# dependencies of this recipe
 DEPS_libomp=()
 
-# url of the package
-URL_libomp=https://github.com/llvm/llvm-project/releases/download/llvmorg-$VERSION_libomp/openmp-$VERSION_libomp.src.tar.xz
 
 # md5 of the package
-MD5_libomp=464bbf25632f71b4c0cd23e7dd7ddad9
 
 # default build path
 BUILD_libomp=${DEPS_BUILD_PATH}/libomp/$(get_directory $URL_libomp)

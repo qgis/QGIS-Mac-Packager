@@ -2,19 +2,13 @@
 
 DESC_python_gdal="GDAL binding for python"
 
-# version of your package
 # keep in SYNC with gdal receipt
 source ${RECIPES_PATH}/gdal/recipe.sh
-VERSION_python_gdal=${VERSION_gdal}
 
-# dependencies of this recipe
 DEPS_python_gdal=(python python_pyproj gdal python_packages )
 
-# url of the package
-URL_python_gdal=${URL_gdal}
 
 # md5 of the package
-MD5_python_gdal=${MD5_gdal}
 
 # default build path
 BUILD_python_gdal=${DEPS_BUILD_PATH}/python_gdal/$(get_directory ${URL_python_gdal})

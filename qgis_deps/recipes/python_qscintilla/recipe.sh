@@ -2,19 +2,13 @@
 
 DESC_python_qscintilla="QScintilla package for python"
 
-# version of your package
 # keep in SYNC with qscintilla receipt
-VERSION_python_qscintilla=2.11.5
 
-# dependencies of this recipe
 # depends on PyQt5
 DEPS_python_qscintilla=(python qscintilla python_sip python_pyqt5 python_packages)
 
-# url of the package
-URL_python_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${VERSION_python_qscintilla}/QScintilla-${VERSION_python_qscintilla}.tar.gz
 
 # md5 of the package
-MD5_python_qscintilla=c31d77e1fcc218ed3f27458fa80d4dc9
 
 # default build path
 BUILD_python_qscintilla=${DEPS_BUILD_PATH}/python_qscintilla/$(get_directory $URL_python_qscintilla)

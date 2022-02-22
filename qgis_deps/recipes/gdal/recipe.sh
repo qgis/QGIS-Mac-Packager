@@ -2,16 +2,13 @@
 
 DESC_gdal="Geospatial Data Abstraction Library"
 
-# version of your package
 # keep in SYNC with python_gdal receipt
-VERSION_gdal=3.4.1
 
 source ${RECIPES_PATH}/netcdf/recipe.sh
 source ${RECIPES_PATH}/xerces/recipe.sh
 
 LINK_gdal=libgdal.dylib.${VERSION_gdal}
 
-# dependencies of this recipe
 DEPS_gdal=(
   expat
   freexl
@@ -38,11 +35,8 @@ DEPS_gdal=(
   zstd
 )
 
-# url of the package
-URL_gdal=https://github.com/OSGeo/gdal/releases/download/v${VERSION_gdal}/gdal-${VERSION_gdal}.tar.gz
 
 # md5 of the package
-MD5_gdal=c90e741ad1a77c30da2241c63208c93a
 
 # default build path
 BUILD_gdal=${DEPS_BUILD_PATH}/gdal/$(get_directory ${URL_gdal})

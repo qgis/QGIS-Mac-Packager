@@ -2,17 +2,11 @@
 
 DESC_python_pyqt5="PyQt5 package for python"
 
-# version of your package
-VERSION_python_pyqt5=5.15.4
 
-# dependencies of this recipe
 DEPS_python_pyqt5=(python python_sip qtwebkit qscintilla)
 
-# url of the package
-URL_python_pyqt5=https://files.pythonhosted.org/packages/8e/a4/d5e4bf99dd50134c88b95e926d7b81aad2473b47fde5e3e4eac2c69a8942/PyQt5-${VERSION_python_pyqt5}.tar.gz
 
 # md5 of the package
-MD5_python_pyqt5=8082ab8fd83d2cd6572bc446e08855e0
 
 # default build path
 BUILD_python_pyqt5=${DEPS_BUILD_PATH}/python_pyqt5/$(get_directory $URL_python_pyqt5)

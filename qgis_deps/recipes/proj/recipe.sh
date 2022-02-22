@@ -2,20 +2,14 @@
 
 DESC_proj="Cartographic Projections Library"
 
-# version of your package
 # keep in SYNC with python_pyproj receipt
-VERSION_proj=8.2.1
 
 LINK_libproj=libproj.22.dylib
 
-# dependencies of this recipe
 DEPS_proj=(sqlite libxml2 openssl libtiff)
 
-# url of the package
-URL_proj=https://github.com/OSGeo/PROJ/releases/download/$VERSION_proj/proj-$VERSION_proj.tar.gz
 
 # md5 of the package
-MD5_proj=03ed0375ba8c9dd245bdbbf40ed7a786
 
 # default build path
 BUILD_proj=${DEPS_BUILD_PATH}/proj/$(get_directory $URL_proj)

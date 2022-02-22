@@ -2,20 +2,14 @@
 
 DESC_python_llvmlite="python llvmlite"
 
-# version of your package
 # need to be in sync, see https://llvmlite.readthedocs.io/en/latest/admin-guide/install.html
 VERSION_llvm=9.0.1
-VERSION_python_llvmlite=0.33.0
 
-# dependencies of this recipe
 DEPS_python_llvmlite=(python python_packages python_numpy python_pillow openblas)
 
-# url of the package
-URL_python_llvmlite=https://github.com/numba/llvmlite/archive/v${VERSION_python_llvmlite}.tar.gz
 URL_llvm=https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION_llvm}/llvm-${VERSION_llvm}.src.tar.xz
 
 # md5 of the package
-MD5_python_llvmlite=2ffb8cfa38d25343415a83180682e1bf
 MD5_llvm=31eb9ce73dd2a0f8dcab8319fb03f8fc
 
 # default build path

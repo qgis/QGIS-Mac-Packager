@@ -2,20 +2,14 @@
 
 DESC_laszip="Lossless LiDAR compression"
 
-# version of your package
-VERSION_laszip=3.4.3
 
 LINK_liblaszip_api=liblaszip_api.8.dylib
 LINK_liblaszip=liblaszip.8.dylib
 
-# dependencies of this recipe
 DEPS_laszip=()
 
-# url of the package
-URL_laszip=https://github.com/laszip/laszip/releases/download/${VERSION_laszip}/laszip-src-${VERSION_laszip}.tar.gz
 
 # md5 of the package
-MD5_laszip=e07be9ba6247889a4ba0bda8535c77e3
 
 # default build path
 BUILD_laszip=${DEPS_BUILD_PATH}/laszip/$(get_directory $URL_laszip)

@@ -2,19 +2,13 @@
 
 DESC_lerc="Limited Error Raster Compression"
 
-# version of your package
-VERSION_lerc=3.0
 
 LINK_liblerc=libLerc.dylib
 
-# dependencies of this recipe
 DEPS_lerc=()
 
-# url of the package
-URL_lerc=https://github.com/Esri/lerc/archive/refs/tags/v$VERSION_lerc.tar.gz
 
 # md5 of the package
-MD5_lerc=916567b67ca55ae037b826717b5940ec
 
 # default build path
 BUILD_lerc=${DEPS_BUILD_PATH}/lerc/$(get_directory $URL_lerc)

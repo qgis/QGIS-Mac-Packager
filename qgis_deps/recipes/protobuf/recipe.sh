@@ -2,18 +2,12 @@
 
 DESC_protobuf="Protocol buffers (Google's data interchange format)"
 
-# version of your package
-VERSION_protobuf=3.19.4
 LINK_protobuf_lite=libprotobuf-lite.30.dylib
 
-# dependencies of this recipe
 DEPS_protobuf=(zlib)
 
-# url of the package
-URL_protobuf=https://github.com/protocolbuffers/protobuf/releases/download/v${VERSION_protobuf}/protobuf-cpp-${VERSION_protobuf}.tar.gz
 
 # md5 of the package
-MD5_protobuf=ccedd5b7b09a9eda37e8654155baca5a
 
 # default build path
 BUILD_protobuf=${DEPS_BUILD_PATH}/protobuf/$(get_directory $URL_protobuf)

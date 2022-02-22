@@ -2,18 +2,12 @@
 
 DESC_exiv2="EXIF and IPTC metadata manipulation library and tools"
 
-# version of your package
-VERSION_exiv2=0.27.5
 LINK_exiv2=libexiv2.27.dylib
 
-# dependencies of this recipe
 DEPS_exiv2=()
 
-# url of the package
-URL_exiv2=https://github.com/Exiv2/exiv2/releases/download/v${VERSION_exiv2}/exiv2-${VERSION_exiv2}-Source.tar.gz
 
 # md5 of the package
-MD5_exiv2=65621b14626f562c05547176e943d0c2
 
 # default build path
 BUILD_exiv2=${DEPS_BUILD_PATH}/exiv2/$(get_directory $URL_exiv2)

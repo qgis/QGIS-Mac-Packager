@@ -2,19 +2,13 @@
 
 DESC_bz2="Portable Foreign Function Interface library"
 
-# version of your package
 VERSION_bz2_major=1.0
-VERSION_bz2=$VERSION_bz2_major.8
 LINK_bz2=libbz2.$VERSION_bz2_major.dylib
 
-# dependencies of this recipe
 DEPS_bz2=()
 
-# url of the package
-URL_bz2=https://sourceware.org/pub/bzip2/bzip2-${VERSION_bz2}.tar.gz
 
 # md5 of the package
-MD5_bz2=67e051268d0c475ea773822f7500d0e5
 
 # default build path
 BUILD_bz2=${DEPS_BUILD_PATH}/bz2/$(get_directory $URL_bz2)

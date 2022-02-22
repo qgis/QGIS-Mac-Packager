@@ -4,20 +4,15 @@ DESC_gcc="gcc"
 
 # we need this to compile FORTRAN
 VERSION_gcc_major=11
-VERSION_gcc=${VERSION_gcc_major}.2.0
 
 LINK_libgfortran=libgfortran.5.dylib
 LINK_gcc_s=libgcc_s.1.dylib
 LINK_libquadmath=libquadmath.0.dylib
 
-# dependencies of this recipe
 DEPS_gcc=(zlib gmp mpfr libmpc libisl)
 
-# url of the package
-URL_gcc=https://ftp.gnu.org/gnu/gcc/gcc-${VERSION_gcc}/gcc-${VERSION_gcc}.tar.xz
 
 # md5 of the package
-MD5_gcc=31c86f2ced76acac66992eeedce2fce2
 
 # default build path
 BUILD_gcc=${DEPS_BUILD_PATH}/gcc/$(get_directory $URL_gcc)

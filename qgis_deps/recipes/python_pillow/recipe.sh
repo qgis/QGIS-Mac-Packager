@@ -2,17 +2,11 @@
 
 DESC_python_pillow="python pillow"
 
-# version of your package
-VERSION_python_pillow=7.2.0
 
-# dependencies of this recipe
 DEPS_python_pillow=(python python_packages zlib jpeg libtiff webp little_cms2 python_numpy)
 
-# url of the package
-URL_python_pillow=https://github.com/python-pillow/Pillow/archive/${VERSION_python_pillow}.tar.gz
 
 # md5 of the package
-MD5_python_pillow=756a9a00895f1b40e297110b8abc6895
 
 # default build path
 BUILD_python_pillow=${DEPS_BUILD_PATH}/python_pillow/$(get_directory $URL_python_pillow)

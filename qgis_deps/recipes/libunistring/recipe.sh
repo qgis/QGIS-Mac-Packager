@@ -2,19 +2,13 @@
 
 DESC_libunistring="C string library for manipulating Unicode strings"
 
-# version of your package
-VERSION_libunistring=0.9.10
 
 LINK_libunistring=libunistring.2.dylib
 
-# dependencies of this recipe
 DEPS_libunistring=()
 
-# url of the package
-URL_libunistring=https://ftp.gnu.org/gnu/libunistring/libunistring-$VERSION_libunistring.tar.xz
 
 # md5 of the package
-MD5_libunistring=db08bb384e81968957f997ec9808926e
 
 # default build path
 BUILD_libunistring=${DEPS_BUILD_PATH}/libunistring/$(get_directory $URL_libunistring)

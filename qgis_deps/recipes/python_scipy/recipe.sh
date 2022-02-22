@@ -2,17 +2,11 @@
 
 DESC_python_scipy="python scipy"
 
-# version of your package
-VERSION_python_scipy=1.5.1
 
-# dependencies of this recipe
 DEPS_python_scipy=(python python_packages python_numpy python_pillow openblas)
 
-# url of the package
-URL_python_scipy=https://github.com/scipy/scipy/archive/v${VERSION_python_scipy}.tar.gz
 
 # md5 of the package
-MD5_python_scipy=d7653c3b9af520d97d93877469eec305
 
 # default build path
 BUILD_python_scipy=${DEPS_BUILD_PATH}/python_scipy/$(get_directory $URL_python_scipy)

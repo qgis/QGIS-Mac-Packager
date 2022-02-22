@@ -2,19 +2,13 @@
 
 DESC_unixodbc="ODBC 3 connectivity for UNIX"
 
-# version of your package
-VERSION_unixodbc=2.3.9
 LINK_unixodbc=libodbc.2.dylib
 LINK_unixodbcinst=libodbcinst.2.dylib
 
-# dependencies of this recipe
 DEPS_unixodbc=(libtool)
 
-# url of the package
-URL_unixodbc=http://www.unixodbc.org/unixODBC-${VERSION_unixodbc}.tar.gz
 
 # md5 of the package
-MD5_unixodbc=06f76e034bb41df5233554abe961a16f
 
 # default build path
 BUILD_unixodbc=${DEPS_BUILD_PATH}/unixodbc/$(get_directory $URL_unixodbc)

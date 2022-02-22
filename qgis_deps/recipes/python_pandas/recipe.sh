@@ -2,17 +2,11 @@
 
 DESC_python_pandas="python pandas"
 
-# version of your package
-VERSION_python_pandas=1.3.3
 
-# dependencies of this recipe
 DEPS_python_pandas=(python python_packages python_numpy)
 
-# url of the package
-URL_python_pandas=https://github.com/pandas-dev/pandas/archive/refs/tags/v${VERSION_python_pandas}.tar.gz
 
 # md5 of the package
-MD5_python_pandas=413a3efbd23832d48517b3091ff44800
 
 # default build path
 BUILD_python_pandas=${DEPS_BUILD_PATH}/python_pandas/$(get_directory $URL_python_pandas)

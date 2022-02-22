@@ -2,18 +2,12 @@
 
 DESC_freexl="Library to extract data from Excel .xls files"
 
-# version of your package
-VERSION_freexl=1.0.6
 LINK_freexl=libfreexl.1.dylib
 
-# dependencies of this recipe
 DEPS_freexl=()
 
-# url of the package
-URL_freexl=https://www.gaia-gis.it/gaia-sins/freexl-sources/freexl-${VERSION_freexl}.tar.gz
 
 # md5 of the package
-MD5_freexl=d3d2df0d2ad7713038ce99024738172a
 
 # default build path
 BUILD_freexl=${DEPS_BUILD_PATH}/freexl/$(get_directory $URL_freexl)

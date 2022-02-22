@@ -2,20 +2,14 @@
 
 DESC_libtiff="TIFF library and utilities"
 
-# version of your package
-VERSION_libtiff=4.3.0
 
 LINK_libtiff=libtiff.5.dylib
 LINK_libtiffxx=libtiffxx.5.dylib
 
-# dependencies of this recipe
 DEPS_libtiff=(xz zstd webp jpeg lerc zlib)
 
-# url of the package
-URL_libtiff=http://download.osgeo.org/libtiff/tiff-${VERSION_libtiff}.tar.gz
 
 # md5 of the package
-MD5_libtiff=0a2e4744d1426a8fc8211c0cdbc3a1b3
 
 # default build path
 BUILD_libtiff=${DEPS_BUILD_PATH}/libtiff/$(get_directory $URL_libtiff)

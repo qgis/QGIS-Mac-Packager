@@ -2,18 +2,12 @@
 
 DESC_gmp="Arithmetic without limitations"
 
-# version of your package
-VERSION_gmp=6.2.0
 LINK_gmp=libgmpxx.4.dylib
 
-# dependencies of this recipe
 DEPS_gmp=()
 
-# url of the package
-URL_gmp=https://gmplib.org/download/gmp/gmp-$VERSION_gmp.tar.lz
 
 # md5 of the package
-MD5_gmp=e3e08ac185842a882204ba3c37985127
 
 # default build path
 BUILD_gmp=${DEPS_BUILD_PATH}/gmp/$(get_directory $URL_gmp)

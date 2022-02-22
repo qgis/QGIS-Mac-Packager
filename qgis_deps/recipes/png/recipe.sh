@@ -2,19 +2,13 @@
 
 DESC_png="PNG Image library"
 
-# version of your package
-VERSION_png=1.6.37
 
 LINK_libpng=libpng16.16.dylib
 
-# dependencies of this recipe
 DEPS_png=()
 
-# url of the package
-URL_png=https://downloads.sourceforge.net/libpng/libpng-${VERSION_png}.tar.xz
 
 # md5 of the package
-MD5_png=015e8e15db1eecde5f2eb9eb5b6e59e9
 
 # default build path
 BUILD_png=${DEPS_BUILD_PATH}/png/$(get_directory $URL_png)

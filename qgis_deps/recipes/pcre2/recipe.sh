@@ -2,21 +2,15 @@
 
 DESC_pcre2="Perl compatible regular expressions library"
 
-# version of your package
-VERSION_pcre2=10.39
 LINK_pcre2=libpcre2-8.dylib
 
-# dependencies of this recipe
 DEPS_pcre2=(
  bz2
  zlib
 )
 
-# url of the package
-URL_pcre2=https://github.com/PhilipHazel/pcre2/releases/download/pcre2-${VERSION_pcre2}/pcre2-${VERSION_pcre2}.tar.bz2
 
 # md5 of the package
-MD5_pcre2=4a765b1419c2e7a01263c3260abca87a
 
 # default build path
 BUILD_pcre2=${DEPS_BUILD_PATH}/pcre2/$(get_directory $URL_pcre2)

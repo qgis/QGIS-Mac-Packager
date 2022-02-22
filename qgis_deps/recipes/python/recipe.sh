@@ -2,18 +2,12 @@
 
 DESC_python="Interpreted, interactive, object-oriented programming language"
 
-# version of your package (set in config.conf)
-VERSION_python=${VERSION_major_python}.${VERSION_minor_python}
 LINK_python=libpython${VERSION_major_python}.dylib
 
-# dependencies of this recipe
 DEPS_python=(openssl xz libffi zlib libzip sqlite expat unixodbc bz2 gettext libcurl)
 
-# url of the package
-URL_python=https://www.python.org/ftp/python/${VERSION_python}/Python-${VERSION_python}.tar.xz
 
 # md5 of the package
-MD5_python=14e8c22458ed7779a1957b26cde01db9
 
 # default build path
 BUILD_python=${DEPS_BUILD_PATH}/python/$(get_directory $URL_python)

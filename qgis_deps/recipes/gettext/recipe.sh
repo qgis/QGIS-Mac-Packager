@@ -2,18 +2,12 @@
 
 DESC_gettext="gettext"
 
-# version of your package
-VERSION_gettext=0.21
 LINK_libintl=libintl.8.dylib
 
-# dependencies of this recipe
 DEPS_gettext=(libcurl libxml2 libunistring)
 
-# url of the package
-URL_gettext=https://ftp.gnu.org/pub/gnu/gettext/gettext-$VERSION_gettext.tar.gz
 
 # md5 of the package
-MD5_gettext=28b1cd4c94a74428723ed966c38cf479
 
 # default build path
 BUILD_gettext=${DEPS_BUILD_PATH}/gettext/$(get_directory $URL_gettext)

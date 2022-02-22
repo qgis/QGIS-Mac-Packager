@@ -2,18 +2,12 @@
 
 DESC_rttopo="RT Topology Library"
 
-# version of your package
-VERSION_rttopo=1.1.0
 LINK_rttopo=librttopo.1.dylib
 
-# dependencies of this recipe
 DEPS_rttopo=(geos)
 
-# url of the package
-URL_rttopo=https://gitlab.com/rttopo/rttopo/-/archive/librttopo-$VERSION_rttopo/rttopo-librttopo-$VERSION_rttopo.tar.gz
 
 # md5 of the package
-MD5_rttopo=3c92498ce25b7f086cc3cd0d8e7bafdd
 
 # default build path
 BUILD_rttopo=${DEPS_BUILD_PATH}/rttopo/$(get_directory $URL_rttopo)

@@ -2,20 +2,14 @@
 
 DESC_webp="Image format providing lossless and lossy compression for web images"
 
-# version of your package
-VERSION_webp=1.1.0
 
 LINK_libwebp=libwebp.7.dylib
 LINK_libwebpdemux=libwebpdemux.2.dylib
 
-# dependencies of this recipe
 DEPS_webp=(png)
 
-# url of the package
-URL_webp=https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${VERSION_webp}.tar.gz
 
 # md5 of the package
-MD5_webp=7e047f2cbaf584dff7a8a7e0f8572f18
 
 # default build path
 BUILD_webp=${DEPS_BUILD_PATH}/webp/$(get_directory $URL_webp)

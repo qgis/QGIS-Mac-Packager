@@ -2,19 +2,13 @@
 
 DESC_postgres="Postgres database"
 
-# version of your package
-VERSION_postgres=14.2
 
 LINK_libpq=libpq.5.dylib
 
-# dependencies of this recipe
 DEPS_postgres=(openssl)
 
-# url of the package
-URL_postgres=https://ftp.postgresql.org/pub/source/v${VERSION_postgres}/postgresql-${VERSION_postgres}.tar.bz2
 
 # md5 of the package
-MD5_postgres=aae1ede6de233e2d44437d66bc1cd3b8
 
 # default build path
 BUILD_postgres=${DEPS_BUILD_PATH}/postgres/$(get_directory $URL_postgres)

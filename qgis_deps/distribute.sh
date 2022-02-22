@@ -6,6 +6,7 @@
 set -o pipefail
 
 source ../scripts/utils.sh
+source versions.conf
 
 function pop_env() {
   info "Leaving build environment"

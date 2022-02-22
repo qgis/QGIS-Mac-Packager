@@ -2,17 +2,11 @@
 
 DESC_python_owslib="Python Open Geospatial Consortium (OGC) web service"
 
-# version of your package
-VERSION_python_owslib=0.19.2
 
-# dependencies of this recipe
 DEPS_python_owslib=(python python_pyproj python_gdal python_packages)
 
-# url of the package
-URL_python_owslib=
 
 # md5 of the package
-MD5_python_owslib=
 
 # default build path
 BUILD_python_owslib=${DEPS_BUILD_PATH}/python_owslib/v${VERSION_python_owslib}

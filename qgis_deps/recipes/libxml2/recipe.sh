@@ -2,18 +2,12 @@
 
 DESC_libxml2="GNOME XML library"
 
-# version of your package
-VERSION_libxml2=2.9.10
 LINK_libxml2=libxml2.2.dylib
 
-# dependencies of this recipe
 DEPS_libxml2=()
 
-# url of the package
-URL_libxml2=http://xmlsoft.org/sources/libxml2-${VERSION_libxml2}.tar.gz
 
 # md5 of the package
-MD5_libxml2=10942a1dc23137a8aa07f0639cbfece5
 
 # default build path
 BUILD_libxml2=${DEPS_BUILD_PATH}/libxml2/$(get_directory $URL_libxml2)

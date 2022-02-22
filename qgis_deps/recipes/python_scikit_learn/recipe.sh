@@ -2,17 +2,11 @@
 
 DESC_python_scikit_learn="python scikit-learn"
 
-# version of your package
-VERSION_python_scikit_learn=0.23.1
 
-# dependencies of this recipe
 DEPS_python_scikit_learn=(python python_packages python_numpy python_scipy libomp)
 
-# url of the package
-URL_python_scikit_learn=https://github.com/scikit-learn/scikit-learn/archive/${VERSION_python_scikit_learn}.tar.gz
 
 # md5 of the package
-MD5_python_scikit_learn=f7f33cfdb020c4ff07e97f66a6085782
 
 # default build path
 BUILD_python_scikit_learn=${DEPS_BUILD_PATH}/python_scikit_learn/$(get_directory $URL_python_scikit_learn)

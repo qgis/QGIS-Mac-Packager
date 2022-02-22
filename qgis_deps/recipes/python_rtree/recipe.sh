@@ -2,18 +2,12 @@
 
 DESC_python_rtree="Python bindings for libspatialindex"
 
-# version of your package
 # keep in SYNC with proj receipt
-VERSION_python_rtree=0.9.7
 
-# dependencies of this recipe
 DEPS_python_rtree=(python python_packages spatialindex)
 
-# url of the package
-URL_python_rtree=https://github.com/Toblerity/rtree/archive/${VERSION_python_rtree}.tar.gz
 
 # md5 of the package
-MD5_python_rtree=eec976e7bd2d8e44ab71cf4c0d7eca9f
 
 # default build path
 BUILD_python_rtree=${DEPS_BUILD_PATH}/python_rtree/$(get_directory $URL_python_rtree)

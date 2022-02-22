@@ -2,19 +2,13 @@
 
 DESC_qwt="Qt Widgets for Technical Applications"
 
-# version of your package
-VERSION_qwt=6.2.0
 
 VERSION_qwt_major=$(echo ${VERSION_qwt} | gsed -r 's/([0-9]+)\..*$/\1/')
 
-# dependencies of this recipe
 DEPS_qwt=()
 
-# url of the package
-URL_qwt=https://downloads.sourceforge.net/project/qwt/qwt/${VERSION_qwt}/qwt-${VERSION_qwt}.tar.bz2
 
 # md5 of the package
-MD5_qwt=00c94f0af8b29d4785cec47351127c00
 
 # default build path
 BUILD_qwt=${DEPS_BUILD_PATH}/qwt/$(get_directory $URL_qwt)

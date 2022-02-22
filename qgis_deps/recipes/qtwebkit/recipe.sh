@@ -2,17 +2,11 @@
 
 DESC_qtwebkit="WebKit extension for QT5"
 
-# version of your package
-VERSION_qtwebkit=${VERSION_QT}
 
-# dependencies of this recipe
 DEPS_qtwebkit=( sqlite bison webp zlib libxslt jpeg png libtiff libicu )
 
-# url of the package
-URL_qtwebkit=https://github.com/qt/qtwebkit/archive/v5.212.0-alpha4.tar.gz
 
 # md5 of the package
-MD5_qtwebkit=22e442063e7d0362439934442e269ed2
 
 # default build path
 BUILD_qtwebkit=${DEPS_BUILD_PATH}/qtwebkit/$(get_directory $URL_qtwebkit)

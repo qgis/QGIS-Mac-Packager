@@ -2,19 +2,13 @@
 
 DESC_qtkeychain="Platform-independent Qt API for storing passwords securely"
 
-# version of your package
-VERSION_qtkeychain=0.12.0
 
 LINK_qtkeychain=libqt5keychain.1.dylib
 
-# dependencies of this recipe
 DEPS_qtkeychain=()
 
-# url of the package
-URL_qtkeychain=https://github.com/frankosterfeld/qtkeychain/archive/v${VERSION_qtkeychain}.tar.gz
 
 # md5 of the package
-MD5_qtkeychain=474f172b42017872dd50eec6c9981fed
 
 # default build path
 BUILD_qtkeychain=${DEPS_BUILD_PATH}/qtkeychain/$(get_directory $URL_qtkeychain)

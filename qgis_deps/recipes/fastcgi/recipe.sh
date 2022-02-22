@@ -2,18 +2,12 @@
 
 DESC_fastcgi="Protocol for interfacing interactive programs with a web server"
 
-# version of your package
-VERSION_fastcgi=2.4.2
 LINK_fastcgi=libfcgi.0.dylib
 
-# dependencies of this recipe
 DEPS_fastcgi=()
 
-# url of the package
-URL_fastcgi=https://github.com/FastCGI-Archives/fcgi2/archive/${VERSION_fastcgi}.tar.gz
 
 # md5 of the package
-MD5_fastcgi=146376d5c5c059b9184755db76505fab
 
 # default build path
 BUILD_fastcgi=${DEPS_BUILD_PATH}/fastcgi/$(get_directory $URL_fastcgi)

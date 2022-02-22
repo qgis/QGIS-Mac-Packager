@@ -2,18 +2,12 @@
 
 DESC_python_pymssql="Python binding of MSSQL"
 
-# version of your package
 # need to keep in sync with hdf5
-VERSION_python_pymssql=2.1.5
 
-# dependencies of this recipe
 DEPS_python_pymssql=(python freetds python_packages)
 
-# url of the package
-URL_python_pymssql=
 
 # md5 of the package
-MD5_python_pymssql=
 
 # default build path
 BUILD_python_pymssql=${DEPS_BUILD_PATH}/python_pymssql/v${VERSION_python_pymssql}
