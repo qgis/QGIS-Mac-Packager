@@ -17,7 +17,7 @@ env:
   QGIS_BUILD_DIR: ${{ github.workspace }}/build
 
 jobs:
-  mac_os_build:
+  qgis_build:
     if: github.repository == 'qgis/QGIS-Mac-Packager'
     runs-on: macos-latest
     steps:
@@ -105,5 +105,5 @@ jobs:
           echo "Building QGIS ${RELEASE} version ${MAJOR}.${MINOR}.${PATCH}"
           
           cd ${PACKAGER_DIR}
-          sudo ./qgis-mac-packager.bash ${RELEASE} ${MAJOR}.${MINOR}.${PATCH} ${RELEASE}.dmg
+          sudo -E ./qgis-mac-packager.bash ${RELEASE} ${MAJOR}.${MINOR}.${PATCH} ${RELEASE}.dmg
 

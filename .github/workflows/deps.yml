@@ -18,7 +18,7 @@ env:
 
 
 jobs:
-  mac_os_build:
+  qgis_deps_build:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -110,6 +110,7 @@ jobs:
           exit 1
 
       - name: copy build to cache dir
+        if: always()
         run: sudo cp ${DEPS_BUILD_PATH} ${{ env.BUILD_CACHE_PATH }}
 
       - name: create package
