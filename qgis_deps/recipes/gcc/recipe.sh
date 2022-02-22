@@ -3,7 +3,6 @@
 DESC_gcc="gcc"
 
 # we need this to compile FORTRAN
-VERSION_gcc_major=11
 
 LINK_libgfortran=libgfortran.5.dylib
 LINK_gcc_s=libgcc_s.1.dylib

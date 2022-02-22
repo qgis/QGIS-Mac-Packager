@@ -2,7 +2,6 @@
 
 DESC_brotli="Generic-purpose lossless compression algorithm by Google"
 
-VERSION_brotli_major=1
 
 LINK_libbrotlicommon=libbrotlicommon.${VERSION_brotli_major}.dylib
 LINK_libbrotlidec=libbrotlidec.${VERSION_brotli_major}.dylib

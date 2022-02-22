@@ -2,9 +2,7 @@
 
 DESC_sqlite="Portable Foreign Function Interface library"
 
-VERSION_sqlite_MAJOR=3
-VERSION_sqlite_MINOR=37
-VERSION_sqlite_PATCH=2
+
 LINK_sqlite=libsqlite3.0.dylib
 
 DEPS_sqlite=()

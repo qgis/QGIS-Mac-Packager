@@ -5,7 +5,6 @@ DESC_libxslt="C XSLT library for GNOME"
 LINK_libxslt=libxslt.1.dylib
 LINK_libexslt=libexslt.0.dylib
 
-VERSION_libxslt_major=$(echo ${VERSION_libxslt} | gsed -r 's/([0-9.]+)\..*$/\1/')
 
 DEPS_libxslt=(libxml2)
 

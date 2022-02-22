@@ -2,8 +2,6 @@
 
 DESC_hdf5="File format designed to store large amounts of data"
 
-VERSION_hdf5_major=1.12
-
 LINK_libhdf5=libhdf5.200.dylib
 LINK_libhdf5_cpp=libhdf5_cpp.200.dylib
 LINK_libhdf5_hl=libhdf5_hl.200.dylib

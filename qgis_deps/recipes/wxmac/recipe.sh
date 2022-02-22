@@ -2,7 +2,6 @@
 
 DESC_wxmac="Cross-platform C++ GUI toolkit (wxWidgets for macOS)"
 
-VERSION_wxmac_major=3.1
 LINK_wxmac_version=3.1.5.0.0
 
 DEPS_wxmac=( jpeg png libtiff )

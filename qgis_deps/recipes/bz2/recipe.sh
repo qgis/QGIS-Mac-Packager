@@ -2,7 +2,6 @@
 
 DESC_bz2="Portable Foreign Function Interface library"
 
-VERSION_bz2_major=1.0
 LINK_bz2=libbz2.$VERSION_bz2_major.dylib
 
 DEPS_bz2=()

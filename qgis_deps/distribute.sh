@@ -6,7 +6,6 @@
 set -o pipefail
 
 source ../scripts/utils.sh
-source versions.conf
 
 function pop_env() {
   info "Leaving build environment"
@@ -60,6 +59,8 @@ if [[ ! -f "${CONFIG_FILE}" ]]; then
 fi
 shift
 source ${CONFIG_FILE}
+
+source versions.conf
 
 SOURCE_PACKAGES_PATH=${SOURCE_PACKAGES_PATH:-${ROOT_OUT_PATH}/.packages}
 
