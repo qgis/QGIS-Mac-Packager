@@ -7,7 +7,7 @@ on:
     - '.github/workflows/deps.yml'
 
 env:
-  MODULE: spatialite
+  MODULE: qgis_deps
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
@@ -112,7 +112,7 @@ jobs:
 
       - name: copy build to cache dir
         if: always()
-        run: sudo cp ${DEPS_BUILD_PATH} ${{ env.BUILD_CACHE_PATH }}
+        run: sudo cp -r ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
 
       - name: create package
         run: |
