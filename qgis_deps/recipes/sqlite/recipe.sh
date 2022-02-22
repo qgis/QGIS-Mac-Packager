@@ -7,8 +7,6 @@ LINK_sqlite=libsqlite3.0.dylib
 
 DEPS_sqlite=()
 
-URL_sqlite_BASE=$(printf "%d%02d%02d00" $VERSION_sqlite_MAJOR $VERSION_sqlite_MINOR $VERSION_sqlite_PATCH)
-
 # md5 of the package
 
 # default build path
