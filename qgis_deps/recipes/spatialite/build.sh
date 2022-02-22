@@ -8,6 +8,8 @@ function build_spatialite() {
     --enable-geocallbacks \
     --disable-dependency-tracking
 
+  export CFLAGS="$CFLAGS -O2 -DPIC"
+
   check_file_configuration config.status
   try $MAKESMP
   try $MAKESMP install
