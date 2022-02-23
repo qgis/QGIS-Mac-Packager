@@ -2,7 +2,7 @@
 
 function check_minizip() {
   env_var_exists VERSION_minizip
-  env_var_exists $LINK_libminizip
+  env_var_exists LINK_libminizip
 }
 
 function bundle_minizip() {
