@@ -31,6 +31,7 @@ jobs:
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
           mkdir -p ${SOURCE_PACKAGES_PATH}
+          mkdir -p ${BUILD_CACHE_PATH}
           sudo mkdir -p ${ROOT_OUT_PATH}
           sudo mkdir -p ${DEPS_BUILD_PATH}
           echo "VERSIONS_CONF_MD5=$(md5 -r qgis_deps/versions.conf | cut -d\  -f1)" >> $GITHUB_ENV
@@ -47,7 +48,6 @@ jobs:
             cache-qgis-deps-build-
 
       - name: Move cache build
-        if: steps.cache-build.outputs.cache-hit == 'true'
         run: sudo mv ${{ env.BUILD_CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
 
       - name: Cache packages
