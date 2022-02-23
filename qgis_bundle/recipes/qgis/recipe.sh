@@ -155,6 +155,12 @@ function fix_binaries_qgis() {
     OWSPROVIDER=PlugIns/qgis/$(qgis_libname provider ows).so
   fi
 
+  # db2 provider removed in 3.25
+  DB2PROVIDER=
+  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider db2).so" ]; then
+    DB2PROVIDER=PlugIns/qgis/$(qgis_libname provider db2).so
+  fi
+
   # REMOVE when LTS is >= 3.22
   # gps plugin removed in 3.21
   GPSPLUGIN=
@@ -213,7 +219,7 @@ function fix_binaries_qgis() {
     $APIHEADER \
     $MAPTILER \
     PlugIns/qgis/$(qgis_libname plugin geometrychecker).so \
-    PlugIns/qgis/$(qgis_libname provider db2).so \
+    $DB2PROVIDER \
     PlugIns/qgis/$(qgis_libname authmethod identcert).so \
     $TOPOLOGYPLUGIN \
     PlugIns/qgis/$(qgis_libname provider gpx).so \
