@@ -101,6 +101,9 @@ jobs:
         run: |
           sudo mv ${{ github.workspace }}/Qt /opt
 
+      - name: install brew deps
+        run: ./scripts/install_brew_dev_packages.bash
+
       - name: Install ccache
         run: |
           mkdir -p ${CCACHE_DIR}
