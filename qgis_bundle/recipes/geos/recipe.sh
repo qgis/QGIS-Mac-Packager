@@ -4,7 +4,7 @@ function check_geos() {
   env_var_exists VERSION_geos
   env_var_exists QGIS_VERSION
   env_var_exists VERSION_grass_major
-  env_var_exists $LINK_libgeos_c
+  env_var_exists LINK_libgeos_c
 }
 
 function bundle_geos() {
