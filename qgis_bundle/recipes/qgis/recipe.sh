@@ -354,7 +354,6 @@ function fix_binaries_qgis() {
 function fix_binaries_qgis_check() {
   verify_binary $BUNDLE_CONTENTS_DIR/MacOS/QGIS
   verify_binary $BUNDLE_CONTENTS_DIR/Frameworks/qgis_core.framework/Versions/$QGIS_VERSION/qgis_core
-  verify_binary $BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider db2).so
 
   ## ORACLE
   if [[ "$WITH_ORACLE" == "true" ]]; then
@@ -365,6 +364,11 @@ function fix_binaries_qgis_check() {
   ## UNTWINE
   if [[ "$WITH_PDAL" == "true" ]]; then
     verify_binary $BUNDLE_LIB_DIR/qgis/untwine
+  fi
+
+  ## DB2
+  if [[ -f $BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider db2).so ]]; then
+    verify_binary $BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider db2).so
   fi
 }
 
