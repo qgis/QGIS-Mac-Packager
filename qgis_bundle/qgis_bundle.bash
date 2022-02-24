@@ -2,9 +2,9 @@
 
 set -o pipefail
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+BUNDLE_SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-source "${DIR}/../scripts/utils.sh"
+source "${BUNDLE_SCRIPT_DIR}/../scripts/utils.sh"
 
 function usage() {
     echo "usage: ${0} QGIS_VERSION CONFIG_NAME"
@@ -24,7 +24,7 @@ if [[ -z "${QGIS_RELEASE_CONFIG}" ]]; then
   usage
   exit 1
 fi
-CONFIG_FILE="${DIR}/../config/${QGIS_RELEASE_CONFIG}.conf"
+CONFIG_FILE="${BUNDLE_SCRIPT_DIR}/../config/${QGIS_RELEASE_CONFIG}.conf"
 if [[ ! -f "${CONFIG_FILE}" ]]; then
   error "config file ${CONFIG_FILE} does not exist"
 fi
@@ -105,7 +105,7 @@ function clean_path {
 }
 
 function clean_binary {
-  try python3 ${DIR}/replace_string_in_file.py \
+  try python3 ${BUNDLE_SCRIPT_DIR}/replace_string_in_file.py \
     --file ${1} \
     --install_path ${QGIS_INSTALL_DIR} \
     --bundle_path ${BUNDLE_DIR} \
