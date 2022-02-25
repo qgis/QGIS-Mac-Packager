@@ -149,36 +149,48 @@ function run_prepare_bundle_dir() {
 function run_check() {
   for module in ${MODULES[*]}; do
     fn=$(echo check_${module})
+    fold_push ${fn}
     debug "Call ${fn}"
     ${fn}
+    fold_pop
   done
 }
 
 function run_bundle() {
   for module in ${MODULES[*]}; do
     fn=$(echo bundle_${module})
+    fold_push ${fn}
     debug "Call ${fn}"
     ${fn}
+    fold_pop
   done
 }
 
 function run_postbundle() {
   for module in ${MODULES[*]}; do
-    fn1=$(echo fix_binaries_${module})
+    fn1="fix_binaries_${module}"
+    fold_push ${fn1}
     debug "Call ${fn1}"
     ${fn1}
+    fold_pop
 
-    fn2=$(echo fix_binaries_${module}_check)
+    fn2="fix_binaries_${module}_check"
+    fold_push ${fn2}
     debug "Call ${fn2}"
     ${fn2}
+    fold_pop
 
-    fn3=$(echo fix_paths_${module})
+    fn3="fix_paths_${module}"
+    fold_push ${fn3}
     debug "Call ${fn3}"
     ${fn3}
+    fold_pop
 
-    fn4=$(echo fix_paths_${module}_check)
+    fn4="fix_paths_${module}_check"
+    fold_push ${fn4}
     debug "Call ${fn4}"
     ${fn4}
+    fold_pop
   done
 }
 
@@ -449,13 +461,27 @@ function run() {
   export -f error
   export -f try
 
+  fold_push "prepare bundle"
   run_prepare_bundle_dir
+  fold_pop
+  fold_push "source modules"
   run_source_modules
+  fold_pop
+  fold_push "source modules"
   run_check
+  fold_pop
+  fold_push "bundle"
   run_bundle
+  fold_pop
+  fold_push "post bundle"
   run_postbundle
+  fold_pop
+  fold_push "clean up"
   run_clean_tmp_files
+  fold_pop
+  fold_push "final check"
   run_final_check
+  fold_pop
   info "All done !"
 }
 
