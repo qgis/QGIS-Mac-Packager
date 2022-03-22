@@ -99,7 +99,7 @@ function fix_python_exec_link {
 function clean_path {
   FNAME=${1}
 
-  try ${SED} "s;${ROOT_OUT_PATH};/MISSING/DEPS/;g" ${FNAME}
+  try ${SED} "s;${QGIS_DEPS_PATH};/MISSING/DEPS/;g" ${FNAME}
   try ${SED} "s;/opt/;/MISSING/OPT/;g" ${FNAME}
   try ${SED} "s;/usr/local/;/MISSING/LOCAL/;g" ${FNAME}
 }
@@ -282,9 +282,9 @@ function check_binary_linker_links() {
       ok="false"
     fi
 
-    if echo "${OTOOL_RPATH}"  | grep -q ${ROOT_OUT_PATH}
+    if echo "${OTOOL_RPATH}"  | grep -q ${QGIS_DEPS_PATH}
     then
-      echo "${1} RPATH contains ${ROOT_OUT_PATH} string <-- forgot to delete/modify RPATH?"
+      echo "${1} RPATH contains ${QGIS_DEPS_PATH} string <-- forgot to delete/modify RPATH?"
       ok="false"
     fi
 
@@ -316,10 +316,10 @@ function check_file_path() {
     echo "${1} reference absolute ${QGIS_INSTALL_DIR} dir"
     ok="false"
   fi
-  if grep -rni ${ROOT_OUT_PATH} ${1}
+  if grep -rni ${QGIS_DEPS_PATH} ${1}
   then
-    grep -rni ${ROOT_OUT_PATH} ${1}
-    echo "${1} reference absolute ${ROOT_OUT_PATH} dir"
+    grep -rni ${QGIS_DEPS_PATH} ${1}
+    echo "${1} reference absolute ${QGIS_DEPS_PATH} dir"
     ok="false"
   fi
   if grep -rni ${BUNDLE_DIR} ${1}
@@ -361,12 +361,12 @@ function check_other_files_links() {
   fi
 
   echo "###########################################"
-  echo " grep ${ROOT_OUT_PATH}"
+  echo " grep ${QGIS_DEPS_PATH}"
   echo "###########################################"
-  if grep -rni ${ROOT_OUT_PATH} . ${EXCLUDE}
+  if grep -rni ${QGIS_DEPS_PATH} . ${EXCLUDE}
   then
-    grep -rni ${ROOT_OUT_PATH} . ${EXCLUDE}
-    echo "Some scripts reference absolute ${ROOT_OUT_PATH} dir"
+    grep -rni ${QGIS_DEPS_PATH} . ${EXCLUDE}
+    echo "Some scripts reference absolute ${QGIS_DEPS_PATH} dir"
     ok="false"
   fi
 
