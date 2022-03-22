@@ -352,6 +352,9 @@ function fix_binaries_qgis() {
 }
 
 function fix_binaries_qgis_check() {
+  ls /Users/runner/work/QGIS-Mac-Packager/QGIS-Mac-Packager/bundle/QGIS-Dev.app/Contents/Frameworks/qgis_core.framework/Versions
+  ls /Users/runner/work/QGIS-Mac-Packager/QGIS-Mac-Packager/bundle/QGIS-Dev.app/Contents/Frameworks/qgis_core.framework/Versions/${QGIS_VERSION}
+
   verify_binary ${BUNDLE_CONTENTS_DIR}/MacOS/QGIS
   verify_binary ${BUNDLE_CONTENTS_DIR}/Frameworks/qgis_core.framework/Versions/${QGIS_VERSION}/qgis_core
 
