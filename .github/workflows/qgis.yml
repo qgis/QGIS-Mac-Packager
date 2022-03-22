@@ -124,6 +124,11 @@ jobs:
           cd ${PACKAGER_DIR}
           sudo -E ./qgis-mac-packager.bash ${RELEASE} ${MAJOR}.${MINOR}.${PATCH} ${RELEASE}.dmg
 
+      - name: Setup tmate session
+        if: failure()
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 20
+
       - name: debug
         if: failure()
         run: cat ${{ github.workspace }}/build/cmake.configure
