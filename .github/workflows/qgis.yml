@@ -120,9 +120,9 @@ jobs:
           MINOR=$(sed -ne 's/[sS][eE][tT](CPACK_PACKAGE_VERSION_MINOR "\([0-9]*\)")/\1/p' ${QGIS_SOURCE_DIR}/CMakeLists.txt)
           PATCH=$(sed -ne 's/[sS][eE][tT](CPACK_PACKAGE_VERSION_PATCH "\([0-9]*\)")/\1/p' ${QGIS_SOURCE_DIR}/CMakeLists.txt)
           echo "Building QGIS ${RELEASE} version ${MAJOR}.${MINOR}.${PATCH}"
-          echo "QGIS_VERSION_MAJOR=${MAJOR}" >> $GITHUB_ENV
-          echo "QGIS_VERSION_MINOR=${MINOR}" >> $GITHUB_ENV
-          echo "QGIS_VERSION_PATCH=${PATCH}" >> $GITHUB_ENV
+          echo "QGIS_MAJOR_VERSION=${MAJOR}" >> $GITHUB_ENV
+          echo "QGIS_MINOR_VERSION=${MINOR}" >> $GITHUB_ENV
+          echo "QGIS_PATCH_VERSION=${PATCH}" >> $GITHUB_ENV
 
       - name: build QGIS
         run: | 
