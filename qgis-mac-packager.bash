@@ -38,6 +38,7 @@ if [[ ${QGIS_VERSION} =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
 else
   error "QGIS version '${QGIS_VERSION}' is invalid"
 fi
+PACKAGE=${3}
 
 source ${CONFIG_FILE}
 

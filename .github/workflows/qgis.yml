@@ -112,7 +112,7 @@ jobs:
           ccache --set-config=max_size=2.0G
           ccache -s
 
-      - name: Run pkg
+      - name: Determine version
         run: |
           mkdir ${QGIS_BUILD_DIR}
           
@@ -120,9 +120,25 @@ jobs:
           MINOR=$(sed -ne 's/[sS][eE][tT](CPACK_PACKAGE_VERSION_MINOR "\([0-9]*\)")/\1/p' ${QGIS_SOURCE_DIR}/CMakeLists.txt)
           PATCH=$(sed -ne 's/[sS][eE][tT](CPACK_PACKAGE_VERSION_PATCH "\([0-9]*\)")/\1/p' ${QGIS_SOURCE_DIR}/CMakeLists.txt)
           echo "Building QGIS ${RELEASE} version ${MAJOR}.${MINOR}.${PATCH}"
+          echo "QGIS_VERSION_MAJOR=${MAJOR}" >> $GITHUB_ENV
+          echo "QGIS_VERSION_MINOR=${MINOR}" >> $GITHUB_ENV
+          echo "QGIS_VERSION_PATCH=${PATCH}" >> $GITHUB_ENV
+
           
           cd ${PACKAGER_DIR}
           sudo -E ./qgis-mac-packager.bash ${RELEASE} ${MAJOR}.${MINOR}.${PATCH} ${RELEASE}.dmg
+
+      - name: build QGIS
+        run: | 
+          sudo ./qgis_build/qgis_build.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
+
+      - name: Bundle QGIS
+        run: |
+          sudo ./qgis_bundle/qgis_bundle.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
+
+      - name: Package QGIS to ${PACKAGE}
+        run: |
+          sudo ./qgis_package/qgis_package.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION} ${RELEASE}.dmg
 
       - name: Setup tmate session
         if: failure()

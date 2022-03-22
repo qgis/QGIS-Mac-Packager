@@ -58,6 +58,7 @@ if [[ ! -f "${CONFIG_FILE}" ]]; then
   error "invalid config file ${CONFIG_FILE}"
 fi
 shift
+
 source ${CONFIG_FILE}
 
 source versions.conf
