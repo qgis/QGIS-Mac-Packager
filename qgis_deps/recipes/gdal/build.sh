@@ -105,7 +105,7 @@ function build_gdal() {
     --with-heif=no \
     --with-qhull=internal \
     --with-jpeg=${STAGE_PATH} \
-    --with-libjson=internal \
+    --with-libjson-c=internal \
     --with-lerc=${STAGE_PATH} \
     --with-libkml=${STAGE_PATH} \
     --with-liblzma=${STAGE_PATH} \
