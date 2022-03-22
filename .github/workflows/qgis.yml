@@ -11,6 +11,7 @@ on:
 
 env:
   RELEASE: nightly
+  APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   CCACHE_DIR: ${{ github.workspace }}/ccache
   BASE_DIR: ${{ github.workspace }}
   PACKAGER_DIR: ${{ github.workspace }}/packager
@@ -133,6 +134,11 @@ jobs:
         run: |
           cd ${PACKAGER_DIR}
           sudo -E ./qgis_bundle/qgis_bundle.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
+
+      - uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.APPLE_CERTIFICATES_FILE_BASE64 }}
+          p12-password: ${{ secrets.APPLE_CERTIFICATES_PASSWORD }}
 
       - name: Package QGIS to ${PACKAGE}
         run: |

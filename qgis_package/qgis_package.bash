@@ -53,20 +53,21 @@ if [ -f "$PACKAGE" ]; then
   rm -f "$PACKAGE"
 fi
 
-IDENTITY=$(cat "$SIGN_FILE")
-if [ ${#IDENTITY} -ne 40 ]; then
-  error "SIGN FILE $SIGN_FILE invalid. key must have 40 chars" ;
-fi
-
-if [ ! -f "$KEYCHAIN_FILE" ]; then
-  error "keychain file $KEYCHAIN_FILE missing"
-fi
+APPLE_CODE_SIGN_IDENTITY={APPLE_CODE_SIGN_IDENTITY:-"Developer ID Application: Open Source Geospatial Foundation"}
+#IDENTITY=$(cat "$SIGN_FILE")
+#if [ ${#IDENTITY} -ne 40 ]; then
+#  error "SIGN FILE $SIGN_FILE invalid. key must have 40 chars" ;
+#fi
+#
+#if [ ! -f "$KEYCHAIN_FILE" ]; then
+#  error "keychain file $KEYCHAIN_FILE missing"
+#fi
 
 info "Print identities"
 security find-identity -v -p codesigning
 
 info "Signing the $QGIS_APP_NAME"
-codesign -s "$IDENTITY" -v --force --timestamp=none --keychain "$KEYCHAIN_FILE" "$QGIS_APP" --deep
+codesign -s "${APPLE_CODE_SIGN_IDENTITY}" -v --force --timestamp=none "$QGIS_APP" --deep
 codesign --deep-verify --verbose "$QGIS_APP"
 
 info "Create dmg image"
@@ -85,7 +86,7 @@ $CONFIGDIR/../scripts/add_license_to_dmg.bash \
   "$PACKAGE"
 
 info "Signing the dmg"
-codesign -s "$IDENTITY" -v --force --timestamp=none --keychain "$KEYCHAIN_FILE" "$PACKAGE"
+codesign -s "${APPLE_CODE_SIGN_IDENTITY}" -v --force --timestamp=none "$PACKAGE"
 codesign --deep-verify --verbose "$PACKAGE"
 
 info "Create checksum"
