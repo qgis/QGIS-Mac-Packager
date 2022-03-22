@@ -28,14 +28,16 @@ CONFIG_FILE="${DIR}/../config/${QGIS_RELEASE_CONFIG}.conf"
 if [[ ! -f "${CONFIG_FILE}" ]]; then
   error "config file ${CONFIG_FILE} does not exist"
 fi
-QGIS_VERSION=${2}
-if [[ ${QGIS_VERSION} =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
-  export QGIS_MAJOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f1)
-  export QGIS_MINOR_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f2)
-  export QGIS_PATCH_VERSION=$(echo ${QGIS_VERSION} | cut -d. -f3)
+
+QGIS_VERSION_COMPLETE=${2}
+if [[ ${QGIS_VERSION_COMPLETE} =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
+  export QGIS_MAJOR_VERSION=$(echo ${QGIS_VERSION_COMPLETE} | cut -d. -f1)
+  export QGIS_MINOR_VERSION=$(echo ${QGIS_VERSION_COMPLETE} | cut -d. -f2)
+  export QGIS_PATCH_VERSION=$(echo ${QGIS_VERSION_COMPLETE} | cut -d. -f3)
 else
-  error "QGIS version '${QGIS_VERSION}' is invalid"
+  error "QGIS version '${QGIS_VERSION_COMPLETE}' is invalid"
 fi
+QGIS_VERSION="${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}"
 
 source ${CONFIG_FILE}
 
