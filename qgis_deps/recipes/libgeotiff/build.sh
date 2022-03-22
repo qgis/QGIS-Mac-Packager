@@ -5,7 +5,11 @@ function build_libgeotiff() {
   push_env
 
   # TODO why this is only static library!??
-  try $CMAKE $BUILD_libgeotiff .
+  try $CMAKE \
+  -DPROJ_DIR=${STAGE_PATH}/lib \
+  -DPROJ_INCLUDE_DIR=${STAGE_PATH}/include \
+  $BUILD_libgeotiff .
+
   check_file_configuration CMakeCache.txt
 
   try $NINJA

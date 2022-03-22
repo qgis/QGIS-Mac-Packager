@@ -68,7 +68,7 @@ function bundle_qt() {
   try rsync -av $QT_ROOT_DIR/plugins/* $BUNDLE_PLUGINS_DIR/ --exclude "sqldrivers"
   try mkdir -p $BUNDLE_PLUGINS_DIR/sqldrivers
   try cp -av $QT_ROOT_DIR/plugins/sqldrivers/libqsqlite.dylib $BUNDLE_PLUGINS_DIR/sqldrivers/
-  try cp -av ${STAGE_PATH}/qt5/plugins/sqldrivers/* $BUNDLE_PLUGINS_DIR/sqldrivers/
+  try cp -av ${QGIS_DEPS_STAGE_PATH}/qt5/plugins/sqldrivers/* $BUNDLE_PLUGINS_DIR/sqldrivers/
 
   #### Designer
   try rsync -av $QT_ROOT_DIR/bin/Designer.app $BUNDLE_MACOS_DIR/
@@ -82,7 +82,7 @@ function fix_binaries_qt() {
   install_name_add_rpath @loader_path/../../MacOS/lib $BUNDLE_PLUGINS_DIR/sqldrivers/$LINK_libqsqlpsql
   install_name_add_rpath @loader_path/../../Frameworks $BUNDLE_PLUGINS_DIR/sqldrivers/$LINK_libqsqlpsql
 
-  install_name_change $QGIS_DEPS_STAGE_PATH/unixodbc/lib/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_PLUGINS_DIR/sqldrivers/$LINK_libqsqlodbc
+  install_name_change ${QGIS_DEPS_STAGE_PATH}/unixodbc/lib/$LINK_unixodbc @rpath/$LINK_unixodbc $BUNDLE_PLUGINS_DIR/sqldrivers/$LINK_libqsqlodbc
   install_name_add_rpath @loader_path/../../MacOS/lib $BUNDLE_PLUGINS_DIR/sqldrivers/$LINK_libqsqlodbc
   install_name_add_rpath @loader_path/../../Frameworks $BUNDLE_PLUGINS_DIR/sqldrivers/$LINK_libqsqlodbc
 }

@@ -45,7 +45,7 @@ if [ ! -f "${QGIS_DEPS_STAGE_PATH}/qgis-deps.config" ]; then
 fi
 source ${QGIS_DEPS_STAGE_PATH}/qgis-deps.config
 
-export DEPS_PYTHON_PACKAGES_DIR=${STAGE_PATH}/lib/python${VERSION_major_python}
+export DEPS_PYTHON_PACKAGES_DIR=${QGIS_DEPS_STAGE_PATH}/lib/python${VERSION_major_python}
 export DEPS_GRASS_ROOT_DIR=${DEPS_ROOT_DIR}/grass${VERSION_grass_major}${VERSION_grass_minor}
 export DEPS_GRASS_LIB_DIR=${DEPS_GRASS_ROOT_DIR}/lib
 
@@ -228,9 +228,9 @@ function check_binary_linker_links() {
       ok="false"
     fi
 
-    if echo "${OTOOL_L}"  | grep -q ${STAGE_PATH}
+    if echo "${OTOOL_L}"  | grep -q ${QGIS_DEPS_STAGE_PATH}
     then
-      echo "${1} contains ${STAGE_PATH} string <-- forgot to change install_name for the linked library?"
+      echo "${1} contains ${QGIS_DEPS_STAGE_PATH} string <-- forgot to change install_name for the linked library?"
       ok="false"
     fi
 

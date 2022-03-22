@@ -18,8 +18,6 @@ RECIPE_libgeotiff=$RECIPES_PATH/libgeotiff
 # (you can apply patch etc here.)
 function prebuild_libgeotiff() {
   cd $BUILD_libgeotiff
-
-
 }
 
 # function called before build_libgeotiff
