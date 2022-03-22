@@ -6,6 +6,7 @@ function build_libgeotiff() {
 
   # TODO why this is only static library!??
   try $CMAKE \
+  -DPROJ=/opt/QGIS/qgis-deps-dev/stage/share/cmake/proj4/proj \
   $BUILD_libgeotiff .
 
   check_file_configuration CMakeCache.txt
