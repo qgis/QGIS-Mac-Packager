@@ -6,8 +6,6 @@ function build_libgeotiff() {
 
   # TODO why this is only static library!??
   try $CMAKE \
-  -DPROJ_DIR=${STAGE_PATH}/lib \
-  -DPROJ_INCLUDE_DIR=${STAGE_PATH}/include \
   $BUILD_libgeotiff .
 
   check_file_configuration CMakeCache.txt
@@ -17,3 +15,7 @@ function build_libgeotiff() {
 
   pop_env
 }
+
+
+#  -DPROJ_DIR=${STAGE_PATH}/share/cmake/proj4 \
+ #  -DPROJ_INCLUDE_DIR=${STAGE_PATH}/include \
