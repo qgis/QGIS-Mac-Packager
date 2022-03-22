@@ -109,7 +109,7 @@ function clean_binary {
     --file ${1} \
     --install_path ${QGIS_INSTALL_DIR} \
     --bundle_path ${BUNDLE_DIR} \
-    --stage_path ${ROOT_OUT_PATH}
+    --stage_path ${QGIS_DEPS_PATH}
 }
 
 #################################

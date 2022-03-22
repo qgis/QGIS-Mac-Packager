@@ -21,6 +21,7 @@ def _replace_string_in_binary(filename, src, dest):
     if src in output:
         raise Exception("Failed to patch " + filename)
 
+
 parser = argparse.ArgumentParser(description='Replace string in binary')
 parser.add_argument('--file',
                     required=True)
