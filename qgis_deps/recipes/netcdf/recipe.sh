@@ -1,8 +1,7 @@
 #!/bin/bash
 
 DESC_netcdf="Libraries and data formats for array-oriented scientific data"
-
-LINK_netcdf=libnetcdf.15.dylib
+LINK_netcdf=libnetcdf.${LIB_VERSION_netcdf}.dylib
 
 DEPS_netcdf=(libcurl libzip)
 
