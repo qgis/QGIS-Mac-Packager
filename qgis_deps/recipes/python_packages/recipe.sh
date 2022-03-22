@@ -18,100 +18,100 @@ RECIPE_python_packages=$RECIPES_PATH/python_packages
 # requirements
 # ORDER matters!
 REQUIREMENTS_python_packages=(
-    six==1.14.0
-    python-dateutil==2.8.0
-    cython==0.29.21
-    decorator==4.4.2
-    coverage==5.1
-    nose2==0.9.2
-    certifi==2020.4.5.1
+    six==1.16.0
+    python-dateutil==2.8.2
+    cython==0.29.28
+    decorator==5.1.1
+    coverage==6.3.2
+    nose2==0.11.0
+    certifi==2021.10.8
     chardet==3.0.4
-    cycler==0.10.0
-    exifread==2.1.2
+    cycler==0.11.0
+    exifread==2.3.2
     funcsigs==1.0.2
     future==0.18.2
-    httplib2==0.17.2
-    idna==2.9
+    httplib2==0.20.4
+    idna==3.3
     ipython-genutils==0.2.0
-    markupsafe==1.1.1
-    jinja2==2.11.2
-    attrs==19.3.0
-    pyrsistent==0.16.0
-    jsonschema==3.2.0
-    traitlets==4.3.3
-    jupyter-core==4.6.3
-    kiwisolver==1.2.0
-    mock==4.0.2
-    nbformat==5.0.5
-    networkx==2.4
-    oauthlib==3.1.0
-    pbr==5.4.5
+    markupsafe==2.1.1
+    jinja2==3.0.3
+    attrs==21.4.0
+    pyrsistent==0.18.1
+    jsonschema==4.4.0
+    traitlets==5.1.1
+    jupyter-core==4.9.2
+    kiwisolver==1.4.0
+    mock==4.0.3
+    nbformat==5.2.0
+    networkx==2.7.1
+    oauthlib==3.2.0
+    pbr==5.8.1
     ply==3.11
-    pygments==2.6.1
-    pyparsing==2.4.7
-    pypubsub==3.3.0
-    pytz==2019.3
-    pyyaml==5.3.1
-    urllib3==1.24.3
-    requests==2.23.0
+    pygments==2.11.2
+    pyparsing==3.0.7
+    pypubsub==4.0.3
+    pytz==2022.1
+    pyyaml==6.0
+    urllib3==1.26.9
+    requests==2.27.1
     retrying==1.3.3
-    simplejson==3.17.0
+    simplejson==3.17.6
     termcolor==1.1.0
-    lxml==4.5.2
+    lxml==4.8.0
     tools==0.1.9
-    xlrd==1.2.0
+    xlrd==2.0.1
     xlwt==1.3.0
-    joblib==0.16.0
-    threadpoolctl==2.1.0
-    cryptography==3.0
-    cffi==1.14.1
-    pycparser==2.20
-    pyopenssl==19.1.0
-    pyodbc==4.0.30
-    plotly==4.6.0
-    access==1.1.1
-    esda==2.3.1
+    joblib==1.1.0
+    threadpoolctl==3.1.0
+    cryptography==36.0.2
+    cffi==1.15.0
+    pycparser==2.21
+    pyopenssl==22.0.0
+    pyodbc==4.0.32
+    plotly==5.6.0
+    access==1.1.3
+    esda==2.4.1
     giddy==2.3.3
     inequality==1.0.0
     pointpats==2.2.0
-    segregation==1.3.0
-    spaghetti==1.5.0
-    mgwr==2.1.1
-    spglm==1.0.7
-    spint==1.0.6
-    spreg==1.1.2.post1
+    segregation==2.1.0
+    spaghetti==1.6.5
+    mgwr==2.1.2
+    spglm==1.0.8
+    spint==1.0.7
+    spreg==1.1.4
     spvcm==0.3.0
-    tobler==0.3.1
-    mapclassify==2.3.0
-    splot==1.1.3
-    iniconfig==1.0.1
-    more-itertools==8.4.0
-    packaging==20.4
-    pluggy==0.13.1
-    py==1.9.0
-    toml==0.10.1
-    pytest==6.0.1
-    pytest-cov==2.10.0
+    tobler==0.9.0
+    mapclassify==2.4.3
+    splot==1.1.4
+    iniconfig==1.1.1
+    more-itertools==8.12.0
+    packaging==21.3
+    pluggy==1.0.0
+    py==1.11.0
+    toml==0.10.2
+    pytest==7.1.1
+    pytest-cov==3.0.0
     beautifulsoup4==4.10.0
-    Sphinx==2.4.3
-    quantecon==0.4.8
-    tqdm==4.48.2
-    seaborn==0.10.1
-    click==7.1.2
+    Sphinx==4.4.0
+    quantecon==0.5.2
+    tqdm==4.63.0
+    seaborn==0.11.2
+    click==8.0.4
     click-plugins==1.1.1
-    cligj==0.5.0
+    cligj==0.7.2
     munch==2.5.0
     appdirs==1.4.4
-    distlib==0.3.1
-    filelock==3.0.12
-    pipenv==2020.6.2
-    virtualenv==20.0.30
-    virtualenv-clone==0.5.4
-    importlib-metadata==1.7.0
-    zipp==3.1.0
-    rasterstats==0.15.0
+    distlib==0.3.4
+    filelock==3.6.0
+    pipenv==2022.1.8
+    virtualenv==20.13.4
+    virtualenv-clone==0.5.7
+    importlib-metadata==4.11.3
+    zipp==3.7.0
+    rasterstats==0.16.0
     clipboard==0.0.4
-    pyperclip==1.8.1
+    pyperclip==1.8.2
     pyvenv==0.2.2
     snuggs==1.4.7
     affine==2.3.0
