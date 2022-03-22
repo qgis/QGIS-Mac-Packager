@@ -127,17 +127,17 @@ jobs:
       - name: build QGIS
         run: | 
           cd ${PACKAGER_DIR}
-          sudo ./qgis_build/qgis_build.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
+          sudo -E ./qgis_build/qgis_build.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
 
       - name: Bundle QGIS
         run: |
           cd ${PACKAGER_DIR}
-          sudo ./qgis_bundle/qgis_bundle.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
+          sudo -E ./qgis_bundle/qgis_bundle.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
 
       - name: Package QGIS to ${PACKAGE}
         run: |
           cd ${PACKAGER_DIR}
-          sudo ./qgis_package/qgis_package.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION} ${RELEASE}.dmg
+          sudo -E ./qgis_package/qgis_package.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION} ${RELEASE}.dmg
 
       - name: Setup tmate session
         if: failure()
