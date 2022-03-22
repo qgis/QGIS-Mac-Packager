@@ -124,20 +124,19 @@ jobs:
           echo "QGIS_VERSION_MINOR=${MINOR}" >> $GITHUB_ENV
           echo "QGIS_VERSION_PATCH=${PATCH}" >> $GITHUB_ENV
 
-          
-          cd ${PACKAGER_DIR}
-          sudo -E ./qgis-mac-packager.bash ${RELEASE} ${MAJOR}.${MINOR}.${PATCH} ${RELEASE}.dmg
-
       - name: build QGIS
         run: | 
+          cd ${PACKAGER_DIR}
           sudo ./qgis_build/qgis_build.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
 
       - name: Bundle QGIS
         run: |
+          cd ${PACKAGER_DIR}
           sudo ./qgis_bundle/qgis_bundle.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
 
       - name: Package QGIS to ${PACKAGE}
         run: |
+          cd ${PACKAGER_DIR}
           sudo ./qgis_package/qgis_package.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION} ${RELEASE}.dmg
 
       - name: Setup tmate session
