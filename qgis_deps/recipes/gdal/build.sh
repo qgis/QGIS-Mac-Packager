@@ -131,7 +131,7 @@ function build_gdal() {
   try ${MAKESMP} install
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_gdal $STAGE_PATH/lib/$LINK_gdal
-  try install_name_tool -change ${DEPS_BUILD_PATH}/gdal/build-$ARCH/lib/$LINK_gdal $STAGE_PATH/lib/$LINK_gdal $STAGE_PATH/lib/$LINK_gdal
+  try install_name_tool -change ${DEPS_BUILD_PATH}/gdal/build-$ARCH/$LINK_gdal $STAGE_PATH/lib/$LINK_gdal $STAGE_PATH/lib/$LINK_gdal
 
   build_ecw
   build_mrsid
