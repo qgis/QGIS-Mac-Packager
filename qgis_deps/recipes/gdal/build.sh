@@ -82,40 +82,47 @@ function build_gdal() {
   info $PKG_CONFIG_PATH
 
   try ${CONFIGURE} \
-    --with-cpp14 \
-    --with-ecw=no \
-    --with-mrsid=no \
-    --with-lerc=${STAGE_PATH} \
+    --with-threads --disable-static \
     --disable-debug \
+    --enable-driver-gml \
     --enable-driver-gpkg \
     --enable-driver-mbtiles \
-    --enable-driver-gml \
+    --enable-driver-mssqlspatial \
     --enable-driver-mvt \
     --enable-driver-xlsx \
-    --enable-driver-mssqlspatial \
-    --with-odbc=yes \
-    --with-heif=no \
-    --with-openexr=no \
-    --with-liblzma=${STAGE_PATH} \
-    --with-zstd=${STAGE_PATH} \
-    --with-libtiff=${STAGE_PATH} \
-    --with-geotiff=${STAGE_PATH} \
-    --with-jpeg=${STAGE_PATH} \
-    --with-hdf5=${STAGE_PATH} \
-    --with-netcdf=${STAGE_PATH} \
-    --with-png=${STAGE_PATH} \
-    --with-spatialite=${STAGE_PATH} \
-    --with-sqlite3=${STAGE_PATH} \
-    --with-freexl=${STAGE_PATH} \
-    --with-libkml=${STAGE_PATH} \
-    --with-xerces=${STAGE_PATH} \
-    --with-xerces-inc=${STAGE_PATH}/include \
-    --with-xerces-lib="-lxerces-c" \
-    --with-expat=${STAGE_PATH} \
+    --with-cfitsio=no \
+    --with-cpp14 \
+    --with-cryptopp=no \
+    --with-ecw=no \
     --with-expat-inc=${STAGE_PATH}/include \
     --with-expat-lib="-lexpat" \
-    --with-poppler=${STAGE_PATH} \
+    --with-expat=${STAGE_PATH} \
+    --with-exr=no \
+    --with-freexl=${STAGE_PATH} \
+    --with-geotiff=${STAGE_PATH} \
+    --with-gif=internal \
+    --with-hdf5=${STAGE_PATH} \
+    --with-heif=no \
+    --with-qhull=internal \
+    --with-jpeg=${STAGE_PATH} \
+    --with-libjson=internal \
+    --with-lerc=${STAGE_PATH} \
+    --with-libkml=${STAGE_PATH} \
+    --with-liblzma=${STAGE_PATH} \
+    --with-libtiff=${STAGE_PATH} \
+    --with-lz4=no \
+    --with-mrsid=no \
+    --with-netcdf=${STAGE_PATH} \
+    --with-odbc=yes \
     --with-pcre2 \
+    --with-png=${STAGE_PATH} \
+    --with-poppler=${STAGE_PATH} \
+    --with-spatialite=${STAGE_PATH} \
+    --with-sqlite3=${STAGE_PATH} \
+    --with-xerces-inc=${STAGE_PATH}/include \
+    --with-xerces-lib="-lxerces-c" \
+    --with-xerces=${STAGE_PATH} \
+    --with-zstd=${STAGE_PATH} \
     --without-libtool
 
   #check_file_configuration config.status

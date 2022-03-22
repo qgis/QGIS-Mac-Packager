@@ -4,7 +4,7 @@ DESC_netcdf="Libraries and data formats for array-oriented scientific data"
 
 LINK_netcdf=libnetcdf.15.dylib
 
-DEPS_netcdf=(libcurl)
+DEPS_netcdf=(libcurl libzip)
 
 
 # md5 of the package
