@@ -135,6 +135,11 @@ jobs:
           cd ${PACKAGER_DIR}
           sudo -E ./qgis_bundle/qgis_bundle.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION}
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: QGIS.app
+          path: ${{ github.workspace }}/bundle/QGIS-Dev.app
+
       - uses: Apple-Actions/import-codesign-certs@v1
         with:
           p12-file-base64: ${{ secrets.APPLE_CERTIFICATES_FILE_BASE64 }}
