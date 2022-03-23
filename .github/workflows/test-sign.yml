@@ -3,11 +3,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-    - 'config/**'
-    - 'qgis_bundle/**'
-    - 'qgis_build/**'
-    - '.github/workflows/qgis.yml'
-    - 'qgis-mac-packager.bash'
+    - '.github/workflows/test-sign.yml'
 
 env:
   RELEASE: nightly
