@@ -145,6 +145,13 @@ jobs:
           p12-file-base64: ${{ secrets.APPLE_CERTIFICATES_FILE_BASE64 }}
           p12-password: ${{ secrets.APPLE_CERTIFICATES_PASSWORD }}
 
+      - uses: Apple-Actions/download-provisioning-profiles@v1
+        with:
+          bundle-id: org.qgis.qgis
+          issuer-id: ${{ secrets.IOS_APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.IOS_APPSTORE_KEY_ID }}
+          api-private-key: ${{ secrets.IOS_APPSTORE_PRIVATE_KEY }}
+
       - name: Package QGIS
         run: |
           cd ${PACKAGER_DIR}
