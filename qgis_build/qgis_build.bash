@@ -103,7 +103,6 @@ cmake -DCMAKE_BUILD_TYPE=Release \
       -DODBC_LIBRARY=${ROOT_OUT_PATH}/stage/unixodbc/lib/${LINK_unixodbc} \
       -DCMAKE_PREFIX_PATH=${QT_BASE}/clang_64 \
       -DQGIS_MACAPP_BUNDLE=-1 \
-      -DWITH_GEOREFERENCER=TRUE \
       -DWITH_3D=TRUE \
       ${PDAL_CMAKE} \
       -DWITH_BINDINGS=TRUE \

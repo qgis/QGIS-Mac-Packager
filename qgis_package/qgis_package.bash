@@ -73,17 +73,12 @@ codesign --deep-verify --verbose "$QGIS_APP"
 info "Create dmg image"
 dmgbuild \
   -Dapp="$QGIS_APP" \
-  -s `dirname $0`/../resources/dmgsettings.py \
+  -s ${DIR}/resources/dmgsettings.py \
   "$QGIS_APP_NAME" \
   "$PACKAGE"
 
 info "Add license to dmg"
-$CONFIGDIR/../scripts/add_license_to_dmg.bash \
-  $CONFIGDIR/../resources/license_ecw.txt \
-  $CONFIGDIR/../resources/license_mrsid.txt \
-  $CONFIGDIR/../resources/EULA.txt \
-  $CONFIGDIR/../resources/eula-resources-template.xml \
-  "$PACKAGE"
+${DIR}/add_license_to_dmg.bash "$PACKAGE"
 
 info "Signing the dmg"
 codesign -s "${APPLE_CODE_SIGN_IDENTITY}" -v --force --timestamp=none "$PACKAGE"

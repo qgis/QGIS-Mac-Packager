@@ -4,11 +4,12 @@ set -e
 
 echo "Adding EULA"
 
-ECW_LICENSE=$1
-MRSID_LICENSE=$2
-QGIS_LICENSE=$3
-RESOURCE_TEMPLATE=$4
-DMG_FILE=$5
+DMG_FILE=$1
+
+ECW_LICENSE=./resources/license_ecw.txt
+MRSID_LICENSE=./resources/license_mrsid.txt
+QGIS_LICENSE=./resources/EULA.txt
+RESOURCE_TEMPLATE=./resources/eula-resources-template.xml
 
 EULA_RSRC=$(mktemp -t dmglicense.tmp.XXXXXXXXXX)
 cat $QGIS_LICENSE > $EULA_RSRC
