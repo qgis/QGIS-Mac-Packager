@@ -3,8 +3,6 @@
 DESC_python_opencv="python opencv-contrib-python"
 # source $RECIPES_PATH/python_numpy/recipe.sh
 
-GIT_TAG_python_opencv=36
-
 DEPS_python_opencv=(python python_packages python_numpy python_scipy openblas protobuf)
 
 

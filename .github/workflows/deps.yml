@@ -95,6 +95,13 @@ jobs:
           sudo mkdir -p /opt/Qt
           sudo mv ${{ github.workspace }}/Qt /opt
 
+      # to compile python cryptography
+      #- name: Install latest nightly
+      #  uses: actions-rs/toolchain@v1
+      #  with:
+      #    toolchain: stable
+      #    target: x86_64-apple-darwin
+
       - name: install brew deps
         run: ./scripts/install_brew_dev_packages.bash
 

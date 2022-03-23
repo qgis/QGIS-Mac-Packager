@@ -2,11 +2,7 @@
 
 DESC_python_numba="A Just-In-Time Compiler for Numerical Functions in Python"
 
-
 DEPS_python_numba=(python python_packages python_numpy python_scipy python_llvmlite )
-
-
-# md5 of the package
 
 # default build path
 BUILD_python_numba=${DEPS_BUILD_PATH}/python_numba/$(get_directory $URL_python_numba)

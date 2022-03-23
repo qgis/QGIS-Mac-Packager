@@ -29,6 +29,8 @@ DEPS_python_all=(
     python_pysal
     python_patsy
     python_pandas
+    python_cryptography
+    python_pypubsub
 )
 
 

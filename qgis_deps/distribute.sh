@@ -236,6 +236,7 @@ function push_env() {
     add_homebrew_path git
     add_homebrew_path wget
     add_homebrew_path texinfo
+    add_homebrew_path rust
 
     ###################
     # Configure/Make system
@@ -288,8 +289,7 @@ function push_env() {
     export PYTHON="${STAGE_PATH}/bin/python3"
     export PIP="${STAGE_PATH}/bin/pip3 --trusted-host pypi.org"
 
-    export PIP_NO_BINARY="${PIP} install --no-dependencies --no-binary all"
-    export PIP_NO_BINARY="${PIP_NO_BINARY} --global-option=build_ext"
+    export PIP_NO_BINARY="${PIP} install --no-dependencies --no-binary all --global-option=build_ext"
     export PIP_NO_BINARY="${PIP_NO_BINARY} --global-option=--include-dirs=${STAGE_PATH}/include"
     export PIP_NO_BINARY="${PIP_NO_BINARY} --global-option=--library-dirs=${STAGE_PATH}/lib"
 }
@@ -597,7 +597,7 @@ function download_file() {
           do_download=0
         else
           # invalid download, remove the file
-          error "Module ${module} has invalid md5, redownload."
+          error "Module ${module} has invalid md5 (${current_md5} vs ${md5}), redownload."
           rm "${filename}"
         fi
       else

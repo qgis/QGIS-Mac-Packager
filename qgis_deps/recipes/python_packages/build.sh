@@ -4,13 +4,14 @@ function build_python_packages() {
 
   push_env
 
-  for i in ${REQUIREMENTS_python_packages[*]}
-  do
-    info "Installing python_packages package $i"
+  n_packages=${#REQUIREMENTS_python_packages[@]}
+  for (( j=0; j<n_packages; j++ )); do
+    package="${REQUIREMENTS_python_packages[$j]}"
+    info "Installing python_packages package ${package} ($((j+1))/${n_packages})"
     # build_ext sometimes tries to dlopen the libraries
     # to determine the library version
     # this does not force --no-binary all strictly
-    DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP_NO_BINARY install $i
+    DYLD_LIBRARY_PATH=${STAGE_PATH}/lib try ${PIP_NO_BINARY} install ${package}
   done
 
   pop_env

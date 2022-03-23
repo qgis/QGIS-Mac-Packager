@@ -49,7 +49,6 @@ REQUIREMENTS_python_packages=(
     ply==3.11
     pygments==2.11.2
     pyparsing==3.0.7
-    pypubsub==4.0.3
     pytz==2022.1
     pyyaml==6.0
     urllib3==1.26.9
@@ -63,7 +62,6 @@ REQUIREMENTS_python_packages=(
     xlwt==1.3.0
     joblib==1.1.0
     threadpoolctl==3.1.0
-    cryptography==36.0.2
     cffi==1.15.0
     pycparser==2.21
     pyopenssl==22.0.0
