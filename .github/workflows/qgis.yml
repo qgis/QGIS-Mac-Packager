@@ -148,9 +148,9 @@ jobs:
       - uses: Apple-Actions/download-provisioning-profiles@v1
         with:
           bundle-id: org.qgis.qgis
-          issuer-id: ${{ secrets.IOS_APPSTORE_ISSUER_ID }}
-          api-key-id: ${{ secrets.IOS_APPSTORE_KEY_ID }}
-          api-private-key: ${{ secrets.IOS_APPSTORE_PRIVATE_KEY }}
+          issuer-id: ${{ secrets.APPLE_APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPLE_APPSTORE_KEY_ID }}
+          api-private-key: ${{ secrets.APPLE_APPSTORE_PRIVATE_KEY }}
 
       - name: Package QGIS
         run: |
