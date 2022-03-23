@@ -4,7 +4,7 @@ DESC_proj="Cartographic Projections Library"
 
 # keep in SYNC with python_pyproj receipt
 
-LINK_libproj=libproj.22.dylib
+LINK_libproj=libproj.${LIB_VERSION_proj}.dylib
 
 DEPS_proj=(sqlite libxml2 openssl libtiff)
 
