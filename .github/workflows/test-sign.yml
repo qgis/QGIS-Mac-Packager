@@ -1,0 +1,63 @@
+name: 🍏 Sign test
+on:
+  workflow_dispatch:
+  push:
+    paths:
+    - 'config/**'
+    - 'qgis_bundle/**'
+    - 'qgis_build/**'
+    - '.github/workflows/qgis.yml'
+    - 'qgis-mac-packager.bash'
+
+env:
+  RELEASE: nightly
+  APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
+  CCACHE_DIR: ${{ github.workspace }}/ccache
+  BASE_DIR: ${{ github.workspace }}
+  PACKAGER_DIR: ${{ github.workspace }}/packager
+  QGIS_SOURCE_DIR: ${{ github.workspace }}/QGIS
+  QGIS_BUILD_DIR: ${{ github.workspace }}/build
+  QGIS_PRIVATE_SDKS_PATH: ${{ github.workspace }}/qgis-private-sdks
+  QGIS_PRIVATE_SDK_VERSION: "0.10"
+
+jobs:
+  qgis_build:
+    if: github.repository == 'qgis/QGIS-Mac-Packager'
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}
+          path: ${{ env.PACKAGER_DIR }}
+
+      - name: Get att
+        run: |
+          wget https://github.com/qgis/QGIS-Mac-Packager/suites/5774188510/artifacts/192361013
+          unzip QGIS.app
+
+      - uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.APPLE_CERTIFICATES_FILE_BASE64 }}
+          p12-password: ${{ secrets.APPLE_CERTIFICATES_PASSWORD }}
+
+      - uses: Apple-Actions/download-provisioning-profiles@v1
+        with:
+          bundle-id: org.qgis.qgis
+          issuer-id: ${{ secrets.APPLE_APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPLE_APPSTORE_KEY_ID }}
+          api-private-key: ${{ secrets.APPLE_APPSTORE_PRIVATE_KEY }}
+
+      - name: Package QGIS
+        run: |
+          cd ${PACKAGER_DIR}
+          sudo -E ./qgis_package/qgis_package.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION} ${QGIS_BUILD_DIR}/${RELEASE}.dmg
+
+      - name: Setup tmate session
+        if: failure()
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 20
+
+      - name: debug
+        if: failure()
+        run: cat ${{ github.workspace }}/build/cmake.configure
+
