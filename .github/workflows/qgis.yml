@@ -140,10 +140,10 @@ jobs:
           p12-file-base64: ${{ secrets.APPLE_CERTIFICATES_FILE_BASE64 }}
           p12-password: ${{ secrets.APPLE_CERTIFICATES_PASSWORD }}
 
-      - name: Package QGIS to ${PACKAGE}
+      - name: Package QGIS to ${{ env.QGIS_BUILD_DIR }}/${{ env.RELEASE }}.dmg
         run: |
           cd ${PACKAGER_DIR}
-          sudo -E ./qgis_package/qgis_package.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION} ${RELEASE}.dmg
+          sudo -E ./qgis_package/qgis_package.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION} ${QGIS_BUILD_DIR}/${RELEASE}.dmg
 
       - name: Setup tmate session
         if: failure()
