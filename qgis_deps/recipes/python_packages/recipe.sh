@@ -73,7 +73,6 @@ REQUIREMENTS_python_packages=(
     inequality==1.0.0
     pointpats==2.2.0
     segregation==2.1.0
-    spaghetti==1.6.5
     mgwr==2.1.2
     spglm==1.0.8
     spint==1.0.7

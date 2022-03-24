@@ -2,9 +2,6 @@
 
 DESC_python_pysal="A library of spatial analysis functions."
 
-VERSION_python_libpysal=4.5.1
-
-
 DEPS_python_pysal=(
   python
   python_scipy

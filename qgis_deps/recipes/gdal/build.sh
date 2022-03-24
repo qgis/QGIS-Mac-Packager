@@ -133,6 +133,8 @@ function build_gdal() {
   try install_name_tool -id $STAGE_PATH/lib/$LINK_gdal $STAGE_PATH/lib/$LINK_gdal
   try install_name_tool -change ${DEPS_BUILD_PATH}/gdal/build-$ARCH/$LINK_gdal $STAGE_PATH/lib/$LINK_gdal $STAGE_PATH/lib/$LINK_gdal
 
+  try install_name_tool -change ${DEPS_BUILD_PATH}/gdal/build-$ARCH/libgdal.dylib $STAGE_PATH/lib/$LINK_gdal $STAGE_PATH/bin/gdalmanage
+
   build_ecw
   build_mrsid
 
