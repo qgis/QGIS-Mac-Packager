@@ -76,7 +76,7 @@ REQUIREMENTS_python_packages=(
     mgwr==2.1.2
     spglm==1.0.8
     spint==1.0.7
-    spreg==1.1.4
+    spreg==1.2.4
     spvcm==0.3.0
     tobler==0.9.0
     mapclassify==2.4.3

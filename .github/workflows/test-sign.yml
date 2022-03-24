@@ -35,8 +35,9 @@ jobs:
           #  curl \
           #  -H "Accept: application/vnd.github.v3+json" \
           #  https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts
-          curl -H "Authorization: token ${{ github.token }}" -q -L -o QGIS.app.zip https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts/192432950/zip
-          unzip QGIS.app.zip
+          curl -H "Authorization: token ${{ github.token }}" --progress-bar -L -o QGIS.app.zip https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts/192432950/zip
+          unzip -q QGIS.app.zip
+          ls ${BUNDLE_DIR}
 
       - uses: Apple-Actions/import-codesign-certs@v1
         with:
