@@ -31,7 +31,7 @@ jobs:
           #  curl \
           #  -H "Accept: application/vnd.github.v3+json" \
           #  https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts
-          wget https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts/192432950/zip
+          curl -H "Authorization: token ${{ github.token }}" -H "Accept: application/vnd.github.v3+json" \https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts/192432950/zip
           unzip QGIS.app
 
       - uses: Apple-Actions/import-codesign-certs@v1
@@ -51,10 +51,10 @@ jobs:
           cd ${PACKAGER_DIR}
           sudo -E ./qgis_package/qgis_package.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION} ${QGIS_BUILD_DIR}/${RELEASE}.dmg
 
-      - name: Setup tmate session
-        if: failure()
-        uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 20
+      #- name: Setup tmate session
+      #  if: failure()
+      #  uses: mxschmitt/action-tmate@v3
+      #  timeout-minutes: 20
 
       - name: debug
         if: failure()
