@@ -48,7 +48,9 @@ jobs:
             cache-qgis-deps-build-
 
       - name: Move cache build
-        run: sudo mv ${{ env.BUILD_CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
+        run: |
+          sudo mv ${{ env.BUILD_CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
+          ls -la ${{ env.ROOT_OUT_PATH }}
 
       - name: Cache packages
         id: cache-packages

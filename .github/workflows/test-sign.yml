@@ -16,7 +16,7 @@ env:
   QGIS_PRIVATE_SDKS_PATH: ${{ github.workspace }}/qgis-private-sdks
   QGIS_PRIVATE_SDK_VERSION: "0.10"
   BUNDLE_DIR: ${{ github.workspace }}/build
-  QGIS_APP_NAME: QGIS.app
+  QGIS_APP_NAME: QGIS-Dev.app
 
 jobs:
   qgis_build:
@@ -30,12 +30,12 @@ jobs:
 
       - name: Get app
         run: |
-          mkdir -p $BUNDLE_DIR/QGIS.app
-          cd ${BUNDLE_DIR}/QGIS.app
+          mkdir -p $BUNDLE_DIR/${QGIS_APP_NAME}
+          cd ${BUNDLE_DIR}/${QGIS_APP_NAME}
           #  curl \
           #  -H "Accept: application/vnd.github.v3+json" \
           #  https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts
-          curl -H "Authorization: token ${{ github.token }}" --progress-bar -L -o QGIS.app.zip https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts/192432950/zip
+          curl -H "Authorization: token ${{ github.token }}" --silent -L -o QGIS.app.zip https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts/192432950/zip
           unzip -q QGIS.app.zip
           ls ${BUNDLE_DIR}
 
