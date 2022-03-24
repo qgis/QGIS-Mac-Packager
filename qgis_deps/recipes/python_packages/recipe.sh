@@ -66,6 +66,8 @@ REQUIREMENTS_python_packages=(
     pycparser==2.21
     pyopenssl==22.0.0
     pyodbc==4.0.32
+    tenacity==8.0.1
+    jupyterlab==3.3.2
     plotly==5.6.0
     access==1.1.3
     esda==2.4.1

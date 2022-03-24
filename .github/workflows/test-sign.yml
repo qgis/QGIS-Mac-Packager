@@ -15,6 +15,8 @@ env:
   QGIS_BUILD_DIR: ${{ github.workspace }}/build
   QGIS_PRIVATE_SDKS_PATH: ${{ github.workspace }}/qgis-private-sdks
   QGIS_PRIVATE_SDK_VERSION: "0.10"
+  BUNDLE_DIR: ${{ github.workspace }}/build
+  QGIS_APP_NAME: QGIS.app
 
 jobs:
   qgis_build:
@@ -28,10 +30,11 @@ jobs:
 
       - name: Get att
         run: |
+          cd ${BUNDLE_DIR}
           #  curl \
           #  -H "Accept: application/vnd.github.v3+json" \
           #  https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts
-          curl -H "Authorization: token ${{ github.token }}" -L -o QGIS.app.zip https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts/192432950/zip
+          curl -H "Authorization: token ${{ github.token }}" -q -L -o QGIS.app.zip https://api.github.com/repos/qgis/QGIS-Mac-Packager/actions/artifacts/192432950/zip
           unzip QGIS.app.zip
 
       - uses: Apple-Actions/import-codesign-certs@v1

@@ -11,7 +11,7 @@ function build_python_packages() {
     # build_ext sometimes tries to dlopen the libraries
     # to determine the library version
     # this does not force --no-binary all strictly
-    DYLD_LIBRARY_PATH=${STAGE_PATH}/lib try ${PIP_NO_BINARY} install ${package}
+    DYLD_LIBRARY_PATH=${STAGE_PATH}/lib try ${PIP_NO_BINARY} -v install ${package}
   done
 
   pop_env
