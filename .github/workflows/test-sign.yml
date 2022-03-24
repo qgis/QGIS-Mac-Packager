@@ -28,8 +28,9 @@ jobs:
           repository: ${{ github.repository }}
           path: ${{ env.PACKAGER_DIR }}
 
-      - name: Get att
+      - name: Get app
         run: |
+          mkdir -p $BUNDLE_DIR
           cd ${BUNDLE_DIR}
           #  curl \
           #  -H "Accept: application/vnd.github.v3+json" \
@@ -59,7 +60,4 @@ jobs:
       #  uses: mxschmitt/action-tmate@v3
       #  timeout-minutes: 20
 
-      - name: debug
-        if: failure()
-        run: cat ${{ github.workspace }}/build/cmake.configure
 
