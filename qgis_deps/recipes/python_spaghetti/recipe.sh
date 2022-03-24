@@ -29,9 +29,7 @@ function prebuild_python_spaghetti() {
 }
 
 function shouldbuild_python_spaghetti() {
-  # not sure why but when spaghetti is imported first
-  # it triggers Symbol not found: _GEOSArea on libspatialite
-  if python_package_installed fiona,spaghetti; then
+  if python_package_installed spaghetti; then
     DO_BUILD=0
   fi
 }

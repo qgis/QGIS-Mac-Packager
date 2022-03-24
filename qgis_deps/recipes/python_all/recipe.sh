@@ -26,12 +26,13 @@ DEPS_python_all=(
     python_scipy
     python_shapely
     python_psycopg2
-    python_pysal
+    python_libpysal
     python_patsy
     python_pandas
     python_cryptography
     python_pypubsub
     python_spaghetti
+    python_tobler
 )
 
 

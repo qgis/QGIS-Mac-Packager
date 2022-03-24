@@ -40,6 +40,7 @@ REQUIREMENTS_python_packages=(
     jsonschema==4.4.0
     traitlets==5.1.1
     jupyter-core==4.9.2
+    jupyterlab==3.3.2
     kiwisolver==1.4.0
     mock==4.0.3
     nbformat==5.2.0
@@ -78,7 +79,6 @@ REQUIREMENTS_python_packages=(
     spint==1.0.7
     spreg==1.2.4
     spvcm==0.3.0
-    tobler==0.9.0
     mapclassify==2.4.3
     splot==1.1.4
     iniconfig==1.1.1
@@ -132,7 +132,7 @@ function prebuild_python_packages() {
 }
 
 function shouldbuild_python_packages() {
-  if python_package_installed yaml; then
+  if python_package_installed yaml, affine; then
     DO_BUILD=0
   fi
 }
