@@ -31,6 +31,7 @@ DEPS_python_all=(
     python_pandas
     python_cryptography
     python_pypubsub
+    python_spaghetti
 )
 
 
