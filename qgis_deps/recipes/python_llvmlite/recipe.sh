@@ -30,7 +30,7 @@ function prebuild_python_llvmlite() {
   try patch -p1 -i intel-D47188-svml-VF.patch
   try patch -p1 -i 0001-Revert-Limit-size-of-non-GlobalValue-name.patch
 
-  cd ${BUILD_python_llvmlite}
+  try rsync -a ${BUILD_python_llvmlite}/ ${DEPS_BUILD_PATH}/python_llvmlite/build-$ARCH/
 }
 
 function shouldbuild_python_llvmlite() {

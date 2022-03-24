@@ -51,6 +51,7 @@ jobs:
         run: |
           sudo mv ${{ env.BUILD_CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
           ls -la ${{ env.ROOT_OUT_PATH }}
+          ls -la ${{ env.DEPS_BUILD_PATH }}
 
       - name: Cache packages
         id: cache-packages

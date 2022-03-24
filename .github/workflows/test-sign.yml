@@ -56,9 +56,9 @@ jobs:
           cd ${PACKAGER_DIR}
           sudo -E ./qgis_package/qgis_package.bash ${RELEASE} 3.25.0 ${QGIS_BUILD_DIR}/${RELEASE}.dmg
 
-      #- name: Setup tmate session
-      #  if: failure()
-      #  uses: mxschmitt/action-tmate@v3
-      #  timeout-minutes: 20
+      - name: Setup tmate session
+        if: failure()
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 20
 
 
