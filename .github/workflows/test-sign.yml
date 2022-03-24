@@ -49,7 +49,7 @@ jobs:
       - name: Package QGIS
         run: |
           cd ${PACKAGER_DIR}
-          sudo -E ./qgis_package/qgis_package.bash ${RELEASE} ${QGIS_MAJOR_VERSION}.${QGIS_MINOR_VERSION}.${QGIS_PATCH_VERSION} ${QGIS_BUILD_DIR}/${RELEASE}.dmg
+          sudo -E ./qgis_package/qgis_package.bash ${RELEASE} 3.25.0 ${QGIS_BUILD_DIR}/${RELEASE}.dmg
 
       #- name: Setup tmate session
       #  if: failure()
