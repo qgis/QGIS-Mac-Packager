@@ -7,7 +7,7 @@ on:
     - '.github/workflows/deps.yml'
 
 env:
-  MODULE: qgis_deps
+  MODULE: openblas
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
@@ -117,14 +117,17 @@ jobs:
           cat ${DEPS_BUILD_PATH}/last-build.log
           exit 1
 
-      - name: copy build to cache dir
-        if: always()
-        run: sudo cp -r ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
+      - name: move build to cache dir if build failed
+        if: failure()
+        run: sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
 
       - name: create package
         run: |
           cd qgis_deps
           sudo -E ./create_package.bash ${{ env.QGIS_DEPS_RELEASE_VERSION }}
+          
+      - name: move build to cache dir
+        run: sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
 
       - uses: Apple-Actions/import-codesign-certs@v1
         with:
