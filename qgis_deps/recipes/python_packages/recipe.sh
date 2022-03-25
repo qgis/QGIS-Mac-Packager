@@ -112,6 +112,7 @@ REQUIREMENTS_python_packages=(
     pyvenv==0.2.2
     snuggs==1.4.7
     affine==2.3.0
+    fonttools==4.31.2
 )
 
 IMPORTS_python_packages=(

@@ -1,5 +1,5 @@
-function build_python_tobler() {
-  try cd $BUILD_python_tobler
+function build_python_pysal() {
+  try cd $BUILD_python_pysal
   push_env
 
   DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install

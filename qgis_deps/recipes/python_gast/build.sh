@@ -1,5 +1,5 @@
-function build_python_tobler() {
-  try cd $BUILD_python_tobler
+function build_python_gast() {
+  try cd ${DEPS_BUILD_PATH}/python_gast/build-${ARCH}
   push_env
 
   DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install

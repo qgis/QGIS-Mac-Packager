@@ -23,6 +23,10 @@ DEPS_python_all=(
     python_qscintilla
     python_sip
     python_pillow
+    python_pybind11
+    python_gast
+    python_beniget
+    python_pythran
     python_scipy
     python_shapely
     python_psycopg2
@@ -33,6 +37,7 @@ DEPS_python_all=(
     python_pypubsub
     python_spaghetti
     python_tobler
+    python_pysal
 )
 
 

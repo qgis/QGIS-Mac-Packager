@@ -6,8 +6,6 @@ DESC_python_patsy="python patsy"
 DEPS_python_patsy=(python python_packages python_numpy)
 
 
-# md5 of the package
-
 # default build path
 BUILD_python_patsy=${DEPS_BUILD_PATH}/python_patsy/$(get_directory $URL_python_patsy)
 

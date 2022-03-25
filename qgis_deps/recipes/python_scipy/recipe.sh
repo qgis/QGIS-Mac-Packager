@@ -3,7 +3,7 @@
 DESC_python_scipy="python scipy"
 
 
-DEPS_python_scipy=(python python_packages python_numpy python_pillow openblas)
+DEPS_python_scipy=(python python_packages python_numpy python_pillow python_pybind11 python_pythran openblas)
 
 
 # md5 of the package

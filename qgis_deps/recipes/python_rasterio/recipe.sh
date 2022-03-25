@@ -4,7 +4,7 @@ DESC_python_rasterio="Rasterio reads and writes geospatial raster data."
 
 
 # depends on PyQt5
-DEPS_python_rasterio=(python gdal python_gdal python_packages)
+DEPS_python_rasterio=(python gdal python_gdal python_pyproj python_packages)
 
 
 # md5 of the package
