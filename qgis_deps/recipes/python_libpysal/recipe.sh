@@ -29,7 +29,7 @@ RECIPE_python_libpysal=$RECIPES_PATH/python_libpysal
 # (you can apply patch etc here.)
 function prebuild_python_libpysal() {
   cd -p $BUILD_python_libpysal
-  try rsync -a $BUILD_python_pylibpysal/ ${DEPS_BUILD_PATH}/python_pylibpysal/build-${ARCH}
+  try rsync -a $BUILD_python_libpysal/ ${DEPS_BUILD_PATH}/python_libpysal/build-${ARCH}
 }
 
 function shouldbuild_python_libpysal() {
