@@ -98,13 +98,6 @@ jobs:
           sudo mkdir -p /opt/Qt
           sudo mv ${{ github.workspace }}/Qt /opt
 
-      # to compile python cryptography
-      #- name: Install latest nightly
-      #  uses: actions-rs/toolchain@v1
-      #  with:
-      #    toolchain: stable
-      #    target: x86_64-apple-darwin
-
       - name: install brew deps
         run: ./scripts/install_brew_dev_packages.bash
 
@@ -123,6 +116,7 @@ jobs:
       - name: move build to cache dir if build failed
         if: failure()
         run: |
+          sudo rm ${DEPS_BUILD_PATH}/last-build.log || true
           sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
           sudo chown -R $(whoami) ${{ env.BUILD_CACHE_PATH }}
 
@@ -133,6 +127,7 @@ jobs:
           
       - name: move build to cache dir
         run: |
+          sudo rm ${DEPS_BUILD_PATH}/last-build.log || true
           sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
           sudo chown -R $(whoami) ${{ env.BUILD_CACHE_PATH }}
 
