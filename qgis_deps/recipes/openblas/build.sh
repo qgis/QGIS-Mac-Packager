@@ -10,12 +10,12 @@ function build_openblas() {
 
   # Contains FORTRAN LAPACK sources
   export DYNAMIC_ARCH=1
-  export USE_OPENMP=0 # ? this is 1 in homebrew..?..
-  export NO_AVX512=1
+  #export USE_OPENMP=0 # ? this is 1 in homebrew..?..
+  #export NO_AVX512=1
   # Force a large NUM_THREADS to support larger Macs than the VMs that build the bottles
   NUM_THREADS=56
 
-  try $MAKESMP FC=gfortran libs netlib shared
+  try $MAKESMP #FC=gfortran libs netlib shared
   try $MAKE install PREFIX=$STAGE_PATH
 
   unset DYNAMIC_ARCH
