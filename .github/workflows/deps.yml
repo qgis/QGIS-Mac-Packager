@@ -7,7 +7,7 @@ on:
     - '.github/workflows/deps.yml'
 
 env:
-  MODULE: qgis_deps
+  MODULE: python_packages
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
@@ -38,7 +38,7 @@ jobs:
 
       - name: Cache build
         id: cache-build
-        uses: pat-s/always-upload-cache@v2.1.5
+        uses: actions/cache@v3
         with:
           path: ${{ env.BUILD_CACHE_PATH }}
           key: cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
@@ -55,7 +55,7 @@ jobs:
 
       - name: Cache packages
         id: cache-packages
-        uses: pat-s/always-upload-cache@v2.1.5
+        uses: actions/cache@v3
         with:
           path: ${{ env.SOURCE_PACKAGES_PATH }}
           key: cache-qgis-deps-packages-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ env.VERSIONS_CONF_MD5 }}
@@ -77,18 +77,10 @@ jobs:
 
       - run: brew install python3
 
-      - name: Cache Qt
-        id: cache-qt
-        uses: actions/cache@v1  # not v2!
-        with:
-          path: ${{ github.workspace }}/Qt
-          key: cache-Qt-${{ env.VERSION_QT }}
-
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
           dir: ${{ github.workspace }}
-          cached: ${{ steps.cache-qt.outputs.cache-hit }}
           setup-python: 'false'
           version: '5.15.2'
           host: 'mac'
@@ -114,12 +106,12 @@ jobs:
           cat ${DEPS_BUILD_PATH}/last-build.log
           exit 1
 
-      - name: move build to cache dir if build failed
-        if: failure()
-        run: |
-          sudo rm ${DEPS_BUILD_PATH}/last-build.log || true
-          sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
-          sudo chown -R $(whoami) ${{ env.BUILD_CACHE_PATH }}
+      #- name: move build to cache dir if build failed
+      #  if: failure()
+      #  run: |
+      #    sudo rm ${DEPS_BUILD_PATH}/last-build.log || true
+      #    sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
+      #    sudo chown -R $(whoami) ${{ env.BUILD_CACHE_PATH }}
 
       - name: create package
         run: |
