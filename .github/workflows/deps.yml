@@ -21,7 +21,7 @@ jobs:
   qgis_deps_build:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set environment
         run: |

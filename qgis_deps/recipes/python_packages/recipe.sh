@@ -41,7 +41,6 @@ REQUIREMENTS_python_packages=(
     traitlets==5.1.1
     jupyter-core==4.9.2
     jupyterlab==3.3.2
-    kiwisolver==1.4.0
     mock==4.0.3
     nbformat==5.2.0
     networkx==2.7.1

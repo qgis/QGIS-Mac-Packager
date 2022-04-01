@@ -25,7 +25,7 @@ jobs:
     if: github.repository == 'qgis/QGIS-Mac-Packager'
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: ${{ github.repository }}
           path: ${{ env.PACKAGER_DIR }}
