@@ -627,6 +627,8 @@ function download_file() {
     build_directory=${DEPS_BUILD_PATH}/${module}/build-${ARCH}
 
     if [[ ${do_prebuild} -eq 1 ]] && [[ "$(recipe_has_changed "${module}" recipe)" == "1" ]]; then
+      echo $(${MD5SUM} ${RECIPES_PATH}/${module}/recipe.sh | cut -d\  -f1)
+      echo $(cat ${DEPS_BUILD_PATH}/${module}/.recipe)
       info "Recipe has changed, removing the existing source and build directories"
       rm -rf ${DEPS_BUILD_PATH}/${module}/${source_directory}
       rm -rf ${build_directory}
