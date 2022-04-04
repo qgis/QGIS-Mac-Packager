@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - '.github/workflows/test-sign.yml'
+    - 'qgis_package/qgis_package.bash'
 
 env:
   RELEASE: nightly
