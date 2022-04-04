@@ -67,7 +67,7 @@ info "Print identities"
 security find-identity -v -p codesigning
 
 info "Signing the $QGIS_APP_NAME"
-codesign -s "${APPLE_CODE_SIGN_IDENTITY}" -i "org.qgis.qgis" -v --force --timestamp=none "$QGIS_APP" --deep
+codesign --verbose --sign "${APPLE_CODE_SIGN_IDENTITY}" -i "org.qgis.qgis" -v --force --timestamp=none "$QGIS_APP" --deep
 codesign --deep-verify --verbose "$QGIS_APP"
 
 info "Create dmg image"
