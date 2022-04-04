@@ -549,8 +549,8 @@ function recipe_has_changed(){
   module=${1}
   file=${2}
   current_recipe_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/${file}.sh | cut -d\  -f1)
-  if [[ -f ${DEPS_BUILD_PATH}/${module}/.${2} ]]; then
-    stored_recipe_sum=$(cat ${DEPS_BUILD_PATH}/${module}/.${2})
+  if [[ -f ${DEPS_BUILD_PATH}/${module}/.${file} ]]; then
+    stored_recipe_sum=$(cat ${DEPS_BUILD_PATH}/${module}/.${file})
     if [[ "${current_recipe_sum}" == "${stored_recipe_sum}" ]]; then
       echo 0
     fi

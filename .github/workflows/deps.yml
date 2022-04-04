@@ -50,8 +50,9 @@ jobs:
       - name: Move cache build
         run: |
           sudo mv ${{ env.BUILD_CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
-          ls -la ${{ env.ROOT_OUT_PATH }}
-          ls -la ${{ env.DEPS_BUILD_PATH }}
+          ls -la ${{ env.DEPS_BUILD_PATH }}/bison
+          echo $(md5 ${{ env.DEPS_BUILD_PATH }}/bison/recipe.sh) || true
+          echo $(md5 ${{ env.DEPS_BUILD_PATH }}/bison/build.sh) || true
 
       - name: Cache packages
         id: cache-packages
