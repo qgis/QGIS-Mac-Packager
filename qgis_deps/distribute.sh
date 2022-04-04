@@ -626,16 +626,10 @@ function download_file() {
     source_directory=$(get_directory ${filename})
     build_directory=${DEPS_BUILD_PATH}/${module}/build-${ARCH}
 
-    if [[ ${do_prebuild} -eq 1 ]] && [[ "$(recipe_has_changed "${module}" recipe)" == "1" ]]; then
-      echo $(${MD5SUM} ${RECIPES_PATH}/${module}/recipe.sh | cut -d\  -f1)
-      echo $(cat ${DEPS_BUILD_PATH}/${module}/.recipe)
+    if ( [[ -d ${source_directory} ]] || [[ -d ${build_directory} ]] ) && [[ ${do_prebuild} -eq 1 ]] && [[ "$(recipe_has_changed "${module}" recipe)" == "1" ]]; then
       info "Recipe has changed, removing the existing source and build directories"
       rm -rf ${DEPS_BUILD_PATH}/${module}/${source_directory}
       rm -rf ${build_directory}
-      if [[ -z ${FORCE_BUILD_FROM_MODULE} ]]; then
-        info "From this module, re-build all"
-        FORCE_BUILD_FROM_MODULE=${module}
-      fi
     fi
 
     # if already decompress, forget it
@@ -753,10 +747,6 @@ function run_build() {
       if [[ "$(type -t ${shouldbuildfn})" == "function" ]]; then
         ${shouldbuildfn}
       fi
-    fi
-
-    if [[ "${FORCE_BUILD_FROM_MODULE}" == "${module}" ]]; then
-      DO_CLEAN_BUILD=1
     fi
 
     # if the module should be build, or if the marker is not present,
