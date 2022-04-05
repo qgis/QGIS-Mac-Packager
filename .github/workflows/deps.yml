@@ -7,7 +7,7 @@ on:
     - '.github/workflows/deps.yml'
 
 env:
-  MODULE: python_packages
+  MODULE: python_all
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
@@ -102,14 +102,8 @@ jobs:
       - name: build qgis_deps
         run: |
           cd qgis_deps
-          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -f -m${{ env.MODULE }}
+          sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -m${{ env.MODULE }}
         timeout-minutes: 320
-
-      - name: last build log
-        if: ${{ failure() }}
-        run: |
-          cat ${DEPS_BUILD_PATH}/last-build.log
-          exit 1
 
       #- name: move build to cache dir if build failed
       #  if: failure()
