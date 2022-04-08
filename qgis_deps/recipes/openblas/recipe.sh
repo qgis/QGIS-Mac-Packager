@@ -23,8 +23,6 @@ RECIPE_openblas=$RECIPES_PATH/openblas
 function prebuild_openblas() {
   cd $BUILD_openblas
   try rsync -a $BUILD_openblas/ ${DEPS_BUILD_PATH}/openblas/build-${ARCH}
-
-
 }
 
 function shouldbuild_openblas() {

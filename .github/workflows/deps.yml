@@ -7,7 +7,7 @@ on:
     - '.github/workflows/deps.yml'
 
 env:
-  MODULE: python_all
+  MODULE: python_packages
   QGIS_DEPS_RELEASE_VERSION: "dev"
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
@@ -38,7 +38,7 @@ jobs:
 
       - name: Cache build
         id: cache-build
-        uses: actions/cache@v3
+        uses: pat-s/always-upload-cache@v3
         with:
           path: ${{ env.BUILD_CACHE_PATH }}
           key: cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
@@ -50,9 +50,7 @@ jobs:
       - name: Move cache build
         run: |
           sudo mv ${{ env.BUILD_CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
-          ls -la ${{ env.DEPS_BUILD_PATH }}/bison
-          echo $(md5 ${{ env.DEPS_BUILD_PATH }}/bison/recipe.sh) || true
-          echo $(md5 ${{ env.DEPS_BUILD_PATH }}/bison/build.sh) || true
+          ls -la ${{ env.DEPS_BUILD_PATH }}
 
       - name: Cache packages
         id: cache-packages
@@ -95,22 +93,18 @@ jobs:
       - name: install brew deps
         run: ./scripts/install_brew_dev_packages.bash
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 60
-
       - name: build qgis_deps
         run: |
           cd qgis_deps
           sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -m${{ env.MODULE }}
         timeout-minutes: 320
 
-      #- name: move build to cache dir if build failed
-      #  if: failure()
-      #  run: |
-      #    sudo rm ${DEPS_BUILD_PATH}/last-build.log || true
-      #    sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
-      #    sudo chown -R $(whoami) ${{ env.BUILD_CACHE_PATH }}
+      - name: move build to cache dir if build failed
+        if: failure()
+        run: |
+          sudo rm ${DEPS_BUILD_PATH}/last-build.log || true
+          sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
+          sudo chown -R $(whoami) ${{ env.BUILD_CACHE_PATH }}
 
       - name: create package
         run: |
@@ -131,7 +125,7 @@ jobs:
       - name: signing deps
         run: |
           cd qgis_deps
-          # sudo -E ./sign_deps.bash ${{ env.QGIS_DEPS_RELEASE_VERSION }}
+          sudo -E ./sign_deps.bash ${{ env.QGIS_DEPS_RELEASE_VERSION }}
 
       - name: upload Qt archive
         uses: actions/upload-artifact@v2
