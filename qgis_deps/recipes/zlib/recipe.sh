@@ -2,7 +2,7 @@
 
 DESC_zlib="General-purpose lossless data-compression library"
 
-LINK_zlib=libz.1.dylib
+LINK_zlib=libz.so.${VERSION_zlib}
 
 DEPS_zlib=()
 

@@ -99,6 +99,10 @@ jobs:
           sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -m${{ env.MODULE }}
         timeout-minutes: 320
 
+      - name: log
+        if: failure()
+        run: cat ${DEPS_BUILD_PATH}/last-build.log
+
       - name: move build to cache dir if build failed
         if: failure()
         run: |
