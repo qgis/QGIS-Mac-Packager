@@ -758,11 +758,12 @@ function run_build() {
       source ${RECIPES_PATH}/${module}/build.sh
       # https://stackoverflow.com/a/363239/1548052
       if [[ ${CI} == true ]]; then
-        ${fn} > ${DEPS_BUILD_PATH}/last-build.log
+        echo "Building ${module}" > ${DEPS_BUILD_PATH}/last-build.log
+        ${fn} >> ${DEPS_BUILD_PATH}/last-build.log
       else
         ${fn}
       fi
-      gsed -i "1s;^;Building ${module}\n;" ${DEPS_BUILD_PATH}/last-build.log
+      [[ $? -ne 0 ]] && error "${module} build failed"
       build_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/build.sh | cut -d\  -f1)
       echo "${build_sum}" > ${DEPS_BUILD_PATH}/${module}/.build
     else
@@ -773,10 +774,11 @@ function run_build() {
     fn2=$(echo postbuild_${module})
     debug "Call ${fn2}"
     if [[ ${CI} == true ]]; then
-      ${fn2} > ${DEPS_BUILD_PATH}/last-build.log
+      ${fn2} >> ${DEPS_BUILD_PATH}/last-build.log
     else
       ${fn2}
     fi
+    [[ $? -ne 0 ]] && error "${module} build failed"
     fold_pop
   done
 }
