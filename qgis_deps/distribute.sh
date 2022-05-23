@@ -757,8 +757,11 @@ function run_build() {
       rm -f ${DEPS_BUILD_PATH}/${module}/.build
       source ${RECIPES_PATH}/${module}/build.sh
       # https://stackoverflow.com/a/363239/1548052
-      ${fn} 2>&1 | tee ${DEPS_BUILD_PATH}/last-build.log
-      [[ $? -ne 0 ]] && error "${module} build failed"
+      if [[ ${CI} == true ]]; then
+        ${fn} > ${DEPS_BUILD_PATH}/last-build.log
+      else
+        ${fn}
+      fi
       gsed -i "1s;^;Building ${module}\n;" ${DEPS_BUILD_PATH}/last-build.log
       build_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/build.sh | cut -d\  -f1)
       echo "${build_sum}" > ${DEPS_BUILD_PATH}/${module}/.build
@@ -769,8 +772,11 @@ function run_build() {
     # postbuild
     fn2=$(echo postbuild_${module})
     debug "Call ${fn2}"
-    ${fn2} 2>&1 | tee -a ${DEPS_BUILD_PATH}/last-build.log
-    [[ $? -ne 0 ]] && error "${module} postbuild failed"
+    if [[ ${CI} == true ]]; then
+      ${fn2} > ${DEPS_BUILD_PATH}/last-build.log
+    else
+      ${fn2}
+    fi
     fold_pop
   done
 }
