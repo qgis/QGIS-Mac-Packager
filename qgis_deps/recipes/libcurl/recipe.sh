@@ -3,7 +3,7 @@
 DESC_libcurl="Get a file from an HTTP, HTTPS or FTP server"
 
 
-LINK_libcurl=libcurl.4.dylib
+LINK_libcurl=libcurl.dylib
 
 DEPS_libcurl=(libtool openssl zstd zlib libssh2)
 
@@ -20,9 +20,7 @@ RECIPE_libcurl=$RECIPES_PATH/libcurl
 # (you can apply patch etc here.)
 function prebuild_libcurl() {
   cd $BUILD_libcurl
-    patch_configure_file configure
   try rsync  -a $BUILD_libcurl/ ${DEPS_BUILD_PATH}/libcurl/build-${ARCH}
-
 }
 
 function shouldbuild_libcurl() {
