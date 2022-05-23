@@ -15,6 +15,7 @@ env:
   BUILD_CACHE_PATH: ${{ github.workspace }}/deps/build
   QGIS_PRIVATE_SDKS_PATH: ${{ github.workspace }}/qgis-private-sdks
   QGIS_PRIVATE_SDK_VERSION: "0.10"
+  CACHE_VERSION: 1
 
 
 jobs:
@@ -43,9 +44,9 @@ jobs:
           path: ${{ env.BUILD_CACHE_PATH }}
           key: cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
           restore-keys: |
-            cache-qgis-deps-build-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
-            cache-qgis-deps-build-dev-
-            cache-qgis-deps-build-
+            cache-qgis-deps-build-${{ env.CACHE_VERSION }}-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
+            cache-qgis-deps-build-${{ env.CACHE_VERSION }}-dev-
+            cache-qgis-deps-build-${{ env.CACHE_VERSION }}-
 
       - name: Move cache build
         run: |
