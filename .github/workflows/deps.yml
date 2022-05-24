@@ -15,7 +15,7 @@ env:
   BUILD_CACHE_PATH: ${{ github.workspace }}/deps/build
   QGIS_PRIVATE_SDKS_PATH: ${{ github.workspace }}/qgis-private-sdks
   QGIS_PRIVATE_SDK_VERSION: "0.10"
-  CACHE_VERSION: 3
+  CACHE_VERSION: 4
 
 
 jobs:

@@ -572,12 +572,12 @@ function download_file() {
       try mkdir -p "${SOURCE_PACKAGES_PATH}/${d_module}"
     fi
 
-    if [[ -z ${url} ]]; then
+    if [[ -z ${d_url} ]]; then
       debug "No package for ${d_module}"
       return
     fi
 
-    filename=$(basename ${url})
+    filename=$(basename ${d_url})
 
     marker_filename=".mark-${filename}"
     do_download=1
@@ -589,15 +589,15 @@ function download_file() {
       # if the marker has not been set, it might be cause of a invalid download.
       if [ ! -f ${marker_filename} ]; then
         rm ${filename}
-      elif [ -n "${md5}" ]; then
+      elif [ -n "${d_md5}" ]; then
         # check if the md5 is correct
         current_md5=$(${MD5SUM} ${filename} | cut -d\  -f1)
-        if [ "${current_md5}" == "${md5}" ]; then
+        if [ "${current_md5}" == "${d_md5}" ]; then
           # correct, no need to download
           do_download=0
         else
           # invalid download, remove the file
-          error "Module ${d_module} has invalid md5 (${current_md5} vs ${md5}), redownload."
+          error "Module ${d_module} has invalid md5 (${current_md5} vs ${d_md5}), redownload."
           rm "${filename}"
         fi
       else
@@ -607,19 +607,19 @@ function download_file() {
 
     # download if needed
     if [ ${do_download} -eq 1 ]; then
-      info "Downloading ${url}"
+      info "Downloading ${d_url}"
       try rm -f ${marker_filename}
-      try ${WGET} ${filename} ${url}
+      try ${WGET} ${filename} ${d_url}
       touch ${marker_filename}
     else
       debug "Module ${d_module} already downloaded"
     fi
 
     # check md5
-    if [[ -n "${md5}" ]]; then
+    if [[ -n "${d_md5}" ]]; then
       current_md5=$(${MD5SUM} ${filename} | cut -d\  -f1)
-      if [[ "${current_md5}" != "${md5}" ]]; then
-        error "File ${filename} md5 check failed (got ${current_md5} instead of ${md5})."
+      if [[ "${current_md5}" != "${d_md5}" ]]; then
+        error "File ${filename} md5 check failed (got ${current_md5} instead of ${d_md5})."
       fi
     fi
 

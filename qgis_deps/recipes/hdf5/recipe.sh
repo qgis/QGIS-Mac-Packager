@@ -8,7 +8,7 @@ LINK_libhdf5_hl=libhdf5_hl.200.dylib
 LINK_libhdf5_hl_cpp=libhdf5_hl_cpp.200.dylib
 
 
-DEPS_hdf5=()
+DEPS_hdf5=(zlib)
 
 
 # md5 of the package
