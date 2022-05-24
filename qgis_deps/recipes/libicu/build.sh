@@ -1,20 +1,19 @@
 function build_libicu() {
-  try cd ${DEPS_BUILD_PATH}/libicu/build-$ARCH/icu4c/source
+  try cd ${DEPS_BUILD_PATH}/libicu/build-$ARCH/source
   push_env
 
-  try ./runConfigureICU MacOSX --prefix=${STAGE_PATH} --enable-rpath \
+  try ./runConfigureICU MacOSX/GCC --prefix=${STAGE_PATH} --enable-rpath \
     --disable-samples \
     --disable-extras \
     --disable-layout \
-    --disable-tests \
-    --with-data-packaging=library
+    --disable-tests
 
   check_file_configuration config.status
   try $MAKESMP
   try $MAKESMP install
 
   # not sure why, but the original file seems corrupted after installtion
-  cp ${DEPS_BUILD_PATH}/libicu/build-x86_64/icu4c/source/lib/libicudata.${VERSION_libicu}.dylib ${STAGE_PATH}/lib/libicudata.${VERSION_libicu}.dylib
+  # cp ${DEPS_BUILD_PATH}/libicu/build-x86_64/icu4c/source/lib/libicudata.${VERSION_libicu}.dylib ${STAGE_PATH}/lib/libicudata.${VERSION_libicu}.dylib
 
   targets=(
     libicudata.${VERSION_libicu}.dylib

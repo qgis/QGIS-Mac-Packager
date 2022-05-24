@@ -559,21 +559,21 @@ function recipe_has_changed(){
 }
 
 function download_file() {
-    module=${1}
-    url=${2}
-    md5=${3}
+    d_module=${1}
+    d_url=${2}
+    d_md5=${3}
     do_prebuild=${4}
 
-    if [ ! -d "${DEPS_BUILD_PATH}/${module}" ]; then
-      try mkdir -p ${DEPS_BUILD_PATH}/${module}
+    if [ ! -d "${DEPS_BUILD_PATH}/${d_module}" ]; then
+      try mkdir -p ${DEPS_BUILD_PATH}/${d_module}
     fi
 
-    if [ ! -d "${SOURCE_PACKAGES_PATH}/${module}" ]; then
-      try mkdir -p "${SOURCE_PACKAGES_PATH}/${module}"
+    if [ ! -d "${SOURCE_PACKAGES_PATH}/${d_module}" ]; then
+      try mkdir -p "${SOURCE_PACKAGES_PATH}/${d_module}"
     fi
 
     if [[ -z ${url} ]]; then
-      debug "No package for ${module}"
+      debug "No package for ${d_module}"
       return
     fi
 
@@ -582,7 +582,7 @@ function download_file() {
     marker_filename=".mark-${filename}"
     do_download=1
 
-    cd "${SOURCE_PACKAGES_PATH}/${module}"
+    cd "${SOURCE_PACKAGES_PATH}/${d_module}"
 
     # check if the file is already present
     if [ -f ${filename} ]; then
@@ -597,7 +597,7 @@ function download_file() {
           do_download=0
         else
           # invalid download, remove the file
-          error "Module ${module} has invalid md5 (${current_md5} vs ${md5}), redownload."
+          error "Module ${d_module} has invalid md5 (${current_md5} vs ${md5}), redownload."
           rm "${filename}"
         fi
       else
@@ -612,7 +612,7 @@ function download_file() {
       try ${WGET} ${filename} ${url}
       touch ${marker_filename}
     else
-      debug "Module ${module} already downloaded"
+      debug "Module ${d_module} already downloaded"
     fi
 
     # check md5
@@ -624,19 +624,19 @@ function download_file() {
     fi
 
     source_directory=$(get_directory ${filename})
-    build_directory=${DEPS_BUILD_PATH}/${module}/build-${ARCH}
+    build_directory=${DEPS_BUILD_PATH}/${d_module}/build-${ARCH}
 
-    if ( [[ -d ${source_directory} ]] || [[ -d ${build_directory} ]] ) && [[ ${do_prebuild} -eq 1 ]] && [[ "$(recipe_has_changed "${module}" recipe)" == "1" ]]; then
+    if ( [[ -d ${source_directory} ]] || [[ -d ${build_directory} ]] ) && [[ ${do_prebuild} -eq 1 ]] && [[ "$(recipe_has_changed "${d_module}" recipe)" == "1" ]]; then
       info "Recipe has changed, removing the existing source and build directories"
-      rm -rf ${DEPS_BUILD_PATH}/${module}/${source_directory}
+      rm -rf ${DEPS_BUILD_PATH}/${d_module}/${source_directory}
       rm -rf ${build_directory}
     fi
 
     # if already decompress, forget it
-    cd ${DEPS_BUILD_PATH}/${module}
+    cd ${DEPS_BUILD_PATH}/${d_module}
     if [[ ! -d "${source_directory}" ]]; then
       # decompress
-      pfilename=${SOURCE_PACKAGES_PATH}/${module}/${filename}
+      pfilename=${SOURCE_PACKAGES_PATH}/${d_module}/${filename}
       info "Extract ${pfilename}"
       case ${pfilename} in
         *.tar.gz|*.tar.xz|*.tgz|*.tar.lz )
@@ -664,11 +664,11 @@ function download_file() {
 
       # run prebuild + patch
       if [[ ${do_prebuild} -eq 1 ]]; then
-        fn="prebuild_${module}"
+        fn="prebuild_${d_module}"
         debug "Call ${fn}"
         ${fn}
-        recipe_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/recipe.sh | cut -d\  -f1)
-        echo "${recipe_sum}" > ${DEPS_BUILD_PATH}/${module}/.recipe
+        recipe_sum=$(${MD5SUM} ${RECIPES_PATH}/${d_module}/recipe.sh | cut -d\  -f1)
+        echo "${recipe_sum}" > ${DEPS_BUILD_PATH}/${d_module}/.recipe
       fi
     fi
 }
@@ -743,9 +743,8 @@ function run_build() {
       DO_BUILD=1
     else
       DO_BUILD=1
-      shouldbuildfn="shouldbuild_${module}"
-      if [[ "$(type -t ${shouldbuildfn})" == "function" ]]; then
-        ${shouldbuildfn}
+      if [[ -f ${DEPS_BUILD_PATH}/${module}/.build ]]; then
+        DO_BUILD=0
       fi
     fi
 
@@ -764,6 +763,7 @@ function run_build() {
         ${fn}
       fi
       [[ $? -ne 0 ]] && error "${module} build failed"
+      echo "$module"
       build_sum=$(${MD5SUM} ${RECIPES_PATH}/${module}/build.sh | cut -d\  -f1)
       echo "${build_sum}" > ${DEPS_BUILD_PATH}/${module}/.build
     else

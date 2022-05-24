@@ -22,48 +22,6 @@ REQUIREMENTS_python=(
   wheel==https://files.pythonhosted.org/packages/4e/be/8139f127b4db2f79c8b117c80af56a3078cc4824b5b94250c7f81a70e03b/wheel-0.37.0.tar.gz==79f55b898e6f274f5586bbde39f6fe8e
 )
 
-download_default_packages() {
-  for i in ${REQUIREMENTS_python[*]}; do
-    arr=(${i//==/ })
-    NAME=${arr[0]}
-    URL=${arr[1]}
-    MD5=${arr[2]}
-    info "Downloading $NAME"
-    download_file $NAME $URL $MD5
-  done
-}
-
-install_default_packages() {
-  for i in ${REQUIREMENTS_python[*]}; do
-    arr=(${i//==/ })
-    NAME=${arr[0]}
-    URL=${arr[1]}
-    MD5=${arr[2]}
-
-    info "Installing $NAME"
-
-    cd ${DEPS_BUILD_PATH}/$NAME/$(get_directory $URL)
-    push_env
-
-    # when building extensions in setup.py it
-    # dlopen some libraries (e.g. _ssl -> libcrypto.dylib, _ffi_call -> _ffi_call)
-    export DYLD_LIBRARY_PATH=$STAGE_PATH/lib
-
-    try $PYTHON \
-      -s setup.py \
-      --no-user-cfg install \
-      --force \
-      --verbose \
-      --install-scripts=$STAGE_PATH/bin \
-      --install-lib=$QGIS_SITE_PACKAGES_PATH \
-      --single-version-externally-managed \
-      --record=installed.txt
-
-    pop_env
-
-  done
-}
-
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_python() {
@@ -71,59 +29,6 @@ function prebuild_python() {
 
   patch_configure_file configure
   try rsync -a $BUILD_python/ ${DEPS_BUILD_PATH}/python/build-$ARCH/
-}
-
-function shouldbuild_python() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_python -nt BUILD_python/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-function install_python() {
-  try cd ${DEPS_BUILD_PATH}/python/build-$ARCH
-
-  push_env
-
-  unset PYTHONHOME
-  unset PYTHONPATH
-
-  # this sets cross_compiling flag in setup.py
-  # so it does not pick /usr/local libs
-  export _PYTHON_HOST_PLATFORM=darwin
-
-  # when building extensions in setup.py it
-  # dlopen some libraries (e.g. _ssl -> libcrypto.dylib)
-  export DYLD_LIBRARY_PATH=$STAGE_PATH/lib
-
-  # add unixodbc
-  export CFLAGS="$CFLAGS -I$STAGE_PATH/unixodbc/include"
-  export LDFLAGS="$LDFLAGS -L$STAGE_PATH/unixodbc/lib"
-  export CXXFLAGS="${CFLAGS}"
-  # pkg-config removes -I flags for paths in CPATH, which confuses python.
-  export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
-
-  #      --enable-optimizations \
-  try ${CONFIGURE} \
-    --enable-ipv6 \
-    --datarootdir=$STAGE_PATH/share \
-    --datadir=$STAGE_PATH/share \
-    --without-gcc \
-    --with-openssl=$STAGE_PATH \
-    --enable-shared \
-    --with-system-expat \
-    --with-system-ffi \
-    --with-computed-gotos \
-    --with-ensurepip=no \
-    --with-ssl-default-suites=openssl \
-    --enable-loadable-sqlite-extensions
-
-  check_file_configuration config.status
-
-  try $MAKESMP
-  try $MAKE install PYTHONAPPSDIR=${STAGE_PATH}
-
-  pop_env
 }
 
 

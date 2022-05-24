@@ -26,18 +26,11 @@ RECIPE_libicu=$RECIPES_PATH/libicu
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_libicu() {
-  cd $BUILD_libicu/icu4c/source
+  cd $BUILD_libicu/source
     patch_configure_file configure
   try rsync  -a $BUILD_libicu/ ${DEPS_BUILD_PATH}/libicu/build-${ARCH}
 
 }
-
-function shouldbuild_libicu() {
-  if [ ${STAGE_PATH}/lib/${LINK_libicudata} -nt $BUILD_libicu/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
 
 
 # function called after all the compile have been done
