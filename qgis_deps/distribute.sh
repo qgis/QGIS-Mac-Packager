@@ -774,11 +774,12 @@ function run_build() {
     fn2=$(echo postbuild_${module})
     debug "Call ${fn2}"
     if [[ ${CI} == true ]]; then
+      echo "*** postbuild" > ${DEPS_BUILD_PATH}/last-build.log
       ${fn2} >> ${DEPS_BUILD_PATH}/last-build.log
     else
       ${fn2}
     fi
-    [[ $? -ne 0 ]] && error "${module} build failed"
+    [[ $? -ne 0 ]] && error "${module} postbuild failed"
     fold_pop
   done
 }

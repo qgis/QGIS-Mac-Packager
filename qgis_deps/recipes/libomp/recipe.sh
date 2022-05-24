@@ -20,17 +20,7 @@ RECIPE_libomp=$RECIPES_PATH/libomp
 # (you can apply patch etc here.)
 function prebuild_libomp() {
   cd $BUILD_libomp
-
-
 }
-
-function shouldbuild_libomp() {
-  if [ ${STAGE_PATH}/lib/${LINK_libomp} -nt $BUILD_libomp/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libomp() {

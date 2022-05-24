@@ -2,10 +2,10 @@
 
 DESC_hdf5="File format designed to store large amounts of data"
 
-LINK_libhdf5=libhdf5.200.dylib
-LINK_libhdf5_cpp=libhdf5_cpp.200.dylib
-LINK_libhdf5_hl=libhdf5_hl.200.dylib
-LINK_libhdf5_hl_cpp=libhdf5_hl_cpp.200.dylib
+LINK_libhdf5=libhdf5.300.dylib
+LINK_libhdf5_cpp=libhdf5_cpp.300.dylib
+LINK_libhdf5_hl=libhdf5_hl.300.dylib
+LINK_libhdf5_hl_cpp=libhdf5_hl_cpp.300.dylib
 
 
 DEPS_hdf5=(zlib)
@@ -23,17 +23,7 @@ RECIPE_hdf5=$RECIPES_PATH/hdf5
 # (you can apply patch etc here.)
 function prebuild_hdf5() {
   cd $BUILD_hdf5
-  patch_configure_file configure
-  try rsync  -a $BUILD_hdf5/ ${DEPS_BUILD_PATH}/hdf5/build-${ARCH}
 }
-
-function shouldbuild_hdf5() {
-  if [ ${STAGE_PATH}/lib/$LINK_libhdf5 -nt $BUILD_hdf5/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_hdf5() {

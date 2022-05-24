@@ -20,17 +20,7 @@ RECIPE_libzip=$RECIPES_PATH/libzip
 # (you can apply patch etc here.)
 function prebuild_libzip() {
   cd $BUILD_libzip
-
-
 }
-
-function shouldbuild_libzip() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_libzip} -nt $BUILD_libzip/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
 
 
 # function called after all the compile have been done
