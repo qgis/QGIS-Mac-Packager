@@ -5,7 +5,7 @@ DESC_png="PNG Image library"
 
 LINK_libpng=libpng16.16.dylib
 
-DEPS_png=()
+DEPS_png=(zlib)
 
 
 # md5 of the package
