@@ -5,7 +5,7 @@ DESC_fontconfig="fontconfig"
 
 LINK_fontconfig=libfontconfig.1.dylib
 
-DEPS_fontconfig=(libtool gettext freetype png brotli)
+DEPS_fontconfig=(python libtool gettext freetype png brotli)
 
 
 # md5 of the package

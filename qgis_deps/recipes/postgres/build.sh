@@ -8,6 +8,7 @@ function build_postgres() {
     --with-openssl
 
   check_file_configuration config.status
+
   try $MAKESMP
 
   # client only install
