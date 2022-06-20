@@ -8,9 +8,6 @@ LINK_libproj=libproj.${LIB_VERSION_proj}.dylib
 
 DEPS_proj=(sqlite libxml2 openssl libtiff)
 
-
-# md5 of the package
-
 # default build path
 BUILD_proj=${DEPS_BUILD_PATH}/proj/$(get_directory $URL_proj)
 
@@ -21,17 +18,7 @@ RECIPE_proj=$RECIPES_PATH/proj
 # (you can apply patch etc here.)
 function prebuild_proj() {
   cd $BUILD_proj
-
-
 }
-
-function shouldbuild_proj() {
-  if [ ${STAGE_PATH}/lib/${LINK_libproj} -nt $BUILD_proj/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_proj() {

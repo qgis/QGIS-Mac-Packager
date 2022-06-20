@@ -7,9 +7,6 @@ DESC_python_pyproj="Proj binding for python"
 # depends on PyQt5
 DEPS_python_pyproj=(python openssl libtiff sqlite proj python_packages)
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_pyproj=${DEPS_BUILD_PATH}/python_pyproj/$(get_directory $URL_python_pyproj)
 
@@ -22,14 +19,6 @@ function prebuild_python_pyproj() {
   cd $BUILD_python_pyproj
   try rsync -a $BUILD_python_pyproj/ ${DEPS_BUILD_PATH}/python_pyproj/build-$ARCH/
 }
-
-function shouldbuild_python_pyproj() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed pyproj; then
-    DO_BUILD=0
-  fi
-}
-
 
 # function called after all the compile have been done
 function postbuild_python_pyproj() {

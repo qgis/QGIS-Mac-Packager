@@ -6,9 +6,6 @@ DESC_python_pymssql="Python binding of MSSQL"
 
 DEPS_python_pymssql=(python freetds python_packages)
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_pymssql=${DEPS_BUILD_PATH}/python_pymssql/v${VERSION_python_pymssql}
 
@@ -20,18 +17,7 @@ RECIPE_python_pymssql=$RECIPES_PATH/python_pymssql
 function prebuild_python_pymssql() {
   mkdir -p $BUILD_python_pymssql
   cd $BUILD_python_pymssql
-
-
 }
-
-function shouldbuild_python_pymssql() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed pymssql; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_pymssql() {

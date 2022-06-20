@@ -5,9 +5,6 @@ DESC_python_scikit_learn="python scikit-learn"
 
 DEPS_python_scikit_learn=(python python_packages python_numpy python_scipy libomp)
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_scikit_learn=${DEPS_BUILD_PATH}/python_scikit_learn/$(get_directory $URL_python_scikit_learn)
 
@@ -19,18 +16,7 @@ RECIPE_python_scikit_learn=$RECIPES_PATH/python_scikit_learn
 function prebuild_python_scikit_learn() {
   cd $BUILD_python_scikit_learn
   try rsync -a $BUILD_python_scikit_learn/ ${DEPS_BUILD_PATH}/python_scikit_learn/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_scikit_learn() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed sklearn; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_scikit_learn() {

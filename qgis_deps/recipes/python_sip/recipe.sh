@@ -8,8 +8,6 @@ DESC_python_sip="SIP bindings package for python"
 DEPS_python_sip=(python qtwebkit qscintilla qtwebkit)
 
 
-# md5 of the package
-
 # default build path
 BUILD_python_sip=${DEPS_BUILD_PATH}/python_sip/$(get_directory $URL_python_sip)
 
@@ -22,17 +20,7 @@ function prebuild_python_sip() {
   try mkdir -p $BUILD_python_sip
   cd $BUILD_python_sip
   try rsync -a $BUILD_python_sip/ ${DEPS_BUILD_PATH}/python_sip/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_sip() {
-   if python_package_installed sipconfig; then
-      DO_BUILD=0
-   fi
-}
-
-
 
 function postbuild_python_sip() {
    # if ! python_package_installed sip ${VERSION_python_sip} sipconfig; then

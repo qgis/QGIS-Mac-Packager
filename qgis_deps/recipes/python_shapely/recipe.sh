@@ -5,9 +5,6 @@ DESC_python_shapely="Manipulation and analysis of geometric objects in the Carte
 
 DEPS_python_shapely=(python geos python_packages python_fiona)
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_shapely=${DEPS_BUILD_PATH}/python_shapely/v${VERSION_python_shapely}
 
@@ -19,17 +16,7 @@ RECIPE_python_shapely=$RECIPES_PATH/python_shapely
 function prebuild_python_shapely() {
   mkdir -p $BUILD_python_shapely
   cd $BUILD_python_shapely
-
-
 }
-
-function shouldbuild_python_shapely() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed shapely; then
-    DO_BUILD=0
-  fi
-}
-
 
 
 # function called after all the compile have been done

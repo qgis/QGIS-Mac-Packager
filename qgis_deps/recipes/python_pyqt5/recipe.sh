@@ -2,11 +2,7 @@
 
 DESC_python_pyqt5="PyQt5 package for python"
 
-
 DEPS_python_pyqt5=(python python_sip qtwebkit qscintilla)
-
-
-# md5 of the package
 
 # default build path
 BUILD_python_pyqt5=${DEPS_BUILD_PATH}/python_pyqt5/$(get_directory $URL_python_pyqt5)
@@ -51,14 +47,6 @@ function prebuild_python_pyqt5() {
 
   try rsync -a $BUILD_python_pyqt5/ ${DEPS_BUILD_PATH}/python_pyqt5/build-${ARCH}
 }
-
-function shouldbuild_python_pyqt5() {
-  if python_package_installed PyQt5.QtCore; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 function postbuild_python_pyqt5() {
    if ! python_package_installed_verbose PyQt5.QtCore; then

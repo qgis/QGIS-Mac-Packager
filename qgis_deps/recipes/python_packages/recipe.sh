@@ -127,17 +127,7 @@ IMPORTS_python_packages=(
 function prebuild_python_packages() {
   try mkdir -p $BUILD_python_packages
   cd $BUILD_python_packages
-
-
 }
-
-function shouldbuild_python_packages() {
-  if python_package_installed yaml, affine; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_packages() {

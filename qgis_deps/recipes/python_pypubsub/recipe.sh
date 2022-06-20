@@ -6,9 +6,6 @@ DESC_python_pypubsub="A Python publish-subcribe library"
 
 DEPS_python_pypubsub=(python python_packages)
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_pypubsub=${DEPS_BUILD_PATH}/python_pypubsub/$(get_directory $URL_python_pypubsub)
 
@@ -18,18 +15,7 @@ function prebuild_python_pypubsub() {
   mkdir -p $BUILD_python_pypubsub
   cd $BUILD_python_pypubsub
   try rsync -a $BUILD_python_pypubsub/ ${DEPS_BUILD_PATH}/python_pypubsub/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_pypubsub() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed pypubsub; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_pypubsub() {

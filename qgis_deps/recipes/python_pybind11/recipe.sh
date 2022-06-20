@@ -7,9 +7,6 @@ DEPS_python_pybind11=(
   python_packages
 )
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_pybind11=${DEPS_BUILD_PATH}/python_pybind11/v${VERSION_python_pybind11}
 

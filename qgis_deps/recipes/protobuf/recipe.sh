@@ -6,9 +6,6 @@ LINK_protobuf_lite=libprotobuf-lite.30.dylib
 
 DEPS_protobuf=(zlib)
 
-
-# md5 of the package
-
 # default build path
 BUILD_protobuf=${DEPS_BUILD_PATH}/protobuf/$(get_directory $URL_protobuf)
 
@@ -20,18 +17,7 @@ RECIPE_protobuf=$RECIPES_PATH/protobuf
 function prebuild_protobuf() {
   cd $BUILD_protobuf
   try rsync -a $BUILD_protobuf/ ${DEPS_BUILD_PATH}/protobuf/build-${ARCH}
-
-
 }
-
-function shouldbuild_protobuf() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_protobuf_lite -nt $BUILD_protobuf/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_protobuf() {

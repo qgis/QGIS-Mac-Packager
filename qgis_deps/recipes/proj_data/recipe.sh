@@ -2,14 +2,10 @@
 
 DESC_proj_data="Cartographic proj library data"
 
-
-
 VERSION_proj_data_major=$(echo ${VERSION_proj_data} | gsed -r 's/([0-9]+\.[0-9]+)(\.[0-9]+)?/\1/')
 
 DEPS_proj_data=(proj)
 
-
-# md5 of the package
 
 # default build path
 BUILD_proj_data=${DEPS_BUILD_PATH}/proj_data/$(get_directory $URL_proj_data)
@@ -22,14 +18,6 @@ RECIPE_proj_data=$RECIPES_PATH/proj_data
 function prebuild_proj_data() {
   cd $BUILD_proj_data
 }
-
-function shouldbuild_proj_data() {
-  if [ ${STAGE_PATH}/share/proj/README.DATA -nt $BUILD_proj_data/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_proj_data() {

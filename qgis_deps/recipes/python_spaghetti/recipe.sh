@@ -10,9 +10,6 @@ DEPS_python_spaghetti=(
   python_scipy
 )
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_spaghetti=${DEPS_BUILD_PATH}/python_spaghetti/v${VERSION_python_spaghetti}
 
@@ -24,17 +21,7 @@ RECIPE_python_spaghetti=$RECIPES_PATH/python_spaghetti
 function prebuild_python_spaghetti() {
   try mkdir -p $BUILD_python_spaghetti
   cd $BUILD_python_spaghetti
-
-
 }
-
-function shouldbuild_python_spaghetti() {
-  if python_package_installed spaghetti; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_spaghetti() {

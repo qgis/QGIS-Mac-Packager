@@ -6,9 +6,6 @@ DESC_python_rtree="Python bindings for libspatialindex"
 
 DEPS_python_rtree=(python python_packages spatialindex)
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_rtree=${DEPS_BUILD_PATH}/python_rtree/$(get_directory $URL_python_rtree)
 
@@ -20,17 +17,7 @@ RECIPE_python_rtree=$RECIPES_PATH/python_rtree
 function prebuild_python_rtree() {
   cd $BUILD_python_rtree
   try rsync -a $BUILD_python_rtree/ ${DEPS_BUILD_PATH}/python_rtree/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_rtree() {
-  if python_package_installed rtree; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_rtree() {

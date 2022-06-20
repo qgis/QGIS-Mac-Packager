@@ -9,5 +9,7 @@ function build_zlib() {
   try $MAKESMP
   try $MAKESMP install
 
+  try install_name_tool -id ${STAGE_PATH}/lib/$LINK_zlib ${STAGE_PATH}/lib/$LINK_zlib
+
   pop_env
 }

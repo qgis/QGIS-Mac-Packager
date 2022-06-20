@@ -21,12 +21,6 @@ function prebuild_python_pythran() {
   try rsync -a $BUILD_python_pythran/ ${DEPS_BUILD_PATH}/python_pythran/build-${ARCH}
 }
 
-function shouldbuild_python_pythran() {
-  if python_package_installed pythran; then
-    DO_BUILD=0
-  fi
-}
-
 # function called after all the compile have been done
 function postbuild_python_pythran() {
    if ! python_package_installed_verbose pythran; then

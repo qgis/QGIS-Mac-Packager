@@ -6,9 +6,6 @@ LINK_python=libpython${VERSION_major_python}.dylib
 
 DEPS_python=(openssl xz libffi zlib libzip sqlite expat unixodbc bz2 gettext libcurl)
 
-
-# md5 of the package
-
 # default build path
 BUILD_python=${DEPS_BUILD_PATH}/python/$(get_directory $URL_python)
 
