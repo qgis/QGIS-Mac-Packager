@@ -4,12 +4,13 @@ function build_postgres() {
 
   try ${CONFIGURE} \
     --disable-debug \
-    --enable-rpath \
-    --with-openssl
+    --with-ssl=openssl \
+    --without-readline \
+    --with-includes=${STAGE_PATH}/include \
+    --without-zlib
+
 
   check_file_configuration config.status
-
-  try $MAKESMP
 
   # client only install
   try $MAKE -C src/bin install

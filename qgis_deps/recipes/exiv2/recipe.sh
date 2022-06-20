@@ -19,8 +19,6 @@ RECIPE_exiv2=$RECIPES_PATH/exiv2
 # (you can apply patch etc here.)
 function prebuild_exiv2() {
   cd $BUILD_exiv2
-
-
 }
 
 function shouldbuild_exiv2() {

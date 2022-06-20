@@ -4,6 +4,7 @@ function build_exiv2() {
   push_env
 
   try ${CMAKE} $BUILD_exiv2
+
   check_file_configuration CMakeCache.txt
 
   try $NINJA

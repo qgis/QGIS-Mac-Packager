@@ -20,8 +20,6 @@ RECIPE_bz2=$RECIPES_PATH/bz2
 function prebuild_bz2() {
   cd $BUILD_bz2
   try rsync -a $BUILD_bz2/ ${DEPS_BUILD_PATH}/bz2/build-${ARCH}
-
-
 }
 
 function shouldbuild_bz2() {

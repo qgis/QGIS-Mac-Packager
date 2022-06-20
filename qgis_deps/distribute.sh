@@ -249,7 +249,7 @@ function push_env() {
     # export some tools
     export MAKESMP="/usr/bin/make -j${CORES}"
     export MAKE="/usr/bin/make"
-    export CONFIGURE="./configure --prefix=${STAGE_PATH}"
+    export CONFIGURE="./configure --prefix=${STAGE_PATH} --enable-rpath"
     export CC="/usr/bin/clang"
     export CXX="/usr/bin/clang++"
     export NINJA="/usr/local/bin/ninja"
@@ -744,6 +744,7 @@ function run_build() {
     else
       DO_BUILD=1
       if [[ -f ${DEPS_BUILD_PATH}/${module}/.build ]]; then
+        info "${module} already built!"
         DO_BUILD=0
       fi
     fi

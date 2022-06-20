@@ -25,8 +25,7 @@ RECIPE_openssl=$RECIPES_PATH/openssl
 function prebuild_openssl() {
   cd $BUILD_openssl
     patch_configure_file configure
-  try rsync  -a $BUILD_openssl/ ${DEPS_BUILD_PATH}/openssl/build-${ARCH}
-
+  try rsync -a $BUILD_openssl/ ${DEPS_BUILD_PATH}/openssl/build-${ARCH}
 }
 
 function shouldbuild_openssl() {
