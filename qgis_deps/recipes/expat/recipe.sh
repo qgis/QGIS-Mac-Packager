@@ -24,14 +24,6 @@ function prebuild_expat() {
 
 }
 
-function shouldbuild_expat() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_expat -nt $BUILD_expat/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_expat() {

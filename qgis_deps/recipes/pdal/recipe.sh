@@ -19,9 +19,6 @@ DEPS_pdal=(
   libcurl
 )
 
-
-# md5 of the package
-
 # default build path
 BUILD_pdal=${DEPS_BUILD_PATH}/pdal/$(get_directory $URL_pdal)
 
@@ -32,18 +29,7 @@ RECIPE_pdal=$RECIPES_PATH/pdal
 # (you can apply patch etc here.)
 function prebuild_pdal() {
   cd $BUILD_pdal
-
-
 }
-
-function shouldbuild_pdal() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_libpdal_c} -nt $BUILD_pdal/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_pdal() {

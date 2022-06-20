@@ -9,9 +9,6 @@ LINK_saga_version=${VERSION_saga}
 
 DEPS_saga=( proj gdal python geos libtiff xz sqlite hdf5 netcdf postgres wxmac )
 
-
-# md5 of the package
-
 # default build path
 BUILD_saga=${DEPS_BUILD_PATH}/saga/$(get_directory $URL_saga)
 
@@ -26,15 +23,6 @@ function prebuild_saga() {
   try rsync  -a $BUILD_saga/ ${DEPS_BUILD_PATH}/saga/build-${ARCH}
 
 }
-
-function shouldbuild_saga() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libsaga_api.dylib -nt $BUILD_saga/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_saga() {

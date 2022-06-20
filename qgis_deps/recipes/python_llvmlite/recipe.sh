@@ -19,14 +19,15 @@ function prebuild_python_llvmlite() {
   rm -rf ${BUILD_llvm}
   download_file python_llvmlite ${URL_llvm} ${MD5_llvm} 0
 
-  try cp ${BUILD_python_llvmlite}/conda-recipes/llvm-lto-static.patch ${BUILD_llvm}/
+  #try cp ${BUILD_python_llvmlite}/conda-recipes/llvm-lto-static.patch ${BUILD_llvm}/
   try cp ${BUILD_python_llvmlite}/conda-recipes/partial-testing.patch ${BUILD_llvm}/
   try cp ${BUILD_python_llvmlite}/conda-recipes/intel-D47188-svml-VF.patch ${BUILD_llvm}/
   try cp ${BUILD_python_llvmlite}/conda-recipes/expect-fastmath-entrypoints-in-add-TLI-mappings.ll.patch ${BUILD_llvm}/
   try cp ${BUILD_python_llvmlite}/conda-recipes/0001-Revert-Limit-size-of-non-GlobalValue-name.patch ${BUILD_llvm}/
 
   cd ${BUILD_llvm}/
-  try patch -p1 -i llvm-lto-static.patch
+
+  #try patch -p1 -i llvm-lto-static.patch
   try patch -p1 -i partial-testing.patch
   try patch -p1 -i intel-D47188-svml-VF.patch
   try patch -p1 -i expect-fastmath-entrypoints-in-add-TLI-mappings.ll.patch

@@ -9,9 +9,6 @@ LINK_libqscintilla2_qt5=libqscintilla2_qt5.15.dylib
 
 DEPS_qscintilla=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_qscintilla=${DEPS_BUILD_PATH}/qscintilla/$(get_directory $URL_qscintilla)
 
@@ -35,15 +32,6 @@ function prebuild_qscintilla() {
 
   try rsync -a $BUILD_qscintilla/ ${DEPS_BUILD_PATH}/qscintilla/build-${ARCH}
 }
-
-function shouldbuild_qscintilla() {
-  # If lib is newer than the sourcecode skip build
-  if [ "${STAGE_PATH}/lib/${LINK_libqscintilla2_qt5}" -nt $BUILD_qscintilla/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_qscintilla() {

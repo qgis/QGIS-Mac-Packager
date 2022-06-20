@@ -24,14 +24,6 @@ function prebuild_gettext() {
 
 }
 
-function shouldbuild_gettext() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/bin/ggettextize -nt $BUILD_gettext/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_gettext() {

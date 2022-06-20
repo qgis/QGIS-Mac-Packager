@@ -11,9 +11,6 @@ LINK_libssl_version=1.1
 LINK_libssl=libssl.${LINK_libssl_version}.dylib
 LINK_libcrypto=libcrypto.${LINK_libssl_version}.dylib
 
-
-# md5 of the package
-
 # default build path
 BUILD_openssl=${DEPS_BUILD_PATH}/openssl/$(get_directory $URL_openssl)
 
@@ -27,15 +24,6 @@ function prebuild_openssl() {
     patch_configure_file configure
   try rsync -a $BUILD_openssl/ ${DEPS_BUILD_PATH}/openssl/build-${ARCH}
 }
-
-function shouldbuild_openssl() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libssl -nt $BUILD_openssl/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_openssl() {

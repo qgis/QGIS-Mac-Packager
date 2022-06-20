@@ -7,10 +7,6 @@ LINK_libssh2=libssh2.1.dylib
 
 DEPS_libssh2=(openssl zlib)
 
-
-
-# md5 of the package
-
 # default build path
 BUILD_libssh2=${DEPS_BUILD_PATH}/libssh2/$(get_directory $URL_libssh2)
 
@@ -23,16 +19,7 @@ function prebuild_libssh2() {
   cd $BUILD_libssh2
     patch_configure_file configure
   try rsync  -a $BUILD_libssh2/ ${DEPS_BUILD_PATH}/libssh2/build-${ARCH}
-
 }
-
-function shouldbuild_libssh2() {
-  if [ ${STAGE_PATH}/lib/${LINK_libssh2} -nt $BUILD_libssh2/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libssh2() {

@@ -27,14 +27,6 @@ function prebuild_python_tobler() {
 
 }
 
-function shouldbuild_python_tobler() {
-  if python_package_installed tobler; then
-    DO_BUILD=0
-  fi
-}
-
-
-
 # function called after all the compile have been done
 function postbuild_python_tobler() {
    if ! python_package_installed_verbose fiona,tobler; then

@@ -18,17 +18,7 @@ function prebuild_szip() {
   cd $BUILD_szip
     patch_configure_file configure
   try rsync -a $BUILD_szip/ ${DEPS_BUILD_PATH}/szip/build-${ARCH}
-
 }
-
-function shouldbuild_szip() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_szip -nt $BUILD_szip/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_szip() {

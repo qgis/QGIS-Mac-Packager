@@ -9,9 +9,6 @@ DEPS_pcre2=(
  zlib
 )
 
-
-# md5 of the package
-
 # default build path
 BUILD_pcre2=${DEPS_BUILD_PATH}/pcre2/$(get_directory $URL_pcre2)
 
@@ -26,15 +23,6 @@ function prebuild_pcre2() {
   try rsync  -a $BUILD_pcre2/ ${DEPS_BUILD_PATH}/pcre2/build-${ARCH}
 
 }
-
-function shouldbuild_pcre2() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_pcre2 -nt $BUILD_pcre2/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_pcre2() {

@@ -6,9 +6,6 @@ LINK_libisl=libisl.dylib
 
 DEPS_libisl=(gmp python)
 
-
-# md5 of the package
-
 # default build path
 BUILD_libisl=${DEPS_BUILD_PATH}/libisl/$(get_directory $URL_libisl)
 
@@ -22,15 +19,6 @@ function prebuild_libisl() {
   patch_configure_file configure
   try rsync  -a $BUILD_libisl/ ${DEPS_BUILD_PATH}/libisl/build-$ARCH/
 }
-
-function shouldbuild_libisl() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libisl -nt $BUILD_libisl/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libisl() {

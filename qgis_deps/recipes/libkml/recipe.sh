@@ -30,18 +30,7 @@ RECIPE_libkml=$RECIPES_PATH/libkml
 # (you can apply patch etc here.)
 function prebuild_libkml() {
   cd $BUILD_libkml
-
-
 }
-
-function shouldbuild_libkml() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_libkmlbase} -nt $BUILD_libkml/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libkml() {

@@ -7,9 +7,6 @@ LINK_libunistring=libunistring.2.dylib
 
 DEPS_libunistring=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_libunistring=${DEPS_BUILD_PATH}/libunistring/$(get_directory $URL_libunistring)
 
@@ -23,14 +20,6 @@ function prebuild_libunistring() {
   patch_configure_file configure
   try rsync -a $BUILD_libunistring/ ${DEPS_BUILD_PATH}/libunistring/build-$ARCH/
 }
-
-function shouldbuild_libunistring() {
-  if [ ${STAGE_PATH}/lib/${LINK_libunistring} -nt $BUILD_libunistring/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libunistring() {

@@ -5,9 +5,6 @@ DESC_bison="Parser generator"
 
 DEPS_bison=(gettext)
 
-
-# md5 of the package
-
 # default build path
 BUILD_bison=${DEPS_BUILD_PATH}/bison/$(get_directory $URL_bison)
 
@@ -22,14 +19,6 @@ function prebuild_bison() {
   try rsync  -a $BUILD_bison/ ${DEPS_BUILD_PATH}/bison/build-${ARCH}
 
 }
-
-function shouldbuild_bison() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/bin/bison -nt $BUILD_bison/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
 
 
 # function called after all the compile have been done

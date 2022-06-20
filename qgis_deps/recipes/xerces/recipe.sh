@@ -6,9 +6,6 @@ DESC_xerces="Validating XML parser written in a portable subset of C++"
 LINK_libxerces_c=libxerces-c-3.2.dylib
 DEPS_xerces=(expat libcurl libicu)
 
-
-# md5 of the package
-
 # default build path
 BUILD_xerces=${DEPS_BUILD_PATH}/xerces/$(get_directory $URL_xerces)
 
@@ -19,18 +16,7 @@ RECIPE_xerces=$RECIPES_PATH/xerces
 # (you can apply patch etc here.)
 function prebuild_xerces() {
   cd $BUILD_xerces
-
-
 }
-
-function shouldbuild_xerces() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_libxerces_c} -nt $BUILD_xerces/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_xerces() {

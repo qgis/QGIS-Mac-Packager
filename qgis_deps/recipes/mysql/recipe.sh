@@ -6,9 +6,6 @@ LINK_libmysqlclient=libmysqlclient.21.dylib
 
 DEPS_mysql=(openssl protobuf boost zstd zlib)
 
-
-# md5 of the package
-
 # default build path
 BUILD_mysql=${DEPS_BUILD_PATH}/mysql/$(get_directory $URL_mysql)
 
@@ -19,18 +16,7 @@ RECIPE_mysql=$RECIPES_PATH/mysql
 # (you can apply patch etc here.)
 function prebuild_mysql() {
   cd $BUILD_mysql
-
-
 }
-
-function shouldbuild_mysql() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libmysqlclient -nt $BUILD_mysql/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_mysql() {

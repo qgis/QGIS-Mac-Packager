@@ -9,9 +9,6 @@ LINK_libopenblasp=libopenblasp-r${VERSION_openblas}.dylib
 
 DEPS_openblas=(sqlite libxml2 openssl gcc)
 
-
-# md5 of the package
-
 # default build path
 BUILD_openblas=${DEPS_BUILD_PATH}/openblas/$(get_directory $URL_openblas)
 
@@ -24,14 +21,6 @@ function prebuild_openblas() {
   cd $BUILD_openblas
   try rsync -a $BUILD_openblas/ ${DEPS_BUILD_PATH}/openblas/build-${ARCH}
 }
-
-function shouldbuild_openblas() {
-  if [ ${STAGE_PATH}/lib/${LINK_libopenblas} -nt $BUILD_openblas/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_openblas() {

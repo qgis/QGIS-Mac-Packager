@@ -9,9 +9,6 @@ LINK_libqsqlpsql=libqsqlpsql.dylib
 
 DEPS_qtextra=(sqlite unixodbc postgres)
 
-
-# md5 of the package
-
 # default build path
 BUILD_qtextra=${DEPS_BUILD_PATH}/qtextra/$(get_directory $URL_qtextra)
 
@@ -23,18 +20,7 @@ RECIPE_qtextra=$RECIPES_PATH/qtextra
 function prebuild_qtextra() {
   cd $BUILD_qtextra
   try rsync -a $BUILD_qtextra/ ${DEPS_BUILD_PATH}/qtextra/build-${ARCH}
-
-
 }
-
-function shouldbuild_qtextra() {
-  # If lib is newer than the sourcecode skip build
-  if [ "${STAGE_PATH}/qt5/plugins/sqldrivers/${LINK_libqtextra2_qt5}" -nt $BUILD_qtextra/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_qtextra() {

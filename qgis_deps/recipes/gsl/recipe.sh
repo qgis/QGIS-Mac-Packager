@@ -21,18 +21,9 @@ RECIPE_gsl=$RECIPES_PATH/gsl
 # (you can apply patch etc here.)
 function prebuild_gsl() {
   cd $BUILD_gsl
-    patch_configure_file configure
+  patch_configure_file configure
   try rsync  -a $BUILD_gsl/ ${DEPS_BUILD_PATH}/gsl/build-${ARCH}
-
 }
-
-function shouldbuild_gsl() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libgsl -nt $BUILD_gsl/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
 
 
 # function called after all the compile have been done

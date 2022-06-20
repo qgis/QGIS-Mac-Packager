@@ -13,10 +13,6 @@ LINK_libicutu=libicutu.${VERSION_libicu}.dylib
 
 DEPS_libicu=(python)
 
-
-
-# md5 of the package
-
 # default build path
 BUILD_libicu=${DEPS_BUILD_PATH}/libicu/$(get_directory $URL_libicu)
 
@@ -29,7 +25,6 @@ function prebuild_libicu() {
   cd $BUILD_libicu/source
     patch_configure_file configure
   try rsync  -a $BUILD_libicu/ ${DEPS_BUILD_PATH}/libicu/build-${ARCH}
-
 }
 
 

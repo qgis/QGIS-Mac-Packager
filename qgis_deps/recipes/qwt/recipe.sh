@@ -7,9 +7,6 @@ VERSION_qwt_major=$(echo ${VERSION_qwt} | gsed -r 's/([0-9]+)\..*$/\1/')
 
 DEPS_qwt=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_qwt=${DEPS_BUILD_PATH}/qwt/$(get_directory $URL_qwt)
 
@@ -29,15 +26,6 @@ function prebuild_qwt() {
 
   try rsync -a $BUILD_qwt/ ${DEPS_BUILD_PATH}/qwt/build-${ARCH}
 }
-
-function shouldbuild_qwt() {
-  # If lib is newer than the sourcecode skip build
-  if [ "${STAGE_PATH}/lib/qt/plugins/designer/libqwt_designer_plugin.dylib" -nt $BUILD_qwt/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_qwt() {

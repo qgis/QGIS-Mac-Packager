@@ -2,13 +2,9 @@
 
 DESC_png="PNG Image library"
 
-
 LINK_libpng=libpng16.16.dylib
 
 DEPS_png=(zlib)
-
-
-# md5 of the package
 
 # default build path
 BUILD_png=${DEPS_BUILD_PATH}/png/$(get_directory $URL_png)
@@ -21,15 +17,6 @@ RECIPE_png=$RECIPES_PATH/png
 function prebuild_png() {
   cd $BUILD_png
 }
-
-function shouldbuild_png() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libpng -nt $BUILD_png/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_png() {

@@ -7,9 +7,6 @@ LINK_fontconfig=libfontconfig.1.dylib
 
 DEPS_fontconfig=(python libtool gettext freetype png brotli)
 
-
-# md5 of the package
-
 # default build path
 BUILD_fontconfig=${DEPS_BUILD_PATH}/fontconfig/$(get_directory $URL_fontconfig)
 

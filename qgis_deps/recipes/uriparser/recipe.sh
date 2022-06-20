@@ -7,9 +7,6 @@ LINK_liburiparser=liburiparser.1.dylib
 
 DEPS_uriparser=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_uriparser=${DEPS_BUILD_PATH}/uriparser/$(get_directory $URL_uriparser)
 
@@ -20,18 +17,7 @@ RECIPE_uriparser=$RECIPES_PATH/uriparser
 # (you can apply patch etc here.)
 function prebuild_uriparser() {
   cd $BUILD_uriparser
-
-
 }
-
-function shouldbuild_uriparser() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_liburiparser} -nt $BUILD_uriparser/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_uriparser() {

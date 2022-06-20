@@ -21,18 +21,7 @@ RECIPE_geos=$RECIPES_PATH/geos
 # (you can apply patch etc here.)
 function prebuild_geos() {
   cd $BUILD_geos
-
-
 }
-
-function shouldbuild_geos() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_libgeos_c} -nt $BUILD_geos/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_geos() {

@@ -6,9 +6,6 @@ LINK_qca=qca-qt5
 
 DEPS_qca=(openssl)
 
-
-# md5 of the package
-
 # default build path
 BUILD_qca=${DEPS_BUILD_PATH}/qca/$(get_directory $URL_qca)
 
@@ -19,18 +16,7 @@ RECIPE_qca=$RECIPES_PATH/qca
 # (you can apply patch etc here.)
 function prebuild_qca() {
   cd $BUILD_qca
-
-
 }
-
-function shouldbuild_qca() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca}/$LINK_qca -nt $BUILD_qca/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_qca() {

@@ -6,9 +6,6 @@ LINK_zlib=libz.so.${VERSION_zlib}
 
 DEPS_zlib=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_zlib=${DEPS_BUILD_PATH}/zlib/$(get_directory $URL_zlib)
 
@@ -23,15 +20,6 @@ function prebuild_zlib() {
   try rsync  -a $BUILD_zlib/ ${DEPS_BUILD_PATH}/zlib/build-${ARCH}
 
 }
-
-function shouldbuild_zlib() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_zlib -nt $BUILD_zlib/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_zlib() {

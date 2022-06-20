@@ -2,14 +2,10 @@
 
 DESC_laszip="Lossless LiDAR compression"
 
-
 LINK_liblaszip_api=liblaszip_api.8.dylib
 LINK_liblaszip=liblaszip.8.dylib
 
 DEPS_laszip=()
-
-
-# md5 of the package
 
 # default build path
 BUILD_laszip=${DEPS_BUILD_PATH}/laszip/$(get_directory $URL_laszip)
@@ -21,18 +17,7 @@ RECIPE_laszip=$RECIPES_PATH/laszip
 # (you can apply patch etc here.)
 function prebuild_laszip() {
   cd $BUILD_laszip
-
-
 }
-
-function shouldbuild_laszip() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_liblaszip} -nt $BUILD_laszip/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_laszip() {

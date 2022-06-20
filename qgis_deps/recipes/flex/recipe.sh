@@ -6,9 +6,6 @@ LINK_flex_version=2
 
 DEPS_flex=( bison )
 
-
-# md5 of the package
-
 # default build path
 BUILD_flex=${DEPS_BUILD_PATH}/flex/$(get_directory $URL_flex)
 
@@ -21,17 +18,7 @@ function prebuild_flex() {
   cd $BUILD_flex
     patch_configure_file configure
   try rsync  -a $BUILD_flex/ ${DEPS_BUILD_PATH}/flex/build-${ARCH}
-
 }
-
-function shouldbuild_flex() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libfl.dylib -nt $BUILD_flex/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_flex() {

@@ -8,9 +8,6 @@ LINK_spatialindex_c=libspatialindex_c.6.1.1.dylib
 
 DEPS_spatialindex=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_spatialindex=${DEPS_BUILD_PATH}/spatialindex/$(get_directory $URL_spatialindex)
 
@@ -28,15 +25,6 @@ function prebuild_spatialindex() {
   try patch --verbose --forward -p1 < $RECIPE_spatialindex/patches/temporaryfile.patch
 
 }
-
-function shouldbuild_spatialindex() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_spatialindex -nt $BUILD_spatialindex/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_spatialindex() {

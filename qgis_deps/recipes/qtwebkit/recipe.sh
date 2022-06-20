@@ -5,9 +5,6 @@ DESC_qtwebkit="WebKit extension for QT5"
 
 DEPS_qtwebkit=( sqlite bison webp zlib libxslt jpeg png libtiff libicu )
 
-
-# md5 of the package
-
 # default build path
 BUILD_qtwebkit=${DEPS_BUILD_PATH}/qtwebkit/$(get_directory $URL_qtwebkit)
 
@@ -27,15 +24,6 @@ function prebuild_qtwebkit() {
   try ${SED} 's;isReachableFromOpaqueRoots(Handle<JSC::Unknown>;isReachableFromOpaqueRoots(JSC::Handle<JSC::Unknown>;g' Source/JavaScriptCore/jsc.cpp
 
 }
-
-function shouldbuild_qtwebkit() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/qml/QtWebKit/libqmlwebkitplugin.so -nt $BUILD_qtwebkit/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_qtwebkit() {

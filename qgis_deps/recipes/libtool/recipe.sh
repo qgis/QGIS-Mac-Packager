@@ -21,17 +21,8 @@ function prebuild_libtool() {
   cd $BUILD_libtool
 
   patch_configure_file configure
-  try rsync   -a $BUILD_libtool/ ${DEPS_BUILD_PATH}/libtool/build-$ARCH/
+  try rsync -a $BUILD_libtool/ ${DEPS_BUILD_PATH}/libtool/build-$ARCH/
 }
-
-function shouldbuild_libtool() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libltdl -nt $BUILD_libtool/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libtool() {

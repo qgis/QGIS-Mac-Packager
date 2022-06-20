@@ -23,15 +23,6 @@ function prebuild_gmp() {
   try rsync   -a $BUILD_gmp/ ${DEPS_BUILD_PATH}/gmp/build-${ARCH}
 }
 
-function shouldbuild_gmp() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_gmp -nt $BUILD_gmp/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
-
 # function called after all the compile have been done
 function postbuild_gmp() {
   verify_binary lib/$LINK_gmp

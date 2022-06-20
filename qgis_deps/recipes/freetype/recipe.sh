@@ -6,9 +6,6 @@ LINK_freetype=libfreetype.6.dylib
 
 DEPS_freetype=(png brotli bz2 zlib)
 
-
-# md5 of the package
-
 # default build path
 BUILD_freetype=${DEPS_BUILD_PATH}/freetype/$(get_directory $URL_freetype)
 
@@ -23,15 +20,6 @@ function prebuild_freetype() {
   try rsync  -a $BUILD_freetype/ ${DEPS_BUILD_PATH}/freetype/build-${ARCH}
 
 }
-
-function shouldbuild_freetype() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_freetype -nt $BUILD_freetype/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_freetype() {

@@ -6,9 +6,6 @@ LINK_libxml2=libxml2.2.dylib
 
 DEPS_libxml2=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_libxml2=${DEPS_BUILD_PATH}/libxml2/$(get_directory $URL_libxml2)
 
@@ -21,17 +18,7 @@ function prebuild_libxml2() {
   cd $BUILD_libxml2
     patch_configure_file configure
   try rsync  -a $BUILD_libxml2/ ${DEPS_BUILD_PATH}/libxml2/build-${ARCH}
-
 }
-
-function shouldbuild_libxml2() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libxml2 -nt $BUILD_libxml2/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libxml2() {

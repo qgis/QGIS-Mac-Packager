@@ -6,9 +6,6 @@ LINK_freexl=libfreexl.1.dylib
 
 DEPS_freexl=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_freexl=${DEPS_BUILD_PATH}/freexl/$(get_directory $URL_freexl)
 
@@ -23,14 +20,6 @@ function prebuild_freexl() {
     patch_configure_file configure
   try rsync   -a $BUILD_freexl/ ${DEPS_BUILD_PATH}/freexl/build-$ARCH/
 }
-
-function shouldbuild_freexl() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_freexl -nt $BUILD_freexl/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
 
 
 # function called after all the compile have been done

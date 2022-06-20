@@ -7,8 +7,6 @@ LINK_sqlite=libsqlite3.0.dylib
 
 DEPS_sqlite=()
 
-# md5 of the package
-
 # default build path
 BUILD_sqlite=${DEPS_BUILD_PATH}/sqlite/$(get_directory $URL_sqlite)
 
@@ -23,15 +21,6 @@ function prebuild_sqlite() {
   try rsync  -a $BUILD_sqlite/ ${DEPS_BUILD_PATH}/sqlite/build-${ARCH}
 
 }
-
-function shouldbuild_sqlite() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_sqlite -nt $BUILD_sqlite/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_sqlite() {

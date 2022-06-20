@@ -6,9 +6,6 @@ LINK_little_cms2=liblcms2.2.dylib
 
 DEPS_little_cms2=(jpeg libtiff)
 
-
-# md5 of the package
-
 # default build path
 BUILD_little_cms2=${DEPS_BUILD_PATH}/little_cms2/$(get_directory $URL_little_cms2)
 
@@ -23,13 +20,6 @@ function prebuild_little_cms2() {
 
   patch_configure_file configure
   try rsync -a $BUILD_little_cms2/ ${DEPS_BUILD_PATH}/little_cms2/build-${ARCH}
-}
-
-function shouldbuild_little_cms2() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_little_cms2 -nt $BUILD_little_cms2/.patched ]; then
-    DO_BUILD=0
-  fi
 }
 
 # function called after all the compile have been done

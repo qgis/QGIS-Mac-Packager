@@ -7,9 +7,6 @@ LINK_libyaml=libyaml-0.2.dylib
 
 DEPS_libyaml=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_libyaml=${DEPS_BUILD_PATH}/libyaml/$(get_directory $URL_libyaml)
 
@@ -22,15 +19,6 @@ function prebuild_libyaml() {
   cd $BUILD_libyaml
   try rsync -a $BUILD_libyaml/ ${DEPS_BUILD_PATH}/libyaml/build-${ARCH}
 }
-
-function shouldbuild_libyaml() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libyaml -nt $BUILD_libyaml/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libyaml() {

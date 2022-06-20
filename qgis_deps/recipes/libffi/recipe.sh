@@ -23,15 +23,6 @@ function prebuild_libffi() {
   try rsync  -a $BUILD_libffi/ ${DEPS_BUILD_PATH}/libffi/build-${ARCH}
 }
 
-function shouldbuild_libffi() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libffi -nt $BUILD_libffi/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
-
 # function called after all the compile have been done
 function postbuild_libffi() {
   verify_binary lib/$LINK_libffi

@@ -7,9 +7,6 @@ LINK_unixodbcinst=libodbcinst.2.dylib
 
 DEPS_unixodbc=(libtool)
 
-
-# md5 of the package
-
 # default build path
 BUILD_unixodbc=${DEPS_BUILD_PATH}/unixodbc/$(get_directory $URL_unixodbc)
 
@@ -24,15 +21,6 @@ function prebuild_unixodbc() {
   try rsync  -a $BUILD_unixodbc/ ${DEPS_BUILD_PATH}/unixodbc/build-${ARCH}
 
 }
-
-function shouldbuild_unixodbc() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/unixodbc/lib/$LINK_unixodbc -nt $BUILD_unixodbc/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_unixodbc() {

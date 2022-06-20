@@ -8,9 +8,6 @@ LINK_libwebpdemux=libwebpdemux.2.dylib
 
 DEPS_webp=(png)
 
-
-# md5 of the package
-
 # default build path
 BUILD_webp=${DEPS_BUILD_PATH}/webp/$(get_directory $URL_webp)
 
@@ -23,17 +20,7 @@ function prebuild_webp() {
   cd $BUILD_webp
     patch_configure_file configure
   try rsync  -a $BUILD_webp/ ${DEPS_BUILD_PATH}/webp/build-${ARCH}
-
 }
-
-function shouldbuild_webp() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libwebp -nt $BUILD_webp/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_webp() {

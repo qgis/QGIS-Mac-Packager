@@ -6,9 +6,6 @@ LINK_zstd=libzstd.1.dylib
 
 DEPS_zstd=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_zstd=${DEPS_BUILD_PATH}/zstd/$(get_directory $URL_zstd)
 
@@ -20,18 +17,7 @@ RECIPE_zstd=$RECIPES_PATH/zstd
 function prebuild_zstd() {
   cd $BUILD_zstd
   try rsync -a $BUILD_zstd/ ${DEPS_BUILD_PATH}/zstd/build-${ARCH}
-
-
 }
-
-function shouldbuild_zstd() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_zstd -nt $BUILD_zstd/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_zstd() {

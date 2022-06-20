@@ -7,9 +7,6 @@ DEPS_grass=(python boost bison flex libtiff png  sqlite geos zlib wxmac zstd zli
 
 LINK_libgrass_version=26
 
-
-# md5 of the package
-
 # default build path
 BUILD_grass=${DEPS_BUILD_PATH}/grass/$(get_directory $URL_grass)
 
@@ -39,15 +36,6 @@ function prebuild_grass() {
 
   try rsync -a $BUILD_grass/ ${DEPS_BUILD_PATH}/grass/build-${ARCH}
 }
-
-function shouldbuild_grass() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/grass${VERSION_grass_major}${VERSION_grass_minor}/lib/libgrass_calc.dylib -nt $BUILD_grass/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_grass() {

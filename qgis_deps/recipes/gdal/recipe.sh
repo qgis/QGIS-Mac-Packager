@@ -72,14 +72,6 @@ function prebuild_gdal() {
   patch_configure_file configure
 }
 
-function shouldbuild_gdal() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_gdal} -nt ${BUILD_gdal}/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 # function called after all the compile have been done
 function postbuild_gdal() {
   verify_binary lib/${LINK_gdal}

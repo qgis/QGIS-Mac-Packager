@@ -6,9 +6,6 @@ LINK_fastcgi=libfcgi.0.dylib
 
 DEPS_fastcgi=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_fastcgi=${DEPS_BUILD_PATH}/fastcgi/$(get_directory $URL_fastcgi)
 
@@ -21,15 +18,6 @@ function prebuild_fastcgi() {
   cd $BUILD_fastcgi
   try rsync -a $BUILD_fastcgi/ ${DEPS_BUILD_PATH}/fastcgi/build-${ARCH}
 }
-
-function shouldbuild_fastcgi() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_fastcgi -nt $BUILD_fastcgi/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_fastcgi() {

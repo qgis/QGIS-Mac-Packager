@@ -8,9 +8,6 @@ LINK_libbrotlidec=libbrotlidec.${VERSION_brotli_major}.dylib
 
 DEPS_brotli=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_brotli=${DEPS_BUILD_PATH}/brotli/$(get_directory $URL_brotli)
 
@@ -21,17 +18,7 @@ RECIPE_brotli=$RECIPES_PATH/brotli
 # (you can apply patch etc here.)
 function prebuild_brotli() {
   cd $BUILD_brotli
-
-
 }
-
-function shouldbuild_brotli() {
-  if [ ${STAGE_PATH}/lib/${LINK_libbrotlidec} -nt $BUILD_brotli/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_brotli() {

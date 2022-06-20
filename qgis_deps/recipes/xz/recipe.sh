@@ -7,9 +7,6 @@ LINK_liblzma=liblzma.5.dylib
 
 DEPS_xz=(gettext)
 
-
-# md5 of the package
-
 # default build path
 BUILD_xz=${DEPS_BUILD_PATH}/xz/$(get_directory $URL_xz)
 
@@ -22,17 +19,7 @@ function prebuild_xz() {
   cd $BUILD_xz
     patch_configure_file configure
   try rsync  -a $BUILD_xz/ ${DEPS_BUILD_PATH}/xz/build-${ARCH}
-
 }
-
-function shouldbuild_xz() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_liblzma -nt $BUILD_xz/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_xz() {

@@ -20,9 +20,6 @@ DEPS_poppler=(
   libcurl
 )
 
-
-# md5 of the package
-
 # default build path
 BUILD_poppler=${DEPS_BUILD_PATH}/poppler/$(get_directory $URL_poppler)
 
@@ -33,18 +30,7 @@ RECIPE_poppler=$RECIPES_PATH/poppler
 # (you can apply patch etc here.)
 function prebuild_poppler() {
   cd $BUILD_poppler
-
-
 }
-
-function shouldbuild_poppler() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_poppler} -nt $BUILD_poppler/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_poppler() {

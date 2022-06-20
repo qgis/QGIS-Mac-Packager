@@ -6,9 +6,6 @@ LINK_bz2=libbz2.$VERSION_bz2_major.dylib
 
 DEPS_bz2=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_bz2=${DEPS_BUILD_PATH}/bz2/$(get_directory $URL_bz2)
 
@@ -21,15 +18,6 @@ function prebuild_bz2() {
   cd $BUILD_bz2
   try rsync -a $BUILD_bz2/ ${DEPS_BUILD_PATH}/bz2/build-${ARCH}
 }
-
-function shouldbuild_bz2() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_bz2 -nt $BUILD_bz2/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_bz2() {

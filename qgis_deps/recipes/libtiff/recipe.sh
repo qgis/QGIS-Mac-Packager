@@ -8,9 +8,6 @@ LINK_libtiffxx=libtiffxx.5.dylib
 
 DEPS_libtiff=(xz zstd webp jpeg lerc zlib)
 
-
-# md5 of the package
-
 # default build path
 BUILD_libtiff=${DEPS_BUILD_PATH}/libtiff/$(get_directory $URL_libtiff)
 
@@ -22,22 +19,8 @@ RECIPE_libtiff=$RECIPES_PATH/libtiff
 # (you can apply patch etc here.)
 function prebuild_libtiff() {
   cd $BUILD_libtiff
-
-
   patch_configure_file configure
-
 }
-
-# function called before build_libtiff
-# set DO_BUILD=0 if you know that it does not require a rebuild
-function shouldbuild_libtiff() {
-# If lib is newer than the sourcecode skip build
-  if [ "${STAGE_PATH}/lib/$LINK_libtiff" -nt $BUILD_libtiff/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libtiff() {

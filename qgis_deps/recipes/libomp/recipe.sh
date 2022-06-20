@@ -2,13 +2,9 @@
 
 DESC_libomp="LLVM's OpenMP runtime library"
 
-
 LINK_libomp=libomp.dylib
 
 DEPS_libomp=()
-
-
-# md5 of the package
 
 # default build path
 BUILD_libomp=${DEPS_BUILD_PATH}/libomp/$(get_directory $URL_libomp)

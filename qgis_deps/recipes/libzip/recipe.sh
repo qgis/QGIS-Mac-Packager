@@ -7,9 +7,6 @@ LINK_libzip=libzip.5.dylib
 
 DEPS_libzip=( zlib xz openssl )
 
-
-# md5 of the package
-
 # default build path
 BUILD_libzip=${DEPS_BUILD_PATH}/libzip/$(get_directory $URL_libzip)
 
@@ -21,7 +18,6 @@ RECIPE_libzip=$RECIPES_PATH/libzip
 function prebuild_libzip() {
   cd $BUILD_libzip
 }
-
 
 # function called after all the compile have been done
 function postbuild_libzip() {

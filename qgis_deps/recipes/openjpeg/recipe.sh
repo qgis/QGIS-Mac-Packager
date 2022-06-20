@@ -11,9 +11,6 @@ DEPS_openjpeg=(
   little_cms2
 )
 
-
-# md5 of the package
-
 # default build path
 BUILD_openjpeg=${DEPS_BUILD_PATH}/openjpeg/$(get_directory $URL_openjpeg)
 
@@ -25,18 +22,7 @@ RECIPE_openjpeg=$RECIPES_PATH/openjpeg
 function prebuild_openjpeg() {
   cd $BUILD_openjpeg
   try rsync -a $BUILD_openjpeg/ ${DEPS_BUILD_PATH}/openjpeg/build-${ARCH}
-
-
 }
-
-function shouldbuild_openjpeg() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_openjpeg -nt $BUILD_openjpeg/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_openjpeg() {

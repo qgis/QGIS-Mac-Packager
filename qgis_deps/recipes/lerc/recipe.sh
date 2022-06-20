@@ -7,9 +7,6 @@ LINK_liblerc=libLerc.dylib
 
 DEPS_lerc=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_lerc=${DEPS_BUILD_PATH}/lerc/$(get_directory $URL_lerc)
 
@@ -20,17 +17,7 @@ RECIPE_lerc=$RECIPES_PATH/lerc
 # (you can apply patch etc here.)
 function prebuild_lerc() {
   cd $BUILD_lerc
-
-
 }
-
-function shouldbuild_lerc() {
-  if [ ${STAGE_PATH}/lib/${LINK_liblerc} -nt $BUILD_lerc/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_lerc() {

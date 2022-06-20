@@ -10,9 +10,6 @@ LINK_libquadmath=libquadmath.0.dylib
 
 DEPS_gcc=(zlib gmp mpfr libmpc libisl)
 
-
-# md5 of the package
-
 # default build path
 BUILD_gcc=${DEPS_BUILD_PATH}/gcc/$(get_directory $URL_gcc)
 
@@ -24,12 +21,6 @@ RECIPE_gcc=$RECIPES_PATH/gcc
 function prebuild_gcc() {
   cd $BUILD_gcc
   try rsync -a $BUILD_gcc/ ${DEPS_BUILD_PATH}/gcc/build-${ARCH}
-}
-
-function shouldbuild_gcc() {
-  if [ ${STAGE_PATH}/lib/${LINK_libgfortran} -nt $BUILD_gcc/.patched ]; then
-    DO_BUILD=0
-  fi
 }
 
 # function called after all the compile have been done

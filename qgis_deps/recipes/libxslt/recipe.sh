@@ -8,9 +8,6 @@ LINK_libexslt=libexslt.0.dylib
 
 DEPS_libxslt=(libxml2)
 
-
-# md5 of the package
-
 # default build path
 BUILD_libxslt=${DEPS_BUILD_PATH}/libxslt/$(get_directory $URL_libxslt)
 
@@ -23,15 +20,6 @@ function prebuild_libxslt() {
   cd $BUILD_libxslt
   try rsync -a $BUILD_libxslt/ ${DEPS_BUILD_PATH}/libxslt/build-${ARCH}
 }
-
-function shouldbuild_libxslt() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libxslt -nt $BUILD_libxslt/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libxslt() {

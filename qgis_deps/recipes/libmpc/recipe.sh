@@ -5,10 +5,6 @@ DESC_libmpc="C library for the arithmetic of high precision complex numbers"
 LINK_libmpc=libmpc.3.dylib
 
 DEPS_libmpc=(gmp mpfr)
-
-
-# md5 of the package
-
 # default build path
 BUILD_libmpc=${DEPS_BUILD_PATH}/libmpc/$(get_directory $URL_libmpc)
 
@@ -21,17 +17,7 @@ function prebuild_libmpc() {
   cd $BUILD_libmpc
     patch_configure_file configure
   try rsync  -a $BUILD_libmpc/ ${DEPS_BUILD_PATH}/libmpc/build-${ARCH}
-
 }
-
-function shouldbuild_libmpc() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libmpc -nt $BUILD_libmpc/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libmpc() {

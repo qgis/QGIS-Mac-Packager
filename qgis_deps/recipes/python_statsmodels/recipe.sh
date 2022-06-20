@@ -5,9 +5,6 @@ DESC_python_statsmodels="python statsmodels"
 
 DEPS_python_statsmodels=(python python_packages python_numpy python_scipy python_patsy python_pandas)
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_statsmodels=${DEPS_BUILD_PATH}/python_statsmodels/$(get_directory $URL_python_statsmodels)
 

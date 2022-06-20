@@ -6,9 +6,6 @@ LINK_wxmac_version=3.1.5.0.0
 
 DEPS_wxmac=( jpeg png libtiff )
 
-
-# md5 of the package
-
 # default build path
 BUILD_wxmac=${DEPS_BUILD_PATH}/wxmac/$(get_directory $URL_wxmac)
 
@@ -22,15 +19,6 @@ function prebuild_wxmac() {
     patch_configure_file configure
   try rsync   -a $BUILD_wxmac/ ${DEPS_BUILD_PATH}/wxmac/build-${ARCH}
 }
-
-function shouldbuild_wxmac() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/libwx_baseu-${VERSION_wxmac_major}.dylib -nt $BUILD_wxmac/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_wxmac() {

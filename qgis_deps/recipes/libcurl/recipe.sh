@@ -2,13 +2,9 @@
 
 DESC_libcurl="Get a file from an HTTP, HTTPS or FTP server"
 
-
 LINK_libcurl=libcurl.dylib
 
 DEPS_libcurl=(libtool openssl zstd zlib libssh2)
-
-
-# md5 of the package
 
 # default build path
 BUILD_libcurl=${DEPS_BUILD_PATH}/libcurl/$(get_directory $URL_libcurl)
@@ -22,14 +18,6 @@ function prebuild_libcurl() {
   cd $BUILD_libcurl
   try rsync  -a $BUILD_libcurl/ ${DEPS_BUILD_PATH}/libcurl/build-${ARCH}
 }
-
-function shouldbuild_libcurl() {
-  if [ ${STAGE_PATH}/lib/${LINK_libcurl} -nt $BUILD_libcurl/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libcurl() {

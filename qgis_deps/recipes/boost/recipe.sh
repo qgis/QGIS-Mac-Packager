@@ -9,9 +9,6 @@ DEPS_boost=(zlib python libicu)
 # from github it does not contain submodules in the build subdir
 # URL_boost=https://github.com/boostorg/boost/archive/boost-${VERSION_boost}.tar.gz
 
-
-# md5 of the package
-
 # default build path
 BUILD_boost=${DEPS_BUILD_PATH}/boost/$(get_directory $URL_boost)
 
@@ -25,14 +22,6 @@ function prebuild_boost() {
   # https://github.com/boostorg/python/pull/344
   try patch --verbose --forward -p1 < ${RECIPE_boost}/patches/python310.patch
   try rsync -a $BUILD_boost/ ${DEPS_BUILD_PATH}/boost/build-${ARCH}
-}
-
-function shouldbuild_boost() {
-  # If lib is newer than the sourcecode skip build
-  pyver=${VERSION_major_python//./}
-  if [ ${STAGE_PATH}/lib/libboost_python${pyver}.dylib -nt $BUILD_boost/.patched ]; then
-    DO_BUILD=0
-  fi
 }
 
 # function called after all the compile have been done

@@ -11,9 +11,6 @@ DEPS_minizip=(
  zlib
 )
 
-
-# md5 of the package
-
 # default build path
 BUILD_minizip=${DEPS_BUILD_PATH}/minizip/$(get_directory $URL_minizip)
 
@@ -24,18 +21,7 @@ RECIPE_minizip=$RECIPES_PATH/minizip
 # (you can apply patch etc here.)
 function prebuild_minizip() {
   cd $BUILD_minizip
-
-
 }
-
-function shouldbuild_minizip() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_libminizip} -nt $BUILD_minizip/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_minizip() {

@@ -17,15 +17,6 @@ function prebuild_netcdf() {
   cd $BUILD_netcdf
 }
 
-function shouldbuild_netcdf() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_netcdf -nt $BUILD_netcdf/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
-
 # function called after all the compile have been done
 function postbuild_netcdf() {
   verify_binary lib/$LINK_netcdf

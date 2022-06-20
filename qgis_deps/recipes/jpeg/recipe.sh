@@ -7,9 +7,6 @@ LINK_jpeg=libjpeg.9.dylib
 
 DEPS_jpeg=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_jpeg=${DEPS_BUILD_PATH}/jpeg/$(get_directory $URL_jpeg)
 
@@ -22,17 +19,7 @@ function prebuild_jpeg() {
   cd $BUILD_jpeg
     patch_configure_file configure
   try rsync  -a $BUILD_jpeg/ ${DEPS_BUILD_PATH}/jpeg/build-${ARCH}
-
 }
-
-function shouldbuild_jpeg() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_jpeg -nt $BUILD_jpeg/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_jpeg() {

@@ -6,9 +6,6 @@ LINK_rttopo=librttopo.1.dylib
 
 DEPS_rttopo=(geos)
 
-
-# md5 of the package
-
 # default build path
 BUILD_rttopo=${DEPS_BUILD_PATH}/rttopo/$(get_directory $URL_rttopo)
 
@@ -21,15 +18,6 @@ function prebuild_rttopo() {
   cd $BUILD_rttopo
   try rsync -a $BUILD_rttopo/ ${DEPS_BUILD_PATH}/rttopo/build-${ARCH}
 }
-
-function shouldbuild_rttopo() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_rttopo -nt $BUILD_rttopo/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_rttopo() {

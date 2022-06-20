@@ -21,18 +21,7 @@ RECIPE_libtasn1=$RECIPES_PATH/libtasn1
 function prebuild_libtasn1() {
   cd $BUILD_libtasn1
   try rsync -a $BUILD_libtasn1/ ${DEPS_BUILD_PATH}/libtasn1/build-${ARCH}
-
-
 }
-
-function shouldbuild_libtasn1() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libtasn1 -nt $BUILD_libtasn1/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_libtasn1() {
