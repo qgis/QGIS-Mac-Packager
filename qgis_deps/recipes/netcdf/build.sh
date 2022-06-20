@@ -3,7 +3,12 @@ function build_netcdf() {
   try cd ${DEPS_BUILD_PATH}/netcdf/build-$ARCH
   push_env
 
-  try ${CMAKE} -DENABLE_EXAMPLES=OFF $BUILD_netcdf
+  try ${CMAKE} \
+  -DBUILD_TESTING=OFF \
+  -DENABLE_EXAMPLES=OFF \
+  -DENABLE_DAP=OFF \
+  $BUILD_netcdf
+
   check_file_configuration CMakeCache.txt
 
   try $NINJA

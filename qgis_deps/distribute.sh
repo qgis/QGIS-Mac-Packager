@@ -249,7 +249,7 @@ function push_env() {
     # export some tools
     export MAKESMP="/usr/bin/make -j${CORES}"
     export MAKE="/usr/bin/make"
-    export CONFIGURE="./configure --prefix=${STAGE_PATH} --enable-rpath"
+    export CONFIGURE="./configure --prefix=${STAGE_PATH}"
     export CC="/usr/bin/clang"
     export CXX="/usr/bin/clang++"
     export NINJA="/usr/local/bin/ninja"

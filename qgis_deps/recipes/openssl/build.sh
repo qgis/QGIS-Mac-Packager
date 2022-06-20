@@ -18,8 +18,10 @@ function build_openssl() {
     no-zlib \
 
   check_file_configuration config.status
+
   try $MAKESMP
-  try $MAKESMP install
+  # do not build docs: https://github.com/openssl/openssl/issues/8170#issuecomment-461122307
+  try $MAKESMP install_sw install_ssldirs
 
   pop_env
 }

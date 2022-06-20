@@ -7,6 +7,8 @@ function build_hdf5() {
     -DBUILD_STATIC_LIBS=OFF \
     -DBUILD_TESTING=OFF \
     -DHDF5_BUILD_CPP_LIB=ON \
+    -DHDF5_ENABLE_Z_LIB_SUPPORT=ON \
+    -DHDF5_BUILD_EXAMPLES=OFF \
     $BUILD_hdf5 .
 
   check_file_configuration CMakeCache.txt

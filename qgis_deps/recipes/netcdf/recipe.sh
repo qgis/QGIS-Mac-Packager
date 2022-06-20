@@ -3,10 +3,7 @@
 DESC_netcdf="Libraries and data formats for array-oriented scientific data"
 LINK_netcdf=libnetcdf.${LIB_VERSION_netcdf}.dylib
 
-DEPS_netcdf=(libcurl libzip)
-
-
-# md5 of the package
+DEPS_netcdf=(libcurl libzip hdf5)
 
 # default build path
 BUILD_netcdf=${DEPS_BUILD_PATH}/netcdf/$(get_directory $URL_netcdf)
@@ -18,8 +15,6 @@ RECIPE_netcdf=$RECIPES_PATH/netcdf
 # (you can apply patch etc here.)
 function prebuild_netcdf() {
   cd $BUILD_netcdf
-
-
 }
 
 function shouldbuild_netcdf() {

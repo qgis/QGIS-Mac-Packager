@@ -5,6 +5,7 @@ function build_postgres() {
   try ${CONFIGURE} \
     --disable-debug \
     --with-ssl=openssl \
+    --enable-rpath \
     --without-readline \
     --with-includes=${STAGE_PATH}/include \
     --without-zlib
