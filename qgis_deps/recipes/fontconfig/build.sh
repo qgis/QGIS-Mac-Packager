@@ -7,7 +7,10 @@ function build_fontconfig() {
   export GETTEXTIZE="ggettextize"
   export AUTOPOINT="gautopoint"
 
-  try ${CONFIGURE}
+  try ${CONFIGURE} \
+    --disable-dependency-tracking \
+    --disable-docs \
+    --disable-cache-build
 
   check_file_configuration config.status
 
