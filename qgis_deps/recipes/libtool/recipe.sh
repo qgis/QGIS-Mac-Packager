@@ -7,7 +7,6 @@ LINK_libltdl=libltdl.7.dylib
 DEPS_libtool=()
 
 
-# md5 of the package
 
 # default build path
 BUILD_libtool=${DEPS_BUILD_PATH}/libtool/$(get_directory $URL_libtool)

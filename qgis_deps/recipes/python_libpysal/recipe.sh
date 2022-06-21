@@ -17,7 +17,6 @@ DEPS_python_libpysal=(
 )
 
 
-# md5 of the package
 
 # default build path
 BUILD_python_libpysal=${DEPS_BUILD_PATH}/python_libpysal/v${VERSION_python_libpysal}
@@ -30,12 +29,6 @@ RECIPE_python_libpysal=$RECIPES_PATH/python_libpysal
 function prebuild_python_libpysal() {
   cd $BUILD_python_libpysal
   try rsync -a $BUILD_python_libpysal/ ${DEPS_BUILD_PATH}/python_libpysal/build-${ARCH}
-}
-
-function shouldbuild_python_libpysal() {
-  if python_package_installed libpysal; then
-    DO_BUILD=0
-  fi
 }
 
 # function called after all the compile have been done

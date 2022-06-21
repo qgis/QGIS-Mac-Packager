@@ -41,9 +41,6 @@ DEPS_python_all=(
     python_pysal
 )
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_all=${DEPS_BUILD_PATH}/python_all/python_all
 
@@ -55,12 +52,6 @@ RECIPE_python_all=$RECIPES_PATH/python_all
 function prebuild_python_all() {
   :
 }
-
-function shouldbuild_python_all() {
-  :
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_all() {

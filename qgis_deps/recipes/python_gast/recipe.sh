@@ -20,12 +20,6 @@ function prebuild_python_gast() {
   try rsync -a $BUILD_python_gast/ ${DEPS_BUILD_PATH}/python_gast/build-${ARCH}
 }
 
-function shouldbuild_python_gast() {
-  if python_package_installed gast; then
-    DO_BUILD=0
-  fi
-}
-
 # function called after all the compile have been done
 function postbuild_python_gast() {
    if ! python_package_installed_verbose gast; then

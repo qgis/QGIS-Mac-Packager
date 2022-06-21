@@ -5,9 +5,9 @@ function build_python_packages() {
   push_env
 
   n_packages=${#REQUIREMENTS_python_packages[@]}
-  for (( j=0; j<n_packages; j++ )); do
-    package="${REQUIREMENTS_python_packages[$j]}"
-    info "Installing python_packages package ${package} ($((j+1))/${n_packages})"
+  for (( ppj=0; ppj<n_packages; ppj++ )); do
+    package="${REQUIREMENTS_python_packages[$ppj]}"
+    info "Installing python_packages package ${package} ($((ppj+1))/${n_packages})"
     # build_ext sometimes tries to dlopen the libraries
     # to determine the library version
     # this does not force --no-binary all strictly

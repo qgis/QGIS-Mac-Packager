@@ -7,9 +7,6 @@ LINK_qtkeychain=libqt5keychain.1.dylib
 
 DEPS_qtkeychain=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_qtkeychain=${DEPS_BUILD_PATH}/qtkeychain/$(get_directory $URL_qtkeychain)
 
@@ -20,18 +17,7 @@ RECIPE_qtkeychain=$RECIPES_PATH/qtkeychain
 # (you can apply patch etc here.)
 function prebuild_qtkeychain() {
   cd $BUILD_qtkeychain
-
-
 }
-
-function shouldbuild_qtkeychain() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_qtkeychain -nt $BUILD_qtkeychain/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_qtkeychain() {

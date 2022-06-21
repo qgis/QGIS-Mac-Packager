@@ -7,7 +7,6 @@ LINK_gmp=libgmpxx.4.dylib
 DEPS_gmp=()
 
 
-# md5 of the package
 
 # default build path
 BUILD_gmp=${DEPS_BUILD_PATH}/gmp/$(get_directory $URL_gmp)

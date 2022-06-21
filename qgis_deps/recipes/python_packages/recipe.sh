@@ -7,7 +7,6 @@ DESC_python_packages="Common packages for python (pre)"
 DEPS_python_packages=(python python_sip python_pyqt5 little_cms2 libyaml)
 
 
-# md5 of the package
 
 # default build path
 BUILD_python_packages=${DEPS_BUILD_PATH}/python_packages/v${VERSION_python_packages}

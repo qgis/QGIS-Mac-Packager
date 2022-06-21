@@ -11,7 +11,6 @@ DEPS_python_cryptography=(
 )
 
 
-# md5 of the package
 
 # default build path
 BUILD_python_cryptography=${DEPS_BUILD_PATH}/python_cryptography/v${VERSION_python_cryptography}
@@ -24,19 +23,7 @@ RECIPE_python_cryptography=$RECIPES_PATH/python_cryptography
 function prebuild_python_cryptography() {
   try mkdir -p $BUILD_python_cryptography
   cd $BUILD_python_cryptography
-
-
 }
-
-function shouldbuild_python_cryptography() {
-  # not sure why but when cryptography is imported first
-  # it triggers Symbol not found: _GEOSArea on libspatialite
-  if python_package_installed fiona,cryptography; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_cryptography() {

@@ -6,9 +6,6 @@ LINK_exiv2=libexiv2.27.dylib
 
 DEPS_exiv2=()
 
-
-# md5 of the package
-
 # default build path
 BUILD_exiv2=${DEPS_BUILD_PATH}/exiv2/$(get_directory $URL_exiv2)
 
@@ -20,15 +17,6 @@ RECIPE_exiv2=$RECIPES_PATH/exiv2
 function prebuild_exiv2() {
   cd $BUILD_exiv2
 }
-
-function shouldbuild_exiv2() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_exiv2 -nt $BUILD_exiv2/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_exiv2() {

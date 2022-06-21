@@ -22,17 +22,6 @@ function prebuild_fontconfig() {
   try rsync -a $BUILD_fontconfig/ ${DEPS_BUILD_PATH}/fontconfig/build-${ARCH}
 }
 
-# function called before build_fontconfig
-# set DO_BUILD=0 if you know that it does not require a rebuild
-function shouldbuild_fontconfig() {
-# If lib is newer than the sourcecode skip build
-  if [ "${STAGE_PATH}/lib/$LINK_fontconfig" -nt $BUILD_fontconfig/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
-
 # function called after all the compile have been done
 function postbuild_fontconfig() {
   verify_binary lib/$LINK_fontconfig

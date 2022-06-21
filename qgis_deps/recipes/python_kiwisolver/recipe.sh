@@ -17,15 +17,6 @@ function prebuild_python_kiwisolver() {
   try rsync -a $BUILD_python_kiwisolver/ ${DEPS_BUILD_PATH}/python_kiwisolver/build-$ARCH/
 }
 
-function shouldbuild_python_kiwisolver() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed kiwisolver; then
-    DO_BUILD=0
-  fi
-}
-
-
-
 # function called after all the compile have been done
 function postbuild_python_kiwisolver() {
    if ! python_package_installed_verbose kiwisolver; then

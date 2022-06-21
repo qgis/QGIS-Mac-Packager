@@ -16,18 +16,7 @@ RECIPE_python_statsmodels=$RECIPES_PATH/python_statsmodels
 function prebuild_python_statsmodels() {
   cd $BUILD_python_statsmodels
   try rsync -a $BUILD_python_statsmodels/ ${DEPS_BUILD_PATH}/python_statsmodels/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_statsmodels() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed statsmodels; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_statsmodels() {

@@ -36,15 +36,6 @@ function prebuild_python_llvmlite() {
   try rsync -a ${BUILD_python_llvmlite}/ ${DEPS_BUILD_PATH}/python_llvmlite/build-$ARCH/
 }
 
-function shouldbuild_python_llvmlite() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed llvmlite; then
-    DO_BUILD=0
-  fi
-}
-
-
-
 # function called after all the compile have been done
 function postbuild_python_llvmlite() {
    if ! python_package_installed_verbose llvmlite; then

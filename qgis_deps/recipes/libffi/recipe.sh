@@ -7,7 +7,6 @@ LINK_libffi=libffi.8.dylib
 DEPS_libffi=()
 
 
-# md5 of the package
 
 # default build path
 BUILD_libffi=${DEPS_BUILD_PATH}/libffi/$(get_directory $URL_libffi)

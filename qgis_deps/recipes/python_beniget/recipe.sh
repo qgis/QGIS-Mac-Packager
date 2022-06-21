@@ -21,12 +21,6 @@ function prebuild_python_beniget() {
   try rsync -a $BUILD_python_beniget/ ${DEPS_BUILD_PATH}/python_beniget/build-${ARCH}
 }
 
-function shouldbuild_python_beniget() {
-  if python_package_installed beniget; then
-    DO_BUILD=0
-  fi
-}
-
 # function called after all the compile have been done
 function postbuild_python_beniget() {
    if ! python_package_installed_verbose beniget; then

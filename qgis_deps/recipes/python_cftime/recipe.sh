@@ -7,7 +7,6 @@ DESC_python_cftime="Python binding of HDF5"
 DEPS_python_cftime=(python python_packages netcdf hdf5 python_numpy libcurl)
 
 
-# md5 of the package
 
 # default build path
 BUILD_python_cftime=${DEPS_BUILD_PATH}/python_cftime/$(get_directory $URL_python_cftime)
@@ -18,18 +17,7 @@ function prebuild_python_cftime() {
   mkdir -p $BUILD_python_cftime
   cd $BUILD_python_cftime
   try rsync -a $BUILD_python_cftime/ ${DEPS_BUILD_PATH}/python_cftime/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_cftime() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed cftime; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_cftime() {

@@ -23,8 +23,6 @@ RECIPE_python_tobler=$RECIPES_PATH/python_tobler
 function prebuild_python_tobler() {
   try mkdir -p $BUILD_python_tobler
   cd $BUILD_python_tobler
-
-
 }
 
 # function called after all the compile have been done

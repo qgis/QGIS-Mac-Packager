@@ -36,9 +36,6 @@ DEPS_qgis_deps=(
     xz
 )
 
-
-# md5 of the package
-
 # default build path
 BUILD_qgis_deps=${DEPS_BUILD_PATH}/qgis_deps/qgis_deps
 
@@ -50,11 +47,6 @@ RECIPE_qgis_deps=$RECIPES_PATH/qgis_deps
 function prebuild_qgis_deps() {
   : # noop
 }
-
-function shouldbuild_qgis_deps() {
-   : # noop
-}
-
 
 
 # function called after all the compile have been done

@@ -7,7 +7,6 @@ LINK_expat=libexpat.1.dylib
 DEPS_expat=()
 
 
-# md5 of the package
 
 # default build path
 BUILD_expat=${DEPS_BUILD_PATH}/expat/$(get_directory $URL_expat)

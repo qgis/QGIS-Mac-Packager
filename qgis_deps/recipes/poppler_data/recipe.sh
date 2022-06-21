@@ -6,8 +6,6 @@ DESC_poppler_data="Poppler encoding data"
 DEPS_poppler_data=()
 
 
-# md5 of the package
-
 # default build path
 BUILD_poppler_data=${DEPS_BUILD_PATH}/poppler_data/$(get_directory ${URL_poppler_data})
 
@@ -19,14 +17,6 @@ RECIPE_poppler_data=${RECIPES_PATH}/poppler_data
 function prebuild_poppler_data() {
   cd ${BUILD_poppler_data}
 }
-
-function shouldbuild_poppler_data() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/${LINK_poppler_data} -nt ${BUILD_poppler_data}/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
 
 
 # function called after all the compile have been done

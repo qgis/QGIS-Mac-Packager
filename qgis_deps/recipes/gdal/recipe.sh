@@ -36,7 +36,6 @@ DEPS_gdal=(
 )
 
 
-# md5 of the package
 
 # default build path
 BUILD_gdal=${DEPS_BUILD_PATH}/gdal/$(get_directory ${URL_gdal})

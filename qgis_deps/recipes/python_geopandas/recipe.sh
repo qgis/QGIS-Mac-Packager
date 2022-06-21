@@ -17,7 +17,6 @@ DEPS_python_geopandas=(
 )
 
 
-# md5 of the package
 
 # default build path
 BUILD_python_geopandas=${DEPS_BUILD_PATH}/python_geopandas/$(get_directory $URL_python_geopandas)
@@ -30,19 +29,7 @@ RECIPE_python_geopandas=$RECIPES_PATH/python_geopandas
 function prebuild_python_geopandas() {
   cd $BUILD_python_geopandas
   try rsync -a $BUILD_python_geopandas/ ${DEPS_BUILD_PATH}/python_geopandas/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_geopandas() {
-  # not sure why but when geopandas is imported first
-  # it triggers Symbol not found: _GEOSArea on libspatialite
-  if python_package_installed "fiona,geopandas"; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_geopandas() {

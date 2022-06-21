@@ -6,7 +6,6 @@ DESC_python_matplotlib="python matplotlib"
 DEPS_python_matplotlib=(python python_packages python_numpy python_pillow fontconfig freetype)
 
 
-# md5 of the package
 
 # default build path
 BUILD_python_matplotlib=${DEPS_BUILD_PATH}/python_matplotlib/$(get_directory $URL_python_matplotlib)
@@ -19,18 +18,7 @@ RECIPE_python_matplotlib=$RECIPES_PATH/python_matplotlib
 function prebuild_python_matplotlib() {
   cd $BUILD_python_matplotlib
   try rsync -a $BUILD_python_matplotlib/ ${DEPS_BUILD_PATH}/python_matplotlib/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_matplotlib() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed matplotlib; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_matplotlib() {

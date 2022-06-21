@@ -9,7 +9,6 @@ LINK_libgslcblas=libgslcblas.0.dylib
 DEPS_gsl=()
 
 
-# md5 of the package
 
 # default build path
 BUILD_gsl=${DEPS_BUILD_PATH}/gsl/$(get_directory $URL_gsl)

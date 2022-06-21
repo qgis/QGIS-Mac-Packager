@@ -20,12 +20,6 @@ function prebuild_python_pybind11() {
   try rsync -a $BUILD_python_pybind11/ ${DEPS_BUILD_PATH}/python_pybind11/build-${ARCH}
 }
 
-function shouldbuild_python_pybind11() {
-  if python_package_installed pybind11; then
-    DO_BUILD=0
-  fi
-}
-
 # function called after all the compile have been done
 function postbuild_python_pybind11() {
    if ! python_package_installed_verbose pybind11; then

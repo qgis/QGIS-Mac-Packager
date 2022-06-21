@@ -6,9 +6,6 @@ LINK_mpfr=libmpfr.6.dylib
 
 DEPS_mpfr=(gmp)
 
-
-# md5 of the package
-
 # default build path
 BUILD_mpfr=${DEPS_BUILD_PATH}/mpfr/$(get_directory $URL_mpfr)
 
@@ -23,15 +20,6 @@ function prebuild_mpfr() {
   try rsync  -a $BUILD_mpfr/ ${DEPS_BUILD_PATH}/mpfr/build-${ARCH}
 
 }
-
-function shouldbuild_mpfr() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_mpfr -nt $BUILD_mpfr/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_mpfr() {

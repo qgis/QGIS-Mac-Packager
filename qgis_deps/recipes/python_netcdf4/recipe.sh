@@ -7,7 +7,6 @@ DESC_python_netcdf4="Python binding of HDF5"
 DEPS_python_netcdf4=(python python_packages netcdf hdf5 python_numpy libcurl python_cftime)
 
 
-# md5 of the package
 
 # default build path
 BUILD_python_netcdf4=${DEPS_BUILD_PATH}/python_netcdf4/$(get_directory $URL_python_netcdf4)
@@ -18,18 +17,7 @@ function prebuild_python_netcdf4() {
   mkdir -p $BUILD_python_netcdf4
   cd $BUILD_python_netcdf4
   try rsync -a $BUILD_python_netcdf4/ ${DEPS_BUILD_PATH}/python_netcdf4/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_netcdf4() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed netCDF4; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_netcdf4() {

@@ -738,8 +738,6 @@ function run_build() {
 
     if [[ "$(recipe_has_changed "${module}" build)" == "1" ]]; then
       DO_BUILD=1
-    elif [[ "$(recipe_has_changed "${module}" build)" == "1" ]]; then
-      DO_BUILD=1
     elif [[ $(in_array ${module} "${modules_update[@]}") -ne -1 ]]; then
       debug "${module} detected to be updated"
       DO_BUILD=1

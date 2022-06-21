@@ -6,7 +6,6 @@ DESC_python_pandas="python pandas"
 DEPS_python_pandas=(python python_packages python_numpy)
 
 
-# md5 of the package
 
 # default build path
 BUILD_python_pandas=${DEPS_BUILD_PATH}/python_pandas/$(get_directory $URL_python_pandas)
@@ -20,15 +19,6 @@ function prebuild_python_pandas() {
   cd $BUILD_python_pandas
   try rsync -a $BUILD_python_pandas/ ${DEPS_BUILD_PATH}/python_pandas/build-${ARCH}
 }
-
-function shouldbuild_python_pandas() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed pandas; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_pandas() {

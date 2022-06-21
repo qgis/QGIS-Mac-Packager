@@ -9,7 +9,6 @@ LINK_libgeos=libgeos.${VERSION_geos}.dylib
 DEPS_geos=()
 
 
-# md5 of the package
 
 # default build path
 BUILD_geos=${DEPS_BUILD_PATH}/geos/$(get_directory $URL_geos)

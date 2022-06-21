@@ -7,7 +7,6 @@ DESC_python_fiona="python fiona"
 DEPS_python_fiona=(python python_packages gdal python_gdal)
 
 
-# md5 of the package
 
 # default build path
 BUILD_python_fiona=${DEPS_BUILD_PATH}/python_fiona/$(get_directory $URL_python_fiona)
@@ -20,18 +19,7 @@ RECIPE_python_fiona=$RECIPES_PATH/python_fiona
 function prebuild_python_fiona() {
   cd $BUILD_python_fiona
   try rsync -a $BUILD_python_fiona/ ${DEPS_BUILD_PATH}/python_fiona/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_fiona() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed fiona; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_fiona() {

@@ -8,7 +8,6 @@ LINK_libtasn1=libtasn1.6.dylib
 DEPS_libtasn1=(gettext)
 
 
-# md5 of the package
 
 # default build path
 BUILD_libtasn1=${DEPS_BUILD_PATH}/libtasn1/$(get_directory $URL_libtasn1)

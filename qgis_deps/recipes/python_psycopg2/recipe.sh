@@ -5,9 +5,6 @@ DESC_python_psycopg2="Python-PostgreSQL Database Adapter"
 
 DEPS_python_psycopg2=(python postgres python_packages python_scipy)
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_psycopg2=${DEPS_BUILD_PATH}/python_psycopg2/v${VERSION_python_psycopg2}
 
@@ -19,18 +16,7 @@ RECIPE_python_psycopg2=$RECIPES_PATH/python_psycopg2
 function prebuild_python_psycopg2() {
   try mkdir -p $BUILD_python_psycopg2
   cd $BUILD_python_psycopg2
-
-
 }
-
-function shouldbuild_python_psycopg2() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed psycopg2; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_psycopg2() {

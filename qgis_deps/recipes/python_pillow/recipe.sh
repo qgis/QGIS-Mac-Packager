@@ -6,7 +6,6 @@ DESC_python_pillow="python pillow"
 DEPS_python_pillow=(python python_packages zlib jpeg libtiff webp little_cms2 python_numpy)
 
 
-# md5 of the package
 
 # default build path
 BUILD_python_pillow=${DEPS_BUILD_PATH}/python_pillow/$(get_directory $URL_python_pillow)
@@ -19,18 +18,7 @@ RECIPE_python_pillow=$RECIPES_PATH/python_pillow
 function prebuild_python_pillow() {
   cd $BUILD_python_pillow
   try rsync -a $BUILD_python_pillow/ ${DEPS_BUILD_PATH}/python_pillow/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_pillow() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed PIL; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_pillow() {

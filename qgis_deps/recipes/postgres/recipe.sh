@@ -2,13 +2,10 @@
 
 DESC_postgres="Postgres database"
 
-
 LINK_libpq=libpq.5.dylib
 
 DEPS_postgres=(openssl)
 
-
-# md5 of the package
 
 # default build path
 BUILD_postgres=${DEPS_BUILD_PATH}/postgres/$(get_directory $URL_postgres)
@@ -23,15 +20,6 @@ function prebuild_postgres() {
   patch_configure_file configure
   try rsync  -a $BUILD_postgres/ ${DEPS_BUILD_PATH}/postgres/build-${ARCH}
 }
-
-function shouldbuild_postgres() {
-  # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/$LINK_libpq -nt $BUILD_postgres/.patched ]; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_postgres() {

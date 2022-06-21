@@ -17,15 +17,6 @@ function prebuild_python_numba() {
   try rsync -a $BUILD_python_numba/ ${DEPS_BUILD_PATH}/python_numba/build-$ARCH/
 }
 
-function shouldbuild_python_numba() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed numba; then
-    DO_BUILD=0
-  fi
-}
-
-
-
 # function called after all the compile have been done
 function postbuild_python_numba() {
    if ! python_package_installed_verbose numba; then

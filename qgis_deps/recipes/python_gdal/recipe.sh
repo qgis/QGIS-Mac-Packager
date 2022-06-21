@@ -8,8 +8,6 @@ source ${RECIPES_PATH}/gdal/recipe.sh
 DEPS_python_gdal=(python python_pyproj gdal python_packages )
 
 
-# md5 of the package
-
 # default build path
 BUILD_python_gdal=${DEPS_BUILD_PATH}/python_gdal/$(get_directory ${URL_python_gdal})
 
@@ -21,18 +19,7 @@ RECIPE_python_gdal=$RECIPES_PATH/python_gdal
 function prebuild_python_gdal() {
   cd $BUILD_python_gdal
   try rsync -a $BUILD_python_gdal/ ${DEPS_BUILD_PATH}/python_gdal/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_gdal() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed osgeo; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_gdal() {

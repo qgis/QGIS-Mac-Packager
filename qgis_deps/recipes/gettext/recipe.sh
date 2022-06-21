@@ -7,7 +7,6 @@ LINK_libintl=libintl.8.dylib
 DEPS_gettext=(libcurl libxml2 libunistring)
 
 
-# md5 of the package
 
 # default build path
 BUILD_gettext=${DEPS_BUILD_PATH}/gettext/$(get_directory $URL_gettext)

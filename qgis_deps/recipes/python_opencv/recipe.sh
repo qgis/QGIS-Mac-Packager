@@ -5,9 +5,6 @@ DESC_python_opencv="python opencv-contrib-python"
 
 DEPS_python_opencv=(python python_packages python_numpy python_scipy openblas protobuf)
 
-
-# md5 of the package
-
 # default build path
 BUILD_python_opencv=${DEPS_BUILD_PATH}/python_opencv/${GIT_TAG_python_opencv}
 
@@ -26,15 +23,6 @@ function prebuild_python_opencv() {
 
   try rsync -a ${DEPS_BUILD_PATH}/python_opencv/opencv-python/ ${DEPS_BUILD_PATH}/python_opencv/build-$ARCH
 }
-
-function shouldbuild_python_opencv() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed cv2; then
-    DO_BUILD=0
-  fi
-}
-
-
 
 # function called after all the compile have been done
 function postbuild_python_opencv() {

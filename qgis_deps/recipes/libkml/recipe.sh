@@ -18,7 +18,6 @@ DEPS_libkml=(
 )
 
 
-# md5 of the package
 
 # default build path
 BUILD_libkml=${DEPS_BUILD_PATH}/libkml/$(get_directory $URL_libkml)

@@ -6,7 +6,6 @@ DESC_python_numpy="python numpy"
 DEPS_python_numpy=(python python_packages openblas)
 
 
-# md5 of the package
 
 # default build path
 BUILD_python_numpy=${DEPS_BUILD_PATH}/python_numpy/$(get_directory $URL_python_numpy)
@@ -19,17 +18,7 @@ RECIPE_python_numpy=$RECIPES_PATH/python_numpy
 function prebuild_python_numpy() {
   cd $BUILD_python_numpy
   try rsync -a $BUILD_python_numpy/ ${DEPS_BUILD_PATH}/python_numpy/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_numpy() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed numpy; then
-    DO_BUILD=0
-  fi
-}
-
 
 
 # function called after all the compile have been done

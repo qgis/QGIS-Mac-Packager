@@ -17,17 +17,7 @@ RECIPE_python_patsy=$RECIPES_PATH/python_patsy
 function prebuild_python_patsy() {
   cd $BUILD_python_patsy
   try rsync -a $BUILD_python_patsy/ ${DEPS_BUILD_PATH}/python_patsy/build-${ARCH}
-
-
 }
-
-function shouldbuild_python_patsy() {
-  # If lib is newer than the sourcecode skip build
-  if python_package_installed patsy; then
-    DO_BUILD=0
-  fi
-}
-
 
 
 # function called after all the compile have been done
