@@ -10,6 +10,7 @@ function build_proj() {
     -DPROJ_INCLUDE_SUBDIR=include \
     -DBUILD_TESTING=OFF \
     -DBUILD_SHARED_LIBS=ON \
+    -DCURL_LIBRARIES=$STAGE_PATH/lib/$LINK_libcurl \
   $BUILD_proj .
 
   check_file_configuration CMakeCache.txt

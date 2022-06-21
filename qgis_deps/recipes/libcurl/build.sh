@@ -5,13 +5,12 @@ function build_libcurl() {
   try ${CMAKE} \
     -DBUILD_TESTING=OFF \
     -DBUILD_SHARED_LIBS=TRUE \
-    -DBUILD_CURL_EXE=OFF \
+    -DBUILD_CURL_EXE=ON \
     -DCURL_USE_LIBSSH2=OFF \
     -DCURL_USE_LIBSSH=OFF \
     -DCURL_ZSTD=ON \
     -DCURL_BROTLI=OFF \
     -DCURL_DISABLE_LDAP=ON \
-    -DCURL_USE_OPENLDAP=OFF \
     -DUSE_QUICHE=OFF \
     -DUSE_NGTCP2=OFF \
     -DUSE_NGHTTP2=OFF \
@@ -25,7 +24,7 @@ function build_libcurl() {
   
   install_name_tool -id $STAGE_PATH/lib/$LINK_libcurl $STAGE_PATH/lib/$LINK_libcurl
 
-  install_name_tool -change ${DEPS_BUILD_PATH}/libcurl/build-$ARCH/$LINK_libcurl $STAGE_PATH/lib/$LINK_libcurl $STAGE_PATH/lib/$LINK_libcurl
+  install_name_tool -change ${DEPS_BUILD_PATH}/libcurl/build-$ARCH/lib/$LINK_libcurl $STAGE_PATH/lib/$LINK_libcurl $STAGE_PATH/bin/curl
 
   pop_env
 }

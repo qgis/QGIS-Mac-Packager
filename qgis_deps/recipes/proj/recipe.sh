@@ -6,7 +6,7 @@ DESC_proj="Cartographic Projections Library"
 
 LINK_libproj=libproj.${LIB_VERSION_proj}.dylib
 
-DEPS_proj=(sqlite libxml2 openssl libtiff)
+DEPS_proj=(sqlite libxml2 openssl libtiff libcurl)
 
 # default build path
 BUILD_proj=${DEPS_BUILD_PATH}/proj/$(get_directory $URL_proj)

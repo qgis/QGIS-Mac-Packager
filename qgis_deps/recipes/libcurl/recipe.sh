@@ -22,6 +22,7 @@ function prebuild_libcurl() {
 # function called after all the compile have been done
 function postbuild_libcurl() {
   verify_binary lib/$LINK_libcurl
+  verify_binary bin/curl
 }
 
 # function to append information to config file

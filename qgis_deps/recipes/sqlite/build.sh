@@ -18,9 +18,12 @@ function build_sqlite() {
     --enable-dynamic-extensions \
     --enable-readline \
     --disable-editline \
+    --enable-static=no \
+    --enable-shared=yes \
     --enable-session
 
   check_file_configuration config.status
+
   try $MAKESMP
   try $MAKE install
 

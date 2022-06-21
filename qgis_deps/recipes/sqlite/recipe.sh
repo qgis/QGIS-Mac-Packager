@@ -18,7 +18,7 @@ RECIPE_sqlite=$RECIPES_PATH/sqlite
 function prebuild_sqlite() {
   cd $BUILD_sqlite
   patch_configure_file configure
-  try rsync  -a $BUILD_sqlite/ ${DEPS_BUILD_PATH}/sqlite/build-${ARCH}
+  try rsync -a $BUILD_sqlite/ ${DEPS_BUILD_PATH}/sqlite/build-${ARCH}
 }
 
 # function called after all the compile have been done

@@ -586,7 +586,7 @@ function download_file() {
 
     # check if the file is already present
     if [ -f ${filename} ]; then
-      # if the marker has not been set, it might be cause of a invalid download.
+      # if the marker has not been set, it might be cause of an invalid download.
       if [ ! -f ${marker_filename} ]; then
         rm ${filename}
       elif [ -n "${d_md5}" ]; then
@@ -626,7 +626,7 @@ function download_file() {
     source_directory=$(get_directory ${filename})
     build_directory=${DEPS_BUILD_PATH}/${d_module}/build-${ARCH}
 
-    if ( [[ -d ${source_directory} ]] || [[ -d ${build_directory} ]] ) && [[ ${do_prebuild} -eq 1 ]] && [[ "$(recipe_has_changed "${d_module}" recipe)" == "1" ]]; then
+    if ( [[ -d ${source_directory} ]] || [[ -d ${build_directory} ]] ) && [[ ${do_prebuild} -eq 1 ]] && ( [[ ${do_download} -eq 1 ]] || [[ "$(recipe_has_changed "${d_module}" recipe)" == "1" ]]); then
       info "Recipe has changed, removing the existing source and build directories"
       rm -rf ${DEPS_BUILD_PATH}/${d_module}/${source_directory}
       rm -rf ${build_directory}
@@ -737,6 +737,8 @@ function run_build() {
     fold_push "building ${module} ($((j+1))/${nmod})"
 
     if [[ "$(recipe_has_changed "${module}" build)" == "1" ]]; then
+      DO_BUILD=1
+    elif [[ "$(recipe_has_changed "${module}" build)" == "1" ]]; then
       DO_BUILD=1
     elif [[ $(in_array ${module} "${modules_update[@]}") -ne -1 ]]; then
       debug "${module} detected to be updated"
