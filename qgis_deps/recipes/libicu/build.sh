@@ -22,14 +22,14 @@ function build_libicu() {
     libicutu.${VERSION_libicu}.dylib
     libicuuc.${VERSION_libicu}.dylib
   )
-  for i in ${targets[*]}
+  for libicu_i in ${targets[*]}
   do
-    info install_name_tool -id $STAGE_PATH/lib/$i $STAGE_PATH/lib/$i
-    try install_name_tool -id $STAGE_PATH/lib/$i $STAGE_PATH/lib/$i
-    for j in ${targets[*]}
+    info install_name_tool -id $STAGE_PATH/lib/$libicu_i $STAGE_PATH/lib/$libicu_i
+    try install_name_tool -id $STAGE_PATH/lib/$libicu_i $STAGE_PATH/lib/$libicu_i
+    for libicu_j in ${targets[*]}
     do
-      info install_name_tool -change $j $STAGE_PATH/lib/$j $STAGE_PATH/lib/$i
-      try install_name_tool -change $j $STAGE_PATH/lib/$j $STAGE_PATH/lib/$i
+      info install_name_tool -change $libicu_j $STAGE_PATH/lib/$libicu_j $STAGE_PATH/lib/$libicu_i
+      try install_name_tool -change $libicu_j $STAGE_PATH/lib/$libicu_j $STAGE_PATH/lib/$libicu_i
     done
   done
 

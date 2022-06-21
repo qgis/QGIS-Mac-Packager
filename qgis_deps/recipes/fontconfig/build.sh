@@ -10,7 +10,8 @@ function build_fontconfig() {
   try ${CONFIGURE} \
     --disable-dependency-tracking \
     --disable-docs \
-    --disable-cache-build
+    --disable-cache-build \
+    --with-pkgconfigdir=/opt/QGIS/qgis-deps-dev/stage/lib/pkgconfig
 
   check_file_configuration config.status
 
