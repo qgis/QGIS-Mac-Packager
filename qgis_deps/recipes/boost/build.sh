@@ -10,24 +10,26 @@ function build_boost() {
     --with-python-root="$PYTHON" \
     --with-python-version="$VERSION_major_python"
 
-  try ./b2 -q \
-    variant=release \
-    address-model="64" \
-    architecture="arm" \
-    binary-format="mach-o" \
-    debug-symbols=off \
-    threading=multi \
-    runtime-link=shared \
-    link=static,shared \
-    toolset=clang \
-    include="${STAGE_PATH}/include" \
-    python="$VERSION_major_python" \
-    cxxflags="${CXXFLAGS}" \
-    linkflags="-L$${STAGE_PATH}/lib" \
-    --layout=system \
+  try ./b2 \
     --with-python \
-    -j"${CORES}" \
     install
+    
+  try install_name_tool -id $STAGE_PATH/lib/$LINK_boost $STAGE_PATH/lib/$LINK_boost
 
   pop_env
 }
+
+
+#     variant=release \
+  #    debug-symbols=off \
+  #    threading=multi \
+  #    runtime-link=shared \
+  #    link=shared \
+  #    toolset=clang \
+  #    include="${STAGE_PATH}/include" \
+  #    python="$VERSION_major_python" \
+  #    cxxflags="${CXXFLAGS}" \
+  #    linkflags="-L$${STAGE_PATH}/lib" \
+  #    --layout=system \
+  #    --with-python \
+  #    -j"${CORES}" \

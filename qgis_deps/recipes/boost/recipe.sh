@@ -2,12 +2,9 @@
 
 DESC_boost="Collection of portable C++ source libraries"
 
-# version required by MySQL
-
 DEPS_boost=(zlib python libicu)
 
-# from github it does not contain submodules in the build subdir
-# URL_boost=https://github.com/boostorg/boost/archive/boost-${VERSION_boost}.tar.gz
+LINK_boost=libboost_python${VERSION_major_python//./}.dylib
 
 # default build path
 BUILD_boost=${DEPS_BUILD_PATH}/boost/$(get_directory $URL_boost)
@@ -19,14 +16,15 @@ RECIPE_boost=$RECIPES_PATH/boost
 # (you can apply patch etc here.)
 function prebuild_boost() {
   cd $BUILD_boost
+
   # https://github.com/boostorg/python/pull/344
-  try patch --verbose --forward -p1 < ${RECIPE_boost}/patches/python310.patch
+  #try patch --verbose --forward -p1 < ${RECIPE_boost}/patches/python310.patch
   try rsync -a $BUILD_boost/ ${DEPS_BUILD_PATH}/boost/build-${ARCH}
 }
 
 # function called after all the compile have been done
 function postbuild_boost() {
-  verify_binary lib/libboost_python${VERSION_major_python//./}.dylib
+  verify_binary lib/$LINK_boost
 }
 
 # function to append information to config file

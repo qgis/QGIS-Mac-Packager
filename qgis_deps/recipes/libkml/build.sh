@@ -13,7 +13,7 @@ function build_libkml() {
   try $NINJA
   try $NINJA install
 
-  for i in \
+  for lki in \
     $LINK_libkmlbase \
     $LINK_libkmlconvenience \
     $LINK_libkmldom \
@@ -21,8 +21,8 @@ function build_libkml() {
     $LINK_libkmlregionator \
     $LINK_libkmlxsd
   do
-    install_name_tool -id $STAGE_PATH/lib/$i $STAGE_PATH/lib/$i
-    for j in \
+    install_name_tool -id $STAGE_PATH/lib/$lki $STAGE_PATH/lib/$lki
+    for lkj in \
         $LINK_libkmlbase \
         $LINK_libkmlconvenience \
         $LINK_libkmldom \
@@ -30,7 +30,7 @@ function build_libkml() {
         $LINK_libkmlregionator \
         $LINK_libkmlxsd
     do
-      install_name_tool -change ${DEPS_BUILD_PATH}/libkml/build-$ARCH/lib/$j $STAGE_PATH/lib/$j $STAGE_PATH/lib/$i
+      install_name_tool -change ${DEPS_BUILD_PATH}/libkml/build-$ARCH/lib/$lkj $STAGE_PATH/lib/$lkj $STAGE_PATH/lib/$lki
     done
   done
 

@@ -20,13 +20,13 @@ function build_mysql() {
       -DMYSQL_DATADIR=$STAGE_PATH/share/data \
       -DDOWNLOAD_BOOST=OFF \
       -DWITH_BOOST=system \
-      -DWITH_CURL=NO \
+      -DWITH_PROTOBUF=system \
+      -DWITH_CURL=system \
       -DWITH_ZSTD=system \
       -DWITH_SYSTEM_LIBS_DEFAULT=TRUE \
       -DCMAKE_FIND_FRAMEWORK=LAST \
       -DWITH_EDITLINE=system \
       -DWITH_SSL=$STAGE_PATH \
-      -DWITH_PROTOBUF=system \
       -DWITH_UNIT_TESTS=OFF \
       -DDEFAULT_CHARSET=utf8 \
       -DDEFAULT_COLLATION=utf8_general_ci \

@@ -1,0 +1,106 @@
+--- CMakeLists.txt	2022-03-23 14:52:57.000000000 +0100
++++ CMakeLists.txt	2022-06-22 11:44:18.000000000 +0200
+@@ -1,5 +1,5 @@
+ # Copyright (c) 2006, 2022, Oracle and/or its affiliates.
+-# 
++#
+ # This program is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License, version 2.0,
+ # as published by the Free Software Foundation.
+@@ -117,7 +117,7 @@ FIND_PACKAGE(Git)
+ SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+ 
+ # First, decide about build type (debug or release)
+-# If cmake is invoked with -DCMAKE_BUILD_TYPE, 
++# If cmake is invoked with -DCMAKE_BUILD_TYPE,
+ # respect user wishes and do not (re)define CMAKE_BUILD_TYPE. If WITH_DEBUG
+ # is given, set CMAKE_BUILD_TYPE = Debug. Otherwise, use Relwithdebinfo.
+ 
+@@ -131,7 +131,7 @@ OPTION(CHECK_ERRMSG_FORMAT "Check printf
+ # Use a default manufacturer if no manufacturer was identified.
+ SET(MANUFACTURER_DOCSTRING
+   "Set the entity that appears as the manufacturer of packages that support a manufacturer field.")
+-IF(NOT DEFINED MANUFACTURER) 
++IF(NOT DEFINED MANUFACTURER)
+   SET(MANUFACTURER "Built from Source" CACHE  STRING ${MANUFACTURER_DOCSTRING})
+   MARK_AS_ADVANCED(MANUFACTURER)
+ ENDIF()
+@@ -157,9 +157,9 @@ ELSEIF(MAX_INDEXES LESS 64)
+ ENDIF()
+ 
+ # We choose to provide WITH_DEBUG as alias to standard CMAKE_BUILD_TYPE=Debug
+-# which turns out to be not trivial, as this involves synchronization 
++# which turns out to be not trivial, as this involves synchronization
+ # between CMAKE_BUILD_TYPE and WITH_DEBUG. Besides, we have to deal with cases
+-# where WITH_DEBUG is  reset from ON to OFF  and here we need to reset 
++# where WITH_DEBUG is  reset from ON to OFF  and here we need to reset
+ # CMAKE_BUILD_TYPE to either none or default RelWithDebInfo
+ 
+ SET(BUILDTYPE_DOCSTRING
+@@ -171,7 +171,7 @@ IF(WITH_DEBUG)
+   SET(OLD_WITH_DEBUG 1 CACHE INTERNAL "" FORCE)
+ ELSEIF(NOT HAVE_CMAKE_BUILD_TYPE OR OLD_WITH_DEBUG)
+   IF(CMAKE_BUILD_TYPE MATCHES "Debug" OR NOT HAVE_CMAKE_BUILD_TYPE)
+-    SET(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING 
++    SET(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING
+        ${BUILDTYPE_DOCSTRING} FORCE)
+   ENDIF()
+   SET(OLD_WITH_DEBUG 0 CACHE INTERNAL "" FORCE)
+@@ -683,7 +683,7 @@ IF(UNIX)
+ ELSE()
+   OPTION(WITH_INNODB_MEMCACHED "" OFF)
+ ENDIF()
+- 
++
+ # Following autotools tradition, add preprocessor definitions
+ # specified in environment variable CPPFLAGS
+ IF(DEFINED ENV{CPPFLAGS})
+@@ -1401,7 +1401,7 @@ IF(WITH_TEST_TRACE_PLUGIN AND NOT WITH_C
+ ENDIF()
+ 
+ IF(WITH_TEST_TRACE_PLUGIN AND NOT CMAKE_BUILD_TYPE_UPPER STREQUAL "DEBUG")
+-  MESSAGE(SEND_ERROR 
++  MESSAGE(SEND_ERROR
+     "Test trace plugin was selected but it can be included only in
+      debug binaries. Set WITH_TEST_TRACE_PLUGIN to OFF or WITH_DEBUG to ON.")
+ ENDIF()
+@@ -1603,15 +1603,6 @@ SET(SYSTEM_LIBRARIES
+   FIDO      # Homebrew  libfido2
+   )
+ 
+-IF(APPLE)
+-  # Homebrew default location is
+-  IF(APPLE_ARM)
+-    SET(HOMEBREW_HOME "/opt/homebrew/opt")
+-  ELSE()
+-    SET(HOMEBREW_HOME "/usr/local/opt")
+-  ENDIF()
+-ENDIF()
+-
+ SET(WITH_SYSTEM_LIBS_DEFAULT OFF)
+ OPTION(WITH_SYSTEM_LIBS
+   "Use -DWITH_XXX=system for ${SYSTEM_LIBRARIES}" ${WITH_SYSTEM_LIBS_DEFAULT})
+@@ -1831,14 +1822,6 @@ IF(APPLE)
+       ENDIF()
+     ENDFOREACH()
+   ENDIF()
+-  # Ensure that we look in /usr/local/include or /opt/homebre/include
+-  FOREACH(SYSTEM_LIB ICU LIBEVENT LZ4 PROTOBUF ZSTD FIDO)
+-    IF(WITH_${SYSTEM_LIB} STREQUAL "system")
+-      GET_FILENAME_COMPONENT(HOMEBREW_BASE ${HOMEBREW_HOME} DIRECTORY)
+-      INCLUDE_DIRECTORIES(SYSTEM ${HOMEBREW_BASE}/include)
+-      BREAK()
+-    ENDIF()
+-  ENDFOREACH()
+ ENDIF()
+ 
+ IF(WITH_AUTHENTICATION_FIDO OR WITH_AUTHENTICATION_CLIENT_PLUGINS)
+@@ -2238,7 +2221,7 @@ IF(WIN32)
+   SET(CPACK_GENERATOR "ZIP")
+ ELSE()
+   SET(CPACK_GENERATOR "TGZ")
+-ENDIF() 
++ENDIF()
+ ADD_SUBDIRECTORY(packaging/WiX)
+ ADD_SUBDIRECTORY(packaging/solaris)
+ 

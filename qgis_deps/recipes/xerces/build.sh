@@ -3,7 +3,10 @@ function build_xerces() {
   try cd ${DEPS_BUILD_PATH}/xerces/build-$ARCH
   push_env
 
-  try $CMAKE $BUILD_xerces .
+  try $CMAKE \
+    -DCURL_LIBRARIES=$STAGE_PATH/lib/$LINK_libcurl \
+    $BUILD_xerces .
+
   check_file_configuration CMakeCache.txt
 
   try $NINJA
