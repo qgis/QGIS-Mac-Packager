@@ -30,11 +30,17 @@ jobs:
         # if: github.event_name == 'release'
         # v1.2-0 => 1.2 https://regex101.com/r/tZBVLT/1
         run: |
-          QGIS_DEPS_RELEASE_VERSION=$(echo ${{ github.event.release.tag_name }} | sed -r 's/v?([0-9]+(\.[0-9]+)*)(-.+)?/\1/')
+          QGIS_DEPS_SDK_VERSION=$(echo ${{ github.event.release.tag_name }} | sed -r 's/v?([0-9]+(\.[0-9]+)*)(-.+)?/\1/')
+          QGIS_DEPS_SDK_VERSION="1.2.3"
+          QGIS_DEPS_RELEASE_VERSION=$(echo "${QGIS_DEPS_SDK_VERSION}" | sed -r 's/^([0-9]+\.[0-9]+).*$/\1/')
+          QGIS_DEPS_RELEASE_VERSION_PATCH=$(echo "${QGIS_DEPS_SDK_VERSION}" | sed -r 's/^[0-9]+\.[0-9]+\.([0-9]+)?$/\1/')
           echo "Release deps version: ${QGIS_DEPS_RELEASE_VERSION}"
+          echo "Release deps patch: ${QGIS_DEPS_RELEASE_VERSION_PATCH}"
           echo "QGIS_DEPS_RELEASE_VERSION=${QGIS_DEPS_RELEASE_VERSION}" >> $GITHUB_ENV
 
           cp qgis_deps/config/deps-dev.conf qgis_deps/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf
+          sed -i "s/QGIS_DEPS_RELEASE_VERSION=.*/QGIS_DEPS_RELEASE_VERSION=${QGIS_DEPS_RELEASE_VERSION}/" qgis_deps/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf
+          sed -i "s/QGIS_DEPS_RELEASE_VERSION_PATCH=.*/QGIS_DEPS_RELEASE_VERSION_PATCH=${QGIS_DEPS_RELEASE_VERSION_PATCH}/" qgis_deps/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf
           
           git add qgis_deps/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf
           git commit -m "Add deps config file for version ${QGIS_DEPS_RELEASE_VERSION}"
