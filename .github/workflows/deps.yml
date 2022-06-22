@@ -5,6 +5,8 @@ on:
     paths:
     - 'qgis_deps/**'
     - '.github/workflows/deps.yml'
+  release:
+    types: [ published ]
 
 env:
   MODULE: qgis_deps
@@ -24,9 +26,23 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set deps version for release
+        # if: github.event_name == 'release'
+        # v1.2-0 => 1.2 https://regex101.com/r/tZBVLT/1
+        run: |
+          QGIS_DEPS_RELEASE_VERSION=$(echo ${{ github.event.release.tag_name }} | sed -r 's/v?([0-9]+(\.[0-9]+)*)(-.+)?/\1/')
+          echo "Release deps version: ${QGIS_DEPS_RELEASE_VERSION}"
+          echo "QGIS_DEPS_RELEASE_VERSION=${QGIS_DEPS_RELEASE_VERSION}" >> $GITHUB_ENV
+
+          cp qgis_deps/config/deps-dev.conf qgis_deps/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf
+          
+          git add qgis_deps/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf
+          git commit -m "Add deps config file for version ${QGIS_DEPS_RELEASE_VERSION}"
+          git push
+
       - name: Set environment
         run: |
-          source qgis_deps/config/deps-${{ env.QGIS_DEPS_RELEASE_VERSION }}.conf
+          source qgis_deps/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf
           echo "ROOT_OUT_PATH=${ROOT_OUT_PATH}" >> $GITHUB_ENV
           echo "DEPS_BUILD_PATH=${DEPS_BUILD_PATH}" >> $GITHUB_ENV
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
