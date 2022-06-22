@@ -1,5 +1,5 @@
---- CMakeLists.txt	2022-03-23 14:52:57.000000000 +0100
-+++ CMakeLists.txt	2022-06-22 11:44:18.000000000 +0200
+--- a/CMakeLists.txt	2022-03-23 14:52:57.000000000 +0100
++++ b/CMakeLists.txt	2022-06-22 11:44:18.000000000 +0200
 @@ -1,5 +1,5 @@
  # Copyright (c) 2006, 2022, Oracle and/or its affiliates.
 -# 
