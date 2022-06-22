@@ -6,12 +6,12 @@ function build_fontconfig() {
   export LIBTOOLIZE="glibtoolize"
   export GETTEXTIZE="ggettextize"
   export AUTOPOINT="gautopoint"
+  export PKG_CONFIG=/usr/local/opt/pkg-config/bin/pkg-config
 
   try ${CONFIGURE} \
     --disable-dependency-tracking \
     --disable-docs \
-    --disable-cache-build \
-    --with-pkgconfigdir=/opt/QGIS/qgis-deps-dev/stage/lib/pkgconfig
+    --disable-cache-build
 
   check_file_configuration config.status
 
