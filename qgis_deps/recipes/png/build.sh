@@ -12,7 +12,6 @@ function build_png() {
   try $NINJA install
   
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libpng $STAGE_PATH/lib/$LINK_libpng
-  try install_name_tool -change ${DEPS_BUILD_PATH}/pdal/build-$ARCH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpdal_util $STAGE_PATH/lib/$LINK_libpng
 
   pop_env
 }

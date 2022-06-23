@@ -2,7 +2,7 @@ function build_libicu() {
   try cd ${DEPS_BUILD_PATH}/libicu/build-$ARCH/source
   push_env
 
-  try ./runConfigureICU MacOSX/GCC --prefix=${STAGE_PATH} --enable-rpath \
+  try ./runConfigureICU MacOSX --prefix=${STAGE_PATH} --enable-rpath \
     --disable-samples \
     --disable-extras \
     --disable-layout \
