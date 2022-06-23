@@ -12,13 +12,6 @@ BUILD_python_pymssql=${DEPS_BUILD_PATH}/python_pymssql/v${VERSION_python_pymssql
 # default recipe path
 RECIPE_python_pymssql=$RECIPES_PATH/python_pymssql
 
-# function called for preparing source code if needed
-# (you can apply patch etc here.)
-function prebuild_python_pymssql() {
-  mkdir -p $BUILD_python_pymssql
-  cd $BUILD_python_pymssql
-}
-
 # function called after all the compile have been done
 function postbuild_python_pymssql() {
    if ! python_package_installed_verbose pymssql; then

@@ -35,7 +35,7 @@ DEPS_python_all=(
     python_patsy
     python_pandas
     python_cryptography
-    python_pypubsub
+    python_pubsub
     python_spaghetti
     python_tobler
     python_pysal

@@ -1,4 +1,5 @@
 function build_python_pymssql() {
+  mkdir -p $BUILD_python_pymssql
   try cd $BUILD_python_pymssql
   push_env
 

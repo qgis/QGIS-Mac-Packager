@@ -1,4 +1,5 @@
 function build_python_cryptography() {
+  mkdir -p ${DEPS_BUILD_PATH}/python_cryptography/build-$ARCH
   try cd ${DEPS_BUILD_PATH}/python_cryptography/build-$ARCH
 
   push_env

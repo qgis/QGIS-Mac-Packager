@@ -10,24 +10,13 @@ DEPS_python_cryptography=(
   python_packages
 )
 
-
-
-# default build path
-BUILD_python_cryptography=${DEPS_BUILD_PATH}/python_cryptography/v${VERSION_python_cryptography}
-
 # default recipe path
 RECIPE_python_cryptography=$RECIPES_PATH/python_cryptography
 
-# function called for preparing source code if needed
-# (you can apply patch etc here.)
-function prebuild_python_cryptography() {
-  try mkdir -p $BUILD_python_cryptography
-  cd $BUILD_python_cryptography
-}
 
 # function called after all the compile have been done
 function postbuild_python_cryptography() {
-   if ! python_package_installed_verbose fiona,cryptography; then
+   if ! python_package_installed_verbose cryptography; then
       error "Missing python package cryptography"
    fi
 }

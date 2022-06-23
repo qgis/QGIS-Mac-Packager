@@ -2,11 +2,7 @@
 
 DESC_python_fiona="python fiona"
 
-# keep in SYNC with proj receipt
-
 DEPS_python_fiona=(python python_packages gdal python_gdal)
-
-
 
 # default build path
 BUILD_python_fiona=${DEPS_BUILD_PATH}/python_fiona/$(get_directory $URL_python_fiona)

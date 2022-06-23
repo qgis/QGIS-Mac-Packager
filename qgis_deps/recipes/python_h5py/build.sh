@@ -1,4 +1,5 @@
 function build_python_h5py() {
+  mkdir -p $BUILD_python_h5py
   try cd $BUILD_python_h5py
   push_env
 
