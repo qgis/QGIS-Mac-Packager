@@ -14,10 +14,10 @@ env:
   APPLE_CODE_SIGN_IDENTITY: ${{ secrets.APPLE_CODE_SIGN_IDENTITY }}
   PACKAGES_OUTPUT: ${{ github.workspace }}
   SOURCE_PACKAGES_PATH: ${{ github.workspace }}/deps/.packages
-  BUILD_CACHE_PATH: ${{ github.workspace }}/deps/build
+  CACHE_PATH: ${{ github.workspace }}/deps/build
   QGIS_PRIVATE_SDKS_PATH: ${{ github.workspace }}/qgis-private-sdks
   QGIS_PRIVATE_SDK_VERSION: "0.10"
-  CACHE_VERSION: 4
+  CACHE_VERSION: 5
 
 
 jobs:
@@ -53,7 +53,7 @@ jobs:
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
           mkdir -p ${SOURCE_PACKAGES_PATH}
-          mkdir -p ${BUILD_CACHE_PATH}
+          mkdir -p ${CACHE_PATH}
           sudo mkdir -p ${ROOT_OUT_PATH}
           sudo mkdir -p ${DEPS_BUILD_PATH}
           echo "VERSIONS_CONF_MD5=$(md5 -r qgis_deps/versions.conf | cut -d\  -f1)" >> $GITHUB_ENV
@@ -62,7 +62,7 @@ jobs:
         id: cache-build
         uses: pat-s/always-upload-cache@v3
         with:
-          path: ${{ env.BUILD_CACHE_PATH }}
+          path: ${{ env.CACHE_PATH }}
           key: cache-qgis-deps-build-${{ env.CACHE_VERSION }}-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ github.ref }}-${{ github.sha }}
           restore-keys: |
             cache-qgis-deps-build-${{ env.CACHE_VERSION }}-${{ env.QGIS_DEPS_RELEASE_VERSION }}-
@@ -71,12 +71,12 @@ jobs:
 
       - name: Move cache build
         run: |
-          sudo mv ${{ env.BUILD_CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
+          sudo mv ${{ env.CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
           ls -la ${{ env.DEPS_BUILD_PATH }}
 
       - name: Cache packages
         id: cache-packages
-        uses: actions/cache@v3
+        uses: pat-s/always-upload-cache@v3
         with:
           path: ${{ env.SOURCE_PACKAGES_PATH }}
           key: cache-qgis-deps-packages-${{ env.QGIS_DEPS_RELEASE_VERSION }}-${{ env.VERSIONS_CONF_MD5 }}
@@ -129,8 +129,8 @@ jobs:
         if: failure()
         run: |
           sudo rm ${DEPS_BUILD_PATH}/last-build.log || true
-          sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
-          sudo chown -R $(whoami) ${{ env.BUILD_CACHE_PATH }}
+          sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.CACHE_PATH }}
+          sudo chown -R $(whoami) ${{ env.CACHE_PATH }}
 
       - name: create package
         run: |
@@ -140,8 +140,8 @@ jobs:
       - name: move build to cache dir
         run: |
           sudo rm ${DEPS_BUILD_PATH}/last-build.log || true
-          sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.BUILD_CACHE_PATH }}
-          sudo chown -R $(whoami) ${{ env.BUILD_CACHE_PATH }}
+          sudo mv ${{ env.ROOT_OUT_PATH }} ${{ env.CACHE_PATH }}
+          sudo chown -R $(whoami) ${{ env.CACHE_PATH }}
 
       - uses: Apple-Actions/import-codesign-certs@v1
         with:
