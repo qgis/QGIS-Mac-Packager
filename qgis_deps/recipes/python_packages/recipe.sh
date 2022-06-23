@@ -2,7 +2,6 @@
 
 DESC_python_packages="Common packages for python (pre)"
 
-
 DEPS_python_packages=(python python_sip python_pyqt5 little_cms2 libyaml)
 
 # default build path
@@ -108,6 +107,7 @@ REQUIREMENTS_python_packages=(
     snuggs==1.4.7
     affine==2.3.0
     fonttools==4.31.2
+    cppy==1.2.1
 )
 
 IMPORTS_python_packages=(
