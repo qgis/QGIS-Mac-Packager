@@ -6,7 +6,6 @@ DESC_python_all="python and all its site-packages"
 DEPS_python_all=(
     python
     python_packages
-    python_kiwisolver
     python_matplotlib
     python_llvmlite
     python_pymssql

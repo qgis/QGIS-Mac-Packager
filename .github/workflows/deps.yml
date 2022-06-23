@@ -17,7 +17,7 @@ env:
   CACHE_PATH: ${{ github.workspace }}/deps/build
   QGIS_PRIVATE_SDKS_PATH: ${{ github.workspace }}/qgis-private-sdks
   QGIS_PRIVATE_SDK_VERSION: "0.10"
-  CACHE_VERSION: 5
+  CACHE_VERSION: 6
 
 
 jobs:
@@ -72,7 +72,6 @@ jobs:
       - name: Move cache build
         run: |
           sudo mv ${{ env.CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
-          ls -la ${{ env.ROOT_OUT_PATH }}/stage
 
       - name: Cache packages
         id: cache-packages

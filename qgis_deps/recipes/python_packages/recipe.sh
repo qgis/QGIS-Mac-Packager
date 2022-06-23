@@ -108,6 +108,7 @@ REQUIREMENTS_python_packages=(
     affine==2.3.0
     fonttools==4.31.2
     cppy==1.2.1
+    kiwisolver==1.4.3
 )
 
 IMPORTS_python_packages=(
