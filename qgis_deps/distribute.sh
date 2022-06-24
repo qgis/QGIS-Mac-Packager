@@ -628,7 +628,7 @@ function download_file() {
 
     if ( [[ -d ${source_directory} ]] || [[ -d ${build_directory} ]] ) && [[ ${do_prebuild} -eq 1 ]] && ( [[ ${do_download} -eq 1 ]] || [[ "$(recipe_has_changed "${d_module}" recipe)" == "1" ]]); then
       info "Recipe has changed, removing the existing source and build directories"
-      rm ${DEPS_BUILD_PATH}/${module}/.build
+      rm ${DEPS_BUILD_PATH}/${module}/.build || true
       rm -rf ${DEPS_BUILD_PATH}/${d_module}/${source_directory}
       rm -rf ${build_directory}
     fi
@@ -708,11 +708,6 @@ function run_get_packages() {
     # if string is empty means we do not need to download anything
     if [[ -z ${url} ]]; then
       debug "${module} does not specified download URL, skipping"
-      if [[ "$(recipe_has_changed "${module}" recipe)" == "1" ]]; then
-        info "Recipe has changed, removing the existing source and build directories"
-        rm ${DEPS_BUILD_PATH}/${module}/.build
-        rm -rf ${DEPS_BUILD_PATH}/${module}/${source_directory}
-      fi
       continue
     fi
 

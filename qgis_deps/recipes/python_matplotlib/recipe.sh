@@ -5,8 +5,6 @@ DESC_python_matplotlib="python matplotlib"
 
 DEPS_python_matplotlib=(python python_packages python_numpy python_pillow fontconfig freetype)
 
-
-
 # default build path
 BUILD_python_matplotlib=${DEPS_BUILD_PATH}/python_matplotlib/$(get_directory $URL_python_matplotlib)
 
@@ -17,6 +15,7 @@ RECIPE_python_matplotlib=$RECIPES_PATH/python_matplotlib
 # (you can apply patch etc here.)
 function prebuild_python_matplotlib() {
   cd $BUILD_python_matplotlib
+  #try patch --verbose --forward -p1 < $RECIPE_python_matplotlib/setup.py.patch
   try rsync -a $BUILD_python_matplotlib/ ${DEPS_BUILD_PATH}/python_matplotlib/build-${ARCH}
 }
 

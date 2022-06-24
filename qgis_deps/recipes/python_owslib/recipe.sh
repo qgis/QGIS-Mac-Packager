@@ -5,20 +5,11 @@ DESC_python_owslib="Python Open Geospatial Consortium (OGC) web service"
 
 DEPS_python_owslib=(python python_pyproj python_gdal python_packages)
 
-
-
 # default build path
 BUILD_python_owslib=${DEPS_BUILD_PATH}/python_owslib/v${VERSION_python_owslib}
 
 # default recipe path
 RECIPE_python_owslib=$RECIPES_PATH/python_owslib
-
-# function called for preparing source code if needed
-# (you can apply patch etc here.)
-function prebuild_python_owslib() {
-  try mkdir -p $BUILD_python_owslib
-  cd $BUILD_python_owslib
-}
 
 # function called after all the compile have been done
 function postbuild_python_owslib() {

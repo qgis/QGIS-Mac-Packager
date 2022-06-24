@@ -8,6 +8,7 @@ DEPS_qgis_deps=(
     boost
     exiv2
     flex
+    pdal
     gdal
     fastcgi
     grass

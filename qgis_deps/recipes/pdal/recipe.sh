@@ -3,9 +3,9 @@
 DESC_pdal="Point data abstraction library"
 
 
-LINK_libpdalcpp=libpdalcpp.13.dylib
-LINK_libpdal_plugin_kernel_fauxplugin=libpdal_plugin_kernel_fauxplugin.13.dylib
-LINK_libpdal_util=libpdal_util.13.dylib
+LINK_libpdalcpp=libpdalcpp.14.dylib
+LINK_libpdal_plugin_kernel_fauxplugin=libpdal_plugin_kernel_fauxplugin.14.dylib
+LINK_libpdal_util=libpdal_util.14.dylib
 
 DEPS_pdal=(
   gdal

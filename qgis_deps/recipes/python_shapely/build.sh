@@ -1,4 +1,5 @@
 function build_python_shapely() {
+  mkdir -p $BUILD_python_shapely
   try cd $BUILD_python_shapely
   push_env
 
