@@ -11,13 +11,6 @@ BUILD_python_psycopg2=${DEPS_BUILD_PATH}/python_psycopg2/v${VERSION_python_psyco
 # default recipe path
 RECIPE_python_psycopg2=$RECIPES_PATH/python_psycopg2
 
-# function called for preparing source code if needed
-# (you can apply patch etc here.)
-function prebuild_python_psycopg2() {
-  try mkdir -p $BUILD_python_psycopg2
-  cd $BUILD_python_psycopg2
-}
-
 # function called after all the compile have been done
 function postbuild_python_psycopg2() {
    if ! python_package_installed_verbose psycopg2; then

@@ -118,7 +118,7 @@ jobs:
         run: |
           cd qgis_deps
           sudo -E ./distribute.sh ${{ env.QGIS_DEPS_RELEASE_VERSION }} -m${{ env.MODULE }}
-        timeout-minutes: 320
+        timeout-minutes: 300
 
       - name: log
         if: failure()

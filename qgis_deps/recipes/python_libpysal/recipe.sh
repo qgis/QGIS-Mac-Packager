@@ -14,6 +14,7 @@ DEPS_python_libpysal=(
   python_geopandas
   python_numba
   python_rasterio
+  python_spopt
 )
 
 
