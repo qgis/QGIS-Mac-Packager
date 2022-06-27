@@ -5,7 +5,6 @@ DESC_python_spaghetti="SPAtial GrapHs: nETworks, Topology, & Inference"
 DEPS_python_spaghetti=(
   spatialite
   python_numpy
-  python_pysal
   python_rtree
   python_scipy
 )
