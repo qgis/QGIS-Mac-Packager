@@ -72,6 +72,8 @@ jobs:
       - name: Move cache build
         run: |
           sudo mv ${{ env.CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
+          ls ${BUILD_PATH}
+          ls ${STAGE_PATH}
 
       - name: Cache packages
         id: cache-packages
