@@ -50,12 +50,12 @@ jobs:
           source qgis_deps/config/deps-${QGIS_DEPS_RELEASE_VERSION}.conf
           echo "ROOT_OUT_PATH=${ROOT_OUT_PATH}" >> $GITHUB_ENV
           echo "DEPS_BUILD_PATH=${DEPS_BUILD_PATH}" >> $GITHUB_ENV
+          echo "STAGE_PATH=${STAGE_PATH}" >> $GITHUB_ENV
           echo "PACKAGES_PATH=${PACKAGES_PATH}" >> $GITHUB_ENV
           echo "VERSION_QT=${VERSION_QT}" >> $GITHUB_ENV
           mkdir -p ${SOURCE_PACKAGES_PATH}
           mkdir -p ${CACHE_PATH}
           sudo mkdir -p ${ROOT_OUT_PATH}
-          sudo mkdir -p ${DEPS_BUILD_PATH}
           echo "VERSIONS_CONF_MD5=$(md5 -r qgis_deps/versions.conf | cut -d\  -f1)" >> $GITHUB_ENV
 
       - name: Cache build
@@ -74,15 +74,23 @@ jobs:
           sudo mv ${{ env.CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
           echo "***"
           echo "ROOT_OUT_PATH: ${ROOT_OUT_PATH}"
+          echo ""
           ls ${ROOT_OUT_PATH}
           echo ""
           echo "***"
           echo "DEPS_BUILD_PATH: ${DEPS_BUILD_PATH}"
+          echo ""
           ls ${DEPS_BUILD_PATH}
           echo ""
           echo "***"
           echo "STAGE_PATH: ${STAGE_PATH}"
+          echo ""
           ls ${STAGE_PATH}
+          echo ""
+          echo "***"
+
+          sudo mkdir -p ${DEPS_BUILD_PATH}
+
 
       - name: Cache packages
         id: cache-packages

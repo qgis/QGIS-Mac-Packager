@@ -13,7 +13,7 @@ function build_libicu() {
   try $MAKESMP install
 
   # not sure why, but the original file seems corrupted after installtion
-  cp ${DEPS_BUILD_PATH}/libicu/build-$ARCH/icu4c/source/lib/libicudata.${VERSION_libicu}.dylib ${STAGE_PATH}/lib/libicudata.${VERSION_libicu}.dylib
+  cp ${DEPS_BUILD_PATH}/libicu/build-$ARCH/source/lib/libicudata.${VERSION_libicu}.dylib ${STAGE_PATH}/lib/libicudata.${VERSION_libicu}.dylib
 
   targets=(
     libicudata.${VERSION_libicu}.dylib
