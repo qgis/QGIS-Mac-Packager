@@ -72,6 +72,9 @@ jobs:
       - name: Move cache build
         run: |
           sudo mv ${{ env.CACHE_PATH }} ${{ env.ROOT_OUT_PATH }}
+          sudo mkdir -p ${DEPS_BUILD_PATH}
+          sudo mkdir -p ${STAGE_PATH}
+
           echo "***"
           echo "ROOT_OUT_PATH: ${ROOT_OUT_PATH}"
           echo ""
@@ -88,9 +91,6 @@ jobs:
           ls ${STAGE_PATH}
           echo ""
           echo "***"
-
-          sudo mkdir -p ${DEPS_BUILD_PATH}
-
 
       - name: Cache packages
         id: cache-packages
