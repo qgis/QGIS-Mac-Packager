@@ -5,7 +5,7 @@ DESC_python_qscintilla="QScintilla package for python"
 # keep in SYNC with qscintilla receipt
 
 # depends on PyQt5
-DEPS_python_qscintilla=(python qscintilla python_sip python_pyqt5 python_packages)
+DEPS_python_qscintilla=(python qscintilla python_sip python_pyqt5 python_packages python_pyqt_builder)
 
 # default build path
 BUILD_python_qscintilla=${DEPS_BUILD_PATH}/python_qscintilla/$(get_directory $URL_python_qscintilla)
@@ -17,7 +17,7 @@ RECIPE_python_qscintilla=$RECIPES_PATH/python_qscintilla
 # (you can apply patch etc here.)
 function prebuild_python_qscintilla() {
   cd $BUILD_python_qscintilla
-  try rsync -a $BUILD_python_qscintilla/ ${DEPS_BUILD_PATH}/python_qscintilla/build-${ARCH}
+  try rsync -a $BUILD_python_qscintilla/Python/ ${DEPS_BUILD_PATH}/python_qscintilla/build-${ARCH}
 
   # without QtWidgets it cannot compile with
   # fatal error: 'QAbstractScrollArea' file not found

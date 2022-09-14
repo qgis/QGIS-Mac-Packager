@@ -18,7 +18,7 @@ RECIPE_qscintilla=$RECIPES_PATH/qscintilla
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_qscintilla() {
-  cd $BUILD_qscintilla/Qt4Qt5
+  cd $BUILD_qscintilla/src
 
   # Install in stage path
   try ${SED} "s;\$\$\[QT_INSTALL_LIBS\];$STAGE_PATH/lib;g" qscintilla.pro

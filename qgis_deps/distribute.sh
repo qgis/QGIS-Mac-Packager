@@ -797,7 +797,7 @@ function run_create_config_file() {
 
   append_to_config_file "export VERSION_major_python=${VERSION_major_python}"
   append_to_config_file "export VERSION_QT=${VERSION_QT}"
-  append_to_config_file "export QT_BASE=/opt/Qt/${VERSION_QT}"
+  append_to_config_file "export QT_BASE=${QT_BASE}"
   append_to_config_file "export MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}"
   append_to_config_file "export QGIS_DEPS_SDK_VERSION=${QGIS_DEPS_SDK_VERSION}"
 
