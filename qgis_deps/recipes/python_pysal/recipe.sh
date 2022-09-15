@@ -8,6 +8,8 @@ DEPS_python_pysal=(
   python_libpysal
   python_tobler
   python_momepy
+  python_splot
+  python_segregation
 )
 
 # default build path

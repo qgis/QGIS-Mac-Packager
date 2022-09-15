@@ -109,6 +109,8 @@ REQUIREMENTS_python_packages=(
     fonttools==4.31.2
     cppy==1.2.1
     kiwisolver==1.4.3
+    mpmath==1.2.1
+    rvlib==0.0.6
 )
 
 IMPORTS_python_packages=(
