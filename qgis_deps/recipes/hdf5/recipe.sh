@@ -2,10 +2,10 @@
 
 DESC_hdf5="File format designed to store large amounts of data"
 
-LINK_libhdf5=libhdf5.300.dylib
-LINK_libhdf5_cpp=libhdf5_cpp.300.dylib
-LINK_libhdf5_hl=libhdf5_hl.300.dylib
-LINK_libhdf5_hl_cpp=libhdf5_hl_cpp.300.dylib
+LINK_libhdf5=libhdf5.200.dylib
+LINK_libhdf5_cpp=libhdf5_cpp.200.dylib
+LINK_libhdf5_hl=libhdf5_hl.200.dylib
+LINK_libhdf5_hl_cpp=libhdf5_hl_cpp.200.dylib
 
 DEPS_hdf5=(zlib szip)
 
