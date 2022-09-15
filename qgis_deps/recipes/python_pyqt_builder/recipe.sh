@@ -3,7 +3,7 @@
 DESC_python_pyqt_builder="pyqt_builder bindings package for python"
 
 
-DEPS_python_pyqt_builder=(python)
+DEPS_python_pyqt_builder=(python python_sip)
 
 # default build path
 BUILD_python_pyqt_builder=${DEPS_BUILD_PATH}/python_pyqt_builder/v${VERSION_python_pyqt_builder}
