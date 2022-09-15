@@ -4,6 +4,7 @@ DESC_python_spaghetti="SPAtial GrapHs: nETworks, Topology, & Inference"
 
 DEPS_python_spaghetti=(
   spatialite
+  python_libpysal
   python_numpy
   python_rtree
   python_scipy
@@ -18,8 +19,8 @@ RECIPE_python_spaghetti=$RECIPES_PATH/python_spaghetti
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_python_spaghetti() {
-  try mkdir -p $BUILD_python_spaghetti
   cd $BUILD_python_spaghetti
+  try rsync -a $BUILD_python_spaghetti/ ${DEPS_BUILD_PATH}/python_spaghetti/build-${ARCH}
 }
 
 # function called after all the compile have been done

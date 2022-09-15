@@ -3,7 +3,8 @@
 DESC_python_spopt="A library of spatial analysis functions."
 
 DEPS_python_spopt=(
-  python_spaghetti
+  python_pulp
+  python_libpysal
 )
 
 # default build path

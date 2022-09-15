@@ -6,6 +6,8 @@ DEPS_python_pysal=(
   python
   python_packages
   python_libpysal
+  python_tobler
+  python_momepy
 )
 
 # default build path

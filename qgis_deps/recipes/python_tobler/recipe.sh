@@ -10,6 +10,7 @@ DEPS_python_tobler=(
   python_statsmodels
   python_scipy
   python_libpysal
+  python_pygeos
 )
 
 # default build path

@@ -15,7 +15,7 @@ RECIPE_python_packages=$RECIPES_PATH/python_packages
 REQUIREMENTS_python_packages=(
     six==1.16.0
     python-dateutil==2.8.2
-    cython==0.29.28
+    cython==0.29.32
     decorator==5.1.1
     coverage==6.3.2
     nose2==0.11.0
