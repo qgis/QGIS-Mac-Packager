@@ -5,6 +5,7 @@
 
 set -o pipefail
 
+
 source ../scripts/utils.sh
 
 function pop_env() {
@@ -46,6 +47,7 @@ ARCH=x86_64
 DO_CLEAN_BUILD=0
 DO_SET_X=0
 DEBUG=0
+
 
 # Load configuration
 QGIS_DEPS_RELEASE_VERSION=${1}
@@ -495,7 +497,7 @@ function run_source_modules() {
 
     # check if the module have already been declared
     if [[ $(in_array ${module} "${processed[@]}") -ne -1 ]]; then
-      debug "Ignored ${module}, already processed"
+      # debug "Ignored ${module}, already processed"
       continue;
     fi
 
@@ -503,7 +505,7 @@ function run_source_modules() {
     processed=( ${processed[@]} ${module} )
 
     # read recipe
-    debug "Read ${module} recipe"
+    #debug "Read ${module} recipe"
     recipe=${RECIPES_PATH}/${module}/recipe.sh
     if [ ! -f ${recipe} ]; then
       error "Recipe ${module} does not exist"
@@ -516,7 +518,7 @@ function run_source_modules() {
     optional_deps="DEPS_OPTIONAL_${module}[@]"
     optional_deps=${!optional_deps}
     if [ ${#deps[*]} -gt 0 ]; then
-      debug "Module ${module} depend on" ${deps[@]}
+      #debug "Module ${module} depends on" ${deps[@]}
       needed=( ${needed[@]} ${deps[@]} )
       echo ${module} ${deps[@]} >> ${fn_deps}
     else

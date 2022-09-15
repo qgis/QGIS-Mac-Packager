@@ -7,6 +7,7 @@ CGRAY="\x1b[30;01m"
 CRESET="\x1b[39;49;00m"
 
 
+
 function fold_push() {
   echo "::group::${1}"
 }

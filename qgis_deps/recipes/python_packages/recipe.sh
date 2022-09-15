@@ -74,7 +74,6 @@ REQUIREMENTS_python_packages=(
     spreg==1.2.4
     spvcm==0.3.0
     mapclassify==2.4.3
-    splot==1.1.4
     iniconfig==1.1.1
     more-itertools==8.12.0
     packaging==21.3
@@ -111,6 +110,17 @@ REQUIREMENTS_python_packages=(
     kiwisolver==1.4.3
     mpmath==1.2.1
     rvlib==0.0.6
+    quilt3==5.0.0
+    deprecation==2.1.0
+    requests_futures==1.0.0
+    tenacity==8.0.1
+    jsonlines==1.2.0
+    boto3==1.24.73
+    botocore==1.27.73
+    aws-requests-auth==0.4.3
+    s3transfer==0.6.0
+    jmespath==1.0.1
+    access==1.1.8
 )
 
 IMPORTS_python_packages=(
