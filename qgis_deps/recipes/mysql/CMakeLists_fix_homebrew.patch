@@ -1,0 +1,33 @@
+--- a/CMakeLists.txt	2022-07-06 23:36:34.000000000 +0200
++++ b/CMakeLists.txt	2022-09-16 09:42:32.000000000 +0200
+@@ -192,7 +192,7 @@ ENDIF()
+ # We need to look for gcc before calling PROJECT below.
+ OPTION(FORCE_UNSUPPORTED_COMPILER "Disable compiler version checks" OFF)
+ MARK_AS_ADVANCED(WITHOUT_SERVER FORCE_UNSUPPORTED_COMPILER)
+-
++  
+ # Use 'uname -r' and 'rpm -qf /' to figure out host system.
+ # For Docker images we cannot trust uname, so use rpm instead.
+ IF(UNIX)
+@@ -1928,21 +1928,6 @@ MYSQL_CHECK_FIDO()
+ MYSQL_CHECK_FIDO_DLLS()
+ 
+ IF(APPLE)
+-  GET_FILENAME_COMPONENT(HOMEBREW_BASE ${HOMEBREW_HOME} DIRECTORY)
+-  IF(EXISTS ${HOMEBREW_BASE}/include/boost)
+-    FOREACH(SYSTEM_LIB ICU LIBEVENT LZ4 PROTOBUF ZSTD FIDO)
+-      IF(WITH_${SYSTEM_LIB} STREQUAL "system")
+-        MESSAGE(FATAL_ERROR
+-          "WITH_${SYSTEM_LIB}=system is not compatible with Homebrew boost\n"
+-          "MySQL depends on ${BOOST_PACKAGE_NAME} with a set of patches.\n"
+-          "Including headers from ${HOMEBREW_BASE}/include "
+-          "will break the build.\n"
+-          "Please use WITH_${SYSTEM_LIB}=bundled\n"
+-          "or do 'brew uninstall boost' or 'brew unlink boost'"
+-          )
+-      ENDIF()
+-    ENDFOREACH()
+-  ENDIF()
+   # Ensure that we look in /usr/local/include or /opt/homebrew/include
+   FOREACH(SYSTEM_LIB ICU LIBEVENT LZ4 PROTOBUF ZSTD FIDO)
+     IF(WITH_${SYSTEM_LIB} STREQUAL "system")

@@ -143,12 +143,19 @@ jobs:
         if: failure()
         run: cat ${DEPS_BUILD_PATH}/last-build.log
 
+      - name: upload log
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: qmp-build-failed.log
+          path: ${DEPS_BUILD_PATH}/last-build.log
+
       - name: move build to cache dir if build failed
         if: failure()
         run: |
           sudo rm ${DEPS_BUILD_PATH}/last-build.log || true
           sudo mv ${{ env.DEPS_BUILD_PATH }} ${{ env.CACHE_PATH }}
-          sudo chown -R $(whoami) ${{ env.CACHE_PATH }}
+          sudo chown -R $(whoami) ${{ env.CACHE_PATH }}  
 
       - name: create package
         run: |

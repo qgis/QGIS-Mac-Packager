@@ -16,6 +16,7 @@ RECIPE_mysql=$RECIPES_PATH/mysql
 # (you can apply patch etc here.)
 function prebuild_mysql() {
   cd $BUILD_mysql
+  try patch --verbose --forward -p1 < $RECIPE_mysql/CMakeLists_fix_homebrew.patch
 }
 
 # function called after all the compile have been done
