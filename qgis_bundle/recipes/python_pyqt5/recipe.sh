@@ -28,7 +28,9 @@ function fix_binaries_python_pyqt5() {
     QtPositioning \
     QtPrintSupport \
     QtQml \
+    QtQmlModels \
     QtQuick \
+    QtQuickControls2 \
     QtQuick3D \
     QtQuickWidgets \
     QtRemoteObjects \
