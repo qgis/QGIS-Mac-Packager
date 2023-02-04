@@ -199,6 +199,12 @@ function fix_binaries_qgis() {
     TOPOLOGYPLUGIN=PlugIns/qgis/$(qgis_libname plugin topology).so
   fi
 
+  # geonode provider dropped in 3.29
+  GEONODEPROVIDER=
+  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider geonode).so" ]; then
+    GEONODEPROVIDER=PlugIns/qgis/$(qgis_libname provider geonode).so
+  fi
+
   # https://github.com/qgis/QGIS/pull/43559
 
   for i in \
@@ -237,7 +243,7 @@ function fix_binaries_qgis() {
     PlugIns/qgis/$(qgis_libname provider delimitedtext).so \
     $GPSPLUGIN \
     PlugIns/qgis/$(qgis_libname provider spatialite).so \
-    PlugIns/qgis/$(qgis_libname provider geonode).so \
+    $GEONODEPROVIDER \
     PlugIns/qgis/$(qgis_libname provider grassraster)${VERSION_grass_major}.so \
     PlugIns/qgis/$(qgis_libname provider wfs).so \
     PlugIns/qgis/$(qgis_libname authmethod oauth2).so \
