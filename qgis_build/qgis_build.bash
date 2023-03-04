@@ -46,12 +46,6 @@ try mkdir -p "$QGIS_INSTALL_DIR"
 # run cmake
 cd $QGIS_BUILD_DIR
 
-if [[ "$WITH_HANA" == "true" ]]; then
-  HANA_CMAKE="-DWITH_HANA=TRUE"
-else
-  HANA_CMAKE="-DWITH_HANA=FALSE"
-fi
-
 if [[ "$WITH_ORACLE" == "true" ]]; then
   ORACLE_SDK="$QGIS_BUILD_SCRIPT_DIR/../../external/oracle/sdk"
   if [ ! -d "$ORACLE_SDK" ]; then
@@ -77,7 +71,7 @@ echo "Using $CXX compiler"
 # SERVER_SKIP_ECW == ECW in server apps requires a special license
 PATH=$ROOT_OUT_PATH/stage/bin:$PATH \
 cmake -DCMAKE_BUILD_TYPE=Release \
-      $HANA_CMAKE \
+      -DWITH_HANA=TRUE \
       $ORACLE_CMAKE \
       -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DODBC_CONFIG=$ROOT_OUT_PATH/stage/unixodbc/bin/odbc_config \

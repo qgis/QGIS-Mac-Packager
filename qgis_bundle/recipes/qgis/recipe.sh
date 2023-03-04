@@ -85,17 +85,12 @@ function bundle_qgis() {
 }
 
 function qgis_libname() {
-   _module=$1
-   _lib=$2
-   if [[ "$_module" != "plugin" && "$QGIS_321_PROVIDER_NAMES" == "true" ]] ||
-      [[ "$_module" == "plugin" && "$QGIS_323_PLUGIN_NAMES" == "true" ]]; then
-     # new way
-     # libprovider_db2.so
-     echo "lib${_module}_${_lib}"
-   else
-     # old way
-     # libdb2provider.so
-     echo "lib${_lib}${_module}"
+  _module=$1
+  _lib=$2
+  if [[ "$_module" == "plugin" ]]; then
+    echo "lib${_module}_${_lib}"
+  else
+    echo "lib${_lib}${_module}"
    fi
 }
 
@@ -134,10 +129,6 @@ function fix_binaries_qgis() {
   install_name_add_rpath @executable_path/../../../../lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
   install_name_add_rpath @executable_path/../../../../../Resources/grass${VERSION_grass_major}${VERSION_grass_minor}/lib $BUNDLE_CONTENTS_DIR/MacOS/lib/qgis/grass/bin/qgis.g.browser7
 
-  if [[ "$WITH_HANA" == "true" ]]; then
-    HANA_PROVIDER=PlugIns/qgis/$(qgis_libname provider hana).so
-  fi
-
   if [[ "$WITH_ORACLE" == "true" ]]; then
     ORACLE_PROVIDER=PlugIns/qgis/$(qgis_libname provider oracle).so
   fi
@@ -153,12 +144,6 @@ function fix_binaries_qgis() {
   OWSPROVIDER=
   if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider ows).so" ]; then
     OWSPROVIDER=PlugIns/qgis/$(qgis_libname provider ows).so
-  fi
-
-  # db2 provider removed in 3.25
-  DB2PROVIDER=
-  if [ -f "$BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider db2).so" ]; then
-    DB2PROVIDER=PlugIns/qgis/$(qgis_libname provider db2).so
   fi
 
   # REMOVE when LTS is >= 3.22
@@ -223,7 +208,7 @@ function fix_binaries_qgis() {
     Frameworks/qgis_analysis.framework/Versions/$QGIS_VERSION/qgis_analysis \
     Frameworks/qgis_gui.framework/Versions/$QGIS_VERSION/qgis_gui \
     Frameworks/qgisgrass${VERSION_grass_major}.framework/Versions/$QGIS_VERSION/qgisgrass${VERSION_grass_major} \
-    $HANA_PROVIDER \
+    PlugIns/qgis/$(qgis_libname provider hana).so \
     $ORACLE_PROVIDER \
     $PDALPROVIDER \
     $UNTWINE \
@@ -232,7 +217,6 @@ function fix_binaries_qgis() {
     $MAPTILER \
     $AWSS3 \
     PlugIns/qgis/$(qgis_libname plugin geometrychecker).so \
-    $DB2PROVIDER \
     PlugIns/qgis/$(qgis_libname authmethod identcert).so \
     $TOPOLOGYPLUGIN \
     PlugIns/qgis/$(qgis_libname provider gpx).so \
@@ -377,11 +361,6 @@ function fix_binaries_qgis_check() {
   ## UNTWINE
   if [[ "$WITH_PDAL" == "true" ]]; then
     verify_binary $BUNDLE_LIB_DIR/qgis/untwine
-  fi
-
-  ## DB2
-  if [[ -f $BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider db2).so ]]; then
-    verify_binary $BUNDLE_CONTENTS_DIR/PlugIns/qgis/$(qgis_libname provider db2).so
   fi
 }
 
