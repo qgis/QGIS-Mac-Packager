@@ -87,11 +87,7 @@ function bundle_qgis() {
 function qgis_libname() {
   _module=$1
   _lib=$2
-  if [[ "$_module" == "plugin" ]]; then
-    echo "lib${_module}_${_lib}"
-  else
-    echo "lib${_lib}${_module}"
-   fi
+  echo "lib${_module}_${_lib}"
 }
 
 function fix_binaries_qgis() {
