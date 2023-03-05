@@ -66,7 +66,7 @@ To know when we release, see [QGIS release schedule](https://www.qgis.org/en/sit
     - On Machine where you created request, export private key and copy and install on server too.
     - install p12 cert to `login` identity
     - `security find-identity -v` to find existing identities 
-    - create `sing_identity.txt` with the ID of your identity
+    - create `sign_identity.txt` with the ID of your identity
     - allow to use it in cronjob (https://stackoverflow.com/a/20324331/2838364)
     - create symbolic link to keychain with the imported identity
     - if used for signing the qgis-deps, you may need to "unlock" it in KeyChain Access App 
