@@ -73,7 +73,7 @@ if [ $PKG = "nightly" ]; then
     echo "invalid config file (1st argument) $CONFIG_FILE"
   fi
   source $CONFIG_FILE
-	if ! PATH=$QT_BASE/clang_64/bin:$DEPS_BIN_DIR:$PATH scripts/pull_ts.sh; then
+	if ! PATH=$QT_BASE/bin:$DEPS_BIN_DIR:$PATH scripts/pull_ts.sh; then
 		echo "Pulling translations failed [$?]"
 		rm -rvf i18n doc/TRANSLATORS
 		git checkout

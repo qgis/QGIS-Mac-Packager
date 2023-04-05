@@ -47,11 +47,11 @@ fi
 # Create QT package
 QT_PACKAGE_FILE=qt-${VERSION_qt}.tar.gz
 QT_PACKAGE=$ROOT_OUT_PATH/${QT_PACKAGE_FILE}
-QT_INSTALL_DIR=\$\{QGIS_DEPS_PREFIX\}$QT_BASE/clang_64
+QT_INSTALL_DIR=\$\{QGIS_DEPS_PREFIX\}$QT_BASE
 if [ -f $QT_PACKAGE ]; then
   echo "Archive $QT_PACKAGE exists, skipping"
 else
-  cd $QT_BASE/clang_64
+  cd $QT_BASE
   $COMPRESS ${QT_PACKAGE} ./
   cd $PWD
 fi

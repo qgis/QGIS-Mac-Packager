@@ -39,7 +39,7 @@ Build QGIS
 cd <qgis-build-dir>
 PATH=<qgis-deps>/stage/bin:$PATH \
 cmake -DQGIS_MAC_DEPS_DIR=<qgis-deps>/stage \
-      -DCMAKE_PREFIX_PATH=<qt-path>/clang_64 \
+      -DCMAKE_PREFIX_PATH=<qt-path> \
       -DQGIS_MACAPP_BUNDLE=0 \
       -DWITH_QT5SERIALPORT=FALSE \
       -DWITH_GRASS=OFF \

@@ -84,10 +84,10 @@ function check_config_conf_vars() {
       error "No QT_BASE environment set, abort"
     fi
 
-    if [ -f "$QT_BASE/clang_64/bin/qmake" ]; then
+    if [ -f "$QT_BASE/bin/qmake" ]; then
        debug "Using QT: $QT_BASE"
     else
-       error "The file '$QT_BASE/clang_64/bin/qmake' in not found."
+       error "The file '$QT_BASE/bin/qmake' in not found."
     fi
 
     if [ "X$ROOT_OUT_PATH" == "X" ]; then
@@ -113,11 +113,24 @@ QGIS_SITE_PACKAGES_PATH=${STAGE_PATH}/lib/python${VERSION_major_python}/site-pac
 BUILD_CONFIG_FILE="${STAGE_PATH}/qgis-deps.config"
 
 function add_homebrew_path() {
-   # info "Adding /usr/local/opt/$1/bin to PATH"
-   if [ ! -d "/usr/local/opt/$1/bin" ]; then
-     error "Missing homebrew $1 /usr/local/opt/$1/bin"
-   fi
-   export PATH="/usr/local/opt/$1/bin:$PATH"
+  HOMEBREW_USR_LOCAL=0
+  HOMEBREW_OPT_HOMEBREW=0
+  # info "Adding /usr/local/opt/$1/bin to PATH"
+  if [ ! -d "/usr/local/opt/$1/bin" ]; then
+    HOMEBREW_USR_LOCAL=0
+  else
+    HOMEBREW_USR_LOCAL=1
+    export PATH="/usr/local/opt/$1/bin:$PATH"
+  fi
+  if [ ! -d "/opt/homebrew/opt/$1/bin" ]; then
+    HOMEBREW_OPT_HOMEBREW=0
+  else
+    HOMEBREW_OPT_HOMEBREW=1
+    export PATH="/opt/homebrew/opt/$1/bin:$PATH"
+  fi
+  if [ $HOMEBREW_USR_LOCAL -eq 0 ] && [ $HOMEBREW_OPT_HOMEBREW -eq 0 ]; then
+    error "Missing homebrew $1 /usr/local/opt/$1/bin and /opt/homebrew/opt/$1/bin"
+  fi
 }
 
 function check_file_configuration() {
@@ -243,7 +256,7 @@ function push_env() {
     export LDFLAGS="-L$STAGE_PATH/lib"
     export CXXFLAGS="${CFLAGS}"
 
-    export PATH="${PATH}:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin:$QT_BASE/clang_64/bin"
+    export PATH="${PATH}:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin:$QT_BASE/bin"
 
     # export some tools
     export MAKESMP="/usr/bin/make -j$CORES"
@@ -271,7 +284,7 @@ function push_env() {
       CMAKE="${CMAKE} -DCMAKE_BUILD_TYPE=Release"
     fi
     export CMAKE="${CMAKE} -DCMAKE_INSTALL_PREFIX:PATH=$STAGE_PATH"
-    export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64"
+    export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=FALSE"
     export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=OFF"

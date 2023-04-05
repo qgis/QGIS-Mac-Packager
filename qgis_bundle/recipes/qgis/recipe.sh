@@ -95,7 +95,7 @@ function fix_binaries_qgis() {
 
   # RPATHS
   install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_CONTENTS_DIR/MacOS/QGIS
-  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
+  install_name_delete_rpath $QT_BASE/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
   install_name_delete_rpath $QGIS_CONTENTS_DIR/MacOS/lib $BUNDLE_CONTENTS_DIR/MacOS/QGIS
 
   install_name_add_rpath @executable_path/../Frameworks $BUNDLE_CONTENTS_DIR/MacOS/QGIS

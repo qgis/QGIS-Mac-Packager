@@ -53,7 +53,7 @@ function build_qtextra() {
   # Check https://doc.qt.io/qt-5/sql-driver.html for available drivers
   # sqlite3 is already shipped with Qt
   # note that the plugins will not be useful in developer mode (building QGIS)
-  # , since they are not in <QT>/clang_64/plugins directory.
+  # , since they are not in <QT>/plugins directory.
   # make a symbolic link if you want to use it in the dev mode
   try mkdir -p ${STAGE_PATH}/qt5/plugins/sqldrivers
 

@@ -10,7 +10,7 @@ function check_qt() {
 }
 
 function bundle_qt() {
-  QT_ROOT_DIR=$QT_BASE/clang_64
+  QT_ROOT_DIR=$QT_BASE
 
   #### FRAMEWORKS
   for i in \

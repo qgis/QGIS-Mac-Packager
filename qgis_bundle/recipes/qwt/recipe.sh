@@ -9,7 +9,7 @@ function bundle_qwt() {
 }
 
 function fix_binaries_qwt() {
-  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_FRAMEWORKS_DIR/qwt.framework/Versions/$VERSION_qwt_major/qwt
+  install_name_delete_rpath $QT_BASE/lib $BUNDLE_FRAMEWORKS_DIR/qwt.framework/Versions/$VERSION_qwt_major/qwt
 }
 
 function fix_binaries_qwt_check() {
