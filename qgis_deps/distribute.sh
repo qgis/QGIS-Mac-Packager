@@ -38,7 +38,7 @@ echo "Loading configuration"
 XCODE_DEVELOPER="$(xcode-select -print-path)"
 CORES=$(sysctl -n hw.ncpu)
 export CORES=$CORES
-ARCH=x86_64
+ARCH=`uname -m`
 DO_CLEAN_BUILD=0
 DO_SET_X=0
 DEBUG=0
