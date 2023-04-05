@@ -266,7 +266,13 @@ function push_env() {
     export CXX="/usr/bin/clang++"
     export OBJCXX=${CXX}
     export OBJC=${CC}
-    export NINJA="/usr/local/bin/ninja"
+    if [ -f "/usr/local/bin/ninja" ]; then
+      export NINJA="/usr/local/bin/ninja"
+    elif [ -f "/opt/homebrew/bin/ninja" ]; then
+      export NINJA="/opt/homebrew/bin/ninja"
+    else
+      error "Please install ninja"
+    fi
     export LD="/usr/bin/ld"
     export PKG_CONFIG_PATH=$STAGE_PATH/lib/pkgconfig
 
