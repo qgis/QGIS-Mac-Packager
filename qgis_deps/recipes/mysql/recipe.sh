@@ -32,8 +32,6 @@ function prebuild_mysql() {
   fi
 
   touch .patched
-
-  exit 1
 }
 
 function shouldbuild_mysql() {
