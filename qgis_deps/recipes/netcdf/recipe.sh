@@ -3,17 +3,17 @@
 DESC_netcdf="Libraries and data formats for array-oriented scientific data"
 
 # version of your package
-VERSION_netcdf=4.7.3
+VERSION_netcdf=4.9.2
 LINK_netcdf=libnetcdf.15.dylib
 
 # dependencies of this recipe
 DEPS_netcdf=(libcurl)
 
 # url of the package
-URL_netcdf=https://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-c-${VERSION_netcdf}.tar.gz
+URL_netcdf=https://downloads.unidata.ucar.edu/netcdf-c/${VERSION_netcdf}/netcdf-c-${VERSION_netcdf}.tar.gz
 
 # md5 of the package
-MD5_netcdf=9e1d7f13c2aef921c854d87037bcbd96
+MD5_netcdf=f48ee01534365006934f0c63d4055ea0
 
 # default build path
 BUILD_netcdf=$BUILD_PATH/netcdf/$(get_directory $URL_netcdf)
