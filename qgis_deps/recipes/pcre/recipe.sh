@@ -13,7 +13,7 @@ DEPS_pcre=(
 )
 
 # url of the package
-URL_pcre=https://ftp.pcre.org/pub/pcre/pcre-$VERSION_pcre.tar.bz2
+URL_pcre=https://ftp.exim.org/pub/pcre/pcre-$VERSION_pcre.tar.bz2
 
 # md5 of the package
 MD5_pcre=cf7326204cc46c755b5b2608033d9d24
