@@ -4,7 +4,7 @@ DESC_netcdf="Libraries and data formats for array-oriented scientific data"
 
 # version of your package
 VERSION_netcdf=4.9.2
-LINK_netcdf=libnetcdf.15.dylib
+LINK_netcdf=libnetcdf.19.dylib
 
 # dependencies of this recipe
 DEPS_netcdf=(libcurl)
