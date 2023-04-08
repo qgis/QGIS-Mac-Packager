@@ -63,7 +63,8 @@ function build_postgres() {
   try $MAKE -C src/bin install
   try $MAKE -C src/include install
   try $MAKE -C src/interfaces install
-  try $MAKE -C doc install
+  # /usr/bin/xsltproc raise Unknown IO error
+  # try $MAKE -C doc install
 
   pop_env
 }
