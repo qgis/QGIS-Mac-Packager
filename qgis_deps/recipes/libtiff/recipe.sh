@@ -5,8 +5,8 @@ DESC_libtiff="TIFF library and utilities"
 # version of your package
 VERSION_libtiff=4.5.0
 
-LINK_libtiff=libtiff.5.dylib
-LINK_libtiffxx=libtiffxx.5.dylib
+LINK_libtiff=libtiff.6.dylib
+LINK_libtiffxx=libtiffxx.6.dylib
 
 # dependencies of this recipe
 DEPS_libtiff=(xz zstd webp jpeg lerc zlib)
