@@ -6,7 +6,7 @@ DESC_proj="Cartographic Projections Library"
 # keep in SYNC with python_pyproj receipt
 VERSION_proj=9.2.0
 
-LINK_libproj=libproj.22.dylib
+LINK_libproj=libproj.25.dylib
 
 # dependencies of this recipe
 DEPS_proj=(sqlite libxml2 openssl libtiff)
