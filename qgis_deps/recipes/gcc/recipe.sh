@@ -3,7 +3,7 @@
 DESC_gcc="gcc"
 
 # we need this to compile FORTRAN
-VERSION_gcc_major=10
+VERSION_gcc_major=12
 VERSION_gcc=${VERSION_gcc_major}.2.0
 
 LINK_libgfortran=libgfortran.5.dylib
@@ -17,7 +17,7 @@ DEPS_gcc=(zlib gmp mpfr libmpc)
 URL_gcc=https://ftp.gnu.org/gnu/gcc/gcc-${VERSION_gcc}/gcc-${VERSION_gcc}.tar.xz
 
 # md5 of the package
-MD5_gcc=e9fd9b1789155ad09bcf3ae747596b50
+MD5_gcc=73bafd0af874439dcdb9fc063b6fb069
 
 # default build path
 BUILD_gcc=$BUILD_PATH/gcc/$(get_directory $URL_gcc)
