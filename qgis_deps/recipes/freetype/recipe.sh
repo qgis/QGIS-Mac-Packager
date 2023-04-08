@@ -50,7 +50,7 @@ function build_freetype() {
 
   push_env
 
-  try ${CONFIGURE} --disable-debug
+  try ${CONFIGURE} --disable-debug --without-harfbuzz
 
   check_file_configuration config.status
   try $MAKESMP
