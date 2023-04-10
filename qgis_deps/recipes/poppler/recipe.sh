@@ -5,7 +5,7 @@ DESC_poppler="PDF rendering library (based on the xpdf-3.0 code base)"
 # version of your package
 VERSION_poppler=23.04.0
 
-LINK_poppler=libpoppler.101.dylib
+LINK_poppler=libpoppler.127.dylib
 LINK_poppler_cpp=libpoppler-cpp.0.dylib
 LINK_poppler_qt5=libpoppler-qt5.1.dylib
 
@@ -70,6 +70,7 @@ function build_poppler() {
     -DENABLE_QT5=ON \
     -DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
     -DWITH_GObjectIntrospection=ON \
+    -DCMAKE_CXX_FLAGS="-std=c++11 -isystem ${STAGE_PATH}/headers" \
     $BUILD_poppler
 
   check_file_configuration CMakeCache.txt
@@ -81,6 +82,7 @@ function build_poppler() {
   install_name_tool -id $STAGE_PATH/lib/$LINK_poppler_cpp $STAGE_PATH/lib/$LINK_poppler_cpp
   install_name_tool -id $STAGE_PATH/lib/$LINK_poppler_qt5 $STAGE_PATH/lib/$LINK_poppler_qt5
 
+  install_name_tool -change $BUILD_PATH/poppler/build-$ARCH/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler
   install_name_tool -change $BUILD_PATH/poppler/build-$ARCH/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler_cpp
   install_name_tool -change $BUILD_PATH/poppler/build-$ARCH/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler $STAGE_PATH/lib/$LINK_poppler_qt5
 
