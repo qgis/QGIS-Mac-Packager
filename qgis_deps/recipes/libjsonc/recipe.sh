@@ -28,7 +28,6 @@ RECIPE_libjsonc=$RECIPES_PATH/libjsonc
 # (you can apply patch etc here.)
 function prebuild_libjsonc() {
   cd $BUILD_libjsonc
-  echo $BUILD_libjsonc
 
   # check marker
   if [ -f .patched ]; then
