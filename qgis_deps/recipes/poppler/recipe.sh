@@ -3,7 +3,7 @@
 DESC_poppler="PDF rendering library (based on the xpdf-3.0 code base)"
 
 # version of your package
-VERSION_poppler=0.90.1
+VERSION_poppler=23.04.0
 
 LINK_poppler=libpoppler.101.dylib
 LINK_poppler_cpp=libpoppler-cpp.0.dylib
@@ -20,13 +20,14 @@ DEPS_poppler=(
   little_cms2
   openjpeg
   libcurl
+  pkg_config
 )
 
 # url of the package
 URL_poppler=https://poppler.freedesktop.org/poppler-${VERSION_poppler}.tar.xz
 
 # md5 of the package
-MD5_poppler=b80a82f14459d31d929db421b0e8cf05
+MD5_poppler=bcf3d31809f7d399fcd5b7288eee8ac0
 
 # default build path
 BUILD_poppler=$BUILD_PATH/poppler/$(get_directory $URL_poppler)

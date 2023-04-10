@@ -3,7 +3,7 @@
 DESC_python_numpy="python numpy"
 
 # version of your package
-VERSION_python_numpy=1.20.1
+VERSION_python_numpy=1.24.2
 
 # dependencies of this recipe
 DEPS_python_numpy=(python python_packages openblas)
@@ -12,7 +12,7 @@ DEPS_python_numpy=(python python_packages openblas)
 URL_python_numpy=https://github.com/numpy/numpy/archive/v${VERSION_python_numpy}.tar.gz
 
 # md5 of the package
-MD5_python_numpy=a8414e2eebac83a4d5b6a945063c4fff
+MD5_python_numpy=b68f6f21d404d1f2b25a87fd9f1bce35
 
 # default build path
 BUILD_python_numpy=$BUILD_PATH/python_numpy/$(get_directory $URL_python_numpy)
