@@ -6,7 +6,7 @@ DESC_python_pyqt5="PyQt5 package for python"
 VERSION_python_pyqt5=5.15.9
 
 # dependencies of this recipe
-DEPS_python_pyqt5=(python python_sip qtwebkit qscintilla)
+DEPS_python_pyqt5=(python python_sip qtwebkit qscintilla python_pyqt_builder)
 
 # url of the package
 URL_python_pyqt5=https://files.pythonhosted.org/packages/5c/46/b4b6eae1e24d9432905ef1d4e7c28b6610e28252527cdc38f2a75997d8b5/PyQt5-${VERSION_python_pyqt5}.tar.gz
@@ -76,25 +76,30 @@ function build_python_pyqt5() {
 
   push_env
 
-  try $PYTHON ./configure.py \
+  try $STAGE_PATH/bin/sip-install \
     --confirm-license \
-    --stubsdir=$QGIS_SITE_PACKAGES_PATH/PyQt5 \
-    --sipdir=$STAGE_PATH/share/sip/PyQt5 \
-    --bindir=$STAGE_PATH/bin \
-    --sip-incdir=$STAGE_PATH/include \
-    --destdir=$QGIS_SITE_PACKAGES_PATH \
-    --disable=QAxContainer \
-    --disable=QtX11Extras \
-    --disable=QtWinExtras \
-    --disable=Enginio \
-    --designer-plugindir=$STAGE_PATH/share/plugins \
-    --qml-plugindir=$STAGE_PATH/share/plugins \
+    --target-dir ${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages \
+    --scripts-dir ${STAGE_PATH}/bin \
+    --disable QAxContainer \
+    --disable QtX11Extras \
+    --disable QtWinExtras \
+    --disable Enginio \
+    --jobs $CORES \
     --verbose
 
-  try $MAKESMP
-  try $MAKE install
-  try $MAKE clean
+  # try $MAKESMP
+  # try $MAKE install
+  # try $MAKE clean
+  # try $STAGE_PATH/bin/sip-install --confirm-license 
 
+  try curl -o PyQt5_sip-12.11.0.tar.gz https://files.pythonhosted.org/packages/39/5f/fd9384fdcb9cd0388088899c110838007f49f5da1dd1ef6749bfb728a5da/PyQt5_sip-12.11.0.tar.gz
+  try tar zxf PyQt5_sip-12.11.0.tar.gz
+  try cd PyQt5_sip-12.11.0
+  try $STAGE_PATH/bin/sip-install \
+    --target-dir ${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages \
+    --jobs $CORES \
+    --verbose
+  
   fix_python_pyqt5_paths
 
   pop_env
