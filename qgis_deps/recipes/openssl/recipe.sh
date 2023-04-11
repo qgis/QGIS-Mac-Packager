@@ -8,7 +8,7 @@ DESC_openssl="Cryptography and SSL/TLS Toolkit"
 VERSION_openssl=1.1.1t
 
 # dependencies of this recipe
-DEPS_openssl=()
+DEPS_openssl=(ca_certificates)
 
 LINK_libssl_version=1.1
 LINK_libssl=libssl.${LINK_libssl_version}.dylib
@@ -63,7 +63,7 @@ function build_openssl() {
   # help debug inevitable breakage.
   try perl ./Configure \
     --prefix=$STAGE_PATH \
-    --openssldir=$STAGE_PATH \
+    --openssldir=${STAGE_PATH}/etc/openssl \
     darwin64-`uname -m`-cc enable-ec_nistp_64_gcc_128 \
     no-ssl3 \
     no-ssl3-method \
@@ -72,6 +72,7 @@ function build_openssl() {
   check_file_configuration config.status
   try $MAKESMP
   try $MAKESMP install
+  try ln -s ${STAGE_PATH}/etc/cert.pem ${STAGE_PATH}/etc/openssl
 
   pop_env
 }
