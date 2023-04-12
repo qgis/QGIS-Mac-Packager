@@ -44,6 +44,8 @@ function build_ca_certificates() {
   try mkdir -p $BUILD_PATH/ca_certificates/build-$ARCH
   try cd $BUILD_PATH/ca_certificates/build-$ARCH
   try cp $PACKAGES_PATH/ca_certificates/cacert-${VERSION_ca_certificates}.pem $BUILD_PATH/ca_certificates/build-$ARCH/cacert-${VERSION_ca_certificates}.pem
+  try mkdir -p ${STAGE_PATH}/share/
+  try mkdir -p ${STAGE_PATH}/etc/
 
   push_env
 
