@@ -21,6 +21,7 @@ DEPS_poppler=(
   openjpeg
   libcurl
   pkg_config
+  boost
 )
 
 # url of the package
