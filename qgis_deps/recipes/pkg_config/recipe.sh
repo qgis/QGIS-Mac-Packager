@@ -6,7 +6,7 @@ DESC_pkg_config="Manage compile and link flags for libraries"
 VERSION_pkg_config=0.29.2
 
 # dependencies of this recipe
-DEPS_pkg_config=()
+DEPS_pkg_config=(python)
 
 # url of the package
 URL_pkg_config=https://pkgconfig.freedesktop.org/releases/pkg-config-${VERSION_pkg_config}.tar.gz
