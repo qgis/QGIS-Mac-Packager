@@ -84,6 +84,8 @@ function build_python_pyqt5() {
     --disable QtX11Extras \
     --disable QtWinExtras \
     --disable Enginio \
+    --enable QtWebKit \
+    --enable QtWebKitWidgets \
     --jobs $CORES \
     --verbose
 
@@ -92,14 +94,73 @@ function build_python_pyqt5() {
   # try $MAKE clean
   # try $STAGE_PATH/bin/sip-install --confirm-license 
 
+  # added depencencies
+  # ref: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/pyqt@5.rb
   try curl -o PyQt5_sip-12.11.0.tar.gz https://files.pythonhosted.org/packages/39/5f/fd9384fdcb9cd0388088899c110838007f49f5da1dd1ef6749bfb728a5da/PyQt5_sip-12.11.0.tar.gz
   try tar zxf PyQt5_sip-12.11.0.tar.gz
   try cd PyQt5_sip-12.11.0
+  # try echo "[tool.sip.project]" >> pyproject.toml
+  # try echo "sip-include-dirs = [${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages/PyQt5/bindings]" >> pyproject.toml
+  # try $STAGE_PATH/bin/sip-install \
+  #   --target-dir ${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages \
+  #   --verbose
+  try $PYTHON setup.py install
+  try cd ..
+  
+  try curl -o PyQt3D-5.15.5.tar.gz https://files.pythonhosted.org/packages/44/af/58684ce08013c0e16839662844b29cd73259a909982c4d6517ce5ffda05f/PyQt3D-5.15.5.tar.gz
+  try tar zxf PyQt3D-5.15.5.tar.gz
+  try cd PyQt3D-5.15.5
+  try sed -i '' -e "s|\[tool.sip.project\]|\[tool.sip.project\]\nsip-include-dirs = \[\"${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages/PyQt5/bindings\"\]|g" pyproject.toml
   try $STAGE_PATH/bin/sip-install \
     --target-dir ${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages \
-    --jobs $CORES \
     --verbose
-  
+  try cd ..
+
+  try curl -o PyQtChart-5.15.6.tar.gz https://files.pythonhosted.org/packages/eb/17/1d9bb859b3e09a06633264ad91249ede0abd68c1e3f2f948ae7df94702d3/PyQtChart-5.15.6.tar.gz
+  try tar zxf PyQtChart-5.15.6.tar.gz
+  try cd PyQtChart-5.15.6
+  try sed -i '' -e "s|\[tool.sip.project\]|\[tool.sip.project\]\nsip-include-dirs = \[\"${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages/PyQt5/bindings\"\]|g" pyproject.toml
+  try $STAGE_PATH/bin/sip-install \
+    --target-dir ${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages \
+    --verbose
+  try cd ..
+
+  try curl -o PyQtDataVisualization-5.15.5.tar.gz https://files.pythonhosted.org/packages/9c/ff/6ba767b4e1dbc32c7ffb93cd5d657048f6a4edf318c5b8810c8931a1733b/PyQtDataVisualization-5.15.5.tar.gz
+  try tar zxf PyQtDataVisualization-5.15.5.tar.gz
+  try cd PyQtDataVisualization-5.15.5
+  try sed -i '' -e "s|\[tool.sip.project\]|\[tool.sip.project\]\nsip-include-dirs = \[\"${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages/PyQt5/bindings\"\]|g" pyproject.toml
+  try $STAGE_PATH/bin/sip-install \
+    --target-dir ${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages \
+    --verbose
+  try cd ..
+
+  try curl -o PyQtNetworkAuth-5.15.5.tar.gz https://files.pythonhosted.org/packages/85/b6/6b8f30ebd7c15ded3d91ed8d6082dee8aebaf79c4e8d5af77b1172c805c2/PyQtNetworkAuth-5.15.5.tar.gz
+  try tar xzf PyQtNetworkAuth-5.15.5.tar.gz
+  try cd PyQtNetworkAuth-5.15.5
+  try sed -i '' -e "s|\[tool.sip.project\]|\[tool.sip.project\]\nsip-include-dirs = \[\"${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages/PyQt5/bindings\"\]|g" pyproject.toml
+  try $STAGE_PATH/bin/sip-install \
+    --target-dir ${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages \
+    --verbose
+  try cd ..
+
+  try curl -o PyQtWebEngine-5.15.6.tar.gz https://files.pythonhosted.org/packages/cf/4b/ca01d875eff114ba5221ce9311912fbbc142b7bb4cbc4435e04f4f1f73cb/PyQtWebEngine-5.15.6.tar.gz
+  try tar zxf PyQtWebEngine-5.15.6.tar.gz
+  try cd PyQtWebEngine-5.15.6
+  try sed -i '' -e "s|\[tool.sip.project\]|\[tool.sip.project\]\nsip-include-dirs = \[\"${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages/PyQt5/bindings\"\]|g" pyproject.toml
+  try $STAGE_PATH/bin/sip-install \
+    --target-dir ${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages \
+    --verbose
+  try cd ..
+
+  try curl -o PyQtPurchasing-5.15.5.tar.gz https://files.pythonhosted.org/packages/41/2a/354f0ae3fa02708719e2ed6a8c310da4283bf9a589e2a7fcf7dadb9638af/PyQtPurchasing-5.15.5.tar.gz
+  try tar zxf PyQtPurchasing-5.15.5.tar.gz
+  try cd PyQtPurchasing-5.15.5
+  try sed -i '' -e "s|\[tool.sip.project\]|\[tool.sip.project\]\nsip-include-dirs = \[\"${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages/PyQt5/bindings\"\]|g" pyproject.toml
+  try $STAGE_PATH/bin/sip-install \
+    --target-dir ${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages \
+    --verbose
+  try cd ..
+
   fix_python_pyqt5_paths
 
   pop_env
