@@ -54,12 +54,6 @@ function prebuild_python_pyqt5() {
     return
   fi
 
-  # this is needed
-  # so the autodetection of modules to build
-  # finds out webkit modules
-  MOD_DIR=$STAGE_PATH/mkspecs/modules
-  try ${SED} "s;pro_lines.extend(target_config.qmake_variables);pro_lines.extend(target_config.qmake_variables)\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkit.pri)\")\;pro_lines.append(\"include(${MOD_DIR}/qt_lib_webkitwidgets.pri)\");g" configure.py
-
   touch .patched
 }
 
@@ -84,26 +78,60 @@ function build_python_pyqt5() {
     --disable QtX11Extras \
     --disable QtWinExtras \
     --disable Enginio \
-    --enable QtWebKit \
-    --enable QtWebKitWidgets \
     --jobs $CORES \
-    --verbose
-
-  # try $MAKESMP
-  # try $MAKE install
-  # try $MAKE clean
-  # try $STAGE_PATH/bin/sip-install --confirm-license 
+    --verbose \
+    --qmake-setting 'QT.webkit.VERSION = 5.212.0' \
+    --qmake-setting 'QT.webkit.MAJOR_VERSION = 5' \
+    --qmake-setting 'QT.webkit.MINOR_VERSION = 212' \
+    --qmake-setting 'QT.webkit.PATCH_VERSION = 0' \
+    --qmake-setting 'QT.webkit.name = QtWebKit' \
+    --qmake-setting 'QT.webkit.module = QtWebKit' \
+    --qmake-setting 'QT.webkit.DEFINES = QT_WEBKIT_LIB' \
+    --qmake-setting "QT.webkit.includes = \"${STAGE_PATH}/lib/QtWebKit.framework/Headers\" \"${STAGE_PATH}/\"" \
+    --qmake-setting 'QT.webkit.private_includes =' \
+    --qmake-setting "QT.webkit.libs = \"${STAGE_PATH}/lib\"" \
+    --qmake-setting "QT.webkit.rpath = \"${STAGE_PATH}/lib\"" \
+    --qmake-setting 'QT.webkit.depends = core gui network' \
+    --qmake-setting 'QT.webkit.run_depends = multimedia sensors positioning qml quick core_private gui_private' \
+    --qmake-setting "QT.webkit.bins = ${STAGE_PATH}/bin" \
+    --qmake-setting 'QT.webkit.libexec =' \
+    --qmake-setting 'QT.webkit.plugins =' \
+    --qmake-setting 'QT.webkit.imports =' \
+    --qmake-setting 'QT.webkit.qml =' \
+    --qmake-setting "QT.webkit.frameworks = ${STAGE_PATH}/lib" \
+    --qmake-setting 'QT.webkit.module_config = v2 lib_bundle' \
+    --qmake-setting 'QT_MODULES += webkit' \
+    --qmake-setting 'QMAKE_LIBS_PRIVATE += ' \
+    --qmake-setting "QMAKE_RPATHDIR += ${STAGE_PATH}/lib" \
+    --qmake-setting 'QT.webkitwidgets.VERSION = 5.212.0' \
+    --qmake-setting 'QT.webkitwidgets.MAJOR_VERSION = 5' \
+    --qmake-setting 'QT.webkitwidgets.MINOR_VERSION = 212' \
+    --qmake-setting 'QT.webkitwidgets.PATCH_VERSION = 0' \
+    --qmake-setting 'QT.webkitwidgets.name = QtWebKitWidgets' \
+    --qmake-setting 'QT.webkitwidgets.module = QtWebKitWidgets' \
+    --qmake-setting 'QT.webkitwidgets.DEFINES = QT_WEBKITWIDGETS_LIB' \
+    --qmake-setting "QT.webkitwidgets.includes = \"${STAGE_PATH}/lib/QtWebKitWidgets.framework/Headers\" \"${STAGE_PATH}/\"" \
+    --qmake-setting 'QT.webkitwidgets.private_includes =' \
+    --qmake-setting "QT.webkitwidgets.libs = \"${STAGE_PATH}/lib\"" \
+    --qmake-setting "QT.webkitwidgets.rpath = \"${STAGE_PATH}/lib\"" \
+    --qmake-setting 'QT.webkitwidgets.depends = core gui network widgets webkit' \
+    --qmake-setting 'QT.webkitwidgets.run_depends = multimedia sensors positioning qml quick core_private gui_private widgets_private opengl printsupport multimediawidgets' \
+    --qmake-setting "QT.webkitwidgets.bins = ${STAGE_PATH}/bin" \
+    --qmake-setting 'QT.webkitwidgets.libexec =' \
+    --qmake-setting 'QT.webkitwidgets.plugins =' \
+    --qmake-setting 'QT.webkitwidgets.imports =' \
+    --qmake-setting 'QT.webkitwidgets.qml =' \
+    --qmake-setting "QT.webkitwidgets.frameworks = ${STAGE_PATH}/lib" \
+    --qmake-setting 'QT.webkitwidgets.module_config = v2 lib_bundle' \
+    --qmake-setting 'QT_MODULES += webkitwidgets' \
+    --qmake-setting 'QMAKE_LIBS_PRIVATE += ' \
+    --qmake-setting "QMAKE_RPATHDIR += ${STAGE_PATH}/lib"
 
   # added depencencies
   # ref: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/pyqt@5.rb
   try curl -o PyQt5_sip-12.11.0.tar.gz https://files.pythonhosted.org/packages/39/5f/fd9384fdcb9cd0388088899c110838007f49f5da1dd1ef6749bfb728a5da/PyQt5_sip-12.11.0.tar.gz
   try tar zxf PyQt5_sip-12.11.0.tar.gz
   try cd PyQt5_sip-12.11.0
-  # try echo "[tool.sip.project]" >> pyproject.toml
-  # try echo "sip-include-dirs = [${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages/PyQt5/bindings]" >> pyproject.toml
-  # try $STAGE_PATH/bin/sip-install \
-  #   --target-dir ${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages \
-  #   --verbose
   try $PYTHON setup.py install
   try cd ..
   
