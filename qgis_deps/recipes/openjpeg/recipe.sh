@@ -62,12 +62,19 @@ function build_openjpeg() {
 
   install_name_tool -id $STAGE_PATH/lib/$LINK_openjpeg $STAGE_PATH/lib/$LINK_openjpeg
 
+  try fix_install_name bin/opj_compress
+  try fix_install_name bin/opj_decompress
+  try fix_install_name bin/opj_dump
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_openjpeg() {
   verify_binary lib/$LINK_openjpeg
+  verify_binary bin/opj_compress
+  verify_binary bin/opj_decompress
+  verify_binary bin/opj_dump
 }
 
 # function to append information to config file
