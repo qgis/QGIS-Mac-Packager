@@ -4,7 +4,7 @@ DESC_python_pymssql="Python binding of MSSQL"
 
 # version of your package
 # need to keep in sync with hdf5
-VERSION_python_pymssql=2.1.5
+VERSION_python_pymssql=2.2.7
 
 # dependencies of this recipe
 DEPS_python_pymssql=(python freetds python_packages)

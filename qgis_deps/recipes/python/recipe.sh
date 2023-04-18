@@ -24,9 +24,9 @@ RECIPE_python=$RECIPES_PATH/python
 
 # requirements
 REQUIREMENTS_python=(
-  setuptools==https://files.pythonhosted.org/packages/9a/74/de4d8c69466b6413b1616048b39f8b73d65f98c15f6202b68ccfc9550f1f/setuptools-58.0.4.tar.gz==17245af34e1a7d54976bca8c1bf092b7
-  pip==https://files.pythonhosted.org/packages/52/e1/06c018197d8151383f66ebf6979d951995cf495629fc54149491f5d157d0/pip-21.2.4.tar.gz==efbdb4201a5e6383fb4d12e26f78f355
-  wheel==https://files.pythonhosted.org/packages/4e/be/8139f127b4db2f79c8b117c80af56a3078cc4824b5b94250c7f81a70e03b/wheel-0.37.0.tar.gz==79f55b898e6f274f5586bbde39f6fe8e
+  setuptools==https://files.pythonhosted.org/packages/cb/46/22ec35f286a77e6b94adf81b4f0d59f402ed981d4251df0ba7b992299146/setuptools-67.6.1.tar.gz==a661b7cdf4cf1e914f866506c1022dee
+  pip==https://files.pythonhosted.org/packages/da/bf/1bdbe62f5fbde085351693e3a8e387a59f8220932b911b1719fe65efa2d7/pip-23.1.tar.gz==b730fe00a3d43fa86e67472ad9d1de4d
+  wheel==https://files.pythonhosted.org/packages/fc/ef/0335f7217dd1e8096a9e8383e1d472aa14717878ffe07c4772e68b6e8735/wheel-0.40.0.tar.gz==ec5004c46d1905da98bb5bc1a10ddd21
 )
 
 download_default_packages() {

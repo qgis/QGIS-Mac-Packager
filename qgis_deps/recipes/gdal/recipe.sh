@@ -4,12 +4,12 @@ DESC_gdal="Geospatial Data Abstraction Library"
 
 # version of your package
 # keep in SYNC with python_gdal receipt
-VERSION_gdal=3.3.2
+VERSION_gdal=3.6.3
 
 source $RECIPES_PATH/netcdf/recipe.sh
 source $RECIPES_PATH/xerces/recipe.sh
 
-LINK_libgdal_version=29
+LINK_libgdal_version=32
 LINK_gdal=libgdal.$LINK_libgdal_version.dylib
 
 # dependencies of this recipe
@@ -43,7 +43,7 @@ DEPS_gdal=(
 URL_gdal=https://github.com/OSGeo/gdal/releases/download/v${VERSION_gdal}/gdal-${VERSION_gdal}.tar.gz
 
 # md5 of the package
-MD5_gdal=fd82c580ec9e16a0a46cd176243a8a56
+MD5_gdal=86bae8db7b8bde2bc77decf7fcd3dfd0
 
 # default build path
 BUILD_gdal=$BUILD_PATH/gdal/$(get_directory $URL_gdal)
@@ -79,7 +79,7 @@ function prebuild_gdal() {
     return
   fi
 
-  patch_configure_file configure
+  # patch_configure_file configure
 
   touch .patched
 }

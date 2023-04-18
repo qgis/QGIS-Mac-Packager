@@ -3,7 +3,7 @@
 DESC_python_patsy="python patsy"
 
 # version of your package
-VERSION_python_patsy=0.5.1
+VERSION_python_patsy=0.5.3
 
 # dependencies of this recipe
 DEPS_python_patsy=(python python_packages python_numpy)
@@ -12,7 +12,7 @@ DEPS_python_patsy=(python python_packages python_numpy)
 URL_python_patsy=https://github.com/pydata/patsy/archive/v${VERSION_python_patsy}.tar.gz
 
 # md5 of the package
-MD5_python_patsy=ff2bad29ac6d71ce265c4027b487fd63
+MD5_python_patsy=d80cade8ace4e653a842c3f43fa90a92
 
 # default build path
 BUILD_python_patsy=$BUILD_PATH/python_patsy/$(get_directory $URL_python_patsy)

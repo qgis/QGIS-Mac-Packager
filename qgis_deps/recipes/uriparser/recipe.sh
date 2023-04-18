@@ -3,7 +3,7 @@
 DESC_uriparser="uriparser is a strictly RFC 3986 compliant URI parsing and handling library written in C89"
 
 # version of your package
-VERSION_uriparser=0.9.4
+VERSION_uriparser=0.9.7
 
 LINK_liburiparser=liburiparser.1.dylib
 
@@ -14,7 +14,7 @@ DEPS_uriparser=()
 URL_uriparser=https://github.com/uriparser/uriparser/archive/uriparser-$VERSION_uriparser.tar.gz
 
 # md5 of the package
-MD5_uriparser=6f0d823f9a0ab0e5b1eb768bfaf56373
+MD5_uriparser=5a8e579864fc43b418ebf45b159cbcc8
 
 # default build path
 BUILD_uriparser=$BUILD_PATH/uriparser/$(get_directory $URL_uriparser)

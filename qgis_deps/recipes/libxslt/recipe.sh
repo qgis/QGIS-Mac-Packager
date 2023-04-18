@@ -3,7 +3,7 @@
 DESC_libxslt="C XSLT library for GNOME"
 
 # version of your package
-VERSION_libxslt=1.1.34
+VERSION_libxslt=1.1.37
 LINK_libxslt=libxslt.1.dylib
 LINK_libexslt=libexslt.0.dylib
 
@@ -11,10 +11,10 @@ LINK_libexslt=libexslt.0.dylib
 DEPS_libxslt=(libxml2)
 
 # url of the package
-URL_libxslt=http://xmlsoft.org/sources/libxslt-${VERSION_libxslt}.tar.gz
+URL_libxslt=https://download.gnome.org/sources/libxslt/1.1/libxslt-${VERSION_libxslt}.tar.xz
 
 # md5 of the package
-MD5_libxslt=db8765c8d076f1b6caafd9f2542a304a
+MD5_libxslt=84e86fc8a1b7495674016e05e4c5da44
 
 # default build path
 BUILD_libxslt=$BUILD_PATH/libxslt/$(get_directory $URL_libxslt)

@@ -371,6 +371,21 @@ function get_directory() {
   echo $directory
 }
 
+function fix_install_name() {
+  cd ${STAGE_PATH}
+  if otool -L $1 | grep -q $BUILD_PATH
+  then
+    otool -L $1 | grep $BUILD_PATH | while read line;
+    do
+      from_lib=$(echo $line | cut -d ' ' -f 1)
+      library_name=`basename $from_lib`
+      to_lib="${STAGE_PATH}/lib/${library_name}"
+      try install_name_tool -id $to_lib $to_lib
+      try install_name_tool -change $from_lib $to_lib $1
+    done
+  fi
+}
+
 
 function check_linked_rpath() {
   cd ${STAGE_PATH}

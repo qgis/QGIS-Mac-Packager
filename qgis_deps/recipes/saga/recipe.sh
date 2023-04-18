@@ -5,7 +5,7 @@ DESC_saga="System for Automated Geoscientific Analyses"
 # version of your package
 # see https://github.com/qgis/QGIS/blob/master/python/plugins/sagaprovider/SagaAlgorithmProvider.py
 # for supported versions
-VERSION_saga=7.8.2
+VERSION_saga=9.0.0
 
 LINK_saga_version=${VERSION_saga}
 
@@ -13,10 +13,10 @@ LINK_saga_version=${VERSION_saga}
 DEPS_saga=( proj gdal python geos libtiff xz sqlite hdf5 netcdf postgres wxmac )
 
 # url of the package
-URL_saga=https://downloads.sourceforge.net/project/saga-gis/SAGA%20-%207/SAGA%20-%20${VERSION_saga}/saga-${VERSION_saga}.tar.gz
+URL_saga=https://downloads.sourceforge.net/project/saga-gis/SAGA%20-%209/SAGA%20-%20${VERSION_saga}/saga-${VERSION_saga}.tar.gz
 
 # md5 of the package
-MD5_saga=895345d820098fb0e1f671d67ce2e798
+MD5_saga=285a70b514a38f2609b76a5acbc67cd1
 
 # default build path
 BUILD_saga=$BUILD_PATH/saga/$(get_directory $URL_saga)
@@ -34,7 +34,7 @@ function prebuild_saga() {
     return
   fi
 
-  patch_configure_file configure
+  # patch_configure_file configure
 
   touch .patched
 }

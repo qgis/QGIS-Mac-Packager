@@ -3,7 +3,7 @@
 DESC_python_shapely="Manipulation and analysis of geometric objects in the Cartesian plane."
 
 # version of your package
-VERSION_python_shapely=1.7.0
+VERSION_python_shapely=2.0.1
 
 # dependencies of this recipe
 DEPS_python_shapely=(python geos python_packages python_fiona)

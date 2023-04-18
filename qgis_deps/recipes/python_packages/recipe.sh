@@ -24,103 +24,103 @@ RECIPE_python_packages=$RECIPES_PATH/python_packages
 # requirements
 # ORDER matters!
 REQUIREMENTS_python_packages=(
-    six==1.14.0
-    python-dateutil==2.8.0
-    cython==0.29.21
-    decorator==4.4.2
-    coverage==5.1
-    nose2==0.9.2
-    certifi==2020.4.5.1
-    chardet==3.0.4
-    cycler==0.10.0
-    exifread==2.1.2
+    six==1.16.0
+    python-dateutil==2.8.2
+    cython==0.29.34
+    decorator==5.1.1
+    coverage==7.2.3
+    nose2==0.12.0
+    certifi==2022.12.7
+    chardet==5.1.0
+    cycler==0.11.0
+    exifread==3.0.0
     funcsigs==1.0.2
-    future==0.18.2
-    httplib2==0.17.2
-    idna==2.9
+    future==0.18.3
+    httplib2==0.22.0
+    idna==3.4
     ipython-genutils==0.2.0
-    markupsafe==1.1.1
-    jinja2==2.11.2
-    attrs==19.3.0
-    pyrsistent==0.16.0
-    jsonschema==3.2.0
-    traitlets==4.3.3
-    jupyter-core==4.6.3
-    kiwisolver==1.2.0
-    mock==4.0.2
-    nbformat==5.0.5
-    networkx==2.4
-    oauthlib==3.1.0
-    pbr==5.4.5
+    markupsafe==2.1.2
+    jinja2==3.1.2
+    attrs==23.1.0
+    pyrsistent==0.19.3
+    jsonschema==4.17.3
+    traitlets==5.9.0
+    jupyter-core==5.3.0
+    kiwisolver==1.4.4
+    mock==5.0.2
+    nbformat==5.8.0
+    networkx==3.1
+    oauthlib==3.2.2
+    pbr==5.11.1
     ply==3.11
-    pygments==2.6.1
-    pyparsing==2.4.7
+    pygments==2.15.0
+    pyparsing==3.0.9
     pypubsub==3.3.0
-    pytz==2019.3
-    pyyaml==5.3.1
-    urllib3==1.24.3
-    requests==2.23.0
-    retrying==1.3.3
-    simplejson==3.17.0
-    termcolor==1.1.0
-    lxml==4.5.2
+    pytz==2023.3
+    pyyaml==6.0
+    urllib3==1.26.15
+    requests==2.28.2
+    retrying==1.3.4
+    simplejson==3.19.1
+    termcolor==2.2.0
+    lxml==4.9.2
     tools==0.1.9
-    xlrd==1.2.0
+    xlrd==2.0.1
     xlwt==1.3.0
-    joblib==0.16.0
-    threadpoolctl==2.1.0
+    joblib==1.2.0
+    threadpoolctl==3.1.0
     cryptography==3.0
-    cffi==1.14.1
-    pycparser==2.20
-    pyopenssl==19.1.0
-    pyodbc==4.0.30
-    plotly==4.6.0
-    access==1.1.1
-    esda==2.3.1
-    giddy==2.3.3
+    cffi==1.15.1
+    pycparser==2.21
+    pyopenssl==23.1.1
+    pyodbc==4.0.39
+    plotly==5.14.1
+    access==1.1.9
+    esda==2.4.3
+    giddy==2.3.4
     inequality==1.0.0
-    pointpats==2.2.0
-    segregation==1.3.0
-    spaghetti==1.5.0
-    mgwr==2.1.1
-    spglm==1.0.7
-    spint==1.0.6
-    spreg==1.1.2.post1
+    pointpats==2.3.0
+    segregation==2.3.1
+    spaghetti==1.7.2
+    mgwr==2.1.2
+    spglm==1.0.8
+    spint==1.0.7
+    spreg==1.3.2
     spvcm==0.3.0
-    tobler==0.3.1
-    mapclassify==2.3.0
-    splot==1.1.3
-    iniconfig==1.0.1
-    more-itertools==8.4.0
-    packaging==20.4
-    pluggy==0.13.1
-    py==1.9.0
-    toml==0.10.1
-    pytest==6.0.1
-    pytest-cov==2.10.0
-    beautifulsoup4==4.10.0
-    Sphinx==2.4.3
-    quantecon==0.4.8
-    tqdm==4.48.2
-    seaborn==0.10.1
-    click==7.1.2
+    tobler==0.9.0
+    mapclassify==2.5.0
+    splot==1.1.5.post1
+    iniconfig==2.0.0
+    more-itertools==9.1.0
+    packaging==23.1
+    pluggy==1.0.0
+    py==1.11.0
+    toml==0.10.2
+    pytest==7.3.1
+    pytest-cov==4.0.0
+    beautifulsoup4==4.12.2
+    Sphinx==6.1.3
+    quantecon==0.6.0
+    tqdm==4.65.0
+    seaborn==0.12.2
+    click==8.1.3
     click-plugins==1.1.1
-    cligj==0.5.0
+    cligj==0.7.2
     munch==2.5.0
     appdirs==1.4.4
-    distlib==0.3.1
-    filelock==3.0.12
-    pipenv==2020.6.2
-    virtualenv==20.0.30
-    virtualenv-clone==0.5.4
-    importlib-metadata==1.7.0
-    zipp==3.1.0
-    rasterstats==0.15.0
+    distlib==0.3.6
+    filelock==3.11.0
+    pipenv==2023.3.20
+    virtualenv==20.21.0
+    virtualenv-clone==0.5.7
+    importlib-metadata==6.4.1
+    zipp==3.15.0
+    rasterstats==0.18.0
     clipboard==0.0.4
-    pyperclip==1.8.1
+    pyperclip==1.8.2
     pyvenv==0.2.2
     snuggs==1.4.7
-    affine==2.3.0
+    affine==2.4.0
 )
 
 IMPORTS_python_packages=(
@@ -146,7 +146,7 @@ function prebuild_python_packages() {
 }
 
 function shouldbuild_python_packages() {
-  if python_package_installed yaml; then
+  if python_package_installed affine; then
     DO_BUILD=0
   fi
 }

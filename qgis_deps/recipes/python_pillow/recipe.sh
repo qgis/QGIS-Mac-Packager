@@ -3,7 +3,7 @@
 DESC_python_pillow="python pillow"
 
 # version of your package
-VERSION_python_pillow=7.2.0
+VERSION_python_pillow=9.5.0
 
 # dependencies of this recipe
 DEPS_python_pillow=(python python_packages zlib jpeg libtiff webp little_cms2 python_numpy)
@@ -12,7 +12,7 @@ DEPS_python_pillow=(python python_packages zlib jpeg libtiff webp little_cms2 py
 URL_python_pillow=https://github.com/python-pillow/Pillow/archive/${VERSION_python_pillow}.tar.gz
 
 # md5 of the package
-MD5_python_pillow=756a9a00895f1b40e297110b8abc6895
+MD5_python_pillow=7eee6ea92f43d34e0c0a04a05fb435be
 
 # default build path
 BUILD_python_pillow=$BUILD_PATH/python_pillow/$(get_directory $URL_python_pillow)

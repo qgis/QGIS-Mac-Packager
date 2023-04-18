@@ -3,8 +3,8 @@
 DESC_python_pysal="A library of spatial analysis functions."
 
 # version of your package
-VERSION_python_pysal=2.5.0
-VERSION_python_libpysal=4.5.1
+VERSION_python_pysal=23.1
+VERSION_python_libpysal=4.7.0
 
 
 # dependencies of this recipe
