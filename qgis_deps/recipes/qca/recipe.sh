@@ -64,8 +64,10 @@ function build_qca() {
   try $NINJA
   try $NINJA install
 
-  fix_install_name lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca
-  fix_install_name bin/qcatool-qt5
+  try install_name_tool -id $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca
+  try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca
+  try install_name_tool -id $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/bin/qcatool-qt5
+  try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/bin/qcatool-qt5
 
   pop_env
 }
