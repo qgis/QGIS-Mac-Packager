@@ -61,6 +61,8 @@ function build_libzip() {
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip
   try install_name_tool -change $BUILD_PATH/libzip/build-$ARCH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/bin/ziptool
+  try install_name_tool -change $BUILD_PATH/libzip/build-$ARCH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/bin/zipcmp
+  try install_name_tool -change $BUILD_PATH/libzip/build-$ARCH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/bin/zipmerge
 
   pop_env
 }
@@ -69,6 +71,8 @@ function build_libzip() {
 function postbuild_libzip() {
   verify_binary lib/$LINK_libzip
   verify_binary bin/ziptool
+  verify_binary bin/zipcmp
+  verify_binary bin/zipmerge
 }
 
 # function to append information to config file

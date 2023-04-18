@@ -66,6 +66,14 @@ function build_proj() {
   try install_name_tool -change $BUILD_PATH/proj/build-$ARCH/lib/$LINK_libproj $STAGE_PATH/lib/$LINK_libproj $STAGE_PATH/bin/proj
   try install_name_tool -delete_rpath $BUILD_PATH/proj/build-$ARCH/lib ${STAGE_PATH}/lib/$LINK_libproj
 
+  try fix_install_name bin/cct
+  try fix_install_name bin/cs2cs
+  try fix_install_name bin/geod
+  try fix_install_name bin/gie
+  try fix_install_name bin/invgeod
+  try fix_install_name bin/projinfo
+  try fix_install_name bin/projsync
+
   pop_env
 }
 
@@ -74,6 +82,13 @@ function postbuild_proj() {
   verify_binary lib/$LINK_libproj
 
   verify_binary bin/proj
+  verify_binary bin/cct
+  verify_binary bin/cs2cs
+  verify_binary bin/geod
+  verify_binary bin/gie
+  verify_binary bin/invgeod
+  verify_binary bin/projinfo
+  verify_binary bin/projsync
 }
 
 # function to append information to config file

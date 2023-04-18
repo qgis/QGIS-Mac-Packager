@@ -59,6 +59,7 @@ function build_uriparser() {
   try $NINJA install
 
   install_name_tool -id $STAGE_PATH/lib/$LINK_liburiparser $STAGE_PATH/lib/$LINK_liburiparser
+  try fix_install_name bin/uriparse
 
   pop_env
 }
@@ -66,6 +67,7 @@ function build_uriparser() {
 # function called after all the compile have been done
 function postbuild_uriparser() {
   verify_binary lib/${LINK_liburiparser}
+  verify_binary bin/uriparse
 }
 
 # function to append information to config file
