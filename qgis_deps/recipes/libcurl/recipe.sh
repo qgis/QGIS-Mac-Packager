@@ -60,7 +60,6 @@ function build_libcurl() {
     --with-default-ssl-backend=openssl \
     --without-libpsl \
     --without-gssapi \
-    --without-libmetalink \
     --without-nghttp2 \
     --without-brotli \
     --without-librtmp \
