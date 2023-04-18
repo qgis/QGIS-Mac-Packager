@@ -3,8 +3,8 @@
 DESC_pcre="Perl compatible regular expressions library"
 
 # version of your package
-VERSION_pcre=8.44
-LINK_pcre=libpcre.1.dylib
+VERSION_pcre=10.37
+LINK_pcre=libpcre2-posix.3.dylib
 
 # dependencies of this recipe
 DEPS_pcre=(
@@ -13,10 +13,10 @@ DEPS_pcre=(
 )
 
 # url of the package
-URL_pcre=https://ftp.exim.org/pub/pcre/pcre-$VERSION_pcre.tar.bz2
+URL_pcre=https://ftp.exim.org/pub/pcre/pcre2-$VERSION_pcre.tar.gz
 
 # md5 of the package
-MD5_pcre=cf7326204cc46c755b5b2608033d9d24
+MD5_pcre=a0b59d89828f62d2e1caac04f7c51e0b
 
 # default build path
 BUILD_pcre=$BUILD_PATH/pcre/$(get_directory $URL_pcre)
@@ -55,9 +55,9 @@ function build_pcre() {
   try ${CONFIGURE} \
       --disable-dependency-tracking \
       --enable-utf8 \
-      --enable-pcre8 \
-      --enable-pcre16 \
-      --enable-pcre32 \
+      --enable-pcre2-8 \
+      --enable-pcre2-16 \
+      --enable-pcre2-32 \
       --enable-unicode-properties \
       --enable-pcregrep-libz \
       --enable-pcregrep-libbz2
