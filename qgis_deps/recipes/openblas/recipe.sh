@@ -7,7 +7,7 @@ source $RECIPES_PATH/gcc/recipe.sh
 VERSION_openblas=0.3.23
 
 LINK_libopenblas=libopenblas.0.dylib
-LINK_libopenblasp=libopenblasp-r0.3.10.dylib
+LINK_libopenblasp=libopenblasp-r0.3.23.dylib
 
 # dependencies of this recipe
 DEPS_openblas=(sqlite libxml2 openssl gcc)
