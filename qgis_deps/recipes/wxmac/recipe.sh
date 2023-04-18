@@ -5,10 +5,10 @@ DESC_wxmac="Cross-platform C++ GUI toolkit (wxWidgets for macOS)"
 # version of your package
 VERSION_wxmac_major=3.2
 VERSION_wxmac=${VERSION_wxmac_major}.2.1
-LINK_wxmac_version=3.2.2.1.0
+LINK_wxmac_version=3.2.0.2.1
 
 # dependencies of this recipe
-DEPS_wxmac=( jpeg png libtiff )
+DEPS_wxmac=( pcre jpeg png libtiff )
 
 # url of the package
 URL_wxmac=https://github.com/wxWidgets/wxWidgets/releases/download/v${VERSION_wxmac}/wxWidgets-${VERSION_wxmac}.tar.bz2
