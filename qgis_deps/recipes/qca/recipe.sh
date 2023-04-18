@@ -76,6 +76,8 @@ function build_qca() {
   try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/qt5/plugins/crypto/libqca-ossl.dylib
   try install_name_tool -id $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/qt5/plugins/crypto/libqca-softstore.dylib
   try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/qt5/plugins/crypto/libqca-softstore.dylib
+  try install_name_tool -id $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/bin/mozcerts-qt5
+  try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/bin/mozcerts-qt5
 
   pop_env
 }
