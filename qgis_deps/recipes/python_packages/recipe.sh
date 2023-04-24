@@ -73,23 +73,15 @@ REQUIREMENTS_python_packages=(
     cffi==1.15.1
     pycparser==2.21
     pyopenssl==23.1.1
-    pyodbc==4.0.39
-    plotly==5.14.1
-    access==1.1.9
-    esda==2.4.3
     giddy==2.3.4
     inequality==1.0.0
     pointpats==2.3.0
-    segregation==2.3.1
     spaghetti==1.7.2
     mgwr==2.1.2
     spglm==1.0.8
     spint==1.0.7
-    spreg==1.3.2
     spvcm==0.3.0
-    tobler==0.9.0
     mapclassify==2.5.0
-    splot==1.1.5.post1
     iniconfig==2.0.0
     more-itertools==9.1.0
     packaging==23.1
@@ -121,6 +113,18 @@ REQUIREMENTS_python_packages=(
     pyvenv==0.2.2
     snuggs==1.4.7
     affine==2.4.0
+)
+
+# pyodbc build may fail
+REQUIREMENTS_python_packages_without_build=(
+  pyodbc==4.0.39
+  plotly==5.14.1
+  access==1.1.9
+  esda==2.4.3
+  segregation==2.3.1
+  spreg==1.3.2
+  tobler==0.9.0
+  splot==1.1.5.post1
 )
 
 IMPORTS_python_packages=(
@@ -157,6 +161,16 @@ function build_python_packages() {
   try cd $BUILD_PATH/python_packages/build-$ARCH
 
   push_env
+
+  export LDFLAGS="-L${STAGE_PATH}/unixodbc/lib"
+  export CPPFLAGS="-I${STAGE_PATH}/unixodbc/include"
+  for i in ${REQUIREMENTS_python_packages_without_build[*]}
+  do
+    info "Installing python_packages package $i without build"
+    DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP install $i
+  done
+  unset LDFLAGS
+  unset CPPFLAGS
 
   for i in ${REQUIREMENTS_python_packages[*]}
   do
