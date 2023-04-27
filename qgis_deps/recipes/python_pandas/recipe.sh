@@ -46,6 +46,9 @@ function build_python_pandas() {
   try cd $BUILD_PATH/python_pandas/build-$ARCH
   push_env
 
+  # setup.py depends versioneer
+  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP_NO_BINARY install versioneer==0.28
+
   DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
 
   pop_env
