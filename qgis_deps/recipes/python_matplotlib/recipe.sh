@@ -46,6 +46,9 @@ function build_python_matplotlib() {
   try cd $BUILD_PATH/python_matplotlib/build-$ARCH
   push_env
 
+  # setup.py depends pybind11
+  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP_NO_BINARY install pybind11==2.10.4
+
   CFLAGS="$CFLAGS -I$STAGE_PATH/include/freetype2"
   CPPFLAGS="$CPPFLAGS -I$STAGE_PATH/include/freetype2"
 
