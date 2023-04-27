@@ -4,7 +4,7 @@ DESC_boost="Collection of portable C++ source libraries"
 
 # version of your package
 # version required by MySQL
-VERSION_boost=1.81.0
+VERSION_boost=1.77.0
 
 # dependencies of this recipe
 DEPS_boost=(zlib python python_numpy libicu)
@@ -17,7 +17,7 @@ URL_boost=https://sourceforge.net/projects/boost/files/boost/${VERSION_boost}/bo
 # URL_boost=https://github.com/boostorg/boost/archive/boost-${VERSION_boost}.tar.gz
 
 # md5 of the package
-MD5_boost=3276c0637d1be8687740c550237ef999
+MD5_boost=09dc857466718f27237144c6f2432d86
 
 # default build path
 BUILD_boost=$BUILD_PATH/boost/$(get_directory $URL_boost)
@@ -57,12 +57,11 @@ function build_boost() {
     --libdir="${STAGE_PATH}/lib" \
     --with-toolset=clang \
     --with-icu="${STAGE_PATH}" \
-    --with-libraries=python \
     --with-python="$PYTHON" \
     --with-python-root="$PYTHON" \
     --with-python-version="$VERSION_major_python"
 
-  #try ./b2 headers
+  try ./b2 headers
   
   try ./b2 -q \
     variant=release \
@@ -76,11 +75,12 @@ function build_boost() {
     toolset=clang \
     include="${STAGE_PATH}/include" \
     python="$VERSION_major_python" \
-    cxxflags="${CXXFLAGS}" \
     linkflags="-L${STAGE_PATH}/lib" \
     --layout=system \
-    --with-python \
     -j"${CORES}" \
+    cxxflags=-std=c++14 \
+    cxxflags=-stdlib=libc++ \
+    linkflags=-stdlib=libc++ \
     install
 
   pop_env
