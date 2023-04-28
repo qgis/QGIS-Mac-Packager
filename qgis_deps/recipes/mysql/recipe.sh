@@ -49,7 +49,7 @@ function build_mysql() {
   push_env
 
   # -DINSTALL_* are relative to `CMAKE_INSTALL_PREFIX` (`prefix`)
-  try ${CMAKE}  \
+  BOOST_ROOT=$STAGE_PATH try ${CMAKE}  \
       -DWITHOUT_SERVER=ON \
       -DFORCE_INSOURCE_BUILD=1 \
       -DENABLED_PROFILING=OFF \
