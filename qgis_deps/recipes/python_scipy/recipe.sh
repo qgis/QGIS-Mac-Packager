@@ -49,7 +49,11 @@ function build_python_scipy() {
   # scipy/sparse/linalg/dsolve/SuperLU/SRC/clacon2.c:175:5: error: implicit declaration of function 'ccopy_' is invalid in C99
   export CFLAGS="$CFLAGS -Wno-implicit-function-declaration"
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
+  # DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
+  # How to do this?
+  # DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP install .
+  # or
+  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP install scipy==1.11.1
 
   pop_env
 }
