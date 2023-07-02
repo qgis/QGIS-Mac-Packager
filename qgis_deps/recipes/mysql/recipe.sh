@@ -83,6 +83,9 @@ function build_mysql() {
   try $NINJA
   try $NINJA install
 
+  try fix_install_name lib/$LINK_libmysqlclient
+  try install_name_tool -id $STAGE_PATH/lib/libmysqlclient.21.dylib lib/$LINK_libmysqlclient
+
   try rm -rf $STAGE_PATH/mysql-test
   try rm -f $STAGE_PATH/LICENCE
   try rm -f $STAGE_PATH/README

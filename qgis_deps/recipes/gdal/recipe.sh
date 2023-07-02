@@ -64,7 +64,7 @@ ECW_SDK_VER="ERDASEcwJpeg2000SDK5.5.0"
 ECW_SDK="$RECIPES_PATH/../../../external/$ECW_SDK_VER/Desktop_Read-Only/"
 LINK_gdal_ecw=gdal_ECW_JP2ECW.dylib
 
-MRSID_SDK_VER="MrSID_DSDK-9.5.1.4427-darwin14.universal.clang60"
+MRSID_SDK_VER="MrSID_DSDK-9.5.5.5244-darwin22.universal.clang140"
 MRSID_SDK="$RECIPES_PATH/../../../external/$MRSID_SDK_VER"
 LINK_gdal_mrsid_lidar=gdal_MG4Lidar.dylib
 LINK_gdal_mrsid_raster=gdal_MrSID.dylib
@@ -175,45 +175,131 @@ function build_gdal() {
   export LDFLAGS="$LDFLAGS -L$STAGE_PATH/unixodbc/lib"
   export CXXFLAGS="${CFLAGS}"
 
-  try ${CONFIGURE} \
-    --with-ecw=no \
-    --with-mrsid=no \
-    --with-lerc=$STAGE_PATH \
-    --disable-debug \
-    --enable-driver-gpkg \
-    --enable-driver-mbtiles \
-    --enable-driver-gml \
-    --enable-driver-mvt \
-    --enable-driver-xlsx \
-    --enable-driver-mssqlspatial \
-    --with-odbc=yes \
-    --with-liblzma=$STAGE_PATH \
-    --with-zstd=$STAGE_PATH \
-    --with-libtiff=$STAGE_PATH \
-    --with-geotiff=$STAGE_PATH \
-    --with-jpeg=$STAGE_PATH \
-    --with-hdf5=$STAGE_PATH \
-    --with-netcdf=$STAGE_PATH \
-    --with-png=$STAGE_PATH \
-    --with-spatialite=$STAGE_PATH \
-    --with-sqlite3=$STAGE_PATH \
-    --with-freexl=$STAGE_PATH \
-    --with-libkml=$STAGE_PATH \
-    --with-xerces=$STAGE_PATH \
-    --with-xerces-inc=$STAGE_PATH/include \
-    --with-xerces-lib="-lxerces-c" \
-    --with-expat=$STAGE_PATH \
-    --with-expat-inc=$STAGE_PATH/include \
-    --with-expat-lib="-lexpat" \
-    --with-poppler=$STAGE_PATH
+  # cmake
+  try ${CMAKE} $BUILD_gdal \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DGDAL_USE_ODBC=ON \
+    -DODBC_INCLUDE_DIR=$STAGE_PATH/unixodbc/include \
+    -DODBC_LIBRARY=$STAGE_PATH/unixodbc/lib/libodbc.dylib \
+    -DODBC_ODBCINST_LIBRARY=$STAGE_PATH/unixodbc/lib/libodbcinst.dylib \
+    -DCMAKE_INSTALL_PREFIX=$STAGE_PATH \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_CXX_FLAGS_RELEASE="-O3 -DNDEBUG" \
+    -DCMAKE_C_FLAGS_RELEASE="-O3 -DNDEBUG" \
+    -DGDAL_USE_ECW=OFF \
+    -DGDAL_USE_MRSID=OFF \
+    -DGDAL_USE_LERC=ON \
+    -DLERC_INCLUDE_DIR=$STAGE_PATH/include \
+    -DLERC_LIBRARY=$STAGE_PATH/lib/libLerc.dylib \
+    -DZSTD_INCLUDE_DIR=$STAGE_PATH/include \
+    -DZSTD_LIBRARY=$STAGE_PATH/lib/libzstd.dylib \
+    -DOGR_ENABLE_DRIVER_GPKG=ON \
+    -DOGR_ENABLE_DRIVER_MBTILES=ON \
+    -DOGR_ENABLE_DRIVER_GML=ON \
+    -DOGR_ENABLE_DRIVER_MVT=ON \
+    -DOGR_ENABLE_DRIVER_XLSX=ON \
+    -DOGR_ENABLE_DRIVER_MSSQLSPATIAL=ON \
+    -DGDAL_USE_ODBC=ON \
+    -DGDAL_USE_LIBLZMA=ON \
+    -DLIBLZMA_INCLUDE_DIR=$STAGE_PATH/include \
+    -DLIBLZMA_LIBRARY=$STAGE_PATH/lib/liblzma.dylib \
+    -DGDAL_USE_TIFF=ON \
+    -DTIFF_INCLUDE_DIR=$STAGE_PATH/include \
+    -DTIFF_LIBRARY=$STAGE_PATH/lib/libtiff.dylib \
+    -DGDAL_USE_GEOTIFF=ON \
+    -DGEOTIFF_INCLUDE_DIR=$STAGE_PATH/include \
+    -DGEOTIFF_LIBRARY_RELEASE=$STAGE_PATH/lib/libgeotiff.a \
+    -DGDAL_USE_JPEG=ON \
+    -DJPEG_INCLUDE_DIR=$STAGE_PATH/include \
+    -DJPEG_LIBRARY_RELEASE=$STAGE_PATH/lib/libjpeg.dylib \
+    -DGDAL_USE_HDF5=ON \
+    -DHDF5_INCLUDE_DIR=$STAGE_PATH/include \
+    -DHDF5_LIBRARY=$STAGE_PATH/lib/libhdf5.dylib \
+    -DGDAL_USE_NETCDF=ON \
+    -DNETCDF_INCLUDE_DIR=$STAGE_PATH/include \
+    -DNETCDF_LIBRARY=$STAGE_PATH/lib/libnetcdf.dylib \
+    -DGDAL_USE_PNG=ON \
+    -DPNG_PNG_INCLUDE_DIR=$STAGE_PATH/include \
+    -DPNG_LIBRARY_RELEASE=$STAGE_PATH/lib/libpng.dylib \
+    -DGDAL_USE_SPATIALITE=ON \
+    -DSPATIALITE_INCLUDE_DIR=$STAGE_PATH/include \
+    -DSPATIALITE_LIBRARY=$STAGE_PATH/lib/libspatialite.dylib \
+    -DGDAL_USE_SQLITE3=ON \
+    -DSQLITE3_INCLUDE_DIR=$STAGE_PATH/include \
+    -DSQLITE3_LIBRARY=$STAGE_PATH/lib/libsqlite3.dylib \
+    -DGDAL_USE_PNG=ON \
+    -DPNG_PNG_INCLUDE_DIR=$STAGE_PATH/include \
+    -DPNG_LIBRARY_RELEASE=$STAGE_PATH/lib/libpng.dylib \
+    -DGDAL_USE_FREEXL=ON \
+    -DFREEXL_INCLUDE_DIR=$STAGE_PATH/include \
+    -DFREEXL_LIBRARY=$STAGE_PATH/lib/libfreexl.dylib \
+    -DGDAL_USE_LIBKML=ON \
+    -DLIBKML_INCLUDE_DIR=$STAGE_PATH/include \
+    -DLIBKML_BASE_LIBRARY=$STAGE_PATH/lib/libkmlbase.dylib \
+    -DLIBKML_DOM_LIBRARY=$STAGE_PATH/lib/libkmldom.dylib \
+    -DLIBKML_ENGINE_LIBRARY=$STAGE_PATH/lib/libkmlengine.dylib \
+    -DLIBKML_MINIZIP_LIBRARY=$STAGE_PATH/lib/libminizip.dylib \
+    -DLIBKML_URIPARSER_LIBRARY=$STAGE_PATH/lib/liburiparser.dylib \
+    -DGDAL_USE_XERCESC=ON \
+    -DXercesC_INCLUDE_DIR=$STAGE_PATH/include \
+    -DXercesC_LIBRARY=$STAGE_PATH/lib/libxerces-c.dylib \
+    -DGDAL_USE_EXPAT=ON \
+    -DEXPAT_INCLUDE_DIR=$STAGE_PATH/include \
+    -DEXPAT_LIBRARY=$STAGE_PATH/lib/libexpat.dylib \
+    -DGDAL_USE_POPPLER=ON \
+    -DPOPPLER_INCLUDE_DIR=$STAGE_PATH/include/poppler \
+    -DPOPPLER_LIBRARY=$STAGE_PATH/lib/libpoppler.dylib \
+    -DGDAL_USE_OPENSSL=ON \
+    -DOPENSSL_INCLUDE_DIR=$STAGE_PATH/include \
+    -DOPENSSL_CRYPTO_LIBRARY=$STAGE_PATH/lib/libcrypto.dylib \
+    -DGDAL_USE_MYSQL=ON \
+    -DMYSQL_INCLUDE_DIR=$STAGE_PATH/include/mysql \
+    -DMYSQL_LIBRARY=$STAGE_PATH/lib/libmysqlclient.dylib
 
-  check_file_configuration config.status
+  # check_file_configuration config.status
+  check_file_configuration CMakeCache.txt
 
-  try $MAKESMP
-  try $MAKESMP install
+  try $NINJA
+  try $NINJA install
 
   build_ecw
   build_mrsid
+
+  # fixes for install names
+  try fix_install_name lib/$LINK_gdal
+  try fix_install_name bin/gdal-config
+  try fix_install_name bin/gdal_contour
+  try fix_install_name bin/gdal_create
+  try fix_install_name bin/gdal_grid
+  try fix_install_name bin/gdal_rasterize
+  try fix_install_name bin/gdal_translate
+  try fix_install_name bin/gdal_viewshed
+  try fix_install_name bin/gdaladdo
+  try fix_install_name bin/gdalbuildvrt
+  try fix_install_name bin/gdaldem
+  try fix_install_name bin/gdalenhance
+  try fix_install_name bin/gdalinfo
+  try fix_install_name bin/gdallocationinfo
+  try fix_install_name bin/gdalmanage
+  try fix_install_name bin/gdalmdiminfo
+  try fix_install_name bin/gdalmdimtranslate
+  try fix_install_name bin/gdalsrsinfo
+  try fix_install_name bin/gdaltindex
+  try fix_install_name bin/gdaltransform
+  try fix_install_name bin/gdalwarp
+  try fix_install_name bin/ogr2ogr
+  try fix_install_name bin/ogrinfo
+  try fix_install_name bin/ogrlineref
+  try fix_install_name bin/ogrtindex
+
+  if [[ "$WITH_ECW" == "true" ]]; then
+    try fix_install_name $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_ecw}
+  fi
+
+  if [[ "$MRSID_SDK" == "true" ]]; then
+    try fix_install_name $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_mrsid_lidar}
+    try fix_install_name $GDAL_NOFOSS_PLUGINS_DIR/${LINK_gdal_mrsid_raster}
+  fi
 
   pop_env
 }

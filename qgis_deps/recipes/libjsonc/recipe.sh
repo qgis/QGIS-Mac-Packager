@@ -59,8 +59,7 @@ function build_libjsonc() {
   try $NINJA
   try $NINJA install
 
-  try install_name_tool -id $STAGE_PATH/lib/$LINK_jsonc $STAGE_PATH/lib/$LINK_libjsonc
-  try install_name_tool -change $BUILD_PATH/libjsonc/build-$ARCH/$LINK_libjsonc $STAGE_PATH/lib/$LINK_libjsonc $STAGE_PATH/lib/$LINK_libjsonc
+  try fix_install_name $STAGE_PATH/lib/$LINK_libjsonc
 
   pop_env
 }
