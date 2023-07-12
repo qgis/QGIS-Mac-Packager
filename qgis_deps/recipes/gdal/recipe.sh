@@ -14,29 +14,29 @@ LINK_gdal=libgdal.$LINK_libgdal_version.dylib
 
 # dependencies of this recipe
 DEPS_gdal=(
+  expat
+  freexl
   geos
-  proj
+  hdf5
+  jpeg
+  lerc
+  libcurl
   libgeotiff
+  libkml
+  libtiff
   libxml2
+  netcdf
+  pcre
+  png
+  poppler
+  postgres
+  proj
+  spatialite
+  sqlite
+  unixodbc
   xerces
   xz
   zstd
-  libtiff
-  netcdf
-  hdf5
-  postgres
-  jpeg
-  png
-  sqlite
-  poppler
-  expat
-  freexl
-  libkml
-  pcre
-  unixodbc
-  spatialite
-  libcurl
-  lerc
 )
 
 # url of the package
