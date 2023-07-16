@@ -14,6 +14,7 @@ LINK_gdal=libgdal.$LINK_libgdal_version.dylib
 
 # dependencies of this recipe
 DEPS_gdal=(
+  apache_arrow
   expat
   freexl
   geos
