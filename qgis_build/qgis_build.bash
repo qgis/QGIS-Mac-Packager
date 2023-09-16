@@ -72,6 +72,7 @@ echo "Using $CXX compiler"
 PATH=$ROOT_OUT_PATH/stage/bin:$PATH \
 cmake -DCMAKE_BUILD_TYPE=Release \
       -DWITH_HANA=TRUE \
+      $QGIS_CMAKE \
       $ORACLE_CMAKE \
       -DQGIS_MAC_DEPS_DIR=$ROOT_OUT_PATH/stage \
       -DODBC_CONFIG=$ROOT_OUT_PATH/stage/unixodbc/bin/odbc_config \

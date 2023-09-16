@@ -69,10 +69,10 @@ if [ $PKG = "nightly" ]; then
 
 	# Get the qt+pylupdate5 from the QGIS-Deps
 	CONFIG_FILE=$DIR/../config/$PKG.conf
-  if [ ! -f "$CONFIG_FILE" ]; then
-    echo "invalid config file (1st argument) $CONFIG_FILE"
-  fi
-  source $CONFIG_FILE
+    if [ ! -f "$CONFIG_FILE" ]; then
+        echo "invalid config file (1st argument) $CONFIG_FILE"
+    fi
+    source $CONFIG_FILE
 	if ! PATH=$QT_BASE/bin:$DEPS_BIN_DIR:$PATH scripts/pull_ts.sh; then
 		echo "Pulling translations failed [$?]"
 		rm -rvf i18n doc/TRANSLATORS
