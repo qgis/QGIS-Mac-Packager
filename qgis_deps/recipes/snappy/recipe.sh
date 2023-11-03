@@ -32,6 +32,9 @@ function prebuild_snappy() {
     return
   fi
 
+  # https://github.com/google/snappy/commit/27f34a580be4a3becf5f8c0cba13433f53c21337
+  try patch --verbose --forward -p1 < $RECIPE_snappy/patches/27f34a580be4a3becf5f8c0cba13433f53c21337.patch
+
   touch .patched
 }
 

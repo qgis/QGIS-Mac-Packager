@@ -9,7 +9,7 @@ LINK_thrift=libthrift.${LINK_thrift_version}.dylib
 LINK_thriftz=libthriftz.${LINK_thrift_version}.dylib
 
 # dependencies of this recipe
-DEPS_thrift=(bison openssl zlib)
+DEPS_thrift=(bison boost openssl zlib)
 
 # url of the package
 URL_thrift=https://archive.apache.org/dist/thrift/${VERSION_thrift}/thrift-${VERSION_thrift}.tar.gz
@@ -55,9 +55,6 @@ function build_thrift() {
   export PY_PREFIX=${STAGE_PATH}
   export PHP_PREFIX=${STAGE_PATH}
   export JAVA_PREFIX=${STAGE_PATH}
-
-  export CXX="${CXX} -std=c++11"
-  export CXX="${CXX} -stdlib=libc++"
 
   try ${CONFIGURE} \
     --disable-debug \
