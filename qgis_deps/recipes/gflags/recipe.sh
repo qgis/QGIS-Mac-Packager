@@ -14,7 +14,7 @@ DEPS_gflags=()
 URL_gflags=https://github.com/gflags/gflags/archive/v${VERSION_gflags}.tar.gz
 
 # md5 of the package
-MD5_gflags=52b9786ca6fbc679869fee2b6fef25a5
+MD5_gflags=1a865b93bacfa963201af3f75b7bd64c
 
 # default build path
 BUILD_gflags=$BUILD_PATH/gflags/$(get_directory $URL_gflags)

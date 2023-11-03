@@ -14,7 +14,7 @@ DEPS_glog=(gflags)
 URL_glog=https://github.com/google/glog/archive/v${VERSION_glog}.tar.gz
 
 # md5 of the package
-MD5_glog=52b9786ca6fbc679869fee2b6fef25a5
+MD5_glog=c98a6068bc9b8ad9cebaca625ca73aa2
 
 # default build path
 BUILD_glog=$BUILD_PATH/glog/$(get_directory $URL_glog)

@@ -14,7 +14,7 @@ DEPS_rapidjson=()
 URL_rapidjson=https://github.com/Tencent/rapidjson/archive/v${VERSION_rapidjson}.tar.gz
 
 # md5 of the package
-MD5_rapidjson=52b9786ca6fbc679869fee2b6fef25a5
+MD5_rapidjson=badd12c511e081fec6c89c43a7027bce
 
 # default build path
 BUILD_rapidjson=$BUILD_PATH/rapidjson/$(get_directory $URL_rapidjson)
@@ -37,7 +37,7 @@ function prebuild_rapidjson() {
 
 function shouldbuild_rapidjson() {
   # If lib is newer than the sourcecode skip build
-  if [ -nt $BUILD_glog/.patched ]; then
+  if [ -nt $BUILD_rapidjson/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -49,6 +49,9 @@ function build_rapidjson() {
   push_env
 
   try ${CMAKE} \
+    -DRAPIDJSON_BUILD_DOC=OFF \
+    -DRAPIDJSON_BUILD_EXAMPLES=OFF \
+    -DRAPIDJSON_BUILD_TESTS=OFF \
     $BUILD_rapidjson
   check_file_configuration CMakeCache.txt
 
@@ -59,9 +62,10 @@ function build_rapidjson() {
 }
 
 # # function called after all the compile have been done
-# function postbuild_rapidjson() {
-#   # nothing to do
-# }
+function postbuild_rapidjson() {
+  # nothing to do
+  true
+}
 
 # function to append information to config file
 function add_config_info_rapidjson() {

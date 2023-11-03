@@ -3,7 +3,7 @@
 DESC_aws_sdk_cpp="AWS SDK for C++"
 
 # version of your package
-VERSION_aws_sdk_cpp=1.11.115
+VERSION_aws_sdk_cpp=1.11.193
 LINK_aws_sdk_cpp=libaws-cpp-sdk-ec2.dylib
 
 # dependencies of this recipe
@@ -13,7 +13,7 @@ DEPS_aws_sdk_cpp=()
 URL_aws_sdk_cpp=https://github.com/aws/aws-sdk-cpp/archive/refs/tags/${VERSION_aws_sdk_cpp}.tar.gz
 
 # md5 of the package
-MD5_aws_sdk_cpp=52b9786ca6fbc679869fee2b6fef25a5
+MD5_aws_sdk_cpp=eaec3122c7b8e48b8b68cd7d2cde8862
 
 # default build path
 BUILD_aws_sdk_cpp=$BUILD_PATH/aws_sdk_cpp/$(get_directory $URL_aws_sdk_cpp)
@@ -25,11 +25,16 @@ RECIPE_aws_sdk_cpp=$RECIPES_PATH/aws_sdk_cpp
 # (you can apply patch etc here.)
 function prebuild_aws_sdk_cpp() {
   cd $BUILD_aws_sdk_cpp
+  echo "Test!!"
+  echo $BUILD_aws_sdk_cpp
 
   # check marker
   if [ -f .patched ]; then
     return
   fi
+
+  # need to clone recursively
+  git clone --recursive https://github.com/aws/aws-sdk-cpp.git -b ${VERSION_aws_sdk_cpp} --depth 1
 
   touch .patched
 }
@@ -49,7 +54,7 @@ function build_aws_sdk_cpp() {
 
   try ${CMAKE} \
     -DENABLE_TESTING=OFF \
-    $BUILD_aws_sdk_cpp
+    $BUILD_aws_sdk_cpp/aws-sdk-cpp
   check_file_configuration CMakeCache.txt
 
   try $NINJA

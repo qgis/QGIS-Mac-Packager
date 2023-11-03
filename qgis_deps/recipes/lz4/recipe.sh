@@ -14,7 +14,7 @@ DEPS_lz4=()
 URL_lz4=https://github.com/lz4/lz4/archive/v${VERSION_lz4}.tar.gz
 
 # md5 of the package
-MD5_lz4=52b9786ca6fbc679869fee2b6fef25a5
+MD5_lz4=e9286adb64040071c5e23498bf753261
 
 # default build path
 BUILD_lz4=$BUILD_PATH/lz4/$(get_directory $URL_lz4)
@@ -45,14 +45,16 @@ function shouldbuild_lz4() {
 # function called to build the source code
 function build_lz4() {
   try cd $BUILD_lz4
+  push_env
 
-  try make install PREFIX=${STAGE_PATH}
+  try make install prefix=${STAGE_PATH}
 
   # fixes all libraries install name
   for i in `ls ${STAGE_PATH}/lib/liblz4*.dylib`;
   do
     fix_install_name lib/`basename $i`
   done
+  pop_env
 }
 
 # function called after all the compile have been done

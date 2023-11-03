@@ -14,7 +14,7 @@ DEPS_apache_arrow=(aws_sdk_cpp brotli bz2 glog grpc lz4 openssl protobuf rapidjs
 URL_apache_arrow=https://archive.apache.org/dist/arrow/arrow-${VERSION_apache_arrow}/apache-arrow-${VERSION_apache_arrow}.tar.gz
 
 # md5 of the package
-MD5_apache_arrow=52b9786ca6fbc679869fee2b6fef25a5
+MD5_apache_arrow=39e373a2148dedc49a0f7a716865734b
 
 # default build path
 BUILD_apache_arrow=$BUILD_PATH/apache_arrow/$(get_directory $URL_apache_arrow)

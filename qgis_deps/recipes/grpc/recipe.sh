@@ -8,13 +8,13 @@ LINK_grpc_version=1.56.2
 LINK_grpc=libgrpc++.${LINK_grpc_version}.dylib
 
 # dependencies of this recipe
-DEPS_grpc=(abseil_cpp c-ares openssl protobuf re2)
+DEPS_grpc=(abseil_cpp c_ares openssl protobuf re2)
 
 # url of the package
 URL_grpc=https://github.com/grpc/grpc/archive/refs/tags/v${VERSION_grpc}.tar.gz
 
 # md5 of the package
-MD5_grpc=52b9786ca6fbc679869fee2b6fef25a5
+MD5_grpc=be0c4a589168ac0669a10a3bcbf64a1d
 
 # default build path
 BUILD_grpc=$BUILD_PATH/grpc/$(get_directory $URL_grpc)

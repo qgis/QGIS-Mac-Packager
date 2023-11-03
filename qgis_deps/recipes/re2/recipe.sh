@@ -14,7 +14,7 @@ DEPS_re2=(abseil_cpp)
 URL_re2=https://github.com/google/re2/releases/download/${VERSION_re2}/re2-${VERSION_re2}.tar.gz
 
 # md5 of the package
-MD5_re2=52b9786ca6fbc679869fee2b6fef25a5
+MD5_re2=36db3643a779947b09d3a0a1ed60fcfc
 
 # default build path
 BUILD_re2=$BUILD_PATH/re2/$(get_directory $URL_re2)
@@ -54,8 +54,8 @@ function build_re2() {
     $BUILD_re2
   check_file_configuration CMakeCache.txt
 
-  try ${CMAKE} --build build-static
-  try ${CMAKE} --install build-static
+  try cmake --build build-static
+  try cmake --install build-static
 
   try ${CMAKE} \
     -B build-shared \
@@ -64,8 +64,8 @@ function build_re2() {
     $BUILD_re2
   check_file_configuration CMakeCache.txt
 
-  try ${CMAKE} --build build-shared
-  try ${CMAKE} --install build-shared
+  try cmake --build build-shared
+  try cmake --install build-shared
 
   # fixes all libraries install name
   for i in `ls ${STAGE_PATH}/lib/libre2*.dylib`;
