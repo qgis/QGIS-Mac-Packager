@@ -84,10 +84,10 @@ function check_config_conf_vars() {
       error "No QT_BASE environment set, abort"
     fi
 
-    if [ -f "$QT_BASE/bin/qmake" ]; then
+    if [ -f "$QT_BASE/clang_64/bin/qmake" ]; then
        debug "Using QT: $QT_BASE"
     else
-       error "The file '$QT_BASE/bin/qmake' in not found."
+       error "The file '$QT_BASE/clang_64/bin/qmake' in not found."
     fi
 
     if [ "X$ROOT_OUT_PATH" == "X" ]; then
@@ -256,7 +256,7 @@ function push_env() {
     export LDFLAGS="-L$STAGE_PATH/lib"
     export CXXFLAGS="${CFLAGS}"
 
-    export PATH="${PATH}:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin:$QT_BASE/bin"
+    export PATH="${PATH}:${XCODE_DEVELOPER}/usr/bin:$STAGE_PATH/bin:$QT_BASE/clang_64/bin"
 
     # export some tools
     export MAKESMP="/usr/bin/make -j$CORES"
@@ -290,7 +290,7 @@ function push_env() {
       CMAKE="${CMAKE} -DCMAKE_BUILD_TYPE=Release"
     fi
     export CMAKE="${CMAKE} -DCMAKE_INSTALL_PREFIX:PATH=$STAGE_PATH"
-    export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE"
+    export CMAKE="${CMAKE} -DCMAKE_PREFIX_PATH=$STAGE_PATH;$QT_BASE/clang_64"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=FALSE"
     export CMAKE="${CMAKE} -DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=FALSE"
     export CMAKE="${CMAKE} -DCMAKE_MACOSX_RPATH=OFF"

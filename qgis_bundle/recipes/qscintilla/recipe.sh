@@ -12,7 +12,7 @@ function bundle_qscintilla() {
 }
 
 function fix_binaries_qscintilla() {
-  install_name_delete_rpath $QT_BASE/lib $BUNDLE_LIB_DIR/${LINK_libqscintilla2_qt5}
+  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_LIB_DIR/${LINK_libqscintilla2_qt5}
 
   install_name_id @rpath/$LINK_libqscintilla2_qt5 $BUNDLE_LIB_DIR/$LINK_libqscintilla2_qt5
 }

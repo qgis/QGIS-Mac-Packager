@@ -62,7 +62,7 @@ function build_qtwebkit() {
     -DUSE_LIBHYPHEN=OFF \
     -DMACOS_USE_SYSTEM_ICU=OFF \
     -DMACOS_FORCE_SYSTEM_XML_LIBRARIES=OFF \
-    -DQT_INSTALL_PREFIX=$QT_BASE \
+    -DQT_INSTALL_PREFIX=$QT_BASE/clang_64 \
     $BUILD_qtwebkit
 
   check_file_configuration CMakeCache.txt

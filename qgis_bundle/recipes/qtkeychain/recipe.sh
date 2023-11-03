@@ -12,7 +12,7 @@ function bundle_qtkeychain() {
 }
 
 function fix_binaries_qtkeychain() {
-  install_name_delete_rpath $QT_BASE/lib $BUNDLE_LIB_DIR/$LINK_qtkeychain
+  install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_LIB_DIR/$LINK_qtkeychain
 
   install_name_id @rpath/$LINK_qtkeychain $BUNDLE_LIB_DIR/$LINK_qtkeychain
 }

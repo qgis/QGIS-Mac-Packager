@@ -55,7 +55,7 @@ function fix_binaries_python_pyqt5() {
   do
     PYQT5_LIB=$BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/$i.so
     if [ -f "$PYQT5_LIB" ]; then
-      install_name_delete_rpath $QT_BASE/lib $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/$i.so
+      install_name_delete_rpath $QT_BASE/clang_64/lib $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/$i.so
       install_name_delete_rpath $DEPS_LIB_DIR $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/$i.so
       # for some reason "some" have it twice
       install_name_tool -delete_rpath $DEPS_LIB_DIR $BUNDLE_PYTHON_SITE_PACKAGES_DIR/PyQt5/$i.so >/dev/null 2>&1
