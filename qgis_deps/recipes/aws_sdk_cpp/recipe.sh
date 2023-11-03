@@ -25,8 +25,6 @@ RECIPE_aws_sdk_cpp=$RECIPES_PATH/aws_sdk_cpp
 # (you can apply patch etc here.)
 function prebuild_aws_sdk_cpp() {
   cd $BUILD_aws_sdk_cpp
-  echo "Test!!"
-  echo $BUILD_aws_sdk_cpp
 
   # check marker
   if [ -f .patched ]; then
