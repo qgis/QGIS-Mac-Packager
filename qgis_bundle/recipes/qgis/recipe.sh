@@ -276,7 +276,10 @@ function fix_binaries_qgis() {
       $LINK_libhdf5 \
       $LINK_libxml2 \
       $LINK_netcdf \
-      $LINK_fastcgi
+      $LINK_fastcgi \
+      $LINK_minizip \
+      $LINK_rttopo \
+      $LINK_freexl
     do
       install_name_change $DEPS_LIB_DIR/$j @rpath/$j $BUNDLE_CONTENTS_DIR/$i
     done
