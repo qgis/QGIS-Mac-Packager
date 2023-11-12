@@ -277,7 +277,7 @@ function fix_binaries_qgis() {
       $LINK_libxml2 \
       $LINK_netcdf \
       $LINK_fastcgi \
-      $LINK_minizip \
+      $LINK_libminizip \
       $LINK_rttopo \
       $LINK_freexl
     do
