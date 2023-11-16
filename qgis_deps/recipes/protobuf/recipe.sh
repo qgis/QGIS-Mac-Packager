@@ -3,18 +3,18 @@
 DESC_protobuf="Protocol buffers (Google's data interchange format)"
 
 # version of your package
-VERSION_protobuf=3.11.4
-LINK_protobuf_lite=libprotobuf-lite.22.dylib
-LINK_protobuf=libprotobuf.22.dylib
+VERSION_protobuf=22.3
+LINK_protobuf_lite=libprotobuf-lite.22.3.0.dylib
+LINK_protobuf=libprotobuf.22.3.0.dylib
 
 # dependencies of this recipe
-DEPS_protobuf=(zlib)
+DEPS_protobuf=(zlib abseil_cpp)
 
 # url of the package
-URL_protobuf=https://github.com/protocolbuffers/protobuf/releases/download/v${VERSION_protobuf}/protobuf-cpp-${VERSION_protobuf}.tar.gz
+URL_protobuf=https://github.com/protocolbuffers/protobuf/releases/download/v${VERSION_protobuf}/protobuf-${VERSION_protobuf}.tar.gz
 
 # md5 of the package
-MD5_protobuf=44fa1fde51cc21c79d0e64caef2d2933
+MD5_protobuf=1cea5c8535745a9f0f0bb584c5dc48a9
 
 # default build path
 BUILD_protobuf=$BUILD_PATH/protobuf/$(get_directory $URL_protobuf)
@@ -44,22 +44,26 @@ function shouldbuild_protobuf() {
 
 # function called to build the source code
 function build_protobuf() {
-  try rsync -a $BUILD_protobuf/ $BUILD_PATH/protobuf/build-$ARCH/
+  try mkdir -p $BUILD_PATH/protobuf/build-$ARCH
   try cd $BUILD_PATH/protobuf/build-$ARCH
   push_env
 
-  export CXXFLAGS="$CXXFLAGS -DNDEBUG"
+  try ${CMAKE} \
+    -Dprotobuf_BUILD_LIBPROTOC=ON \
+    -Dprotobuf_INSTALL_EXAMPLES=OFF \
+    -Dprotobuf_BUILD_TESTS=OFF \
+    -Dprotobuf_BUILD_SHARED_LIBS=ON \
+    -Dprotobuf_ABSL_PROVIDER=package \
+    $BUILD_protobuf
+  check_file_configuration CMakeCache.txt
 
-  try ./autogen.sh
-  patch_configure_file configure
-  try ${CONFIGURE} \
-    --disable-debug \
-    --disable-dependency-tracking \
-    --with-zlib
+  try $NINJA
+  try $NINJA install
 
-  check_file_configuration config.status
-  try $MAKESMP
-  try $MAKESMP install
+  fix_install_name lib/$LINK_protobuf_lite
+  fix_install_name lib/$LINK_protobuf
+  fix_install_name lib/libprotoc.dylib
+  fix_install_name bin/protoc
 
   pop_env
 }

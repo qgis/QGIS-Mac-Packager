@@ -3,7 +3,7 @@
 DESC_gmp="Arithmetic without limitations"
 
 # version of your package
-VERSION_gmp=6.2.0
+VERSION_gmp=6.2.1
 LINK_gmp=libgmpxx.4.dylib
 
 # dependencies of this recipe
@@ -13,7 +13,7 @@ DEPS_gmp=()
 URL_gmp=https://gmplib.org/download/gmp/gmp-$VERSION_gmp.tar.lz
 
 # md5 of the package
-MD5_gmp=e3e08ac185842a882204ba3c37985127
+MD5_gmp=03a31d8cbaf29d136252f8f38875ed82
 
 # default build path
 BUILD_gmp=$BUILD_PATH/gmp/$(get_directory $URL_gmp)

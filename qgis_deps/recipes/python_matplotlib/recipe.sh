@@ -3,7 +3,7 @@
 DESC_python_matplotlib="python matplotlib"
 
 # version of your package
-VERSION_python_matplotlib=3.3.0
+VERSION_python_matplotlib=3.7.1
 
 # dependencies of this recipe
 DEPS_python_matplotlib=(python python_packages python_numpy python_pillow fontconfig freetype)
@@ -12,7 +12,7 @@ DEPS_python_matplotlib=(python python_packages python_numpy python_pillow fontco
 URL_python_matplotlib=https://github.com/matplotlib/matplotlib/archive/v$VERSION_python_matplotlib.tar.gz
 
 # md5 of the package
-MD5_python_matplotlib=8a55bbf600206a512629e8c582e5eb4a
+MD5_python_matplotlib=d7e610cb65a21aab8d0dd7430b2fc4ac
 
 # default build path
 BUILD_python_matplotlib=$BUILD_PATH/python_matplotlib/$(get_directory $URL_python_matplotlib)
@@ -45,6 +45,9 @@ function build_python_matplotlib() {
   try rsync -a $BUILD_python_matplotlib/ $BUILD_PATH/python_matplotlib/build-$ARCH/
   try cd $BUILD_PATH/python_matplotlib/build-$ARCH
   push_env
+
+  # setup.py depends pybind11
+  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP_NO_BINARY install pybind11==2.10.4
 
   CFLAGS="$CFLAGS -I$STAGE_PATH/include/freetype2"
   CPPFLAGS="$CPPFLAGS -I$STAGE_PATH/include/freetype2"

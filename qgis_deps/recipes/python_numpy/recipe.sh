@@ -3,7 +3,7 @@
 DESC_python_numpy="python numpy"
 
 # version of your package
-VERSION_python_numpy=1.20.1
+VERSION_python_numpy=1.24.3
 
 # dependencies of this recipe
 DEPS_python_numpy=(python python_packages openblas)
@@ -12,7 +12,7 @@ DEPS_python_numpy=(python python_packages openblas)
 URL_python_numpy=https://github.com/numpy/numpy/archive/v${VERSION_python_numpy}.tar.gz
 
 # md5 of the package
-MD5_python_numpy=a8414e2eebac83a4d5b6a945063c4fff
+MD5_python_numpy=5a9863ccbcc15378d18c139fe988b991
 
 # default build path
 BUILD_python_numpy=$BUILD_PATH/python_numpy/$(get_directory $URL_python_numpy)
@@ -52,7 +52,7 @@ function build_python_numpy() {
   export ATLAS=None
   export ACCELERATE=None
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
+  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP install .
 
   unset OPENBLAS
   unset BLAS

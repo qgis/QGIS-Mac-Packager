@@ -4,9 +4,9 @@ DESC_proj="Cartographic Projections Library"
 
 # version of your package
 # keep in SYNC with python_pyproj receipt
-VERSION_proj=8.1.1
+VERSION_proj=9.2.0
 
-LINK_libproj=libproj.22.dylib
+LINK_libproj=libproj.25.dylib
 
 # dependencies of this recipe
 DEPS_proj=(sqlite libxml2 openssl libtiff)
@@ -15,7 +15,7 @@ DEPS_proj=(sqlite libxml2 openssl libtiff)
 URL_proj=https://github.com/OSGeo/PROJ/releases/download/$VERSION_proj/proj-$VERSION_proj.tar.gz
 
 # md5 of the package
-MD5_proj=f017fd7d35311b0d65b2cf0503844690
+MD5_proj=1241c7115d8c380ea19469ba0828a22a
 
 # default build path
 BUILD_proj=$BUILD_PATH/proj/$(get_directory $URL_proj)
@@ -66,6 +66,14 @@ function build_proj() {
   try install_name_tool -change $BUILD_PATH/proj/build-$ARCH/lib/$LINK_libproj $STAGE_PATH/lib/$LINK_libproj $STAGE_PATH/bin/proj
   try install_name_tool -delete_rpath $BUILD_PATH/proj/build-$ARCH/lib ${STAGE_PATH}/lib/$LINK_libproj
 
+  try fix_install_name bin/cct
+  try fix_install_name bin/cs2cs
+  try fix_install_name bin/geod
+  try fix_install_name bin/gie
+  try fix_install_name bin/invgeod
+  try fix_install_name bin/projinfo
+  try fix_install_name bin/projsync
+
   pop_env
 }
 
@@ -74,6 +82,13 @@ function postbuild_proj() {
   verify_binary lib/$LINK_libproj
 
   verify_binary bin/proj
+  verify_binary bin/cct
+  verify_binary bin/cs2cs
+  verify_binary bin/geod
+  verify_binary bin/gie
+  verify_binary bin/invgeod
+  verify_binary bin/projinfo
+  verify_binary bin/projsync
 }
 
 # function to append information to config file

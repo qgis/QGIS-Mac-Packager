@@ -3,7 +3,7 @@
 DESC_libtool="Library to extract data from Excel .xls files"
 
 # version of your package
-VERSION_libtool=2.4.6
+VERSION_libtool=2.4.7
 LINK_libltdl=libltdl.7.dylib
 
 # dependencies of this recipe
@@ -13,7 +13,7 @@ DEPS_libtool=()
 URL_libtool=https://ftp.gnu.org/gnu/libtool/libtool-${VERSION_libtool}.tar.xz
 
 # md5 of the package
-MD5_libtool=1bfb9b923f2c1339b4d2ce1807064aa5
+MD5_libtool=2fc0b6ddcd66a89ed6e45db28fa44232
 
 # default build path
 BUILD_libtool=$BUILD_PATH/libtool/$(get_directory $URL_libtool)

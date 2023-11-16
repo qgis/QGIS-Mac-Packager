@@ -4,7 +4,7 @@ DESC_qscintilla="Port to Qt of the Scintilla editing component"
 
 # version of your package
 # keep in SYNC with python_qscintilla receipt
-VERSION_qscintilla=2.11.5
+VERSION_qscintilla=2.13.4
 
 # full link version of the library
 LINK_libqscintilla2_qt5=libqscintilla2_qt5.15.dylib
@@ -13,10 +13,10 @@ LINK_libqscintilla2_qt5=libqscintilla2_qt5.15.dylib
 DEPS_qscintilla=()
 
 # url of the package
-URL_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${VERSION_qscintilla}/QScintilla-${VERSION_qscintilla}.tar.gz
+URL_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${VERSION_qscintilla}/QScintilla_src-${VERSION_qscintilla}.tar.gz
 
 # md5 of the package
-MD5_qscintilla=c31d77e1fcc218ed3f27458fa80d4dc9
+MD5_qscintilla=4f83a4a4ad7da40eae80ad23f9fb18f2
 
 # default build path
 BUILD_qscintilla=$BUILD_PATH/qscintilla/$(get_directory $URL_qscintilla)
@@ -27,7 +27,7 @@ RECIPE_qscintilla=$RECIPES_PATH/qscintilla
 # function called for preparing source code if needed
 # (you can apply patch etc here.)
 function prebuild_qscintilla() {
-  cd $BUILD_qscintilla/Qt4Qt5
+  cd $BUILD_qscintilla/src
 
   # check marker
   if [ -f .patched ]; then
@@ -60,7 +60,7 @@ function build_qscintilla() {
   try cd $BUILD_PATH/qscintilla/build-$ARCH
   push_env
 
-  cd Qt4Qt5
+  cd src
   try ${QMAKE} qscintilla.pro
 
   try $MAKESMP

@@ -3,7 +3,8 @@
 DESC_qca="Qt Cryptographic Architecture (QCA)"
 
 # version of your package
-VERSION_qca=2.3.1
+VERSION_qca_major=2
+VERSION_qca=${VERSION_qca_major}.3.5
 LINK_qca=qca-qt5
 
 # dependencies of this recipe
@@ -13,7 +14,7 @@ DEPS_qca=(openssl)
 URL_qca=https://github.com/KDE/qca/archive/v${VERSION_qca}.tar.gz
 
 # md5 of the package
-MD5_qca=96c4769d51140e03087266cf705c2b86
+MD5_qca=b33fed0aa484f37a64f6407e2a6eaa64
 
 # default build path
 BUILD_qca=$BUILD_PATH/qca/$(get_directory $URL_qca)
@@ -36,7 +37,7 @@ function prebuild_qca() {
 
 function shouldbuild_qca() {
   # If lib is newer than the sourcecode skip build
-  if [ ${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca}/$LINK_qca -nt $BUILD_qca/.patched ]; then
+  if [ ${STAGE_PATH}/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca -nt $BUILD_qca/.patched ]; then
     DO_BUILD=0
   fi
 }
@@ -63,12 +64,27 @@ function build_qca() {
   try $NINJA
   try $NINJA install
 
+  try install_name_tool -id $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca
+  try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca
+  try install_name_tool -id $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/bin/qcatool-qt5
+  try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/bin/qcatool-qt5
+  try install_name_tool -id $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/qt5/plugins/crypto/libqca-cyrus-sasl.dylib
+  try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/qt5/plugins/crypto/libqca-cyrus-sasl.dylib
+  try install_name_tool -id $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/qt5/plugins/crypto/libqca-logger.dylib
+  try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/qt5/plugins/crypto/libqca-logger.dylib
+  try install_name_tool -id $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/qt5/plugins/crypto/libqca-ossl.dylib
+  try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/qt5/plugins/crypto/libqca-ossl.dylib
+  try install_name_tool -id $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/qt5/plugins/crypto/libqca-softstore.dylib
+  try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/qt5/plugins/crypto/libqca-softstore.dylib
+  try install_name_tool -id $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/bin/mozcerts-qt5
+  try install_name_tool -change $BUILD_PATH/qca/build-$ARCH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca $STAGE_PATH/bin/mozcerts-qt5
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_qca() {
-  verify_binary lib/qca-qt5.framework/Versions/${VERSION_qca}/$LINK_qca
+  verify_binary lib/qca-qt5.framework/Versions/${VERSION_qca_major}/$LINK_qca
   verify_binary bin/qcatool-qt5
 }
 

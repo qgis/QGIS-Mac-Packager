@@ -4,7 +4,7 @@ DESC_python_pyproj="Proj binding for python"
 
 # version of your package
 # keep in SYNC with proj receipt
-VERSION_python_pyproj=3.2.0
+VERSION_python_pyproj=3.5.0
 
 # dependencies of this recipe
 # depends on PyQt5
@@ -14,7 +14,7 @@ DEPS_python_pyproj=(python openssl libtiff sqlite proj python_packages)
 URL_python_pyproj=https://github.com/pyproj4/pyproj/archive/refs/tags/${VERSION_python_pyproj}.tar.gz
 
 # md5 of the package
-MD5_python_pyproj=dc548c8990e10bc52d012bae5a87030f
+MD5_python_pyproj=27906a26dabdece2a0d4b70def556f08
 
 # default build path
 BUILD_python_pyproj=$BUILD_PATH/python_pyproj/$(get_directory $URL_python_pyproj)

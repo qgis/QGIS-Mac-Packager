@@ -3,7 +3,7 @@
 DESC_libzip="C library for reading, creating, and modifying zip archives"
 
 # version of your package
-VERSION_libzip=1.7.3
+VERSION_libzip=1.9.2
 
 LINK_libzip=libzip.5.dylib
 
@@ -14,7 +14,7 @@ DEPS_libzip=( zlib xz openssl )
 URL_libzip=https://github.com/nih-at/libzip/archive/v${VERSION_libzip}.tar.gz
 
 # md5 of the package
-MD5_libzip=866fc2fbfc86615fd6cfca9b0a52accf
+MD5_libzip=ba557996752906b651c27b2d1e7a1613
 
 # default build path
 BUILD_libzip=$BUILD_PATH/libzip/$(get_directory $URL_libzip)
@@ -61,6 +61,8 @@ function build_libzip() {
 
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip
   try install_name_tool -change $BUILD_PATH/libzip/build-$ARCH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/bin/ziptool
+  try install_name_tool -change $BUILD_PATH/libzip/build-$ARCH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/bin/zipcmp
+  try install_name_tool -change $BUILD_PATH/libzip/build-$ARCH/lib/$LINK_libzip $STAGE_PATH/lib/$LINK_libzip $STAGE_PATH/bin/zipmerge
 
   pop_env
 }
@@ -69,6 +71,8 @@ function build_libzip() {
 function postbuild_libzip() {
   verify_binary lib/$LINK_libzip
   verify_binary bin/ziptool
+  verify_binary bin/zipcmp
+  verify_binary bin/zipmerge
 }
 
 # function to append information to config file

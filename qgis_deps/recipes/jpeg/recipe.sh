@@ -14,7 +14,7 @@ DEPS_jpeg=()
 URL_jpeg=https://www.ijg.org/files/jpegsrc.v${VERSION_jpeg}.tar.gz
 
 # md5 of the package
-MD5_jpeg=ad7e40dedc268f97c44e7ee3cd54548a
+MD5_jpeg=8fc632eb8498d0f323b1d2ba22cb5faa
 
 # default build path
 BUILD_jpeg=$BUILD_PATH/jpeg/$(get_directory $URL_jpeg)

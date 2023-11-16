@@ -3,7 +3,7 @@
 DESC_python_statsmodels="python statsmodels"
 
 # version of your package
-VERSION_python_statsmodels=0.11.1
+VERSION_python_statsmodels=0.13.5
 
 # dependencies of this recipe
 DEPS_python_statsmodels=(python python_packages python_numpy python_scipy python_patsy python_pandas)
@@ -12,7 +12,7 @@ DEPS_python_statsmodels=(python python_packages python_numpy python_scipy python
 URL_python_statsmodels=https://github.com/statsmodels/statsmodels/archive/v${VERSION_python_statsmodels}.tar.gz
 
 # md5 of the package
-MD5_python_statsmodels=a53f9620fdb954b06cdc33a2597f5875
+MD5_python_statsmodels=c573cde33aec1b5962709ddad8515ba8
 
 # default build path
 BUILD_python_statsmodels=$BUILD_PATH/python_statsmodels/$(get_directory $URL_python_statsmodels)

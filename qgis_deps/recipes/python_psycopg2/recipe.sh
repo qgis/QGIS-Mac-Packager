@@ -3,7 +3,7 @@
 DESC_python_psycopg2="Python-PostgreSQL Database Adapter"
 
 # version of your package
-VERSION_python_psycopg2=2.8.5
+VERSION_python_psycopg2=2.9.6
 
 # dependencies of this recipe
 DEPS_python_psycopg2=(python postgres python_packages python_scipy)

@@ -3,7 +3,7 @@
 DESC_python_numba="A Just-In-Time Compiler for Numerical Functions in Python"
 
 # version of your package
-VERSION_python_numba=0.50.1
+VERSION_python_numba=0.56.4
 
 # dependencies of this recipe
 DEPS_python_numba=(python python_packages python_numpy python_scipy python_llvmlite )
@@ -12,7 +12,7 @@ DEPS_python_numba=(python python_packages python_numpy python_scipy python_llvml
 URL_python_numba=https://github.com/numba/numba/archive/${VERSION_python_numba}.tar.gz
 
 # md5 of the package
-MD5_python_numba=0cfb6b45282f4d6b9793a17588de180b
+MD5_python_numba=ec421940dacba78b05c03e27a5646360
 
 # default build path
 BUILD_python_numba=$BUILD_PATH/python_numba/$(get_directory $URL_python_numba)

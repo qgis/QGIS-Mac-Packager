@@ -3,17 +3,17 @@
 DESC_mysql="Open source relational database management system"
 
 # version of your package
-VERSION_mysql=8.0.23
+VERSION_mysql=8.0.32
 LINK_libmysqlclient=libmysqlclient.21.dylib
 
 # dependencies of this recipe
 DEPS_mysql=(openssl protobuf boost zstd zlib)
 
 # url of the package
-URL_mysql=https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-boost-${VERSION_mysql}.tar.gz
+URL_mysql=https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-boost-${VERSION_mysql}.tar.gz
 
 # md5 of the package
-MD5_mysql=27cfcf24fc754b592acd69fd32a3940a
+MD5_mysql=ac9445f619135336c8b4553d4e81b684
 
 # default build path
 BUILD_mysql=$BUILD_PATH/mysql/$(get_directory $URL_mysql)
@@ -32,8 +32,6 @@ function prebuild_mysql() {
   fi
 
   touch .patched
-
-  exit 1
 }
 
 function shouldbuild_mysql() {
@@ -51,7 +49,7 @@ function build_mysql() {
   push_env
 
   # -DINSTALL_* are relative to `CMAKE_INSTALL_PREFIX` (`prefix`)
-  try ${CMAKE}  \
+  BOOST_ROOT=$STAGE_PATH try ${CMAKE}  \
       -DWITHOUT_SERVER=ON \
       -DFORCE_INSOURCE_BUILD=1 \
       -DENABLED_PROFILING=OFF \
@@ -84,6 +82,9 @@ function build_mysql() {
 
   try $NINJA
   try $NINJA install
+
+  try fix_install_name lib/$LINK_libmysqlclient
+  try install_name_tool -id $STAGE_PATH/lib/libmysqlclient.21.dylib lib/$LINK_libmysqlclient
 
   try rm -rf $STAGE_PATH/mysql-test
   try rm -f $STAGE_PATH/LICENCE
