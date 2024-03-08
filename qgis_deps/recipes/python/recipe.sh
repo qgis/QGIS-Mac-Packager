@@ -3,7 +3,7 @@
 DESC_python="Interpreted, interactive, object-oriented programming language"
 
 # version of your package (set in config.conf)
-VERSION_minor_python=5
+VERSION_minor_python=13
 VERSION_python=${VERSION_major_python}.${VERSION_minor_python}
 LINK_python=libpython${VERSION_major_python}.dylib
 
@@ -14,7 +14,7 @@ DEPS_python=(openssl xz libffi zlib libzip sqlite expat unixodbc bz2 gettext lib
 URL_python=https://www.python.org/ftp/python/${VERSION_python}/Python-${VERSION_python}.tar.xz
 
 # md5 of the package
-MD5_python=71f7ada6bec9cdbf4538adc326120cfd
+MD5_python=8847dc6458d1431d0ae0f55942deeb89
 
 # default build path
 BUILD_python=$BUILD_PATH/python/$(get_directory $URL_python)
