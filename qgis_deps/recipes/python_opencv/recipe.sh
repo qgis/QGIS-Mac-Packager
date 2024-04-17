@@ -4,8 +4,8 @@ DESC_python_opencv="python opencv-contrib-python"
 # source $RECIPES_PATH/python_numpy/recipe.sh
 
 # version of your package
-GIT_TAG_python_opencv=36
-VERSION_python_opencv=4.3.0.${GIT_TAG_python_opencv}
+GIT_TAG_python_opencv=72
+VERSION_python_opencv=4.7.0.${GIT_TAG_python_opencv}
 
 # dependencies of this recipe
 DEPS_python_opencv=(python python_packages python_numpy python_scipy openblas protobuf)

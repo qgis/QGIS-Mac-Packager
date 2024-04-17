@@ -4,16 +4,16 @@ DESC_python_netcdf4="Python binding of HDF5"
 
 # version of your package
 # need to keep in sync with compatible version of netcdf lib
-VERSION_python_netcdf4=1.5.4
+VERSION_python_netcdf4=1.6.3
 
 # dependencies of this recipe
 DEPS_python_netcdf4=(python python_packages netcdf hdf5 python_numpy libcurl python_cftime)
 
 # url of the package
-URL_python_netcdf4=https://github.com/Unidata/netcdf4-python/archive/v${VERSION_python_netcdf4}rel.tar.gz
+URL_python_netcdf4=https://github.com/Unidata/netcdf4-python/archive/refs/tags/v${VERSION_python_netcdf4}rel.tar.gz
 
 # md5 of the package
-MD5_python_netcdf4=eddb60fddd0f018da33111931fe49d33
+MD5_python_netcdf4=1bd0955c3e947edda65f4a538cbe18ff
 
 # default build path
 BUILD_python_netcdf4=$BUILD_PATH/python_netcdf4/$(get_directory $URL_python_netcdf4)

@@ -8,6 +8,7 @@ VERSION_brotli=${VERSION_brotli_major}.0.9
 
 LINK_libbrotlicommon=libbrotlicommon.${VERSION_brotli_major}.dylib
 LINK_libbrotlidec=libbrotlidec.${VERSION_brotli_major}.dylib
+LINK_libbrotlienc=libbrotlienc.${VERSION_brotli_major}.dylib
 
 # dependencies of this recipe
 DEPS_brotli=()
@@ -65,6 +66,7 @@ function build_brotli() {
   try install_name_tool -id $STAGE_PATH/lib/$LINK_libbrotlidec $STAGE_PATH/lib/$LINK_libbrotlidec
   try install_name_tool -change $BUILD_PATH/brotli/build-$ARCH/$LINK_libbrotlidec $STAGE_PATH/lib/$LINK_libbrotlidec $STAGE_PATH/lib/$LINK_libbrotlidec
   try install_name_tool -change $BUILD_PATH/brotli/build-$ARCH/$LINK_libbrotlicommon $STAGE_PATH/lib/$LINK_libbrotlicommon $STAGE_PATH/lib/$LINK_libbrotlidec
+  try fix_install_name lib/$LINK_libbrotlienc
 
   pop_env
 }
@@ -73,6 +75,7 @@ function build_brotli() {
 function postbuild_brotli() {
   verify_binary lib/$LINK_libbrotlicommon
   verify_binary lib/$LINK_libbrotlidec
+  verify_binary lib/$LINK_libbrotlienc
 }
 
 # function to append information to config file

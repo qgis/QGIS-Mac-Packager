@@ -3,8 +3,8 @@
 DESC_libicu="International Components for Unicode"
 
 # version of your package
-VERSION_libicu_major=68
-VERSION_libicu_minor=2
+VERSION_libicu_major=73
+VERSION_libicu_minor=1
 VERSION_libicu=$VERSION_libicu_major.$VERSION_libicu_minor
 
 LINK_libicudata=libicudata.${VERSION_libicu_major}.dylib
@@ -20,7 +20,7 @@ DEPS_libicu=(python)
 URL_libicu=https://github.com/unicode-org/icu/archive/release-$VERSION_libicu_major-$VERSION_libicu_minor.tar.gz
 
 # md5 of the package
-MD5_libicu=ea591dfbcbc3aa44029ca66d6abf8070
+MD5_libicu=8c2aeca508f7f7ebb08fa712a75a2633
 
 # default build path
 BUILD_libicu=$BUILD_PATH/libicu/$(get_directory $URL_libicu)

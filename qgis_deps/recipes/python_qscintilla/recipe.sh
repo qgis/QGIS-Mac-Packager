@@ -4,17 +4,17 @@ DESC_python_qscintilla="QScintilla package for python"
 
 # version of your package
 # keep in SYNC with qscintilla receipt
-VERSION_python_qscintilla=2.11.5
+VERSION_python_qscintilla=2.13.4
 
 # dependencies of this recipe
 # depends on PyQt5
 DEPS_python_qscintilla=(python qscintilla python_sip python_pyqt5 python_packages)
 
 # url of the package
-URL_python_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${VERSION_python_qscintilla}/QScintilla-${VERSION_python_qscintilla}.tar.gz
+URL_python_qscintilla=https://www.riverbankcomputing.com/static/Downloads/QScintilla/${VERSION_python_qscintilla}/QScintilla_src-${VERSION_python_qscintilla}.tar.gz
 
 # md5 of the package
-MD5_python_qscintilla=c31d77e1fcc218ed3f27458fa80d4dc9
+MD5_python_qscintilla=4f83a4a4ad7da40eae80ad23f9fb18f2
 
 # default build path
 BUILD_python_qscintilla=$BUILD_PATH/python_qscintilla/$(get_directory $URL_python_qscintilla)
@@ -56,26 +56,16 @@ function build_python_qscintilla() {
   cd Python
   mkdir -p ${STAGE_PATH}/share/sip/PyQt5/Qsci
 
-  # QMAKEFEATURES=$STAGE_PATH/data/mkspecs/features;\
-  try $PYTHON ./configure.py \
-    -o ${STAGE_PATH}/lib \
-    -n ${STAGE_PATH}/include \
-    --apidir=${STAGE_PATH}/qsci \
-    --stubsdir=$QGIS_SITE_PACKAGES_PATH/PyQt5 \
-    --destdir=$QGIS_SITE_PACKAGES_PATH/PyQt5 \
-    --qsci-featuresdir=$STAGE_PATH/data/mkspecs/features/ \
-    --qsci-sipdir=${STAGE_PATH}/share/sip/PyQt5 \
-    --qsci-incdir=${STAGE_PATH}/include \
-    --qsci-libdir=${STAGE_PATH}/lib \
-    --pyqt=PyQt5 \
-    --pyqt-sipdir=${STAGE_PATH}/share/sip/PyQt5 \
-    --sip-incdir=${STAGE_PATH}/include \
-    --spec=${QSPEC} \
+  try cp pyproject-qt5.toml pyproject.toml
+  try $STAGE_PATH/bin/sip-install \
+    --target-dir ${STAGE_PATH}/lib/python${VERSION_major_python}/site-packages \
+    --api-dir ${STAGE_PATH}/qsci \
+    --qsci-features-dir $STAGE_PATH/data/mkspecs/features/ \
+    --qsci-include-dir ${STAGE_PATH}/include \
+    --qsci-library-dir ${STAGE_PATH}/lib \
+    --qmake-setting "QMAKE_RPATHDIR += ${STAGE_PATH}/lib" \
+    --spec ${QSPEC} \
     --verbose
-
-  try $MAKESMP
-  try $MAKE install
-  try $MAKE clean
 
   install_name_tool -add_rpath "${STAGE_PATH}/lib" $QGIS_SITE_PACKAGES_PATH/PyQt5/Qsci.so
 

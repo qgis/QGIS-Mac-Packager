@@ -10,7 +10,7 @@ LINK_exiv2=libexiv2.27.dylib
 DEPS_exiv2=()
 
 # url of the package
-URL_exiv2=https://www.exiv2.org/builds/exiv2-${VERSION_exiv2}-Source.tar.gz
+URL_exiv2=https://github.com/Exiv2/exiv2/releases/download/v${VERSION_exiv2}/exiv2-${VERSION_exiv2}-Source.tar.gz
 
 # md5 of the package
 MD5_exiv2=68a59595e8617284b2e1eee528ae1f77

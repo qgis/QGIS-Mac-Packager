@@ -5,7 +5,7 @@ DESC_minizip="zip manipulation library written in C"
 # version of your package
 source $RECIPES_PATH/libkml/recipe.sh
 source $RECIPES_PATH/zlib/recipe.sh
-VERSION_minizip=1.1
+VERSION_minizip=1.3.0
 
 LINK_libminizip=libminizip.dylib
 

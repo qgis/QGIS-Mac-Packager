@@ -3,7 +3,7 @@
 DESC_freetype="Software library to render fonts"
 
 # version of your package
-VERSION_freetype=2.10.2
+VERSION_freetype=2.13.0
 LINK_freetype=libfreetype.6.dylib
 
 # dependencies of this recipe
@@ -13,7 +13,7 @@ DEPS_freetype=(png brotli bz2 zlib)
 URL_freetype=https://download.savannah.gnu.org/releases/freetype/freetype-$VERSION_freetype.tar.gz
 
 # md5 of the package
-MD5_freetype=b1cb620e4c875cd4d1bfa04945400945
+MD5_freetype=98bc3cf234fe88ef3cf24569251fe0a4
 
 # default build path
 BUILD_freetype=$BUILD_PATH/freetype/$(get_directory $URL_freetype)
@@ -50,7 +50,7 @@ function build_freetype() {
 
   push_env
 
-  try ${CONFIGURE} --disable-debug
+  try ${CONFIGURE} --disable-debug --without-harfbuzz
 
   check_file_configuration config.status
   try $MAKESMP

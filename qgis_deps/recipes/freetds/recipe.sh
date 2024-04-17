@@ -3,7 +3,7 @@
 DESC_freetds="Libraries to talk to Microsoft SQL Server and Sybase databases"
 
 # version of your package
-VERSION_freetds=1.2.5
+VERSION_freetds=1.3.18
 LINK_ct=libct.4.dylib
 LINK_sybdb=libsybdb.5.dylib
 LINK_tdsodbc=libtdsodbc.0.so
@@ -15,7 +15,7 @@ DEPS_freetds=(gettext libtool openssl unixodbc)
 URL_freetds=https://www.freetds.org/files/stable/freetds-${VERSION_freetds}.tar.gz
 
 # md5 of the package
-MD5_freetds=5de473ef22bfcc6a415398a5a145c53b
+MD5_freetds=a54e09a32a33ca91d70a3501da86af31
 
 # default build path
 BUILD_freetds=$BUILD_PATH/freetds/$(get_directory $URL_freetds)

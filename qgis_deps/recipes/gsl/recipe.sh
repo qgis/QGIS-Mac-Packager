@@ -3,9 +3,9 @@
 DESC_gsl="Numerical library for C and C++"
 
 # version of your package
-VERSION_gsl=2.6
+VERSION_gsl=2.7.1
 
-LINK_libgsl=libgsl.25.dylib
+LINK_libgsl=libgsl.27.dylib
 LINK_libgslcblas=libgslcblas.0.dylib
 
 # dependencies of this recipe
@@ -15,7 +15,7 @@ DEPS_gsl=()
 URL_gsl=https://ftp.gnu.org/gnu/gsl/gsl-${VERSION_gsl}.tar.gz
 
 # md5 of the package
-MD5_gsl=bda73a3dd5ff2f30b5956764399db6e7
+MD5_gsl=36aee97e67f64dbdab7afae197e3483b
 
 # default build path
 BUILD_gsl=$BUILD_PATH/gsl/$(get_directory $URL_gsl)

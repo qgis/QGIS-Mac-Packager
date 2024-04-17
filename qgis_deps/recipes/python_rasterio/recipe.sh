@@ -3,7 +3,7 @@
 DESC_python_rasterio="Rasterio reads and writes geospatial raster data."
 
 # version of your package
-VERSION_python_rasterio=1.1.5
+VERSION_python_rasterio=1.3.6
 
 # dependencies of this recipe
 # depends on PyQt5
@@ -13,7 +13,7 @@ DEPS_python_rasterio=(python gdal python_gdal python_packages)
 URL_python_rasterio=https://github.com/mapbox/rasterio/archive/$VERSION_python_rasterio.tar.gz
 
 # md5 of the package
-MD5_python_rasterio=fbfb53a7bc521c607d9aad7a4c35c930
+MD5_python_rasterio=65cd28e7d9ac6383c6956bf4f3d02cce
 
 # default build path
 BUILD_python_rasterio=$BUILD_PATH/python_rasterio/$(get_directory $URL_python_rasterio)

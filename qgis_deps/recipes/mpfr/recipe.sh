@@ -3,7 +3,7 @@
 DESC_mpfr="C library for multiple-precision floating-point computations"
 
 # version of your package
-VERSION_mpfr=4.1.0
+VERSION_mpfr=4.2.0
 LINK_mpfr=libmpfr.6.dylib
 
 # dependencies of this recipe
@@ -13,7 +13,7 @@ DEPS_mpfr=(gmp)
 URL_mpfr=https://ftp.gnu.org/gnu/mpfr/mpfr-$VERSION_mpfr.tar.xz
 
 # md5 of the package
-MD5_mpfr=bdd3d5efba9c17da8d83a35ec552baef
+MD5_mpfr=a25091f337f25830c16d2054d74b5af7
 
 # default build path
 BUILD_mpfr=$BUILD_PATH/mpfr/$(get_directory $URL_mpfr)

@@ -3,7 +3,7 @@
 DESC_openjpeg="Image manipulation library"
 
 # version of your package
-VERSION_openjpeg=2.3.1
+VERSION_openjpeg=2.5.0
 
 LINK_openjpeg=libopenjp2.7.dylib
 
@@ -18,7 +18,7 @@ DEPS_openjpeg=(
 URL_openjpeg=https://github.com/uclouvain/openjpeg/archive/v${VERSION_openjpeg}.tar.gz
 
 # md5 of the package
-MD5_openjpeg=3b9941dc7a52f0376694adb15a72903f
+MD5_openjpeg=5cbb822a1203dd75b85639da4f4ecaab
 
 # default build path
 BUILD_openjpeg=$BUILD_PATH/openjpeg/$(get_directory $URL_openjpeg)
@@ -62,12 +62,19 @@ function build_openjpeg() {
 
   install_name_tool -id $STAGE_PATH/lib/$LINK_openjpeg $STAGE_PATH/lib/$LINK_openjpeg
 
+  try fix_install_name bin/opj_compress
+  try fix_install_name bin/opj_decompress
+  try fix_install_name bin/opj_dump
+
   pop_env
 }
 
 # function called after all the compile have been done
 function postbuild_openjpeg() {
   verify_binary lib/$LINK_openjpeg
+  verify_binary bin/opj_compress
+  verify_binary bin/opj_decompress
+  verify_binary bin/opj_dump
 }
 
 # function to append information to config file

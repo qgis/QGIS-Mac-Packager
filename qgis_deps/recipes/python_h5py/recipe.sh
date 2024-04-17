@@ -4,7 +4,7 @@ DESC_python_h5py="Python binding of HDF5"
 
 # version of your package
 # need to keep in sync with hdf5
-VERSION_python_h5py=2.10.0
+VERSION_python_h5py=3.8.0
 
 # dependencies of this recipe
 DEPS_python_h5py=(python hdf5 python_numpy python_packages)

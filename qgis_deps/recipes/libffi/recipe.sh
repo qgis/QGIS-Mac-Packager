@@ -3,7 +3,7 @@
 DESC_libffi="Portable Foreign Function Interface library"
 
 # version of your package
-VERSION_libffi=3.4.2
+VERSION_libffi=3.4.4
 LINK_libffi=libffi.8.dylib
 
 # dependencies of this recipe
@@ -13,7 +13,7 @@ DEPS_libffi=()
 URL_libffi=https://github.com/libffi/libffi/releases/download/v${VERSION_libffi}/libffi-${VERSION_libffi}.tar.gz
 
 # md5 of the package
-MD5_libffi=294b921e6cf9ab0fbaea4b639f8fdbe8
+MD5_libffi=0da1a5ed7786ac12dcbaf0d499d8a049
 
 # default build path
 BUILD_libffi=$BUILD_PATH/libffi/$(get_directory $URL_libffi)
