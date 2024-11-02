@@ -241,7 +241,7 @@ function fix_binaries_qgis() {
     PlugIns/qgis/$(qgis_libname provider virtuallayer).so \
     $VIRTUALRASTER \
     Resources/python/qgis/_core.so \
-    Resources/python/qgis/_3d.so \
+    Resources/python/qgis/_3d*.so \
     Resources/python/qgis/_server.so \
     Resources/python/qgis/_analysis.so \
     Resources/python/qgis/_gui.so \
