@@ -4,10 +4,10 @@ DESC_openblas="optimized BLAS library based on GotoBLAS2"
 
 source $RECIPES_PATH/gcc/recipe.sh
 # version of your package
-VERSION_openblas=0.3.10
+VERSION_openblas=0.3.23
 
 LINK_libopenblas=libopenblas.0.dylib
-LINK_libopenblasp=libopenblasp-r0.3.10.dylib
+LINK_libopenblasp=libopenblasp-r0.3.23.dylib
 
 # dependencies of this recipe
 DEPS_openblas=(sqlite libxml2 openssl gcc)
@@ -16,7 +16,7 @@ DEPS_openblas=(sqlite libxml2 openssl gcc)
 URL_openblas=https://github.com/xianyi/OpenBLAS/archive/v$VERSION_openblas.tar.gz
 
 # md5 of the package
-MD5_openblas=4727a1333a380b67c8d7c7787a3d9c9a
+MD5_openblas=115634b39007de71eb7e75cf7591dfb2
 
 # default build path
 BUILD_openblas=$BUILD_PATH/openblas/$(get_directory $URL_openblas)

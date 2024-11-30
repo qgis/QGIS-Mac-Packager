@@ -38,7 +38,7 @@ echo "Loading configuration"
 XCODE_DEVELOPER="$(xcode-select -print-path)"
 CORES=$(sysctl -n hw.ncpu)
 export CORES=$CORES
-ARCH=x86_64
+ARCH=`uname -m`
 DO_CLEAN_BUILD=0
 DO_SET_X=0
 DEBUG=0
@@ -113,11 +113,24 @@ QGIS_SITE_PACKAGES_PATH=${STAGE_PATH}/lib/python${VERSION_major_python}/site-pac
 BUILD_CONFIG_FILE="${STAGE_PATH}/qgis-deps.config"
 
 function add_homebrew_path() {
-   # info "Adding /usr/local/opt/$1/bin to PATH"
-   if [ ! -d "/usr/local/opt/$1/bin" ]; then
-     error "Missing homebrew $1 /usr/local/opt/$1/bin"
-   fi
-   export PATH="/usr/local/opt/$1/bin:$PATH"
+  HOMEBREW_USR_LOCAL=0
+  HOMEBREW_OPT_HOMEBREW=0
+  # info "Adding /usr/local/opt/$1/bin to PATH"
+  if [ ! -d "/usr/local/opt/$1/bin" ]; then
+    HOMEBREW_USR_LOCAL=0
+  else
+    HOMEBREW_USR_LOCAL=1
+    export PATH="/usr/local/opt/$1/bin:$PATH"
+  fi
+  if [ ! -d "/opt/homebrew/opt/$1/bin" ]; then
+    HOMEBREW_OPT_HOMEBREW=0
+  else
+    HOMEBREW_OPT_HOMEBREW=1
+    export PATH="/opt/homebrew/opt/$1/bin:$PATH"
+  fi
+  if [ $HOMEBREW_USR_LOCAL -eq 0 ] && [ $HOMEBREW_OPT_HOMEBREW -eq 0 ]; then
+    error "Missing homebrew $1 /usr/local/opt/$1/bin and /opt/homebrew/opt/$1/bin"
+  fi
 }
 
 function check_file_configuration() {
@@ -253,7 +266,13 @@ function push_env() {
     export CXX="/usr/bin/clang++"
     export OBJCXX=${CXX}
     export OBJC=${CC}
-    export NINJA="/usr/local/bin/ninja"
+    if [ -f "/usr/local/bin/ninja" ]; then
+      export NINJA="/usr/local/bin/ninja"
+    elif [ -f "/opt/homebrew/bin/ninja" ]; then
+      export NINJA="/opt/homebrew/bin/ninja"
+    else
+      error "Please install ninja"
+    fi
     export LD="/usr/bin/ld"
     export PKG_CONFIG_PATH=$STAGE_PATH/lib/pkgconfig
 
@@ -350,6 +369,21 @@ function get_directory() {
       ;;
   esac
   echo $directory
+}
+
+function fix_install_name() {
+  cd ${STAGE_PATH}
+  if otool -L $1 | grep -q $BUILD_PATH
+  then
+    otool -L $1 | grep $BUILD_PATH | while read line;
+    do
+      from_lib=$(echo $line | cut -d ' ' -f 1)
+      library_name=`basename $from_lib`
+      to_lib="${STAGE_PATH}/lib/${library_name}"
+      try install_name_tool -id $to_lib $to_lib
+      try install_name_tool -change $from_lib $to_lib $1
+    done
+  fi
 }
 
 

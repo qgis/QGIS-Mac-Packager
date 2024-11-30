@@ -32,6 +32,8 @@ function prebuild_qtwebkit() {
 
   #https://github.com/qtwebkit/qtwebkit/pull/1012/files
   try patch --verbose --forward -p1 < $RECIPE_qtwebkit/patches/bison37.patch
+  #python3.9 changes json API
+  try patch --verbose --forward -p1 < $RECIPE_qtwebkit/patches/python3.patch
 
   # Ambiguous Handle (also in MacPorts.h)
   try ${SED} 's;isReachableFromOpaqueRoots(Handle<JSC::Unknown>;isReachableFromOpaqueRoots(JSC::Handle<JSC::Unknown>;g' Source/JavaScriptCore/jsc.cpp

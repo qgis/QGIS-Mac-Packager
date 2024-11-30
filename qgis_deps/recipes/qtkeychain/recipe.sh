@@ -3,7 +3,7 @@
 DESC_qtkeychain="Platform-independent Qt API for storing passwords securely"
 
 # version of your package
-VERSION_qtkeychain=0.12.0
+VERSION_qtkeychain=0.13.2
 
 LINK_qtkeychain=libqt5keychain.1.dylib
 
@@ -14,7 +14,7 @@ DEPS_qtkeychain=()
 URL_qtkeychain=https://github.com/frankosterfeld/qtkeychain/archive/v${VERSION_qtkeychain}.tar.gz
 
 # md5 of the package
-MD5_qtkeychain=474f172b42017872dd50eec6c9981fed
+MD5_qtkeychain=4622bf9f4bb73fb72ea9eae272c49235
 
 # default build path
 BUILD_qtkeychain=$BUILD_PATH/qtkeychain/$(get_directory $URL_qtkeychain)
@@ -59,6 +59,9 @@ function build_qtkeychain() {
 
   try $NINJA
   try $NINJA install
+
+  try install_name_tool -id $STAGE_PATH/lib/$LINK_qtkeychain $STAGE_PATH/lib/$LINK_qtkeychain
+  try install_name_tool -change $BUILD_PATH/qtkeychain/build-$ARCH/$LINK_qtkeychain $STAGE_PATH/lib/$LINK_qtkeychain $STAGE_PATH/lib/$LINK_qtkeychain
 
   pop_env
 }

@@ -3,10 +3,10 @@
 DESC_grass="Geographic Resources Analysis Support System"
 
 # version of your package
-VERSION_grass_major=7
-VERSION_grass_minor=8
-VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.6
-VERSION_grass_build=${VERSION_grass}RC2
+VERSION_grass_major=8
+VERSION_grass_minor=2
+VERSION_grass=${VERSION_grass_major}.${VERSION_grass_minor}.1
+VERSION_grass_build=${VERSION_grass}
 
 # dependencies of this recipe
 DEPS_grass=(python boost bison flex libtiff png  sqlite geos zlib wxmac zstd zlib xz netcdf proj gdal libgeotiff python_pyqt5 mysql postgres openssl )
@@ -17,7 +17,7 @@ LINK_libgrass_version=26
 URL_grass=https://github.com/OSGeo/grass/archive/${VERSION_grass_build}.tar.gz
 
 # md5 of the package
-MD5_grass=915440060be87c3fa9bd22212aaeb55d
+MD5_grass=6ef0c4f26901e03618bd4251bf246dfe
 
 # default build path
 BUILD_grass=$BUILD_PATH/grass/$(get_directory $URL_grass)
@@ -39,14 +39,14 @@ function prebuild_grass() {
   patch_configure_file configure
 
   # Usage of /usr/local
-  try ${SED} "s;/usr/local/lib' ;$STAGE_PATH/lib', '$STAGE_PATH/grass${VERSION_grass_major}${VERSION_grass_minor}/lib ;g" lib/python/ctypes/loader.py
+  # try ${SED} "s;/usr/local/lib' ;$STAGE_PATH/lib', '$STAGE_PATH/grass${VERSION_grass_major}${VERSION_grass_minor}/lib ;g" lib/python/ctypes/loader.py
 
   # it tries to install HELP to system
   # see https://github.com/OSGeo/grass/issues/474
-  try mkdir -p $BUILD_grass/Library/Documentation/Help
-  try mkdir -p $BUILD_grass/Home/Library/Documentation/Help
-  try ${SED} "s; /Library/Documentation/Help; $BUILD_grass/Library/Documentation/Help;g" include/Make/Install.make
-  try ${SED} "s; \$HOME/Library/Documentation/Help; $BUILD_grass/Home/Library/Documentation/Help;g" macosx/app/build_html_user_index.sh
+  # try mkdir -p $BUILD_grass/Library/Documentation/Help
+  # try mkdir -p $BUILD_grass/Home/Library/Documentation/Help
+  # try ${SED} "s; /Library/Documentation/Help; $BUILD_grass/Library/Documentation/Help;g" include/Make/Install.make
+  # try ${SED} "s; \$HOME/Library/Documentation/Help; $BUILD_grass/Home/Library/Documentation/Help;g" macosx/app/build_html_user_index.sh
 
   # missing space in gpde Makefile
   try ${SED} "s;EXTRA_LIBS=\$(GISLIB);EXTRA_LIBS = \$(GISLIB);g" lib/gpde/Makefile

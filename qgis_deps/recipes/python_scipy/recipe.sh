@@ -3,7 +3,7 @@
 DESC_python_scipy="python scipy"
 
 # version of your package
-VERSION_python_scipy=1.5.1
+VERSION_python_scipy=1.10.1
 
 # dependencies of this recipe
 DEPS_python_scipy=(python python_packages python_numpy python_pillow openblas)
@@ -12,7 +12,7 @@ DEPS_python_scipy=(python python_packages python_numpy python_pillow openblas)
 URL_python_scipy=https://github.com/scipy/scipy/archive/v${VERSION_python_scipy}.tar.gz
 
 # md5 of the package
-MD5_python_scipy=d7653c3b9af520d97d93877469eec305
+MD5_python_scipy=3324cf882154d10c7ecdfa5bc9836389
 
 # default build path
 BUILD_python_scipy=$BUILD_PATH/python_scipy/$(get_directory $URL_python_scipy)
@@ -49,7 +49,11 @@ function build_python_scipy() {
   # scipy/sparse/linalg/dsolve/SuperLU/SRC/clacon2.c:175:5: error: implicit declaration of function 'ccopy_' is invalid in C99
   export CFLAGS="$CFLAGS -Wno-implicit-function-declaration"
 
-  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
+  # DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PYTHON setup.py install
+  # How to do this?
+  # DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP install .
+  # or
+  DYLD_LIBRARY_PATH=$STAGE_PATH/lib try $PIP install scipy==1.11.1
 
   pop_env
 }
